@@ -1,0 +1,3 @@
+[submodule "Externals/Engine"]
+	path = Externals/Engine
+	url = https://github.com/KyouGenSo/TakoEngine.git
