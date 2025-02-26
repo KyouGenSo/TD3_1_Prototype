@@ -29,7 +29,7 @@ void MyGame::Initialize()
 	// シーンの初期化
 	sceneFactory_ = new SceneFactory();
 	SceneManager::GetInstance()->SetSceneFactory(sceneFactory_);
-	SceneManager::GetInstance()->ChangeScene("title", 0.0f);
+	SceneManager::GetInstance()->ChangeScene("play", 0.0f);
 
   // PostEffectParamの設定
   postEffectParam.vignettePower = 0.f;
