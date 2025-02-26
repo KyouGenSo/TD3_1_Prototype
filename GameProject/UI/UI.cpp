@@ -11,6 +11,7 @@ bool UI::isBeginFrame_ = false;
 NiVec2 UI::leftTop_ = { 0, 0 };
 NiVec2 UI::size_ = { 0, 0 };
 std::unordered_map<std::string, ButtonImageData> UI::buttonImages_ = std::unordered_map<std::string, ButtonImageData>();
+std::string UI::activeComponentID_ = {};
 
 void UI::Initialize(const NiVec2& _size, const NiVec2& _leftTop)
 {
