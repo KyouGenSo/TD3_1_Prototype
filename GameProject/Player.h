@@ -10,6 +10,13 @@ class Player{
     Transform transform_ {};
 
     Camera* pCamera_ = nullptr;
+
+    Vector3 move_ {};
+
+    bool isGround_ = true;
+
+    const float FLOOR = 0.f;
+    const float GRAVITY = -.16f;
 public:
 	void Initialize();
     void Update();

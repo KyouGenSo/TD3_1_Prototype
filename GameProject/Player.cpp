@@ -19,18 +19,34 @@ void Player::Initialize() {
 }
 
 void Player::Update() {
-    if(Input::GetInstance()->IsConnect()){
+	constexpr float speed = 0.3f;
+    Vector3 move{};
+	if(Input::GetInstance()->IsConnect()){
 	    // Joycon Movement
     } else{
-	    constexpr float speed = 0.3f;
-        Vector3 move = {
+	     move += {
             static_cast<float>(Input::GetInstance()->PushKey(DIK_D) - Input::GetInstance()->PushKey(DIK_A)),
             0.f,
             static_cast<float>(Input::GetInstance()->PushKey(DIK_W) - Input::GetInstance()->PushKey(DIK_S))
         };
-        move = move.Normalize()* speed;
-        transform_.translate += Mat4x4::TransFormNormal(pCamera_->GetWorldMatrix(), move);
     }
+    move_ = move.Normalize() * speed;
+
+	if (isGround_){
+        if(Input::GetInstance()->TriggerKey(DIK_SPACE)){
+            move_.y = 1.6f;
+            isGround_ = false;
+        }
+    }else{
+        move_.y += GRAVITY;
+        if (transform_.translate.y + move_.y <= FLOOR){
+            transform_.translate.y = FLOOR;
+            move_.y = 0;
+            isGround_ = true;
+        }
+    }
+
+	transform_.translate += Mat4x4::TransFormNormal(pCamera_->GetWorldMatrix(), move_);
 
     model_->SetScale(transform_.scale);
     model_->SetRotate(transform_.rotate);
