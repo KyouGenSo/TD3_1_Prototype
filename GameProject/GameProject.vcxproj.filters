@@ -16,6 +16,9 @@
     <Filter Include="UI">
       <UniqueIdentifier>{eb01988a-7f67-483a-809a-ebd787d142b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\math">
+      <UniqueIdentifier>{4cb49353-5ca4-492b-bfc7-5e4c2b60e1b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyGame.cpp">
@@ -31,6 +34,9 @@
     <ClCompile Include="UI\UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\math\NiVec2.cpp">
+      <Filter>UI\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGame.h">
@@ -43,6 +49,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="UI\UI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\math\NiVec2.h">
+      <Filter>UI\math</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ComponentData.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIEnum.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
