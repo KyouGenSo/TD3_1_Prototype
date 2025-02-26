@@ -1,6 +1,8 @@
 ﻿#include "UI.h"
 
 #include <stdexcept> // runtime_error
+#include "SpriteBasic.h"
+#include "Sprite.h"
 
 
 UI_Input UI::input_ = UI_Input();
@@ -39,6 +41,10 @@ void UI::DrawUI()
 {
     CheckValid_DrawUI();
 
+    // 描画前処理
+    SpriteBasic::GetInstance()->SetCommonRenderSetting();
+
+
     // 確認用フラグを倒す
     isBeginFrame_ = false;
 }
@@ -52,23 +58,44 @@ void UI::NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 bool UI::Button(const std::string& _id, const std::string& _textureName, const NiVec2& _leftTop, const NiVec2& _size)
 {
     auto& buttonImage = buttonImages_[_id];
-    bool isPressPre = buttonImage.isPress;
+    bool isTrigger = false;
+    bool isHover = false;
+    bool isRelease = false;
+    bool isHeld = false;
 
-    JudgeClickRect(_leftTop, _size, buttonImage.isHover, buttonImage.isPress);
-    if(buttonImage.isPress && !isPressPre)
-    {
-        buttonImage.isClick = true;
-    }
-    else
-    {
-        buttonImage.isClick = false;
-    }
+    // 当たり判定
+    JudgeClickRect(_leftTop, _size, isHover, isTrigger, isRelease);
 
+    // ボタンの挙動
+    bool result = ButtonBehavior(_id, isHover, isTrigger, isRelease, isHeld);
+
+    /// ボタンのデータを更新
     buttonImage.textureName = _textureName;
     buttonImage.leftTop = _leftTop;
     buttonImage.size = _size;
+    buttonImage.isHover = isHover;
+    buttonImage.isHeld = isHeld;
 
-    return buttonImage.isClick;
+    return result;
+}
+
+bool UI::ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held)
+{
+    if(_isTrigger)
+    {
+        activeComponentID_ = _id;
+    }
+
+    if(activeComponentID_ == _id)
+    {
+        if(_isRelease)
+        {
+            activeComponentID_ = {};
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void UI::CheckValid_BeginFrame()
@@ -97,24 +124,33 @@ void UI::CheckValid_DrawUI()
     }
 }
 
-void UI::JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isPress)
+void UI::JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isTrigger, bool& _isRelease)
 {
     if(_leftTop.x <= input_.GetMousePos().x && input_.GetMousePos().x <= _leftTop.x + _size.x &&
         _leftTop.y <= input_.GetMousePos().y && input_.GetMousePos().y <= _leftTop.y + _size.y)
     {
         _isHover = true;
-        if(input_.PressLeft())
+        if(input_.TriggerLeft())
         {
-            _isPress = true;
+            _isTrigger = true;
         }
         else
         {
-            _isPress = false;
+            _isTrigger = false;
+        }
+
+        if(input_.ReleaseLeft())
+        {
+            _isRelease = true;
+        }
+        else
+        {
+            _isRelease = false;
         }
     }
     else
     {
         _isHover = false;
-        _isPress = false;
+        _isTrigger = false;
     }
 }

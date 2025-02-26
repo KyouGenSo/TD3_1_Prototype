@@ -59,12 +59,20 @@ private: /// メンバ変数
     static NiVec2 size_;
 
 
+    // アクティブコンポーネントID
+    static std::string activeComponentID_;
+
+
     // コンポーネントのリスト
     static std::unordered_map<std::string, ButtonImageData> buttonImages_;
 
 
 private:
+    static bool ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held);
+
+
+private:
     static void CheckValid_BeginFrame();
     static void CheckValid_DrawUI();
-    static void JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isPress);
+    static void JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isTrigger, bool& _isRelease);
 };

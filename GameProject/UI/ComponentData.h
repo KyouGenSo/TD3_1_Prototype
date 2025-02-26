@@ -24,13 +24,14 @@ struct FlexContainerData
 };
 
 
-// フレックスアイテムのデータ
+// ボタンデータ
 struct ButtonImageData
 {
     std::string textureName;
     NiVec2 leftTop;
     NiVec2 size;
+
+    /// ボタンの状態
+    bool isHeld;
     bool isHover;
-    bool isPress;
-    bool isClick;
 };
