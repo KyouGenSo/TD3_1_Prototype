@@ -172,6 +172,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UI\math\NiVec2.cpp" />
     <ClCompile Include="UI\UI.cpp" />
+    <ClCompile Include="UI\UI_Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGame.h" />
@@ -181,6 +182,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="UI\math\NiVec2.h" />
     <ClInclude Include="UI\UI.h" />
     <ClInclude Include="UI\UIEnum.h" />
+    <ClInclude Include="UI\UI_Input.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

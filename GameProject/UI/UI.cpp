@@ -2,9 +2,10 @@
 
 #include <stdexcept> // runtime_error
 
+
+
 bool UI::isInitialized_ = false;
 bool UI::isBeginFrame_ = false;
-bool UI::isDrawUI_ = false;
 NiVec2 UI::leftTop_ = { 0, 0 };
 NiVec2 UI::size_ = { 0, 0 };
 std::unordered_map<std::string, ButtonImageData> UI::buttonImages_ = std::unordered_map<std::string, ButtonImageData>();
@@ -36,6 +37,14 @@ void UI::DrawUI()
 
     isBeginFrame_ = false;
 }
+
+void UI::NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+
+}
+
+
+
 
 void UI::CheckValid_BeginFrame()
 {

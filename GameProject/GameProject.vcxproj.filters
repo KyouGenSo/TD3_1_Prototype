@@ -19,6 +19,9 @@
     <Filter Include="UI\math">
       <UniqueIdentifier>{4cb49353-5ca4-492b-bfc7-5e4c2b60e1b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\type">
+      <UniqueIdentifier>{cd5fecf9-1bd5-485d-8082-7ff306084b93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyGame.cpp">
@@ -37,6 +40,9 @@
     <ClCompile Include="UI\math\NiVec2.cpp">
       <Filter>UI\math</Filter>
     </ClCompile>
+    <ClCompile Include="UI\UI_Input.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGame.h">
@@ -54,11 +60,14 @@
     <ClInclude Include="UI\math\NiVec2.h">
       <Filter>UI\math</Filter>
     </ClInclude>
-    <ClInclude Include="UI\ComponentData.h">
+    <ClInclude Include="UI\UI_Input.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="UI\ComponentData.h">
+      <Filter>UI\type</Filter>
+    </ClInclude>
     <ClInclude Include="UI\UIEnum.h">
-      <Filter>UI</Filter>
+      <Filter>UI\type</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

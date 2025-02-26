@@ -2,8 +2,12 @@
 
 #include "ComponentData.h" // ComponentData
 #include "math/NiVec2.h" // NiVec2
+#include "UI_Input.h" // UI_Input
 #include <unordered_map> // unordered_map
 #include <string> // string
+#include <minwindef.h> // HWND
+#include <windef.h> // UINT, WPARAM, LPARAM
+
 
 /// UIクラス
 class UI
@@ -30,12 +34,18 @@ public: /// 一般
     static void DrawUI();
 
 
+    // ウィンドウプロシージャハンドラ
+    // 注意：ImGuiのハンドラより先に呼び出してください。
+    void NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 private:
 
     // 確認用フラグ
     static bool isInitialized_;
     static bool isBeginFrame_;
 
+    // 入力データ
+    static UI_Input input_;
 
     // ウィンドウのサイズ
     static NiVec2 leftTop_;
