@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
-// ƒRƒ“ƒ|[ƒlƒ“ƒgƒf[ƒ^
-// ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìƒf[ƒ^‚ğ•Û‚·‚é\‘¢‘Ì‚Å‚·B
-// ‚±‚Ì\‘¢‘Ì‚ÍUIƒNƒ‰ƒX‚Ì“à•”‚Åg—p‚³‚ê‚Ü‚·B
+// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿
+// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒ‡ãƒ¼ã‚¿ã‚’ä¿æŒã™ã‚‹æ§‹é€ ä½“ã§ã™ã€‚
+// ã“ã®æ§‹é€ ä½“ã¯UIã‚¯ãƒ©ã‚¹ã®å†…éƒ¨ã§ä½¿ç”¨ã•ã‚Œã¾ã™ã€‚
 
 
 #include <string> // string
@@ -10,7 +10,7 @@
 #include "UIEnum.h" // enums
 
 
-// ƒtƒŒƒbƒNƒXƒRƒ“ƒeƒi‚Ìƒf[ƒ^
+// ãƒ•ãƒ¬ãƒƒã‚¯ã‚¹ã‚³ãƒ³ãƒ†ãƒŠã®ãƒ‡ãƒ¼ã‚¿
 struct FlexContainerData
 {
     NiVec2 leftTop;
@@ -24,10 +24,13 @@ struct FlexContainerData
 };
 
 
-// ƒtƒŒƒbƒNƒXƒAƒCƒeƒ€‚Ìƒf[ƒ^
+// ãƒ•ãƒ¬ãƒƒã‚¯ã‚¹ã‚¢ã‚¤ãƒ†ãƒ ã®ãƒ‡ãƒ¼ã‚¿
 struct ButtonImageData
 {
     std::string textureName;
     NiVec2 leftTop;
     NiVec2 size;
+    bool isHover;
+    bool isPress;
+    bool isClick;
 };

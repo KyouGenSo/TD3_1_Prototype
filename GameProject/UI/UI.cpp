@@ -1,9 +1,9 @@
-#include "UI.h"
+ï»¿#include "UI.h"
 
 #include <stdexcept> // runtime_error
 
 
-
+UI_Input UI::input_ = UI_Input();
 bool UI::isInitialized_ = false;
 bool UI::isBeginFrame_ = false;
 NiVec2 UI::leftTop_ = { 0, 0 };
@@ -16,6 +16,8 @@ void UI::Initialize(const NiVec2& _size, const NiVec2& _leftTop)
     leftTop_ = _leftTop;
     size_ = _size;
 
+    input_.Initialize();
+
     return;
 }
 
@@ -24,8 +26,10 @@ void UI::BeginFrame()
 {
     CheckValid_BeginFrame();
 
+    // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿æ›´æ–°
+    input_.Update();
 
-
+    // ç¢ºèªç”¨ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
     isBeginFrame_ = true;
 
     return;
@@ -35,27 +39,48 @@ void UI::DrawUI()
 {
     CheckValid_DrawUI();
 
+    // ç¢ºèªç”¨ãƒ•ãƒ©ã‚°ã‚’å€’ã™
     isBeginFrame_ = false;
 }
 
 void UI::NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-
+    input_.WndProcHandler(hWnd, msg, wParam, lParam);
+    return;
 }
 
+bool UI::Button(const std::string& _id, const std::string& _textureName, const NiVec2& _leftTop, const NiVec2& _size)
+{
+    auto& buttonImage = buttonImages_[_id];
+    bool isPressPre = buttonImage.isPress;
 
+    JudgeClickRect(_leftTop, _size, buttonImage.isHover, buttonImage.isPress);
+    if(buttonImage.isPress && !isPressPre)
+    {
+        buttonImage.isClick = true;
+    }
+    else
+    {
+        buttonImage.isClick = false;
+    }
 
+    buttonImage.textureName = _textureName;
+    buttonImage.leftTop = _leftTop;
+    buttonImage.size = _size;
+
+    return buttonImage.isClick;
+}
 
 void UI::CheckValid_BeginFrame()
 {
     if(!isInitialized_)
     {
-        throw std::runtime_error("UIƒNƒ‰ƒX‚ª‰Šú‰»‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB");
+        throw std::runtime_error("UIã‚¯ãƒ©ã‚¹ãŒåˆæœŸåŒ–ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚");
     }
 
     if(isBeginFrame_)
     {
-        throw std::runtime_error("BeginFrame‚ª˜A‘±‚ÅŒÄ‚Ño‚³‚ê‚Ä‚¢‚Ü‚·B");
+        throw std::runtime_error("BeginFrameãŒé€£ç¶šã§å‘¼ã³å‡ºã•ã‚Œã¦ã„ã¾ã™ã€‚");
     }
 }
 
@@ -63,11 +88,33 @@ void UI::CheckValid_DrawUI()
 {
     if(!isInitialized_)
     {
-        throw std::runtime_error("UIƒNƒ‰ƒX‚ª‰Šú‰»‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB");
+        throw std::runtime_error("UIã‚¯ãƒ©ã‚¹ãŒåˆæœŸåŒ–ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚");
     }
 
     if(!isBeginFrame_)
     {
-        throw std::runtime_error("BeginFrame‚ªŒÄ‚Ño‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB");
+        throw std::runtime_error("BeginFrameãŒå‘¼ã³å‡ºã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚");
+    }
+}
+
+void UI::JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isPress)
+{
+    if(_leftTop.x <= input_.GetMousePos().x && input_.GetMousePos().x <= _leftTop.x + _size.x &&
+        _leftTop.y <= input_.GetMousePos().y && input_.GetMousePos().y <= _leftTop.y + _size.y)
+    {
+        _isHover = true;
+        if(input_.PressLeft())
+        {
+            _isPress = true;
+        }
+        else
+        {
+            _isPress = false;
+        }
+    }
+    else
+    {
+        _isHover = false;
+        _isPress = false;
     }
 }

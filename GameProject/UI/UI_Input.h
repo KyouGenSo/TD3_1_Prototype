@@ -1,10 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 #include "math/NiVec2.h" // NiVec2
-#include <minwindef.h>
-#include <windef.h>
 
-/// ƒ}ƒEƒXƒf[ƒ^
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h> // HWND, UINT, WPARAM, LPARAM
+
+/// ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿
 struct MouseData
 {
     NiVec2 pos;
@@ -17,46 +18,55 @@ struct MouseData
 };
 
 
-/// UI“ü—ÍƒNƒ‰ƒX
+/// UIå…¥åŠ›ã‚¯ãƒ©ã‚¹
 class UI_Input
 {
-public: /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
+public: /// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     UI_Input() = default;
     ~UI_Input() = default;
 
 
-public: /// ˆê”Ê
+public: /// ä¸€èˆ¬
 
-    // ‰Šú‰»
+    // åˆæœŸåŒ–
     void Initialize();
 
-    // “ü—Íƒf[ƒ^XV
-    // ƒf[ƒ^‚ğæ“¾‚·‚é‘O‚ÉŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢B
+    // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿æ›´æ–°
+    // ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹å‰ã«å‘¼ã³å‡ºã—ã¦ãã ã•ã„ã€‚
     void Update();
 
-    // ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒƒnƒ“ƒhƒ‰
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ãƒãƒ³ãƒ‰ãƒ©
     void WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
-public: // “ü—Íƒf[ƒ^æ“¾
+public: // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å–å¾—
 
-    // ¶ƒNƒŠƒbƒNƒvƒŒƒX
+    // å·¦ã‚¯ãƒªãƒƒã‚¯ãƒ—ãƒ¬ã‚¹
     bool PressLeft() const { return mouseData_.isLeft; }
-    // ¶ƒNƒŠƒbƒNƒgƒŠƒK[
+    // å·¦ã‚¯ãƒªãƒƒã‚¯ãƒˆãƒªã‚¬ãƒ¼
     bool TriggerLeft() const { return mouseData_.isLeft && !mouseData_.isLeftPre; }
+    // å·¦ã‚¯ãƒªãƒƒã‚¯ãƒªãƒªãƒ¼ã‚¹
+    bool ReleaseLeft() const { return !mouseData_.isLeft && mouseData_.isLeftPre; }
 
-    // ‰EƒNƒŠƒbƒNƒvƒŒƒX
+    // å³ã‚¯ãƒªãƒƒã‚¯ãƒ—ãƒ¬ã‚¹
     bool PressRight() const { return mouseData_.isRight; }
-    // ‰EƒNƒŠƒbƒNƒgƒŠƒK[
+    // å³ã‚¯ãƒªãƒƒã‚¯ãƒˆãƒªã‚¬ãƒ¼
     bool TriggerRight() const { return mouseData_.isRight && !mouseData_.isRightPre; }
+    // å³ã‚¯ãƒªãƒƒã‚¯ãƒªãƒªãƒ¼ã‚¹
+    bool ReleaseRight() const { return !mouseData_.isRight && mouseData_.isRightPre; }
 
-    // ’†ƒNƒŠƒbƒNƒvƒŒƒX
+    // ä¸­ã‚¯ãƒªãƒƒã‚¯ãƒ—ãƒ¬ã‚¹
     bool PressMiddle() const { return mouseData_.isMiddle; }
-    // ’†ƒNƒŠƒbƒNƒgƒŠƒK[
+    // ä¸­ã‚¯ãƒªãƒƒã‚¯ãƒˆãƒªã‚¬ãƒ¼
     bool TriggerMiddle() const { return mouseData_.isMiddle && !mouseData_.isMiddlePre; }
+    // ä¸­ã‚¯ãƒªãƒƒã‚¯ãƒªãƒªãƒ¼ã‚¹
+    bool ReleaseMiddle() const { return !mouseData_.isMiddle && mouseData_.isMiddlePre; }
+
+    // ãƒã‚¦ã‚¹åº§æ¨™
+    NiVec2 GetMousePos() const { return mouseData_.pos; }
 
 
 private:
-    // ƒ}ƒEƒXƒf[ƒ^
+    // ãƒã‚¦ã‚¹ãƒ‡ãƒ¼ã‚¿
     MouseData mouseData_;
 };

@@ -1,4 +1,4 @@
-#include "UI_Input.h"
+ï»¿#include "UI_Input.h"
 
 #include <WinUser.h> // WM_LBUTTONDOWN, WM_LBUTTONUP, WM_RBUTTONDOWN, WM_RBUTTONUP, WM_MBUTTONDOWN, WM_MBUTTONUP
 
@@ -9,15 +9,15 @@ void UI_Input::Initialize()
 
 void UI_Input::Update()
 {
-    /// ‘OƒtƒŒ[ƒ€‚Ìó‘Ô‚ğ•Û‘¶
+    /// å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®çŠ¶æ…‹ã‚’ä¿å­˜
     mouseData_.isLeftPre = mouseData_.isLeft;
     mouseData_.isRightPre = mouseData_.isRight;
     mouseData_.isMiddlePre = mouseData_.isMiddle;
 
-    /// ƒ}ƒEƒX‚ÌÀ•W‚ğæ“¾
+    /// ãƒã‚¦ã‚¹ã®åº§æ¨™ã‚’å–å¾—
     POINT point;
-    GetCursorPos(&point); // ƒ}ƒEƒX‚ÌÀ•W‚ğæ“¾
-    mouseData_.pos = { point.x, point.y };
+    GetCursorPos(&point); // ãƒã‚¦ã‚¹ã®åº§æ¨™ã‚’å–å¾—
+    mouseData_.pos = NiVec2(static_cast<float>(point.x), static_cast<float>(point.y));
 }
 
 void UI_Input::WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

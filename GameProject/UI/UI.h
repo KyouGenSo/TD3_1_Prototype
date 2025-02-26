@@ -1,62 +1,70 @@
-#pragma once
+ï»¿#pragma once
 
 #include "ComponentData.h" // ComponentData
 #include "math/NiVec2.h" // NiVec2
 #include "UI_Input.h" // UI_Input
 #include <unordered_map> // unordered_map
 #include <string> // string
-#include <minwindef.h> // HWND
-#include <windef.h> // UINT, WPARAM, LPARAM
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h> // HWND, UINT, WPARAM, LPARAM
 
 
-/// UIƒNƒ‰ƒX
+/// UIã‚¯ãƒ©ã‚¹
 class UI
 {
-public: /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
+public: /// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
     UI() = default;
     ~UI() = default;
 
 
-public: /// ˆê”Ê
+public: /// ä¸€èˆ¬
 
-    // ƒ‹[ƒgƒEƒBƒ“ƒhƒE‚Ì‰Šú‰»
-    // ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚Ì¶ãÀ•W‚ÆƒTƒCƒY‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B
+    // ãƒ«ãƒ¼ãƒˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®åˆæœŸåŒ–
+    // ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®å·¦ä¸Šåº§æ¨™ã¨ã‚µã‚¤ã‚ºã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
     static void Initialize(const NiVec2& _size, const NiVec2& _leftTop = {0, 0});
 
 
-    // ƒtƒŒ[ƒ€‚²‚Æ‚Ì‰Šú‰»ˆ—
-    // UIƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’Ç‰Á‚·‚é‘O‚ÉŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢B
+    // ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã®åˆæœŸåŒ–å‡¦ç†
+    // UIã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¿½åŠ ã™ã‚‹å‰ã«å‘¼ã³å‡ºã—ã¦ãã ã•ã„ã€‚
     static void BeginFrame();
 
 
-    // UI‚ÌXV‹y‚Ñ•`‰æ
-    // ‚±‚ÌŠÖ”‚ğŒÄ‚Ño‚µ‚½‚çABeginFrame()‚ğŒÄ‚Ño‚·‚Ü‚ÅUIƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’Ç‰Á‚Í”½‰f‚³‚ê‚Ü‚¹‚ñB
+    // UIã®æ›´æ–°åŠã³æç”»
+    // ã“ã®é–¢æ•°ã‚’å‘¼ã³å‡ºã—ãŸã‚‰ã€BeginFrame()ã‚’å‘¼ã³å‡ºã™ã¾ã§UIã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®è¿½åŠ ã¯åæ˜ ã•ã‚Œã¾ã›ã‚“ã€‚
     static void DrawUI();
 
 
-    // ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒƒnƒ“ƒhƒ‰
-    // ’ˆÓFImGui‚Ìƒnƒ“ƒhƒ‰‚æ‚èæ‚ÉŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢B
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ãƒãƒ³ãƒ‰ãƒ©
+    // æ³¨æ„ï¼šImGuiã®ãƒãƒ³ãƒ‰ãƒ©ã‚ˆã‚Šå…ˆã«å‘¼ã³å‡ºã—ã¦ãã ã•ã„ã€‚
     void NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-private:
 
-    // Šm”F—pƒtƒ‰ƒO
+public: /// UIã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®è¿½åŠ 
+    // ãƒœã‚¿ãƒ³ã®è¿½åŠ 
+    // ãƒœã‚¿ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£åã€å·¦ä¸Šåº§æ¨™ã€ã‚µã‚¤ã‚ºã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
+    static bool Button(const std::string& _id, const std::string& _textureName, const NiVec2& _leftTop, const NiVec2& _size);
+
+
+private: /// ãƒ¡ãƒ³ãƒå¤‰æ•°
+
+    // ç¢ºèªç”¨ãƒ•ãƒ©ã‚°
     static bool isInitialized_;
     static bool isBeginFrame_;
 
-    // “ü—Íƒf[ƒ^
+    // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿
     static UI_Input input_;
 
-    // ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚º
     static NiVec2 leftTop_;
     static NiVec2 size_;
 
 
-    // ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌƒŠƒXƒg
+    // ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ãƒªã‚¹ãƒˆ
     static std::unordered_map<std::string, ButtonImageData> buttonImages_;
 
 
 private:
     static void CheckValid_BeginFrame();
     static void CheckValid_DrawUI();
+    static void JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isPress);
 };

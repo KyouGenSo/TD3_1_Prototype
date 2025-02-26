@@ -1,7 +1,7 @@
 // Copyright © 2024 Souto-Naitou. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-#include "Vector2.h"
+#include "NiVec2.h"
 
 #include <cmath>
 

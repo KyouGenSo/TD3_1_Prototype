@@ -1,59 +1,59 @@
-#pragma once
+ï»¿#pragma once
 
-// UI—p—ñ‹“‘Ì
-// UIƒNƒ‰ƒX‚Åg—p‚·‚é—ñ‹“‘Ì‚ğ’è‹`‚µ‚Ü‚·B
-// ‚±‚Ì—ñ‹“‘Ì‚ÍUIƒNƒ‰ƒX‚Ì“à•”‚Åg—p‚³‚ê‚Ü‚·B
+// UIç”¨åˆ—æŒ™ä½“
+// UIã‚¯ãƒ©ã‚¹ã§ä½¿ç”¨ã™ã‚‹åˆ—æŒ™ä½“ã‚’å®šç¾©ã—ã¾ã™ã€‚
+// ã“ã®åˆ—æŒ™ä½“ã¯UIã‚¯ãƒ©ã‚¹ã®å†…éƒ¨ã§ä½¿ç”¨ã•ã‚Œã¾ã™ã€‚
 
 
 /// - - - - - 
-/// ƒŒƒCƒAƒEƒg
+/// ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 /// - - - - - -
 
 
-// ƒtƒŒƒbƒNƒXƒRƒ“ƒeƒi‚Ì•ûŒü
+// ãƒ•ãƒ¬ãƒƒã‚¯ã‚¹ã‚³ãƒ³ãƒ†ãƒŠã®æ–¹å‘
 enum class NiUI_Flex_Direction
 {
-    Row, // ‰¡
-    Column, // c
+    Row, // æ¨ª
+    Column, // ç¸¦
 };
 
-// ƒtƒŒƒbƒNƒXƒRƒ“ƒeƒi‚Ì”z’u
+// ãƒ•ãƒ¬ãƒƒã‚¯ã‚¹ã‚³ãƒ³ãƒ†ãƒŠã®é…ç½®
 enum class NiUI_Flex_JustifyContent
 {
-    Start, // ŠJn
-    End, // I—¹
-    Center, // ’†‰›
-    SpaceBetween, // ŠÔŠu‚ğ‹Ï“™‚É
-    SpaceAround, // ŠÔŠu‚ğ‹Ï“™‚É
+    Start, // é–‹å§‹
+    End, // çµ‚äº†
+    Center, // ä¸­å¤®
+    SpaceBetween, // é–“éš”ã‚’å‡ç­‰ã«
+    SpaceAround, // é–“éš”ã‚’å‡ç­‰ã«
 };
 
-// ƒtƒŒƒbƒNƒXƒRƒ“ƒeƒi‚ÌƒAƒ‰ƒCƒ“ƒƒ“ƒg
+// ãƒ•ãƒ¬ãƒƒã‚¯ã‚¹ã‚³ãƒ³ãƒ†ãƒŠã®ã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 enum class NiUI_Flex_AlignItems
 {
-    Start, // ŠJn
-    End, // I—¹
-    Center, // ’†‰›
+    Start, // é–‹å§‹
+    End, // çµ‚äº†
+    Center, // ä¸­å¤®
 };
 
-// ƒtƒŒƒbƒNƒXƒAƒCƒeƒ€‚ğ•¡”s‚É‚µ‚½‚Æ‚«
+// ãƒ•ãƒ¬ãƒƒã‚¯ã‚¹ã‚¢ã‚¤ãƒ†ãƒ ã‚’è¤‡æ•°è¡Œã«ã—ãŸã¨ã
 enum class NiUI_Flex_AlignContent
 {
-    Start, // ŠJn
-    End, // I—¹
-    Center, // ’†‰›
-    SpaceBetween, // ŠÔŠu‚ğ‹Ï“™‚É
-    SpaceAround, // ŠÔŠu‚ğ‹Ï“™‚É
+    Start, // é–‹å§‹
+    End, // çµ‚äº†
+    Center, // ä¸­å¤®
+    SpaceBetween, // é–“éš”ã‚’å‡ç­‰ã«
+    SpaceAround, // é–“éš”ã‚’å‡ç­‰ã«
 };
 
 
 /// - - - - - - - - - - -
-/// ƒRƒ“ƒ|[ƒlƒ“ƒgEƒXƒe[ƒg
+/// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãƒ»ã‚¹ãƒ†ãƒ¼ãƒˆ
 /// - - - - - - - - - - -
 
-// ƒ{ƒ^ƒ“‚Ìó‘Ô
+// ãƒœã‚¿ãƒ³ã®çŠ¶æ…‹
 enum class NiUI_ButtonState
 {
-    None, // ‰½‚à‚È‚¢
-    Hover, // ƒzƒo[
-    Press, // ‰Ÿ‰º
+    None, // ä½•ã‚‚ãªã„
+    Hover, // ãƒ›ãƒãƒ¼
+    Press, // æŠ¼ä¸‹
 };
