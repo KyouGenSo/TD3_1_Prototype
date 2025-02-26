@@ -85,6 +85,9 @@ void MyGame::Draw()
 	// シーンの描画
 	SceneManager::GetInstance()->Draw();
 
+    // UIの描画
+
+
 	ParticleManager::GetInstance()->Draw();
 
 	Draw2D::GetInstance()->Draw();
