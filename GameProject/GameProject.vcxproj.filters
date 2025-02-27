@@ -41,8 +41,8 @@
       <Filter>UI\math</Filter>
     </ClCompile>
     <ClCompile Include="UI\UI_Input.cpp">
-		<Filter>UI</Filter>
-	</ClCompile>
+      <Filter>UI</Filter>
+    </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -50,6 +50,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="FollowCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,7 +80,7 @@
     </ClInclude>
     <ClInclude Include="UI\UIEnum.h">
       <Filter>UI\type</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -85,6 +88,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="FollowCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

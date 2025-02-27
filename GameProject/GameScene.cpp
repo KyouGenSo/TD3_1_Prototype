@@ -10,6 +10,10 @@ void GameScene::Initialize() {
     player_ = std::make_unique<Player>();
     player_->Initialize();
 
+	ModelManager::GetInstance()->LoadModel("cube.gltf");
+	enemy_ = std::make_unique<Enemy>();
+	enemy_->Initialize();
+
     camera_ = std::make_unique<FollowCamera>();
     camera_->Initialize();
     camera_->SetTarget(&player_->GetTransform());
@@ -17,12 +21,14 @@ void GameScene::Initialize() {
 
 void GameScene::Finalize() {
     player_->Finalize();
+	enemy_->Finalize();
     camera_->Finalize();
 }
 
 void GameScene::Update() {
     camera_->Update();
     player_->Update();
+	enemy_->Update();
 }
 
 void GameScene::Draw() {
@@ -34,6 +40,7 @@ void GameScene::Draw() {
     // 3Dモデル共通描画設定
     Object3dBasic::GetInstance()->SetCommonRenderSetting();
     player_->Draw();
+	enemy_->Draw();
 
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定

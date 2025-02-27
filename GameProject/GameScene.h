@@ -2,9 +2,11 @@
 #include "BaseScene.h"
 #include "FollowCamera.h"
 #include "Player.h"
+#include "Enemy.h"
 
 class GameScene : public BaseScene{
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<Enemy>enemy_;
 	std::unique_ptr<FollowCamera> camera_;
 public:
 	void Initialize() override;
