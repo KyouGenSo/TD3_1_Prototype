@@ -14,8 +14,12 @@ void Collider::Update() {
     }
 }
 
-void Collider::OnCollision() const {
-    onCollision_();
+void Collider::OnCollision(Object* pObject) const {
+    onCollision_(pObject);
+}
+
+void Collider::OnCollisionTrigger(Object* pObject) const {
+    onCollisionTrigger_(pObject);
 }
 
 Transform& Collider::GetTransform() const {
