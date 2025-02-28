@@ -73,3 +73,11 @@ void Player::ImGui() {
     ImGui::End();
 }
 
+bool Player::IsDead() {
+    return false;
+}
+
+void Player::OnCollision(const Object* pObject) {
+	Object::OnCollision(pObject);
+}
+

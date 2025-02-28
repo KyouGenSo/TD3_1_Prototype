@@ -1,11 +1,14 @@
 #pragma once
 #include "BaseScene.h"
+#include "CollisionManager.h"
 #include "FollowCamera.h"
 #include "Player.h"
 
 class GameScene : public BaseScene{
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<FollowCamera> camera_;
+
+	CollisionManager* pCollisionManager_ = nullptr;
 public:
 	void Initialize() override;
 	void Finalize() override;
