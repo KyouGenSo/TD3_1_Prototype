@@ -74,10 +74,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(SolutionDir)..\Generated\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\outputs\$(Configuration)\</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>$(SolutionDir)..\Generated\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\outputs\$(Configuration)\</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -166,10 +168,16 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGame.cpp" />
+    <ClCompile Include="NiUI\Derived\Drawer.cpp" />
+    <ClCompile Include="NiUI\Interface\NiUI_IDrawer.cpp" />
+    <ClCompile Include="NiUI\Math\NiVec2.cpp" />
+    <ClCompile Include="NiUI\NiUI.cpp" />
+    <ClCompile Include="NiUI\NiUI_Input.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SingletonFinalizer.cpp" />
@@ -182,6 +190,17 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h" />
+    <ClInclude Include="FollowCamera.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="MyGame.h" />
+    <ClInclude Include="NiUI\Derived\Drawer.h" />
+    <ClInclude Include="NiUI\Interface\NiUI_IDrawer.h" />
+    <ClInclude Include="NiUI\Math\NiVec2.h" />
+    <ClInclude Include="NiUI\NiUI.h" />
+    <ClInclude Include="NiUI\NiUI_Input.h" />
+    <ClInclude Include="NiUI\Type\NiUI_ComponentData.h" />
+    <ClInclude Include="NiUI\Type\NiUI_Enum.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="Singleton.h" />
