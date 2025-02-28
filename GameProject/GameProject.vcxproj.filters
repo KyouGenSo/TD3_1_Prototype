@@ -31,27 +31,33 @@
     <Filter Include="NiUI\Derived">
       <UniqueIdentifier>{704d2649-6cdf-4e01-a4d9-5ee12955b7fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyGame">
+      <UniqueIdentifier>{60520dc7-409e-4a32-a37a-2419a6e465c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{6d267460-858b-4c80-8359-b440dd875bf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem">
+      <UniqueIdentifier>{aa991427-bf28-4b43-b4df-4ebf171ee836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\FollowCamera">
+      <UniqueIdentifier>{cd32d73f-14f0-4ccc-8d51-76b53ff090b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\ConcreteSceneFactory">
+      <UniqueIdentifier>{3da580e9-00df-4608-980b-2b98884a15c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{036e23fc-c5a8-4166-919a-aacea8f2249d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{4bb56d39-90b3-4d7b-99c8-553ffbfd5511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DeltaTimeManager">
+      <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyGame.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="GameScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FollowCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="NiUI\NiUI.cpp">
       <Filter>NiUI</Filter>
     </ClCompile>
@@ -67,26 +73,29 @@
     <ClCompile Include="NiUI\Derived\Drawer.cpp">
       <Filter>NiUI\Derived</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MyGame.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FollowCamera.cpp">
+      <Filter>GameSystem\FollowCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFactory.cpp">
+      <Filter>Scene\ConcreteSceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp">
+      <Filter>DeltaTimeManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyGame.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="FollowCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="NiUI\NiUI.h">
       <Filter>NiUI</Filter>
     </ClInclude>
@@ -107,6 +116,27 @@
     </ClInclude>
     <ClInclude Include="NiUI\Derived\Drawer.h">
       <Filter>NiUI\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MyGame.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowCamera.h">
+      <Filter>GameSystem\FollowCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneFactory.h">
+      <Filter>Scene\ConcreteSceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h">
+      <Filter>DeltaTimeManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
