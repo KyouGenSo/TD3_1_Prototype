@@ -13,79 +13,130 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{eb01988a-7f67-483a-809a-ebd787d142b5}</UniqueIdentifier>
+    <Filter Include="NiUI">
+      <UniqueIdentifier>{344f19be-d96f-4824-b7fa-e251f8bd2248}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\math">
-      <UniqueIdentifier>{4cb49353-5ca4-492b-bfc7-5e4c2b60e1b8}</UniqueIdentifier>
+    <Filter Include="NiUI\Math">
+      <UniqueIdentifier>{6ea7fd46-c530-4bd2-a94f-f1c433566ad7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\type">
-      <UniqueIdentifier>{cd5fecf9-1bd5-485d-8082-7ff306084b93}</UniqueIdentifier>
+    <Filter Include="NiUI\Input">
+      <UniqueIdentifier>{eecdb033-f978-4c58-83f4-f644a3c1e309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NiUI\Interface">
+      <UniqueIdentifier>{53d175c0-5fcd-431c-a7c5-b736f277efc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NiUI\Type">
+      <UniqueIdentifier>{968f9e6c-5edc-46d2-85c9-93fe08c38614}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NiUI\Derived">
+      <UniqueIdentifier>{704d2649-6cdf-4e01-a4d9-5ee12955b7fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyGame">
+      <UniqueIdentifier>{60520dc7-409e-4a32-a37a-2419a6e465c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{6d267460-858b-4c80-8359-b440dd875bf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem">
+      <UniqueIdentifier>{aa991427-bf28-4b43-b4df-4ebf171ee836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\FollowCamera">
+      <UniqueIdentifier>{cd32d73f-14f0-4ccc-8d51-76b53ff090b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\ConcreteSceneFactory">
+      <UniqueIdentifier>{3da580e9-00df-4608-980b-2b98884a15c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{036e23fc-c5a8-4166-919a-aacea8f2249d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{4bb56d39-90b3-4d7b-99c8-553ffbfd5511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DeltaTimeManager">
+      <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyGame.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="UI\UI.cpp">
-      <Filter>UI</Filter>
+    <ClCompile Include="NiUI\NiUI.cpp">
+      <Filter>NiUI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\math\NiVec2.cpp">
-      <Filter>UI\math</Filter>
+    <ClCompile Include="NiUI\Interface\NiUI_IDrawer.cpp">
+      <Filter>NiUI\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="UI\UI_Input.cpp">
-		<Filter>UI</Filter>
-	</ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="NiUI\NiUI_Input.cpp">
+      <Filter>NiUI\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Math\NiVec2.cpp">
+      <Filter>NiUI\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Derived\Drawer.cpp">
+      <Filter>NiUI\Derived</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MyGame.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="FollowCamera.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>GameSystem\FollowCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFactory.cpp">
+      <Filter>Scene\ConcreteSceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp">
+      <Filter>DeltaTimeManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyGame.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="NiUI\NiUI.h">
+      <Filter>NiUI</Filter>
     </ClInclude>
-    <ClInclude Include="SceneFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="NiUI\Type\NiUI_ComponentData.h">
+      <Filter>NiUI\Type</Filter>
     </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="NiUI\Type\NiUI_Enum.h">
+      <Filter>NiUI\Type</Filter>
     </ClInclude>
-    <ClInclude Include="UI\UI.h">
-      <Filter>UI</Filter>
+    <ClInclude Include="NiUI\Interface\NiUI_IDrawer.h">
+      <Filter>NiUI\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="UI\math\NiVec2.h">
-      <Filter>UI\math</Filter>
+    <ClInclude Include="NiUI\NiUI_Input.h">
+      <Filter>NiUI\Input</Filter>
     </ClInclude>
-    <ClInclude Include="UI\UI_Input.h">
-      <Filter>UI</Filter>
+    <ClInclude Include="NiUI\Math\NiVec2.h">
+      <Filter>NiUI\Math</Filter>
     </ClInclude>
-    <ClInclude Include="UI\ComponentData.h">
-      <Filter>UI\type</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\UIEnum.h">
-      <Filter>UI\type</Filter>
-	</ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="NiUI\Derived\Drawer.h">
+      <Filter>NiUI\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MyGame.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="FollowCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>GameSystem\FollowCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneFactory.h">
+      <Filter>Scene\ConcreteSceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h">
+      <Filter>DeltaTimeManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
