@@ -13,14 +13,23 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{eb01988a-7f67-483a-809a-ebd787d142b5}</UniqueIdentifier>
+    <Filter Include="NiUI">
+      <UniqueIdentifier>{344f19be-d96f-4824-b7fa-e251f8bd2248}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\math">
-      <UniqueIdentifier>{4cb49353-5ca4-492b-bfc7-5e4c2b60e1b8}</UniqueIdentifier>
+    <Filter Include="NiUI\Math">
+      <UniqueIdentifier>{6ea7fd46-c530-4bd2-a94f-f1c433566ad7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\type">
-      <UniqueIdentifier>{cd5fecf9-1bd5-485d-8082-7ff306084b93}</UniqueIdentifier>
+    <Filter Include="NiUI\Input">
+      <UniqueIdentifier>{eecdb033-f978-4c58-83f4-f644a3c1e309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NiUI\Interface">
+      <UniqueIdentifier>{53d175c0-5fcd-431c-a7c5-b736f277efc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NiUI\Type">
+      <UniqueIdentifier>{968f9e6c-5edc-46d2-85c9-93fe08c38614}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NiUI\Derived">
+      <UniqueIdentifier>{704d2649-6cdf-4e01-a4d9-5ee12955b7fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,15 +43,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="UI\UI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\math\NiVec2.cpp">
-      <Filter>UI\math</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\UI_Input.cpp">
-		<Filter>UI</Filter>
-	</ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -51,6 +51,21 @@
     </ClCompile>
     <ClCompile Include="FollowCamera.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\NiUI.cpp">
+      <Filter>NiUI</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Interface\NiUI_IDrawer.cpp">
+      <Filter>NiUI\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\NiUI_Input.cpp">
+      <Filter>NiUI\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Math\NiVec2.cpp">
+      <Filter>NiUI\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Derived\Drawer.cpp">
+      <Filter>NiUI\Derived</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,21 +78,6 @@
     <ClInclude Include="TitleScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="UI\UI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\math\NiVec2.h">
-      <Filter>UI\math</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\UI_Input.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\ComponentData.h">
-      <Filter>UI\type</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\UIEnum.h">
-      <Filter>UI\type</Filter>
-	</ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -86,6 +86,27 @@
     </ClInclude>
     <ClInclude Include="FollowCamera.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\NiUI.h">
+      <Filter>NiUI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Type\NiUI_ComponentData.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Type\NiUI_Enum.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Interface\NiUI_IDrawer.h">
+      <Filter>NiUI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\NiUI_Input.h">
+      <Filter>NiUI\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Math\NiVec2.h">
+      <Filter>NiUI\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Derived\Drawer.h">
+      <Filter>NiUI\Derived</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,9 +9,9 @@ void FollowCamera::Initialize() {
 }
 
 void FollowCamera::Update() {
-    //rotation
+    // rotation
     if(Input::GetInstance()->IsConnect()){
-	    //Joycon
+    // Joycon
     } else{
         yaw += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.1f;
     }

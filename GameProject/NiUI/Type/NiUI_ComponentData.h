@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 // コンポーネントデータ
 // コンポーネントのデータを保持する構造体です。
@@ -6,8 +6,8 @@
 
 
 #include <string> // string
-#include "math/NiVec2.h" // NiVec2
-#include "UIEnum.h" // enums
+#include "../math/NiVec2.h" // NiVec2
+#include "NiUI_Enum.h" // enums
 
 
 // フレックスコンテナのデータ

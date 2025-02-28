@@ -1,8 +1,10 @@
-﻿#pragma once
+#pragma once
 
-#include "ComponentData.h" // ComponentData
+#include "Type/NiUI_ComponentData.h" // ComponentData
 #include "math/NiVec2.h" // NiVec2
-#include "UI_Input.h" // UI_Input
+#include "NiUI_Input.h" // NiUI_Input
+#include "Interface/NiUI_IDrawer.h"
+
 #include <unordered_map> // unordered_map
 #include <string> // string
 #define WIN32_LEAN_AND_MEAN
@@ -10,11 +12,11 @@
 
 
 /// UIクラス
-class UI
+class NiUI
 {
 public: /// コンストラクタとデストラクタ
-    UI() = default;
-    ~UI() = default;
+    NiUI() = default;
+    ~NiUI() = default;
 
 
 public: /// 一般
@@ -36,13 +38,18 @@ public: /// 一般
 
     // ウィンドウプロシージャハンドラ
     // 注意：ImGuiのハンドラより先に呼び出してください。
-    void NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    static void NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
 public: /// UIコンポーネントの追加
     // ボタンの追加
     // ボタンのテクスチャ名、左上座標、サイズを指定してください。
     static bool Button(const std::string& _id, const std::string& _textureName, const NiVec2& _leftTop, const NiVec2& _size);
+
+    
+public: /// セッター
+    static void SetDrawer(IDrawer* _drawer) { drawer_ = _drawer; }
+    static void SetWindowInfo(const NiVec2& _size, const NiVec2& _leftTop) { size_ = _size; leftTop_ = _leftTop; }
 
 
 private: /// メンバ変数
@@ -52,7 +59,7 @@ private: /// メンバ変数
     static bool isBeginFrame_;
 
     // 入力データ
-    static UI_Input input_;
+    static NiUI_Input input_;
 
     // ウィンドウのサイズ
     static NiVec2 leftTop_;
@@ -67,9 +74,16 @@ private: /// メンバ変数
     static std::unordered_map<std::string, ButtonImageData> buttonImages_;
 
 
+    // 描画クラス
+    static IDrawer* drawer_;
+
+
 private:
     static bool ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held);
 
+
+private:
+    static void ButtonDataEnqueue();
 
 private:
     static void CheckValid_BeginFrame();

@@ -11,133 +11,143 @@
 #include "FrameTimer.h"
 #include "GlobalVariables.h"
 #include "Vector4.h"
+#include <NiUI/NiUI.h>
+
 
 void MyGame::Initialize()
 {
 
-	TakoFramework::Initialize();
+    TakoFramework::Initialize();
 
 #pragma region 汎用機能初期化-------------------------------------------------------------------------------------------------------------------
-	// 入力クラスの初期化
-	Input::GetInstance()->Initialize(winApp_);
+    // 入力クラスの初期化
+    Input::GetInstance()->Initialize(winApp_);
 
-	// オーディオの初期化
-	Audio::GetInstance()->Initialize("resources/Sound/");
+    // オーディオの初期化
+    Audio::GetInstance()->Initialize("resources/Sound/");
 
 #pragma endregion
 
-	// シーンの初期化
-	sceneFactory_ = new SceneFactory();
-	SceneManager::GetInstance()->SetSceneFactory(sceneFactory_);
-	SceneManager::GetInstance()->ChangeScene("play", 0.0f);
+    // シーンの初期化
+    sceneFactory_ = new SceneFactory();
+    SceneManager::GetInstance()->SetSceneFactory(sceneFactory_);
+    SceneManager::GetInstance()->ChangeScene("play", 0.0f);
 
-  // PostEffectParamの設定
-  postEffectParam.vignettePower = 0.f;
-  postEffectParam.vignetteRange = 20.0f;
-  postEffectParam.bloomThreshold = 1.0f;
-  postEffectParam.bloomIntensity = 1.0f;
-  postEffectParam.bloomSigma = 2.0f;
-  postEffectParam.fogColor = {1.0f, 1.0f, 1.0f, 1.0f};
-  postEffectParam.fogDensity = 0.01f;
+    // PostEffectParamの設定
+    postEffectParam.vignettePower = 0.f;
+    postEffectParam.vignetteRange = 20.0f;
+    postEffectParam.bloomThreshold = 1.0f;
+    postEffectParam.bloomIntensity = 1.0f;
+    postEffectParam.bloomSigma = 2.0f;
+    postEffectParam.fogColor = {1.0f, 1.0f, 1.0f, 1.0f};
+    postEffectParam.fogDensity = 0.01f;
 
+    /// UIの初期化
+    NiUI::Initialize({ 1280,720 });
+    /// 描画クラスの設定
+    drawer_ = std::make_unique<Drawer>();
+    NiUI::SetDrawer(drawer_.get());
 }
 
 void MyGame::Finalize()
 {
-	TakoFramework::Finalize();
+    TakoFramework::Finalize();
 
-	// Audioの解放
-	Audio::GetInstance()->Finalize();
+    // Audioの解放
+    Audio::GetInstance()->Finalize();
 
-	// 入力クラスの解放
-	Input::GetInstance()->Finalize();
+    // 入力クラスの解放
+    Input::GetInstance()->Finalize();
 }
 
 void MyGame::Update()
 {
-	// カメラの更新
-	defaultCamera_->Update();
+    // カメラの更新
+    defaultCamera_->Update();
 
-	// 入力情報の更新
-	Input::GetInstance()->Update();
+    // 入力情報の更新
+    Input::GetInstance()->Update();
 
-	TakoFramework::Update();
+    // UIの更新
+    NiUI::BeginFrame();
 
-	//　サウンドの更新
-	Audio::GetInstance()->Update();
+    TakoFramework::Update();
+
+    //　サウンドの更新
+    Audio::GetInstance()->Update();
 
   // ゲームパッドの状態をリスレッシュ
-	Input::GetInstance()->RefreshGamePadState();
+    Input::GetInstance()->RefreshGamePadState();
 }
 
 void MyGame::Draw()
 {
-	/// ============================================= ///
-	/// ------------------シーン描画-------------------///
-	/// ============================================= ///
+    /// ============================================= ///
+    /// ------------------シーン描画-------------------///
+    /// ============================================= ///
 
-	// 描画前の処理(レンダーテクスチャを描画対象に設定)
-	dx12_->SetRenderTexture();
+    // 描画前の処理(レンダーテクスチャを描画対象に設定)
+    dx12_->SetRenderTexture();
 
-	// テクスチャ用のsrvヒープの設定
-	SrvManager::GetInstance()->BeginDraw();
+    // テクスチャ用のsrvヒープの設定
+    SrvManager::GetInstance()->BeginDraw();
 
-	// シーンの描画
-	SceneManager::GetInstance()->Draw();
+    // シーンの描画
+    SceneManager::GetInstance()->Draw();
 
     // UIの描画
+    NiUI::DrawUI();
+
+    ParticleManager::GetInstance()->Draw();
+
+    Draw2D::GetInstance()->Draw();
+
+    Draw2D::GetInstance()->Reset();
 
 
-	ParticleManager::GetInstance()->Draw();
+    /// ===================================================== ///
+    /// ------------------ポストエフェクト描画-------------------///
+    /// ===================================================== ///
+    // SwapChainを描画対象に設定
+    dx12_->SetSwapChain();
 
-	Draw2D::GetInstance()->Draw();
-
-	Draw2D::GetInstance()->Reset();
-
-
-	/// ===================================================== ///
-	/// ------------------ポストエフェクト描画-------------------///
-	/// ===================================================== ///
-	// SwapChainを描画対象に設定
-	dx12_->SetSwapChain();
-
-	// PostEffectの描画
-	switch (postEffectType)
-	{
-	case::MyGame::NoEffect:
-		PostEffect::GetInstance()->Draw("NoEffect");
-		break;
-	case::MyGame::VignetteRed:
-		PostEffect::GetInstance()->Draw("VignetteRed");
-		break;
-	case::MyGame::VignetteRedBloom:
-		PostEffect::GetInstance()->Draw("VignetteRedBloom");
-		break;
-	case::MyGame::GrayScale:
-		PostEffect::GetInstance()->Draw("GrayScale");
-		break;
-	case::MyGame::VigRedGrayScale:
-		PostEffect::GetInstance()->Draw("VigRedGrayScale");
-		break;
-	case::MyGame::Bloom:
-		PostEffect::GetInstance()->Draw("Bloom");
-		break;
-	case::MyGame::BloomFog:
-		PostEffect::GetInstance()->Draw("BloomFog");
-		break;
-	}
+    // PostEffectの描画
+    switch (postEffectType)
+    {
+    case::MyGame::NoEffect:
+        PostEffect::GetInstance()->Draw("NoEffect");
+        break;
+    case::MyGame::VignetteRed:
+        PostEffect::GetInstance()->Draw("VignetteRed");
+        break;
+    case::MyGame::VignetteRedBloom:
+        PostEffect::GetInstance()->Draw("VignetteRedBloom");
+        break;
+    case::MyGame::GrayScale:
+        PostEffect::GetInstance()->Draw("GrayScale");
+        break;
+    case::MyGame::VigRedGrayScale:
+        PostEffect::GetInstance()->Draw("VigRedGrayScale");
+        break;
+    case::MyGame::Bloom:
+        PostEffect::GetInstance()->Draw("Bloom");
+        break;
+    case::MyGame::BloomFog:
+        PostEffect::GetInstance()->Draw("BloomFog");
+        break;
+    }
 
 
-	/// ========================================= ///
-	///-------------------ImGui-------------------///
-	/// ========================================= ///
+    /// ========================================= ///
+    ///-------------------ImGui-------------------///
+    /// ========================================= ///
 #ifdef _DEBUG
 
-	imguiManager_->Begin();
+    imguiManager_->Begin();
 
-	SceneManager::GetInstance()->DrawImGui();
+    SceneManager::GetInstance()->DrawImGui();
 
-	Draw2D::GetInstance()->ImGui();
+    Draw2D::GetInstance()->ImGui();
 
   // GlobalVariablesの更新
   GlobalVariables::GetInstance()->Update();
@@ -167,7 +177,7 @@ void MyGame::Draw()
   }
 
 
-	// PostEffectのパラメータ調整
+    // PostEffectのパラメータ調整
   if (PostEffectWindowVisible) {
     ImGui::Begin("PostEffect", &PostEffectWindowVisible);
     if (ImGui::BeginTabBar("PostEffectTab"))
@@ -231,13 +241,13 @@ void MyGame::Draw()
     ImGui::End();
   }
 
-	imguiManager_->End();
+    imguiManager_->End();
 
-	//imguiの描画
-	imguiManager_->Draw();
+    //imguiの描画
+    imguiManager_->Draw();
 #endif
 
 
-	// 描画後の処理
-	dx12_->EndDraw();
+    // 描画後の処理
+    dx12_->EndDraw();
 }

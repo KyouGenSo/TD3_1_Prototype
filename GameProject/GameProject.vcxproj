@@ -170,25 +170,29 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGame.cpp" />
+    <ClCompile Include="NiUI\Derived\Drawer.cpp" />
+    <ClCompile Include="NiUI\Interface\NiUI_IDrawer.cpp" />
+    <ClCompile Include="NiUI\Math\NiVec2.cpp" />
+    <ClCompile Include="NiUI\NiUI.cpp" />
+    <ClCompile Include="NiUI\NiUI_Input.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="UI\math\NiVec2.cpp" />
-    <ClCompile Include="UI\UI.cpp" />
-    <ClCompile Include="UI\UI_Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="MyGame.h" />
+    <ClInclude Include="NiUI\Derived\Drawer.h" />
+    <ClInclude Include="NiUI\Interface\NiUI_IDrawer.h" />
+    <ClInclude Include="NiUI\Math\NiVec2.h" />
+    <ClInclude Include="NiUI\NiUI.h" />
+    <ClInclude Include="NiUI\NiUI_Input.h" />
+    <ClInclude Include="NiUI\Type\NiUI_ComponentData.h" />
+    <ClInclude Include="NiUI\Type\NiUI_Enum.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="UI\ComponentData.h" />
-    <ClInclude Include="UI\math\NiVec2.h" />
-    <ClInclude Include="UI\UI.h" />
-    <ClInclude Include="UI\UIEnum.h" />
-    <ClInclude Include="UI\UI_Input.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
