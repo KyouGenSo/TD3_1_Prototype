@@ -3,16 +3,20 @@
 #include "Draw2D.h"
 #include "ModelManager.h"
 #include "Object3dBasic.h"
+#include "Singleton.h"
 #include "SpriteBasic.h"
 
 void GameScene::Initialize() {
     ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
+    pCollisionManager_ = Singleton<CollisionManager>::GetInstance();
+
     player_ = std::make_unique<Player>();
     player_->Initialize();
 
     camera_ = std::make_unique<FollowCamera>();
     camera_->Initialize();
     camera_->SetTarget(&player_->GetTransform());
+
 }
 
 void GameScene::Finalize() {
@@ -23,6 +27,8 @@ void GameScene::Finalize() {
 void GameScene::Update() {
     camera_->Update();
     player_->Update();
+
+    pCollisionManager_->Update();
 }
 
 void GameScene::Draw() {
