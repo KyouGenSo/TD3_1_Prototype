@@ -169,9 +169,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGame.cpp" />
     <ClCompile Include="NiUI\Derived\Drawer.cpp" />
+    <ClCompile Include="NiUI\Derived\ProcHandler.cpp" />
     <ClCompile Include="NiUI\Interface\NiUI_IDrawer.cpp" />
     <ClCompile Include="NiUI\Math\NiVec2.cpp" />
     <ClCompile Include="NiUI\NiUI.cpp" />
@@ -184,8 +186,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameUI\LvUP\GUI_LvUP.h" />
+    <ClInclude Include="Interfaces\IObserver.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="NiUI\Derived\Drawer.h" />
+    <ClInclude Include="NiUI\Derived\ProcHandler.h" />
     <ClInclude Include="NiUI\Interface\NiUI_IDrawer.h" />
     <ClInclude Include="NiUI\Math\NiVec2.h" />
     <ClInclude Include="NiUI\NiUI.h" />

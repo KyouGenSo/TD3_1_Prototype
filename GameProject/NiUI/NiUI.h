@@ -9,6 +9,7 @@
 #include <string> // string
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h> // HWND, UINT, WPARAM, LPARAM
+#include "Type/NiUI_Enum.h" // enums
 
 
 /// UIクラス
@@ -44,12 +45,21 @@ public: /// 一般
 public: /// UIコンポーネントの追加
     // ボタンの追加
     // ボタンのテクスチャ名、左上座標、サイズを指定してください。
-    static bool Button(const std::string& _id, const std::string& _textureName, const NiVec2& _leftTop, const NiVec2& _size);
+    static NiUI_ButtonState Button(
+        const std::string& _id,
+        const std::string& _textureName,
+        const NiVec2& _position,
+        const NiVec2& _size,
+        NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
+        NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
+    );
 
     
 public: /// セッター
     static void SetDrawer(IDrawer* _drawer) { drawer_ = _drawer; }
     static void SetWindowInfo(const NiVec2& _size, const NiVec2& _leftTop) { size_ = _size; leftTop_ = _leftTop; }
+    static void SetHoverSound(uint32_t _hoverSE) { hoverSE_ = _hoverSE; }
+    static void SetConfirmSound(uint32_t _confirmSE) { confirmSE_ = _confirmSE; }
 
 
 private: /// メンバ変数
@@ -68,6 +78,11 @@ private: /// メンバ変数
 
     // アクティブコンポーネントID
     static std::string activeComponentID_;
+    static std::string hoverComponentID_;
+
+    // SEのハンドル
+    static int32_t hoverSE_;
+    static int32_t confirmSE_;
 
 
     // コンポーネントのリスト
@@ -89,4 +104,6 @@ private:
     static void CheckValid_BeginFrame();
     static void CheckValid_DrawUI();
     static void JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isTrigger, bool& _isRelease);
+    static NiVec2 ComputeStandardPoint(NiUI_StandardPoint _stdpoint);
+    static void ClearData();
 };

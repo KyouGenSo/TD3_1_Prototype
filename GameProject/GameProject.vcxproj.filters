@@ -55,6 +55,18 @@
     <Filter Include="DeltaTimeManager">
       <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameUI">
+      <UniqueIdentifier>{9a0f21eb-8949-4e73-a570-f3fc2ef34baf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameUI\HUD">
+      <UniqueIdentifier>{6be891c2-2bad-4594-b634-07ddb2277ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameUI\LvUP">
+      <UniqueIdentifier>{b7442bcd-0dc0-4732-8979-dc039d385d6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{ce930390-efe0-4603-96d9-9a6e83349ada}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -93,6 +105,12 @@
     </ClCompile>
     <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp">
       <Filter>DeltaTimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Derived\ProcHandler.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +155,15 @@
     </ClInclude>
     <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h">
       <Filter>DeltaTimeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\LvUP\GUI_LvUP.h">
+      <Filter>GameUI\LvUP</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IObserver.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Derived\ProcHandler.h">
+      <Filter>NiUI\Derived</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

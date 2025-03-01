@@ -47,6 +47,12 @@ void MyGame::Initialize()
     /// 描画クラスの設定
     drawer_ = std::make_unique<Drawer>();
     NiUI::SetDrawer(drawer_.get());
+    /// ウィンドウプロシージャハンドラの設定
+    procHandler_ = std::make_unique<ProcHandler>();
+    winApp_->SetWndProcHandler(procHandler_.get());
+    /// UIサウンドの設定
+    NiUI::SetHoverSound(Audio::GetInstance()->LoadWaveFile("ui_hover.wav"));
+    NiUI::SetConfirmSound(Audio::GetInstance()->LoadWaveFile("ui_confirm.wav"));
 }
 
 void MyGame::Finalize()

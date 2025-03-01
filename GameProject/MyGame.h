@@ -2,6 +2,7 @@
 #include"TakoFramework.h"
 #include"Vector2.h"
 #include <NiUI/Derived/Drawer.h>
+#include <NiUI/Derived/ProcHandler.h>
 #include <memory>
 
 class MyGame : public TakoFramework
@@ -47,6 +48,7 @@ private: // メンバ変数
     bool PostEffectWindowVisible = false;
     
     std::unique_ptr<Drawer> drawer_ = nullptr;
+    std::unique_ptr<ProcHandler> procHandler_ = nullptr;
 
     enum PostEffectType
     {
