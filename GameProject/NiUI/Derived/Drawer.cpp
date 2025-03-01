@@ -2,10 +2,15 @@
 
 #include <TextureManager.h>
 #include <Audio.h>
+#include <NiUI/NiUI.h>
 
 void Drawer::DrawSetting()
 {
     IDrawer::DrawSetting();
+
+    /// UIクラスからデータを取得
+    auto hoveredComponentID = NiUI::GetHoverComponentID();
+    auto activeComponentID = NiUI::GetActiveComponentID();
 
     buttonSpriteCount_.clear();
 
@@ -48,12 +53,12 @@ void Drawer::DrawSetting()
 
         Vector4 color = {};
 
-        if(data->isHeld)
+        if(data->id == activeComponentID)
         {
             color = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
             sprite->SetColor(color);
         }
-        else if(data->isHover)
+        else if(data->id == hoveredComponentID)
         {
             color = Vector4(0.7f, 0.7f, 0.7f, 1.0f);
             sprite->SetColor(color);

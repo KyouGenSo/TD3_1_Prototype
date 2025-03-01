@@ -2,22 +2,23 @@
 
 #include <stdexcept> // runtime_error
 
-NiUI_Input NiUI::input_ = NiUI_Input();
-bool NiUI::isInitialized_ = false;
-bool NiUI::isBeginFrame_ = false;
-NiVec2 NiUI::leftTop_ = { 0, 0 };
-NiVec2 NiUI::size_ = { 0, 0 };
-std::unordered_map<std::string, ButtonImageData> NiUI::buttonImages_ = std::unordered_map<std::string, ButtonImageData>();
-std::string NiUI::activeComponentID_ = {};
-std::string NiUI::hoverComponentID_ = {};
-IDrawer* NiUI::drawer_ = nullptr;
-int32_t NiUI::hoverSE_ = -1;
-int32_t NiUI::confirmSE_ = -1;
+
+NiUI_Input          NiUI::input_        = NiUI_Input();
+NiVec2              NiUI::leftTop_      = { 0, 0 };
+NiVec2              NiUI::size_         = { 0, 0 };
+IDrawer*            NiUI::drawer_       = nullptr;
+
+NiUIIO              NiUI::io_           = NiUIIO();
+NiUICoreState       NiUI::state_        = NiUICoreState();
+INiUIDebug*         NiUI::debug_        = nullptr;
+
+std::unordered_map<std::string, ButtonData> NiUI::buttonImages_ = std::unordered_map<std::string, ButtonData>();
+
 
 
 void NiUI::Initialize(const NiVec2& _size, const NiVec2& _leftTop)
 {
-    isInitialized_ = true;
+    state_.validFlag.isInitialized = true;
     leftTop_ = _leftTop;
     size_ = _size;
 
@@ -26,7 +27,6 @@ void NiUI::Initialize(const NiVec2& _size, const NiVec2& _leftTop)
     return;
 }
 
-
 void NiUI::BeginFrame()
 {
     CheckValid_BeginFrame();
@@ -34,8 +34,11 @@ void NiUI::BeginFrame()
     // 入力データ更新
     input_.Update();
 
+    // 入力データのコピー
+    CopyInputData();
+
     // 確認用フラグを立てる
-    isBeginFrame_ = true;
+    state_.validFlag.isBeginFrame = true;
 
     return;
 }
@@ -44,6 +47,9 @@ void NiUI::DrawUI()
 {
     // 描画処理に必要なデータの確認
     CheckValid_DrawUI();
+
+    // ボタンの確定処理
+    PostProcess_Button();
 
     // ボタンの描画データを追加
     ButtonDataEnqueue();
@@ -54,11 +60,14 @@ void NiUI::DrawUI()
     // 描画
     drawer_->Draw();
 
+    // 前フレームのデータとして保存
+    SavePreData();
+
     // データのクリア
     ClearData();
 
     // 確認用フラグを倒す
-    isBeginFrame_ = false;
+    state_.validFlag.isBeginFrame = false;
 }
 
 void NiUI::NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -66,6 +75,8 @@ void NiUI::NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
     input_.WndProcHandler(hWnd, msg, wParam, lParam);
     return;
 }
+
+
 
 NiUI_ButtonState NiUI::Button(
     const std::string& _id,
@@ -94,11 +105,10 @@ NiUI_ButtonState NiUI::Button(
     bool onButton = ButtonBehavior(_id, isHover, isTrigger, isRelease, isHeld);
 
     /// ボタンのデータを更新
+    buttonImage.id = _id;
     buttonImage.textureName = _textureName;
     buttonImage.leftTop = position;
     buttonImage.size = _size;
-    buttonImage.isHover = isHover;
-    buttonImage.isHeld = isHeld;
 
     NiUI_ButtonState result = NiUI_ButtonState::None;
     if (onButton)
@@ -117,39 +127,28 @@ bool NiUI::ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger
 {
     if (_isHover)
     {
-        if (hoverComponentID_ != _id)
-        {
-            // サウンドを鳴らす
-            if (hoverSE_ != -1)
-            {
-                drawer_->PlayAudio(hoverSE_);
-            }
-        }
-
-        hoverComponentID_ = _id;
+        state_.componentID.hover = _id;
     }
+
 
     if(_isTrigger)
     {
-        activeComponentID_ = _id;
+        state_.componentID.active = _id;
     }
 
-    if(activeComponentID_ == _id)
+
+    if(state_.componentID.active == _id)
     {
         _out_held = true;
 
         if (_isRelease && _isHover)
         {
-            activeComponentID_ = {};
-            if (confirmSE_ != -1)
-            {
-                drawer_->PlayAudio(confirmSE_);
-            }
+            state_.componentID.active = {};
             return true;
         }
         else if(_isRelease)
         {
-            activeComponentID_ = {};
+            state_.componentID.active = {};
         }
     }
 
@@ -165,14 +164,66 @@ void NiUI::ButtonDataEnqueue()
     }
 }
 
+void NiUI::PostProcess_Button()
+{
+    auto& componentID = state_.componentID;
+    auto& componentTime = state_.time;
+
+    /// =========
+    /// Active
+    if (!componentID.active.empty())
+    {
+        /// アクティブIDが変更されたら
+        if (componentID.active != componentID.preActive)
+        {
+            // アクティブ時間をリセット
+            componentTime.active = 0;
+        }
+        ++componentTime.active;
+    }
+    else
+    {
+        componentTime.active = 0;
+    }
+
+
+    /// ========
+    /// Hover
+    if (!componentID.hover.empty())
+    {
+        if (componentID.hover != componentID.preHover)
+        {
+            componentTime.hover = 0;
+        }
+        ++componentTime.hover;
+    }
+    else
+    {
+        componentTime.hover = 0;
+    }
+
+    /// ========
+    /// Play SE
+    if (componentTime.active == 0 && componentID.preActive == componentID.preHover && !componentID.preActive.empty())
+    {
+        drawer_->PlayAudio(io_.audioHnd.buttonConfirm);
+    }
+    if (componentTime.hover == 1)
+    {
+        drawer_->PlayAudio(io_.audioHnd.buttonHover);
+    }
+}
+
+
+
 void NiUI::CheckValid_BeginFrame()
 {
-    if(!isInitialized_)
+    if(!state_.validFlag.isInitialized)
     {
         throw std::runtime_error("UIクラスが初期化されていません。");
     }
 
-    if(isBeginFrame_)
+    if(state_.validFlag.isBeginFrame)
     {
         throw std::runtime_error("BeginFrameが連続で呼び出されています。");
     }
@@ -180,12 +231,12 @@ void NiUI::CheckValid_BeginFrame()
 
 void NiUI::CheckValid_DrawUI()
 {
-    if(!isInitialized_)
+    if(!state_.validFlag.isInitialized)
     {
         throw std::runtime_error("UIクラスが初期化されていません。");
     }
 
-    if(!isBeginFrame_)
+    if(!state_.validFlag.isBeginFrame)
     {
         throw std::runtime_error("BeginFrameが呼び出されていません。");
     }
@@ -290,7 +341,26 @@ NiVec2 NiUI::ComputeStandardPoint(NiUI_StandardPoint _stdpoint)
 void NiUI::ClearData()
 {
     buttonImages_.clear();
+    state_.componentID.hover = {};
     return;
+}
+
+void NiUI::SavePreData()
+{
+    // 前フレームのホバー中のコンポーネントIDを保存
+    state_.componentID.preHover = state_.componentID.hover;
+    state_.componentID.preActive = state_.componentID.active;
+}
+
+void NiUI::CopyInputData()
+{
+    io_.input.isLeftPre = io_.input.isLeft;
+    io_.input.isRightPre = io_.input.isRight;
+    io_.input.isMiddlePre = io_.input.isMiddle;
+
+    io_.input.isLeft = input_.PressLeft();
+    io_.input.isRight = input_.PressRight();
+    io_.input.isMiddle = input_.PressMiddle();
 }
 
 

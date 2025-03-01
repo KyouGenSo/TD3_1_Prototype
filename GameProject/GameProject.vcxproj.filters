@@ -108,15 +108,10 @@
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp">
       <Filter>GameUI\LvUP</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SingletonFinalizer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="SingletonFinalizer.cpp" />
+    <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -184,6 +179,15 @@
     </ClInclude>
     <ClInclude Include="SingletonFinalizer.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Interface\NiUI_IDebug.h">
+      <Filter>NiUI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Type\NiUI_Core_Type.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Derived\NiUI_Debug.h">
+      <Filter>NiUI\Derived</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

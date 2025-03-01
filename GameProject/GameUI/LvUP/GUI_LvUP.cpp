@@ -33,7 +33,7 @@ void GUI_LvUP::ShowLvUP()
     /// レベルアップ画面を表示する処理
     bool isClose = false;
 
-    if (NiUI::Button("Card1", TEXTUREPATH_, { -260.0f, 0.0f }, { 240.0f, 360.0f }, center, center) == NiUI_ButtonState::Confirm)
+    if (NiUI::Button("Card1", TEXTUREPATH_, { -200.0f, 50.0f }, { 240.0f, 360.0f }, center, center) == NiUI_ButtonState::Confirm)
     {
         isClose = true;
     }

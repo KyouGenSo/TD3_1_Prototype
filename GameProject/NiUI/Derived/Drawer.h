@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "../Interface/NiUI_IDrawer.h"
 
@@ -18,6 +18,6 @@ public:
 
 private:
     using SpriteList = std::list<std::unique_ptr<Sprite>>;
-    std::unordered_map<std::string, SpriteList> sprites_; // <ƒeƒNƒXƒ`ƒƒ–¼, ƒXƒvƒ‰ƒCƒgƒŠƒXƒg>
-    std::unordered_map<std::string, uint32_t> buttonSpriteCount_; // <ƒeƒNƒXƒ`ƒƒ–¼, ƒXƒvƒ‰ƒCƒg”>
+    std::unordered_map<std::string, SpriteList> sprites_; // <ãƒ†ã‚¯ã‚¹ãƒãƒ£å, ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒªã‚¹ãƒˆ>
+    std::unordered_map<std::string, uint32_t> buttonSpriteCount_; // <ãƒ†ã‚¯ã‚¹ãƒãƒ£å, ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ•°>
 };
