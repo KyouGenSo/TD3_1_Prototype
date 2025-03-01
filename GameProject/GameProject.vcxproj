@@ -189,15 +189,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="FollowCamera.h" />
-    <ClInclude Include="GameScene.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h" />
-    <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameUI\LvUP\GUI_LvUP.h" />
     <ClInclude Include="Interfaces\IObserver.h" />
-    <ClInclude Include="MyGame.h" />
     <ClInclude Include="NiUI\Derived\Drawer.h" />
     <ClInclude Include="NiUI\Derived\ProcHandler.h" />
     <ClInclude Include="NiUI\Interface\NiUI_IDrawer.h" />
