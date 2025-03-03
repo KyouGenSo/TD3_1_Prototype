@@ -14,6 +14,13 @@ private:
 	static constexpr uint32_t ALLY = 0b1;
     static constexpr uint32_t ENEMY = 0b1 << 1;
 
+public:
+    enum class Event{
+        TRIGGER,
+        STAY,
+        EXIT
+    };
+
 private:
 	CollisionManager* pManager_;
 
@@ -21,22 +28,26 @@ private:
 
 	float radius_ = 1.f;
 
-    std::function<void(Object*)> onCollision_;
-    std::function<void(Object*)> onCollisionTrigger_;
+    std::function<void(const Object*)> onCollisionTrigger_;
+    std::function<void(const Object*)> onCollision_;
+    std::function<void(const Object*)> onCollisionExit_;
 
     uint32_t attribute_ = 0xffffffff;
     uint32_t ignore_ = 0b0;
 
 public:
-	Collider();
+	Collider(Object* _owner);
     ~Collider() = default;
 
     void Update();
 
-	void OnCollision(Object* pObject) const;
-    void OnCollisionTrigger(Object* pObject) const;
+    void OnCollisionTrigger(const Object* pObject) const;
+	void OnCollision(const Object* pObject) const;
+    void OnCollisionExit(const Object* pObject) const;
 
-	std::string GetUniqueId() const {
+    void SetEvent(const std::function<void(const Object*)>& callback, Event event = Event::STAY);
+
+    std::string GetUniqueId() const {
         return pOwner_->GetUniqueId();
     }
 

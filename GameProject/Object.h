@@ -14,8 +14,9 @@ protected:
 public:
 	Object();
 	virtual ~Object() = default;
-    virtual void OnCollision(const Object* pObject){}
     virtual void OnCollisionTrigger(const Object* pObject){}
+    virtual void OnCollision(const Object* pObject){}
+    virtual void OnCollisionExit(const Object* pObject){}
 	virtual bool IsDead() = 0;
 
 	Transform& GetTransform(){
