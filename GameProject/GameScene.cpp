@@ -17,6 +17,10 @@ void GameScene::Initialize() {
 	enemy_ = std::make_unique<Enemy>();
 	enemy_->Initialize();
 
+	ModelManager::GetInstance()->LoadModel("bigCube.gltf");
+	boss_ = std::make_unique<Boss>();
+	boss_->Initialize();
+
     camera_ = std::make_unique<FollowCamera>();
     camera_->Initialize();
     camera_->SetTarget(&player_->GetTransform());
@@ -28,6 +32,7 @@ void GameScene::Initialize() {
 void GameScene::Finalize() {
     player_->Finalize();
 	enemy_->Finalize();
+	boss_->Finalize();
     camera_->Finalize();
 }
 
@@ -38,6 +43,7 @@ void GameScene::Update() {
 
     pCollisionManager_->Update();
 	enemy_->Update();
+	boss_->Update();
 }
 
 void GameScene::Draw() {
@@ -50,6 +56,7 @@ void GameScene::Draw() {
     Object3dBasic::GetInstance()->SetCommonRenderSetting();
     player_->Draw();
 	enemy_->Draw();
+	boss_->Draw();
 
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定
