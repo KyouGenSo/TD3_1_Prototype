@@ -19,8 +19,8 @@ void NiUI_Debug::DrawDebugUI()
     {
         if (ImGui::TreeNode("ValidationFlags"))
         {
-            ImGui::Text("isInitialized : %s", state_.validFlag.isInitialized ? "true" : "false");
-            ImGui::Text("isBeginFrame : %s", state_.validFlag.isBeginFrame ? "true" : "false");
+            ImGui::Text("isInitialized : %s", state_.valid.isInitialized ? "true" : "false");
+            ImGui::Text("isBeginFrame : %s", state_.valid.isBeginFrame ? "true" : "false");
             ImGui::TreePop();
         }
         if (ImGui::TreeNode("ComponentID"))

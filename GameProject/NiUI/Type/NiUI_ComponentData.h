@@ -32,3 +32,16 @@ struct ButtonData
     NiVec2 leftTop;
     NiVec2 size;
 };
+
+struct BaseRegionData
+{
+    NiVec2 leftTop;
+    NiVec2 size;
+
+    BaseRegionData* parent = nullptr;
+};
+
+struct DivData : public BaseRegionData 
+{
+    std::string textureName;
+};

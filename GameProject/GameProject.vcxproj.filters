@@ -112,6 +112,12 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="SingletonFinalizer.cpp" />
     <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
+    <ClCompile Include="NiUI\Math\NiVec4.cpp">
+      <Filter>NiUI\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Math\NiVec3.cpp">
+      <Filter>NiUI\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -188,6 +194,12 @@
     </ClInclude>
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h">
       <Filter>NiUI\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Math\NiVec4.h">
+      <Filter>NiUI\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Math\NiVec3.h">
+      <Filter>NiUI\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

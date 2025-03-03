@@ -59,18 +59,31 @@ public: /// UIコンポーネントの追加
         NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
     );
 
+    static bool BeginDiv(
+        const std::string& _id,
+        const NiVec2& _position,
+        const NiVec2& _size,
+        const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
+        const NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
+    );
+
+    static void EndDiv();
+
     
 public: /// セッター
     static void SetDrawer(IDrawer* _drawer) { drawer_ = _drawer; }
     static void SetDebug(INiUIDebug* _debug) { debug_ = _debug; }
     static void SetWindowInfo(const NiVec2& _size, const NiVec2& _leftTop) { size_ = _size; leftTop_ = _leftTop; }
     static void SetHoverSound(uint32_t _hoverSE) { io_.audioHnd.buttonHover = _hoverSE; }
+    static void SetHoverSound(void* _hoverSE) { io_.audioHandler.buttonHover = _hoverSE; }
     static void SetConfirmSound(uint32_t _confirmSE) { io_.audioHnd.buttonConfirm = _confirmSE; }
+    static void SetConfirmSound(void* _confirmSE) { io_.audioHandler.buttonConfirm = _confirmSE; }
 
 
 public: /// ゲッター
     static const NiUIIO& GetIO() { return io_; }
     static const NiUICoreState& GetState() { return state_; }
+    static const NiUIStyle& GetStyle() { return style_; }
 
     static std::string GetActiveComponentID() { return state_.componentID.active; }
     static std::string GetHoverComponentID() { return state_.componentID.hover; }
@@ -85,6 +98,7 @@ private: /// メンバ変数
 
     static NiUIIO           io_;
     static NiUICoreState    state_;
+    static NiUIStyle        style_;
 
     // 入力データ
     static NiUI_Input       input_;
@@ -101,6 +115,9 @@ private: /// メンバ変数
 
     // コンポーネントのリスト
     static std::unordered_map<std::string, ButtonData> buttonImages_;
+    static std::unordered_map<std::string, DivData> divData_;
+
+    static BaseRegionData* currentRegion_;
 
 
 private: /// 挙動
@@ -109,6 +126,7 @@ private: /// 挙動
 
 private: /// 描画クラスにデータを送る関数
     static void ButtonDataEnqueue();
+    static void DivDataEnqueue();
 
 
 private: /// ボタンの処理
@@ -120,6 +138,7 @@ private: /// その他
     static void CheckValid_DrawUI();
     static void JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isTrigger, bool& _isRelease);
     static NiVec2 ComputeStandardPoint(NiUI_StandardPoint _stdpoint);
+    static NiVec2 ComputeLeftTop(const NiVec2& _position, const NiVec2& _size, const NiVec2& _parentSize, NiUI_StandardPoint _anchor, NiUI_StandardPoint _pivot);
     static void ClearData();
     static void SavePreData();
     static void CopyInputData();
