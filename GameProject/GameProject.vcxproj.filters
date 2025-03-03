@@ -112,6 +112,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="SingletonFinalizer.cpp" />
     <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -188,6 +189,9 @@
     </ClInclude>
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h">
       <Filter>NiUI\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
