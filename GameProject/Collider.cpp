@@ -15,10 +15,20 @@ void Collider::Update() {
 }
 
 void Collider::OnCollision(Object* pObject) const {
+    if (!onCollision_)return;
+
     onCollision_(pObject);
 }
 
+void Collider::OnCollisionExit(Object* pObject) const {
+    if (!onCollisionExit_)return;
+
+    onCollisionExit_(pObject);
+}
+
 void Collider::OnCollisionTrigger(Object* pObject) const {
+    if(!onCollisionTrigger_)return;
+
     onCollisionTrigger_(pObject);
 }
 

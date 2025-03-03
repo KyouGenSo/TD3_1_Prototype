@@ -50,5 +50,12 @@ void CollisionManager::Check(const std::string& col, const std::string& other) {
 
         pCollider->OnCollision(pOther->GetOwner());
         pOther->OnCollision(pCollider->GetOwner());
+        return;
+    }
+
+    if (pairs_.end() != std::ranges::find(pairs_, Pair {col, other})){
+        pairs_.erase(std::ranges::find(pairs_, Pair {col, other}));
+        pCollider->OnCollisionExit(pOther->GetOwner());
+        pOther->OnCollisionExit(pCollider->GetOwner());
     }
 }

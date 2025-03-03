@@ -8,7 +8,7 @@ class CollisionManager{
     using Pair = std::pair<std::string, std::string>;
 
 	std::unordered_map<std::string, Collider*> pColliders_; 
-    std::vector<Pair> pairs_; 
+    std::vector<Pair> pairs_;
 
 public:
 	void Add(Collider* pCollider);

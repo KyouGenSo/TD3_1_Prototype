@@ -21,8 +21,9 @@ private:
 
 	float radius_ = 1.f;
 
-    std::function<void(Object*)> onCollision_;
     std::function<void(Object*)> onCollisionTrigger_;
+    std::function<void(Object*)> onCollision_;
+    std::function<void(Object*)> onCollisionExit_;
 
     uint32_t attribute_ = 0xffffffff;
     uint32_t ignore_ = 0b0;
@@ -33,8 +34,9 @@ public:
 
     void Update();
 
-	void OnCollision(Object* pObject) const;
     void OnCollisionTrigger(Object* pObject) const;
+	void OnCollision(Object* pObject) const;
+    void OnCollisionExit(Object* pObject) const;
 
 	std::string GetUniqueId() const {
         return pOwner_->GetUniqueId();
