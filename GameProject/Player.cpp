@@ -16,6 +16,9 @@ void Player::Initialize() {
         {0,0.f,0},
         {0,0,0}
     };
+
+    collider_ = std::make_unique<Collider>(this);
+    collider_->SetEvent([this](const Object* obj){this->OnCollision(obj); });
 }
 
 void Player::Update() {
@@ -78,6 +81,5 @@ bool Player::IsDead() {
 }
 
 void Player::OnCollision(const Object* pObject) {
-	Object::OnCollision(pObject);
 }
 
