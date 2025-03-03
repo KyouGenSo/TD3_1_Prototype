@@ -9,6 +9,19 @@
 /// レイアウト
 /// - - - - - -
 
+// アラインメント
+enum class NiUI_StandardPoint
+{
+    LeftTop, // 左上
+    CenterTop, // 上
+    RightTop, // 右上
+    LeftCenter, // 左
+    Center, // 中央
+    RightCenter, // 右
+    LeftBottom, // 左下
+    CenterBottom, // 下
+    RightBottom, // 右下
+};
 
 // フレックスコンテナの方向
 enum class NiUI_Flex_Direction
@@ -55,5 +68,5 @@ enum class NiUI_ButtonState
 {
     None, // 何もない
     Hover, // ホバー
-    Press, // 押下
+    Confirm, // 確定
 };

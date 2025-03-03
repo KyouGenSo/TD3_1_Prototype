@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="ヘッダー ファイル">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
@@ -55,6 +51,18 @@
     <Filter Include="DeltaTimeManager">
       <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameUI">
+      <UniqueIdentifier>{9a0f21eb-8949-4e73-a570-f3fc2ef34baf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameUI\HUD">
+      <UniqueIdentifier>{6be891c2-2bad-4594-b634-07ddb2277ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameUI\LvUP">
+      <UniqueIdentifier>{b7442bcd-0dc0-4732-8979-dc039d385d6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{ce930390-efe0-4603-96d9-9a6e83349ada}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -94,15 +102,16 @@
     <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp">
       <Filter>DeltaTimeManager</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="NiUI\Derived\ProcHandler.cpp">
+      <Filter>NiUI\Derived</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp">
+      <Filter>GameUI\LvUP</Filter>
     </ClCompile>
-    <ClCompile Include="SingletonFinalizer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="SingletonFinalizer.cpp" />
+    <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -147,6 +156,15 @@
     <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h">
       <Filter>DeltaTimeManager</Filter>
     </ClInclude>
+    <ClInclude Include="GameUI\LvUP\GUI_LvUP.h">
+      <Filter>GameUI\LvUP</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IObserver.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Derived\ProcHandler.h">
+      <Filter>NiUI\Derived</Filter>
+    </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -161,6 +179,15 @@
     </ClInclude>
     <ClInclude Include="SingletonFinalizer.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Interface\NiUI_IDebug.h">
+      <Filter>NiUI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Type\NiUI_Core_Type.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Derived\NiUI_Debug.h">
+      <Filter>NiUI\Derived</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

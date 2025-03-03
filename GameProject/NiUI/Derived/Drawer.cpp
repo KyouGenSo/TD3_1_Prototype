@@ -1,47 +1,75 @@
 #include "Drawer.h"
 
+#include <TextureManager.h>
+#include <Audio.h>
+#include <NiUI/NiUI.h>
+
 void Drawer::DrawSetting()
 {
     IDrawer::DrawSetting();
 
-    /// スプライトの数が足りない場合は追加
-    if(buttonDrawDataQueue_.size() > sprites_.size())
+    /// UIクラスからデータを取得
+    auto hoveredComponentID = NiUI::GetHoverComponentID();
+    auto activeComponentID = NiUI::GetActiveComponentID();
+
+    buttonSpriteCount_.clear();
+
+    /// 同じテクスチャのボタンの数をカウント
+    for (auto& buttonDrawData : buttonDrawDataQueue_)
     {
-        sprites_.resize(buttonDrawDataQueue_.size());
-        for(auto& sprite : sprites_)
+        buttonSpriteCount_[buttonDrawData->textureName]++;
+    }
+
+    /// スプライトの数が足りない場合は追加
+    for (auto& buttonSpriteCount : buttonSpriteCount_)
+    {
+        auto& textureName = buttonSpriteCount.first;
+        auto& spriteList = sprites_[textureName];
+        /// スプライトリストが足りない場合は追加 & 初期化
+        while (spriteList.size() < buttonSpriteCount.second)
         {
-            sprite = std::make_unique<Sprite>();
+            spriteList.push_back(std::make_unique<Sprite>());
+            // テクスチャの読み込み
+            TextureManager::GetInstance()->LoadTexture(textureName);
+            // スプライトの初期化
+            spriteList.back()->Initialize(textureName);
         }
     }
 
+    /// イテレータの生成
+    std::unordered_map<std::string, SpriteList::iterator> itr_sprites;
+    for (auto& spriteList : sprites_)
+    {
+        itr_sprites[spriteList.first] = spriteList.second.begin();
+    }
+
     /// ボタンの描画データをスプライトに変換
-    auto itr_sprites = sprites_.begin();
     for(auto& data : buttonDrawDataQueue_)
     {
-        auto sprite = itr_sprites->get();
-        sprite->Initialize(data->textureName);
+        auto sprite = itr_sprites[data->textureName]->get();
+        
         sprite->SetPos(Vector2(data->leftTop.x, data->leftTop.y));
         sprite->SetSize(Vector2(data->size.x, data->size.y));
 
-        auto& color = sprite->GetColor();
-        Vector3 color3 = Vector3(color.x, color.y, color.z);
+        Vector4 color = {};
 
-        if(data->isHeld)
+        if(data->id == activeComponentID)
         {
-            color3 -= Vector3(0.3f, 0.3f, 0.3f);
-            sprite->SetColor(Vector4(color3.x, color3.y, color3.z, 1.0f));
+            color = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+            sprite->SetColor(color);
         }
-        else if(data->isHover)
+        else if(data->id == hoveredComponentID)
         {
-            color3 -= Vector3(0.15f, 0.15f, 0.15f);
-            sprite->SetColor(Vector4(color3.x, color3.y, color3.z, 1.0f));
+            color = Vector4(0.7f, 0.7f, 0.7f, 1.0f);
+            sprite->SetColor(color);
         }
         else
         {
             sprite->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
         }
 
-        ++itr_sprites;
+        /// イテレータを進める
+        ++itr_sprites[data->textureName];
     }
 
     return;
@@ -49,14 +77,28 @@ void Drawer::DrawSetting()
 
 void Drawer::Draw()
 {
-    for(auto& sprite : sprites_)
+    /// 実際に描画するスプライトの数 = ボタンの描画データの数
+    for (auto& pathCountPair : buttonSpriteCount_)
     {
-        sprite->Update();
-        sprite->Draw();
+        auto& textureName = pathCountPair.first;
+        auto spriteListItr = sprites_[textureName].begin();
+        
+        for (uint32_t i = 0; i < pathCountPair.second; ++i)
+        {
+            spriteListItr->get()->Update();
+            spriteListItr->get()->Draw();
+            ++spriteListItr;
+        }
     }
 
     /// 描画データのクリア
     buttonDrawDataQueue_.clear();
 
+    return;
+}
+
+void Drawer::PlayAudio(uint32_t _handle)
+{
+    Audio::GetInstance()->Play(_handle);
     return;
 }

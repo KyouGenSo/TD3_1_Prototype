@@ -42,11 +42,29 @@ void MyGame::Initialize()
     postEffectParam.fogColor = {1.0f, 1.0f, 1.0f, 1.0f};
     postEffectParam.fogDensity = 0.01f;
 
+    // テーマ編集
+    OverrideImGuiStyle();
+
     /// UIの初期化
     NiUI::Initialize({ 1280,720 });
+
     /// 描画クラスの設定
     drawer_ = std::make_unique<Drawer>();
     NiUI::SetDrawer(drawer_.get());
+
+    /// ウィンドウプロシージャハンドラの設定
+    procHandler_ = std::make_unique<ProcHandler>();
+    winApp_->SetWndProcHandler(procHandler_.get());
+
+    /// UIサウンドの設定
+    NiUI::SetHoverSound(Audio::GetInstance()->LoadWaveFile("ui_hover.wav"));
+    NiUI::SetConfirmSound(Audio::GetInstance()->LoadWaveFile("ui_confirm.wav"));
+
+    /// デバッグUIの設定
+    auto& io = NiUI::GetIO();
+    auto& state = NiUI::GetState();
+    niUI_Debug_ = std::make_unique<NiUI_Debug>(io, state);
+    NiUI::SetDebug(niUI_Debug_.get());
 }
 
 void MyGame::Finalize()
@@ -62,6 +80,10 @@ void MyGame::Finalize()
 
 void MyGame::Update()
 {
+    #ifdef _DEBUG
+    imguiManager_->Begin();
+    #endif // _DEBUG
+
     // カメラの更新
     defaultCamera_->Update();
 
@@ -76,7 +98,7 @@ void MyGame::Update()
     //　サウンドの更新
     Audio::GetInstance()->Update();
 
-  // ゲームパッドの状態をリスレッシュ
+    // ゲームパッドの状態をリフレッシュ
     Input::GetInstance()->RefreshGamePadState();
 }
 
@@ -94,6 +116,10 @@ void MyGame::Draw()
 
     // シーンの描画
     SceneManager::GetInstance()->Draw();
+
+    #ifdef _DEBUG
+    NiUI::DrawDebug();
+    #endif // _DEBUG
 
     // UIの描画
     NiUI::DrawUI();
@@ -142,8 +168,6 @@ void MyGame::Draw()
     ///-------------------ImGui-------------------///
     /// ========================================= ///
 #ifdef _DEBUG
-
-    imguiManager_->Begin();
 
     SceneManager::GetInstance()->DrawImGui();
 
@@ -250,4 +274,11 @@ void MyGame::Draw()
 
     // 描画後の処理
     dx12_->EndDraw();
+}
+
+void MyGame::OverrideImGuiStyle()
+{
+    auto& style = ImGui::GetStyle();
+    style.FramePadding = ImVec2(3.0f, 3.4f);
+    style.IndentSpacing = 22.0f;
 }

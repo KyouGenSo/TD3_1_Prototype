@@ -17,6 +17,8 @@ void GameScene::Initialize() {
     camera_->Initialize();
     camera_->SetTarget(&player_->GetTransform());
 
+    guiLvUP_ = std::make_unique<GUI_LvUP>();
+    guiLvUP_->OnNotify("lvup");
 }
 
 void GameScene::Finalize() {
@@ -27,6 +29,7 @@ void GameScene::Finalize() {
 void GameScene::Update() {
     camera_->Update();
     player_->Update();
+    guiLvUP_->Update();
 
     pCollisionManager_->Update();
 }
