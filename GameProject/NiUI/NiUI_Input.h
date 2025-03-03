@@ -1,29 +1,30 @@
-﻿#pragma once
+#pragma once
 
 #include "math/NiVec2.h" // NiVec2
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h> // HWND, UINT, WPARAM, LPARAM
 
-/// マウスデータ
-struct MouseData
-{
-    NiVec2 pos;
-    bool isLeft;
-    bool isLeftPre;
-    bool isRight;
-    bool isRightPre;
-    bool isMiddle;
-    bool isMiddlePre;
-};
-
 
 /// UI入力クラス
-class UI_Input
+class NiUI_Input
 {
+public:
+    /// マウスデータ
+    struct MouseData
+    {
+        NiVec2 pos;
+        bool isLeft;
+        bool isLeftPre;
+        bool isRight;
+        bool isRightPre;
+        bool isMiddle;
+        bool isMiddlePre;
+    };
+
 public: /// コンストラクタとデストラクタ
-    UI_Input() = default;
-    ~UI_Input() = default;
+    NiUI_Input() = default;
+    ~NiUI_Input() = default;
 
 
 public: /// 一般
@@ -69,4 +70,10 @@ public: // 入力データ取得
 private:
     // マウスデータ
     MouseData mouseData_;
+
+    HWND hWnd_ = nullptr;
+
+    bool isLeftFromMsg = false;
+    bool isRightFromMsg = false;
+    bool isMiddleFromMsg = false;
 };

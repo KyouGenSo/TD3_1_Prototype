@@ -1,15 +1,17 @@
 #pragma once
 #include <memory>
 
+#include "Object.h"
 #include "Object3d.h"
 #include "Camera.h"
+#include "Collider.h"
 
-class Player{
+class Player : public Object{
     std::unique_ptr<Object3d> model_;
 
-    Transform transform_ {};
-
     Camera* pCamera_ = nullptr;
+
+    std::unique_ptr<Collider> collider_;
 
     Vector3 move_ {};
 
@@ -23,7 +25,7 @@ public:
     void Draw();
     void Finalize();
     void ImGui();
-
-    Transform& GetTransform() {return transform_;}
+    bool IsDead() override;
+    void OnCollision(const Object* pObject) override;
 };
 
