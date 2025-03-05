@@ -37,9 +37,9 @@ void GUI_LvUP::ShowLvUP()
     bool isClose = false;
 
     
-    if (NiUI::BeginDivMovable("TestDiv1", { 0.0f, 0.0f }, { 500.0f, 200.0f }, center, center))
+    if (NiUI::BeginDivMovable("TestDiv1", "", { 0.0f, 0.0f }, {500.0f, 200.0f}, center, center))
     {
-        if (NiUI::BeginDivMovable("TestDiv2", { 0.0f, 0.0f }, { 230.0f, 120.0f }, center, center))
+        if (NiUI::BeginDivMovable("TestDiv2", "", { 0.0f, 0.0f }, {230.0f, 120.0f}, center, center))
         {
             if (NiUI::Button("Test1", TEXTUREPATH_, { 10.0f, 0.0f }, { 100.0f, 100.0f }, leftCenter, leftCenter) == confirm)
             {

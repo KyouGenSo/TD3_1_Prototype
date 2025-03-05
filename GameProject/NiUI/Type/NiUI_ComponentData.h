@@ -37,6 +37,7 @@ struct ButtonData
 struct BaseRegionData
 {
     std::string id;
+    std::string textureName;
     NiVec2 leftTop;
     NiVec2 size;
     uint32_t zOrder;
@@ -46,5 +47,4 @@ struct BaseRegionData
 
 struct DivData : public BaseRegionData 
 {
-    std::string textureName;
 };

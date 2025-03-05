@@ -3,7 +3,7 @@
 #include <stdexcept> // runtime_error
 
 
-bool NiUI::BeginDiv(const std::string& _id, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
+bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
 {
     // ネストカウントを増やす
     state_.valid.nestCount++;
@@ -71,12 +71,13 @@ bool NiUI::BeginDiv(const std::string& _id, const NiVec2& _position, const NiVec
     divData.leftTop = newLeftTop;
     divData.size = _size;
     divData.zOrder = state_.buffer.currentZOrder++;
+    divData.textureName = _textureName;
 
 
     return true;
 }
 
-bool NiUI::BeginDivMovable(const std::string& _id, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
+bool NiUI::BeginDivMovable(const std::string& _id, const std::string& _textureName, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
 {
     // ネストカウントを増やす
     state_.valid.nestCount++;
@@ -144,6 +145,7 @@ bool NiUI::BeginDivMovable(const std::string& _id, const NiVec2& _position, cons
     divData.leftTop = newLeftTop;
     divData.size = _size;
     divData.zOrder = state_.buffer.currentZOrder++;
+    divData.textureName = _textureName;
 
 
     return true;

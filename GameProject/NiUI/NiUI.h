@@ -59,8 +59,11 @@ public: /// UIコンポーネントの追加
         NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
     );
 
+    // Divの追加
+    // textureNameが空の場合はデフォルトの画像が使用されます。
     static bool BeginDiv(
         const std::string& _id,
+        const std::string& _textureName,
         const NiVec2& _position,
         const NiVec2& _size,
         const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
@@ -69,8 +72,11 @@ public: /// UIコンポーネントの追加
 
     static void EndDiv();
 
+    // 移動可能なDivの追加
+    // textureNameが空の場合はデフォルトの画像が使用されます。
     static bool BeginDivMovable(
         const std::string& _id,
+        const std::string& _textureName,
         const NiVec2& _position,
         const NiVec2& _size,
         const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
