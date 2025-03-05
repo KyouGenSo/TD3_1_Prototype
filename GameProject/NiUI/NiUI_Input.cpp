@@ -29,7 +29,17 @@ void NiUI_Input::Update()
         ScreenToClient(hWnd_, &point);
     }
 
+    NiVec2 prePos = mouseData_.pos;
+
     mouseData_.pos = NiVec2(static_cast<float>(point.x), static_cast<float>(point.y));
+
+    mouseData_.differencePos = mouseData_.pos - prePos;
+
+    /// トリガーした座標を保存
+    if (TriggerLeft() || TriggerMiddle() || TriggerRight())
+    {
+        mouseData_.triggeredPos = mouseData_.pos;
+    }
 }
 
 void NiUI_Input::WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

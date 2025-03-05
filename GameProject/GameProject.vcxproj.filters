@@ -63,6 +63,9 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{ce930390-efe0-4603-96d9-9a6e83349ada}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NiUI\Impl">
+      <UniqueIdentifier>{8eede6ca-bab7-4ca9-a4c7-070da6dc8cc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -112,6 +115,18 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="SingletonFinalizer.cpp" />
     <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
+    <ClCompile Include="NiUI\Math\NiVec4.cpp">
+      <Filter>NiUI\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Math\NiVec3.cpp">
+      <Filter>NiUI\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Impl\Impl_Button.cpp">
+      <Filter>NiUI\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Impl\Impl_Div.cpp">
+      <Filter>NiUI\Impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -188,6 +203,12 @@
     </ClInclude>
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h">
       <Filter>NiUI\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Math\NiVec4.h">
+      <Filter>NiUI\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Math\NiVec3.h">
+      <Filter>NiUI\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

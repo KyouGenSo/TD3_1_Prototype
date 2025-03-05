@@ -17,14 +17,16 @@ void NiUI_Debug::DrawDebugUI()
 
     if (ImGui::TreeNodeEx("State", parentFlags))
     {
-        if (ImGui::TreeNode("ValidationFlags"))
+        if (ImGui::TreeNode("Validation"))
         {
-            ImGui::Text("isInitialized : %s", state_.validFlag.isInitialized ? "true" : "false");
-            ImGui::Text("isBeginFrame : %s", state_.validFlag.isBeginFrame ? "true" : "false");
+            ImGui::Text("isInitialized : %s", state_.valid.isInitialized ? "true" : "false");
+            ImGui::Text("isBeginFrame : %s", state_.valid.isBeginFrame ? "true" : "false");
+            ImGui::Text("nestCount : %d", state_.valid.nestCount);
             ImGui::TreePop();
         }
         if (ImGui::TreeNode("ComponentID"))
         {
+            ImGui::Text("Type : %s", state_.componentID.type.c_str());
             ImGui::Text("ActiveComponentID : %s", state_.componentID.active.c_str());
             ImGui::Text("HoverComponentID : %s", state_.componentID.hover.c_str());
             ImGui::Text("PreHoverComponentID : %s", state_.componentID.preHover.c_str());
@@ -44,6 +46,9 @@ void NiUI_Debug::DrawDebugUI()
     {
         if (ImGui::TreeNode("InputData"))
         {
+            ImGui::Text("CursorPos : (%.2f, %.2f)", io_.input.cursorPos.x, io_.input.cursorPos.y);
+            ImGui::Text("TriggeredPos : (%.2f, %.2f)", io_.input.triggeredPos.x, io_.input.triggeredPos.y);
+            ImGui::Text("DifferencePos : (%.2f, %.2f)", io_.input.differencePos.x, io_.input.differencePos.y);
             ImGui::Text("isLeft : %s", io_.input.isLeft ? "true" : "false");
             ImGui::Text("isLeftPre : %s", io_.input.isLeftPre ? "true" : "false");
             ImGui::Text("isRight : %s", io_.input.isRight ? "true" : "false");
