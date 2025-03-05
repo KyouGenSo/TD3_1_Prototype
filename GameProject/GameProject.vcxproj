@@ -166,6 +166,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Chain.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp" />
@@ -182,12 +184,16 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="NiUI\NiUI.cpp" />
     <ClCompile Include="NiUI\NiUI_Input.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RocketBullet.cpp" />
+    <ClCompile Include="RocketLauncher.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SingletonFinalizer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Chain.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="FollowCamera.h" />
@@ -209,6 +215,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="NiUI\Type\NiUI_ComponentData.h" />
     <ClInclude Include="NiUI\Type\NiUI_Enum.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RocketBullet.h" />
+    <ClInclude Include="RocketLauncher.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SingletonFinalizer.h" />

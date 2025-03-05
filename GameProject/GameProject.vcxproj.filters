@@ -113,6 +113,10 @@
     <ClCompile Include="SingletonFinalizer.cpp" />
     <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="RocketLauncher.cpp" />
+    <ClCompile Include="Chain.cpp" />
+    <ClCompile Include="RocketBullet.cpp" />
+    <ClCompile Include="Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -191,6 +195,18 @@
       <Filter>NiUI\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketLauncher.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Chain.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketBullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
