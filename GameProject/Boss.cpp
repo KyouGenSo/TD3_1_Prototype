@@ -29,3 +29,12 @@ void Boss::Draw()
 void Boss::Finalize()
 {
 }
+
+bool Boss::IsDead()
+{
+	return false;
+}
+
+void Boss::OnCollisionTrigger(const Object* bObject)
+{
+}

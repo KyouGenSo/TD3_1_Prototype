@@ -29,3 +29,12 @@ void Enemy::Draw()
 void Enemy::Finalize()
 {
 }
+
+bool Enemy::IsDead()
+{
+	return false;
+}
+
+void Enemy::OnCollisionTrigger(const Object* eObject)
+{
+}
