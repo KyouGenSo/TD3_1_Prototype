@@ -35,6 +35,7 @@ struct ButtonData
 
 struct BaseRegionData
 {
+    std::string id;
     NiVec2 leftTop;
     NiVec2 size;
 

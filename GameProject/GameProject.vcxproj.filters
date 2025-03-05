@@ -63,6 +63,9 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{ce930390-efe0-4603-96d9-9a6e83349ada}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NiUI\Impl">
+      <UniqueIdentifier>{8eede6ca-bab7-4ca9-a4c7-070da6dc8cc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -117,6 +120,12 @@
     </ClCompile>
     <ClCompile Include="NiUI\Math\NiVec3.cpp">
       <Filter>NiUI\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Impl\Impl_Button.cpp">
+      <Filter>NiUI\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Impl\Impl_Div.cpp">
+      <Filter>NiUI\Impl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

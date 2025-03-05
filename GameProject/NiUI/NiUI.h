@@ -117,11 +117,13 @@ private: /// メンバ変数
     static std::unordered_map<std::string, ButtonData> buttonImages_;
     static std::unordered_map<std::string, DivData> divData_;
 
-    static BaseRegionData* currentRegion_;
+    // エンドユーザーが変更したデータ
+    static std::unordered_map<std::string, NiVec2> regionEditted_;
 
 
 private: /// 挙動
     static bool ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held);
+    static NiVec2 DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, const NiVec2& _leftTop);
 
 
 private: /// 描画クラスにデータを送る関数
@@ -130,7 +132,8 @@ private: /// 描画クラスにデータを送る関数
 
 
 private: /// ボタンの処理
-    static void PostProcess_Button();
+    static void PostProcessComponents();
+    static void PlaySE(const std::string& _type, uint32_t _hoverSE, uint32_t _confirmSE, void* _hoverHandler, void* _confirmHandler);
 
 
 private: /// その他

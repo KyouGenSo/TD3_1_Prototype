@@ -2,7 +2,6 @@
 
 #include <stdexcept> // runtime_error
 
-
 NiUI_Input          NiUI::input_        = NiUI_Input();
 NiVec2              NiUI::leftTop_      = { 0, 0 };
 NiVec2              NiUI::size_         = { 0, 0 };
@@ -16,7 +15,7 @@ NiUIStyle           NiUI::style_        = NiUIStyle();
 std::unordered_map<std::string, ButtonData> NiUI::buttonImages_ = std::unordered_map<std::string, ButtonData>();
 std::unordered_map<std::string, DivData> NiUI::divData_ = std::unordered_map<std::string, DivData>();
 
-BaseRegionData* NiUI::currentRegion_ = nullptr;
+std::unordered_map<std::string, NiVec2> NiUI::regionEditted_ = std::unordered_map<std::string, NiVec2>();
 
 
 
@@ -29,7 +28,7 @@ void NiUI::Initialize(const NiVec2& _size, const NiVec2& _leftTop)
     input_.Initialize();
 
     style_.windowPadding = { 10, 10 };
-    style_.color.backGround = { 0.0f, 0.0f, 0.0f, 0.9f };
+    style_.color.backGround = { 0.0f, 0.0f, 0.0f, 0.3f };
 
     return;
 }
@@ -56,7 +55,7 @@ void NiUI::DrawUI()
     CheckValid_DrawUI();
 
     // ボタンの確定処理
-    PostProcess_Button();
+    PostProcessComponents();
 
     // コンポーネントの描画データを追加
     ButtonDataEnqueue();
@@ -83,210 +82,6 @@ void NiUI::NiUI_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
     input_.WndProcHandler(hWnd, msg, wParam, lParam);
     return;
 }
-
-
-
-NiUI_ButtonState NiUI::Button(
-    const std::string& _id,
-    const std::string& _textureName,
-    const NiVec2& _position,
-    const NiVec2& _size,
-    NiUI_StandardPoint _anchor,
-    NiUI_StandardPoint _pivot)
-{
-    auto& buttonImage = buttonImages_[_id];
-    bool isTrigger = false;
-    bool isHover = false;
-    bool isRelease = false;
-    bool isHeld = false;
-
-    NiVec2 posInRegion = _position;
-    NiVec2 size = size_;
-    if (currentRegion_ != nullptr)
-    {
-        posInRegion = _position + currentRegion_->leftTop;
-        size = currentRegion_->size;
-    }
-
-    auto leftTop = ComputeLeftTop(posInRegion, _size, size, _anchor, _pivot);
-
-    // 当たり判定
-    JudgeClickRect(leftTop, _size, isHover, isTrigger, isRelease);
-
-    // ボタンの挙動
-    bool onButton = ButtonBehavior(_id, isHover, isTrigger, isRelease, isHeld);
-
-    /// ボタンのデータを更新
-    buttonImage.id = _id;
-    buttonImage.textureName = _textureName;
-    buttonImage.leftTop = leftTop;
-    buttonImage.size = _size;
-
-    NiUI_ButtonState result = NiUI_ButtonState::None;
-    if (onButton)
-    {
-        result = NiUI_ButtonState::Confirm;
-    }
-    else if (isHover)
-    {
-        result = NiUI_ButtonState::Hover;
-    }
-
-    return result;
-}
-
-bool NiUI::BeginDiv(const std::string& _id, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
-{
-    state_.valid.nestCount++;
-
-    NiVec2 leftTop = {};
-
-    if (currentRegion_ == nullptr)
-    {
-        leftTop = ComputeLeftTop(_position, _size, size_, _anchor, _pivot);
-    }
-    else
-    {
-        leftTop = ComputeLeftTop(_position, _size, currentRegion_->size, _anchor, _pivot);
-    }
-    
-
-    divData_[_id].leftTop = leftTop;
-    divData_[_id].size = _size;
-    divData_[_id].parent = currentRegion_;
-
-    currentRegion_ = dynamic_cast<BaseRegionData*>(&divData_[_id]);
-
-    return true;
-}
-
-void NiUI::EndDiv()
-{
-    if (state_.valid.nestCount == 0)
-    {
-        throw std::runtime_error("ネスト終了関数の呼び出し過多です。");
-    }
-
-    state_.valid.nestCount--;
-
-    currentRegion_ = currentRegion_->parent;
-}
-
-bool NiUI::ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held)
-{
-    if (_isHover)
-    {
-        state_.componentID.hover = _id;
-    }
-
-
-    if(_isTrigger)
-    {
-        state_.componentID.active = _id;
-    }
-
-
-    if(state_.componentID.active == _id)
-    {
-        _out_held = true;
-
-        if (_isRelease && _isHover)
-        {
-            state_.componentID.active = {};
-            return true;
-        }
-        else if(_isRelease)
-        {
-            state_.componentID.active = {};
-        }
-    }
-
-    return false;
-}
-
-void NiUI::ButtonDataEnqueue()
-{
-    for(auto& buttonImage : buttonImages_)
-    {
-        // 描画クラスにデータを追加
-        drawer_->EnqueueDrawInfo(&buttonImage.second);
-    }
-}
-
-void NiUI::DivDataEnqueue()
-{
-    for (auto& divData : divData_)
-    {
-        // 描画クラスにデータを追加
-        drawer_->EnqueueDrawInfo(&divData.second);
-    }
-}
-
-void NiUI::PostProcess_Button()
-{
-    auto& componentID = state_.componentID;
-    auto& componentTime = state_.time;
-
-    /// =========
-    /// Active
-    if (!componentID.active.empty())
-    {
-        /// アクティブIDが変更されたら
-        if (componentID.active != componentID.preActive)
-        {
-            // アクティブ時間をリセット
-            componentTime.active = 0;
-        }
-        ++componentTime.active;
-    }
-    else
-    {
-        componentTime.active = 0;
-    }
-
-
-    /// ========
-    /// Hover
-    if (!componentID.hover.empty())
-    {
-        if (componentID.hover != componentID.preHover)
-        {
-            componentTime.hover = 0;
-        }
-        ++componentTime.hover;
-    }
-    else
-    {
-        componentTime.hover = 0;
-    }
-
-    /// ========
-    /// Play SE
-    if (componentTime.active == 0 && componentID.preActive == componentID.preHover && !componentID.preActive.empty())
-    {
-        if (io_.audioHandler.buttonConfirm)
-        {
-            drawer_->PlayAudio(io_.audioHandler.buttonConfirm);
-        }
-        else
-        {
-            drawer_->PlayAudio(io_.audioHnd.buttonConfirm);
-        }
-    }
-    if (componentTime.hover == 1)
-    {
-        if (io_.audioHandler.buttonHover)
-        {
-            drawer_->PlayAudio(io_.audioHandler.buttonHover);
-        }
-        else
-        {
-            drawer_->PlayAudio(io_.audioHnd.buttonHover);
-        }
-    }
-}
-
-
 
 void NiUI::CheckValid_BeginFrame()
 {
@@ -430,7 +225,11 @@ NiVec2 NiUI::ComputeLeftTop(const NiVec2& _position, const NiVec2& _size, const 
 void NiUI::ClearData()
 {
     buttonImages_.clear();
+    divData_.clear();
     state_.componentID.hover = {};
+    state_.componentID.type = {};
+
+    state_.buffer.currentRegion = nullptr;
     return;
 }
 
@@ -450,6 +249,82 @@ void NiUI::CopyInputData()
     io_.input.isLeft = input_.PressLeft();
     io_.input.isRight = input_.PressRight();
     io_.input.isMiddle = input_.PressMiddle();
+
+    io_.input.cursorPos = input_.GetMousePos();
+    io_.input.triggeredPos = input_.GetTriggeredPos();
+    io_.input.differencePos = input_.GetDifferencePos();
 }
 
+void NiUI::PostProcessComponents()
+{
+    auto& componentID = state_.componentID;
+    auto& componentTime = state_.time;
 
+    /// =========
+    /// Active
+    if (!componentID.active.empty())
+    {
+        /// アクティブIDが変更されたら
+        if (componentID.active != componentID.preActive)
+        {
+            // アクティブ時間をリセット
+            componentTime.active = 0;
+        }
+        ++componentTime.active;
+    }
+    else
+    {
+        componentTime.active = 0;
+    }
+
+
+    /// ========
+    /// Hover
+    if (!componentID.hover.empty())
+    {
+        if (componentID.hover != componentID.preHover)
+        {
+            componentTime.hover = 0;
+        }
+        ++componentTime.hover;
+    }
+    else
+    {
+        componentTime.hover = 0;
+    }
+
+    /// ========
+    /// Play SE
+    PlaySE("Button", io_.audioHnd.buttonHover, io_.audioHnd.buttonConfirm, io_.audioHandler.buttonHover, io_.audioHandler.buttonConfirm);
+}
+
+void NiUI::PlaySE(const std::string& _type, uint32_t _hoverSE, uint32_t _confirmSE, void* _hoverHandler, void* _confirmHandler)
+{
+    auto& componentID = state_.componentID;
+    auto& componentTime = state_.time;
+
+    if (componentID.type != _type) return;
+
+    if (componentTime.active == 0 && componentID.preActive == componentID.preHover && !componentID.preActive.empty())
+    {
+        if (_confirmSE != -1)
+        {
+            drawer_->PlayAudio(_confirmSE);
+        }
+        else
+        {
+            drawer_->PlayAudio(_confirmHandler);
+        }
+    }
+    if (componentTime.hover == 1)
+    {
+        if (_hoverSE != -1)
+        {
+            drawer_->PlayAudio(_hoverSE);
+        }
+        else
+        {
+            drawer_->PlayAudio(_hoverHandler);
+        }
+    }
+}

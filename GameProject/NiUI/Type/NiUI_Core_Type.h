@@ -4,11 +4,13 @@
 
 #include "../Math/NiVec2.h" // NiVec2
 #include "../Math/NiVec4.h" // NiVec4
+#include "NiUI_ComponentData.h"
 
 
 // Included in NiUICoreState
 struct NiUIComponentID
 {
+    std::string type;
     std::string active;
     std::string hover;
     std::string preHover;
@@ -30,9 +32,17 @@ struct NiUIValidation
     uint32_t nestCount;
 };
 
+struct NiUIBuffer
+{
+    BaseRegionData* currentRegion;
+};
+
 // Included in NiUIIO
 struct NiUIInputData
 {
+    NiVec2 cursorPos;
+    NiVec2 triggeredPos;
+    NiVec2 differencePos;
     bool isLeft;
     bool isLeftPre;
     bool isRight;
@@ -81,4 +91,5 @@ struct NiUICoreState
     NiUIValidation valid;
     NiUIComponentID componentID;
     NiUITime time;
+    NiUIBuffer buffer;
 };

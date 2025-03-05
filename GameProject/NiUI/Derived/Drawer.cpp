@@ -38,7 +38,7 @@ void Drawer::DrawSetting()
     {
         std::string path = divSpriteCount.first;
         if (divSpriteCount.first == "") path = "white.png";
-        CheckCountAndCreateSprite(path, spritesDiv_[path], divSpriteCount.second + buttonSpriteCount_[path]);
+        CheckCountAndCreateSprite(path, spritesDiv_[path], divSpriteCount.second);
     }
 
     SpriteSettingByButtonData();
