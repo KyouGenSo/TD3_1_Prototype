@@ -15,7 +15,7 @@ NiUIStyle           NiUI::style_        = NiUIStyle();
 std::unordered_map<std::string, ButtonData> NiUI::buttonImages_ = std::unordered_map<std::string, ButtonData>();
 std::unordered_map<std::string, DivData> NiUI::divData_ = std::unordered_map<std::string, DivData>();
 
-std::unordered_map<std::string, NiVec2> NiUI::regionEditted_ = std::unordered_map<std::string, NiVec2>();
+std::unordered_map<std::string, NiVec2> NiUI::regionLeftTopDifference_ = std::unordered_map<std::string, NiVec2>();
 
 
 
@@ -253,6 +253,14 @@ void NiUI::CopyInputData()
     io_.input.cursorPos = input_.GetMousePos();
     io_.input.triggeredPos = input_.GetTriggeredPos();
     io_.input.differencePos = input_.GetDifferencePos();
+}
+
+void NiUI::ClampRect(NiVec2& _leftTop, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize)
+{
+    if (_leftTop.x < _parentPos.x) _leftTop.x = _parentPos.x;
+    if (_leftTop.y < _parentPos.y) _leftTop.y = _parentPos.y;
+    if (_leftTop.x + _size.x > _parentPos.x + _parentSize.x) _leftTop.x = _parentPos.x + _parentSize.x - _size.x;
+    if (_leftTop.y + _size.y > _parentPos.y + _parentSize.y) _leftTop.y = _parentPos.y + _parentSize.y - _size.y;
 }
 
 void NiUI::PostProcessComponents()
