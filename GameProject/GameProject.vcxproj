@@ -188,6 +188,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="RocketLauncher.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SingletonFinalizer.cpp" />
+    <ClCompile Include="Timer\Timer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -220,6 +221,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SingletonFinalizer.h" />
+    <ClInclude Include="Timer\Timer.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

@@ -48,9 +48,6 @@
     <Filter Include="Object\Player">
       <UniqueIdentifier>{4bb56d39-90b3-4d7b-99c8-553ffbfd5511}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DeltaTimeManager">
-      <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameUI">
       <UniqueIdentifier>{9a0f21eb-8949-4e73-a570-f3fc2ef34baf}</UniqueIdentifier>
     </Filter>
@@ -62,6 +59,15 @@
     </Filter>
     <Filter Include="Interface">
       <UniqueIdentifier>{ce930390-efe0-4603-96d9-9a6e83349ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{06268caa-1c1f-4bb9-9718-07cb3f03bc70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\Timer">
+      <UniqueIdentifier>{84cc20f4-17b7-4c84-a730-ae94ffa2cb28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DeltaTimeManager">
+      <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +123,9 @@
     <ClCompile Include="Chain.cpp" />
     <ClCompile Include="RocketBullet.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Timer\Timer.cpp">
+      <Filter>Utility\Timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -208,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\Timer.h">
+      <Filter>Utility\Timer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
