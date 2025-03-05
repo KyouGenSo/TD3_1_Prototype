@@ -69,6 +69,14 @@ public: /// UIコンポーネントの追加
 
     static void EndDiv();
 
+    static bool BeginDivMovable(
+        const std::string& _id,
+        const NiVec2& _position,
+        const NiVec2& _size,
+        const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
+        const NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
+    );
+
     
 public: /// セッター
     static void SetDrawer(IDrawer* _drawer) { drawer_ = _drawer; }
@@ -118,12 +126,13 @@ private: /// メンバ変数
     static std::unordered_map<std::string, DivData> divData_;
 
     // エンドユーザーが変更したデータ
-    static std::unordered_map<std::string, NiVec2> regionEditted_;
+    static std::unordered_map<std::string, NiVec2> regionLeftTopDifference_;
 
 
 private: /// 挙動
     static bool ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held);
-    static NiVec2 DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, const NiVec2& _leftTop);
+    static void DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease);
+    static void DivBehaviorMovable(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease);
 
 
 private: /// 描画クラスにデータを送る関数
@@ -145,4 +154,5 @@ private: /// その他
     static void ClearData();
     static void SavePreData();
     static void CopyInputData();
+    static void ClampRect(NiVec2& _leftTop, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize);
 };
