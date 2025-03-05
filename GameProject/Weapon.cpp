@@ -9,3 +9,7 @@ void Weapon::Execute() {
     isRoot_ = false;
     Initialize();
 }
+
+bool Weapon::IsDead() {
+    return pOwner_->IsDead();
+}

@@ -1,20 +1,26 @@
 #pragma once
+#include "Object.h"
 
-class Weapon{
+class Weapon : public Object{
 protected:
 	struct Status{
 		
 	};
+
+
 	bool isRoot_ = false;
 	Status status_;
+
+	Object* pOwner_ = nullptr;
 
 public:
 	void Fire();
 	void Execute();
 
-	virtual void Update() = 0;
-    virtual void Draw() = 0;
+	void Update() override = 0;
+    void Draw() override = 0;
+	bool IsDead() override;
 protected:
-	virtual void Initialize() = 0;
+	void Initialize() override = 0;
 };
 
