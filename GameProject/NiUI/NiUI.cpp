@@ -28,7 +28,7 @@ void NiUI::Initialize(const NiVec2& _size, const NiVec2& _leftTop)
     input_.Initialize();
 
     style_.windowPadding = { 10, 10 };
-    style_.color.backGround = { 0.0f, 0.0f, 0.0f, 0.3f };
+    style_.color.backGround = { 0.0f, 0.0f, 0.0f, 0.7f };
 
     return;
 }
@@ -230,6 +230,7 @@ void NiUI::ClearData()
     state_.componentID.type = {};
 
     state_.buffer.currentRegion = nullptr;
+    state_.buffer.currentZOrder = 0;
     return;
 }
 

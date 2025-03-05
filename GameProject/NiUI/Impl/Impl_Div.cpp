@@ -70,6 +70,7 @@ bool NiUI::BeginDiv(const std::string& _id, const NiVec2& _position, const NiVec
     /// データの更新
     divData.leftTop = newLeftTop;
     divData.size = _size;
+    divData.zOrder = state_.buffer.currentZOrder++;
 
 
     return true;
@@ -142,6 +143,7 @@ bool NiUI::BeginDivMovable(const std::string& _id, const NiVec2& _position, cons
     /// データの更新
     divData.leftTop = newLeftTop;
     divData.size = _size;
+    divData.zOrder = state_.buffer.currentZOrder++;
 
 
     return true;

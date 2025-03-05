@@ -35,6 +35,7 @@ struct NiUIValidation
 struct NiUIBuffer
 {
     BaseRegionData* currentRegion;
+    uint32_t currentZOrder;
 };
 
 // Included in NiUIIO

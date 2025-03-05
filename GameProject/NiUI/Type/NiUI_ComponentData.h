@@ -31,6 +31,7 @@ struct ButtonData
     std::string textureName;
     NiVec2 leftTop;
     NiVec2 size;
+    uint32_t zOrder;
 };
 
 struct BaseRegionData
@@ -38,6 +39,7 @@ struct BaseRegionData
     std::string id;
     NiVec2 leftTop;
     NiVec2 size;
+    uint32_t zOrder;
 
     BaseRegionData* parent = nullptr;
 };
