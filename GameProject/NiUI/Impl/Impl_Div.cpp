@@ -5,45 +5,12 @@
 
 bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
 {
-    // ネストカウントを増やす
-    state_.valid.nestCount++;
-
-    NiVec2 leftTop = {};
-    NiVec2 size = {};
+    NiVec2 leftTop = _position;
+    NiVec2 size = _size;
     NiVec2 parentPos = {};
     NiVec2 parentSize = {};
 
-    /// 親の座標とサイズを取得
-    if (state_.buffer.currentRegion == nullptr)
-    {
-        parentSize = size_;
-    }
-    else
-    {
-        parentPos = state_.buffer.currentRegion->leftTop;
-        parentSize = state_.buffer.currentRegion->size;
-    }
-
-    /// サイズが親より大きい場合は親のサイズに合わせる
-    size = _size;
-    if (_size.x > parentSize.x) size.x = parentSize.x;
-    if (_size.y > parentSize.y) size.y = parentSize.y;
-
-    /// 親の座標を考慮した座標を計算
-    NiVec2 posInRegion = _position;
-    if (state_.buffer.currentRegion != nullptr)
-    {
-        posInRegion = _position + state_.buffer.currentRegion->leftTop;
-    }
-
-    /// ピボットとアンカーを考慮した座標を計算
-    leftTop = ComputeLeftTop(posInRegion, size, parentSize, _anchor, _pivot);
-
-    /// 親の更新と現在のリージョンの更新
-    auto& divData = divData_[_id];
-    divData.id = _id;
-    divData.parent = state_.buffer.currentRegion;
-    state_.buffer.currentRegion = dynamic_cast<BaseRegionData*>(&divData);
+    ComputeRect(_id, leftTop, size, parentPos, parentSize, _anchor, _pivot);
 
     /// =============
     /// 当たり判定と挙動
@@ -52,26 +19,23 @@ bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, con
     bool isHover = false;
     bool isRelease = false;
 
-    auto& leftTopDiff = regionLeftTopDifference_[_id];
-
-    /// 範囲clamp
-    NiVec2 newLeftTop = leftTop + leftTopDiff;
-    if (state_.buffer.currentRegion != nullptr)
-    {
-        ClampRect(newLeftTop, size, parentPos, parentSize);
-    }
-
     /// 当たり判定
-    JudgeClickRect(newLeftTop, _size, isHover, isTrigger, isRelease);
+    JudgeClickRect(leftTop, size, isHover, isTrigger, isRelease);
 
     /// 挙動
     DivBehavior(_id, isHover, isTrigger, isRelease);
 
     /// データの更新
-    divData.leftTop = newLeftTop;
-    divData.size = _size;
+    auto& divData = divData_[_id];
+    divData.id = _id;
+    divData.leftTop = leftTop;
+    divData.size = size;
     divData.zOrder = state_.buffer.currentZOrder++;
     divData.textureName = _textureName;
+    divData.parent = state_.buffer.currentRegion;
+
+    /// 現在のリージョンを更新
+    state_.buffer.currentRegion = dynamic_cast<BaseRegionData*>(&divData);
 
 
     return true;
@@ -79,45 +43,12 @@ bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, con
 
 bool NiUI::BeginDivMovable(const std::string& _id, const std::string& _textureName, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
 {
-    // ネストカウントを増やす
-    state_.valid.nestCount++;
-
-    NiVec2 leftTop = {};
-    NiVec2 size = {};
+    NiVec2 leftTop = _position;
+    NiVec2 size = _size;
     NiVec2 parentPos = {};
     NiVec2 parentSize = {};
 
-    /// 親の座標とサイズを取得
-    if (state_.buffer.currentRegion == nullptr)
-    {
-        parentSize = size_;
-    }
-    else
-    {
-        parentPos = state_.buffer.currentRegion->leftTop;
-        parentSize = state_.buffer.currentRegion->size;
-    }
-
-    /// サイズが親より大きい場合は親のサイズに合わせる
-    size = _size;
-    if (_size.x > parentSize.x) size.x = parentSize.x;
-    if (_size.y > parentSize.y) size.y = parentSize.y;
-
-    /// 親の座標を考慮した座標を計算
-    NiVec2 posInRegion = _position;
-    if (state_.buffer.currentRegion != nullptr)
-    {
-        posInRegion = _position + state_.buffer.currentRegion->leftTop;
-    }
-    
-    /// ピボットとアンカーを考慮した座標を計算
-    leftTop = ComputeLeftTop(posInRegion, size, parentSize, _anchor, _pivot);
-
-    /// 親の更新と現在のリージョンの更新
-    auto& divData = divData_[_id];
-    divData.id = _id;
-    divData.parent = state_.buffer.currentRegion;
-    state_.buffer.currentRegion = dynamic_cast<BaseRegionData*>(&divData);
+    ComputeRect(_id, leftTop, size, parentPos, parentSize, _anchor, _pivot);
 
     /// =============
     /// 当たり判定と挙動
@@ -126,27 +57,30 @@ bool NiUI::BeginDivMovable(const std::string& _id, const std::string& _textureNa
     bool isHover = false;
     bool isRelease = false;
 
-    auto& leftTopDiff = regionLeftTopDifference_[_id];
-
-    /// 範囲clamp
-    NiVec2 newLeftTop = leftTop + leftTopDiff;
-    if (state_.buffer.currentRegion != nullptr)
-    {
-        ClampRect(newLeftTop, size, parentPos, parentSize);
-    }
+    NiVec2 posClamped = leftTop + divOffset_[_id];
+    ClampRect(posClamped, _size, parentPos, parentSize);
 
     /// 当たり判定
-    JudgeClickRect(newLeftTop, _size, isHover, isTrigger, isRelease);
+    JudgeClickRect(posClamped, size, isHover, isTrigger, isRelease);
 
     /// 挙動
-    DivBehaviorMovable(_id, isHover, isTrigger, isRelease);
+    auto& regionDiff = divOffset_[_id];
+
+    DivBehavior(_id, isHover, isTrigger, isRelease);
+
+    OffsetUpdate(_id, posClamped, leftTop, size, parentPos, parentSize);
 
     /// データの更新
-    divData.leftTop = newLeftTop;
-    divData.size = _size;
+    auto& divData = divData_[_id];
+    divData.id = _id;
+    divData.leftTop = posClamped;
+    divData.size = size;
     divData.zOrder = state_.buffer.currentZOrder++;
     divData.textureName = _textureName;
+    divData.parent = state_.buffer.currentRegion;
 
+    /// 現在のリージョンを更新
+    state_.buffer.currentRegion = dynamic_cast<BaseRegionData*>(&divData);
 
     return true;
 }
@@ -163,9 +97,11 @@ void NiUI::EndDiv()
     state_.buffer.currentRegion = state_.buffer.currentRegion->parent;
 }
 
-
 void NiUI::DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease)
 {
+    // ネストカウントを増やす
+    state_.valid.nestCount++;
+
     if (_isHover)
     {
         state_.componentID.hover = _id;
@@ -176,25 +112,6 @@ void NiUI::DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger, b
     {
         state_.componentID.active = _id;
     }
-
-    if (_isRelease && state_.componentID.active == _id)
-    {
-        state_.componentID.active = {};
-    }
-}
-
-void NiUI::DivBehaviorMovable(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease)
-{
-    auto& regionDiff = regionLeftTopDifference_[_id];
-
-    DivBehavior(_id, _isHover, _isTrigger, _isRelease);
-
-    if (state_.componentID.active == _id)
-    {
-        regionDiff += io_.input.differencePos;
-    }
-
-    return;
 }
 
 void NiUI::DivDataEnqueue()
@@ -204,4 +121,27 @@ void NiUI::DivDataEnqueue()
         // 描画クラスにデータを追加
         drawer_->EnqueueDrawInfo(&divData.second);
     }
+}
+
+void NiUI::ComputeRect(const std::string& _id, NiVec2& _leftTop, NiVec2& _size, NiVec2& _parentPos, NiVec2& _parentSize, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
+{
+    /// 親の座標とサイズを取得
+    if (state_.buffer.currentRegion == nullptr)
+    {
+        _parentSize = size_;
+    }
+    else
+    {
+        _parentPos = state_.buffer.currentRegion->leftTop;
+        _parentSize = state_.buffer.currentRegion->size;
+    }
+
+    /// 親の座標を考慮した座標を計算
+    if (state_.buffer.currentRegion != nullptr)
+    {
+        _leftTop += state_.buffer.currentRegion->leftTop;
+    }
+
+    /// ピボットとアンカーを考慮した座標を計算
+    _leftTop = ComputeLeftTop(_leftTop, _size, _parentSize, _anchor, _pivot);
 }

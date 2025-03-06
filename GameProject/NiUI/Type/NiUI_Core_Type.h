@@ -32,10 +32,17 @@ struct NiUIValidation
     uint32_t nestCount;
 };
 
+// Included in NiUICoreState
+struct NiUIFlags
+{
+    bool autoPosition;
+};
+
 struct NiUIBuffer
 {
     BaseRegionData* currentRegion;
     uint32_t currentZOrder;
+    NiVec2 currentPos;
 };
 
 // Included in NiUIIO
@@ -74,8 +81,11 @@ struct NiUIColor
 
 struct NiUIStyle
 {
-    NiVec2 windowPadding;
     NiUIColor color;
+
+    NiVec2 windowPadding;
+    NiVec2 divPadding;
+    NiVec2 itemSpacing;
 };
 
 
@@ -91,6 +101,7 @@ struct NiUICoreState
 {
     NiUIValidation valid;
     NiUIComponentID componentID;
+    NiUIFlags flags;
     NiUITime time;
     NiUIBuffer buffer;
 };
