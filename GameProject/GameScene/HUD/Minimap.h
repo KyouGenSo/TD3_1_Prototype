@@ -2,8 +2,8 @@
 #include <memory>
 #include <vector>
 
-#include "Object.h"
 #include "Sprite.h"
+#include "GameScene/Object/Object.h"
 
 class Minimap{
 	struct StageRange{

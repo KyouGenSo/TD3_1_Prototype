@@ -1,9 +1,10 @@
 #pragma once
-#include "Object.h"
-#include "Camera.h"
-#include "Collider.h"
+#include "GameScene/Object/Object.h"
 
-#include "Chain.h"
+#include "Camera.h"
+#include "Weapon/Chain.h"
+#include "GameScene/Object/Collision/Collider.h"
+
 
 class Player : public Object{
     std::unique_ptr<Collider> collider_;

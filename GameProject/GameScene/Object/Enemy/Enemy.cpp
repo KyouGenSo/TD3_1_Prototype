@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "Object3dBasic.h"
-#include "CollisionManager.h"
 
 void Enemy::Initialize()
 {
