@@ -47,7 +47,7 @@ void Collider::OnCollisionTrigger(const Object* pObject) const {
     onCollisionTrigger_(pObject);
 }
 
-Transform& Collider::GetTransform() const {
+const Transform& Collider::GetTransform() const {
     return pOwner_->GetTransform();
 }
 

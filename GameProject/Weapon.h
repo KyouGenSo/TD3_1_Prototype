@@ -1,26 +1,32 @@
 #pragma once
 #include "Object.h"
 
-class Weapon : public Object{
-protected:
-	struct Status{
-		
-	};
+#include <memory>
+#include <list>
 
+#include <Bullet.h>
+#include <Chain.h>
 
-	bool isRoot_ = false;
-	Status status_;
+class Weapon : public Object
+{
+public:
+    virtual void Fire() = 0;
 
-	Object* pOwner_ = nullptr;
+    void Update() override = 0;
+    void Draw() override = 0;
+
 
 public:
-	void Fire();
-	void Execute();
+    void SetChainManager(ChainManager* _chainManager) { pChainManager_ = _chainManager; }
 
-	void Update() override = 0;
-    void Draw() override = 0;
-	bool IsDead() override;
+
 protected:
-	void Initialize() override = 0;
+    std::list<std::unique_ptr<Bullet>> bullets_;
+    ChainManager* pChainManager_ = nullptr;
+
+
+protected:
+    void Initialize() override = 0;
+    void AddNewBullet(std::unique_ptr<Bullet> _bullet);
 };
 

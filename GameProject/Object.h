@@ -15,6 +15,7 @@ protected:
     Camera* pCamera_ = nullptr;
     std::unique_ptr<Object3d> model_;
 	Transform transform_ {};
+    bool isDead_ = false;
 
 public:
 	Object();
@@ -27,14 +28,35 @@ public:
     virtual void OnCollisionTrigger(const Object* pObject){}
     virtual void OnCollision(const Object* pObject){}
     virtual void OnCollisionExit(const Object* pObject){}
-	virtual bool IsDead() = 0;
 
-	Transform& GetTransform(){
+
+public: /// Setter
+    void SetTransform(const Transform& _transform) {
+        transform_ = _transform;
+    }
+    void SetPosition(const Vector3& _position) {
+        transform_.translate = _position;
+    }
+    void SetRotation(const Vector3& _rotation) {
+        transform_.rotate = _rotation;
+    }
+    void SetScale(const Vector3& _scale) {
+        transform_.scale = _scale;
+    }
+
+
+public: /// Getter
+	const Transform& GetTransform() {
 	    return transform_;
-	}
+    }
 
-    const std::string& GetUniqueId(){
+    const std::string& GetUniqueId() {
         return uuid_;
+    }
+
+    bool IsDead() const
+    {
+        return isDead_;
     }
 };
 

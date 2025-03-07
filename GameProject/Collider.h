@@ -59,7 +59,7 @@ public:
         return pOwner_;
     }
 
-	Transform& GetTransform() const;
+	const Transform& GetTransform() const;
 
     float GetRadius() const{
         return radius_;

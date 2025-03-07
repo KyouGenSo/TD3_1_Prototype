@@ -69,6 +69,9 @@
     <Filter Include="DeltaTimeManager">
       <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{4f3b2e73-5456-40c8-bc4e-c00619d8f873}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -126,6 +129,7 @@
     <ClCompile Include="Timer\Timer.cpp">
       <Filter>Utility\Timer</Filter>
     </ClCompile>
+    <ClCompile Include="BulletFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -220,6 +224,9 @@
     </ClInclude>
     <ClInclude Include="Timer\Timer.h">
       <Filter>Utility\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

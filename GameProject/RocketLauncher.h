@@ -4,10 +4,9 @@
 
 class RocketLauncher final : public Weapon{
 public:
+	void Initialize() override;
 	void Update() override;
 	void Draw() override;
-
-protected:
-	void Initialize() override;
+    void Fire() override;
 };
 
