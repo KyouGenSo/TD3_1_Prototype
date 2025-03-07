@@ -19,15 +19,15 @@ public:
 
 	bool IsDead() override;
 
-	void OnCollisionTrigger(const Object* eObject) override;
+	void OnCollision(const Object* pObject) override;
 
 private:
 	std::unique_ptr<Object3d> model_;
 
-	Transform transform_{};
-
 	Camera* eCamera_ = nullptr;
 
 	std::unique_ptr<Collider> collider_;
+
+	Vector3 prePos;
 };
 

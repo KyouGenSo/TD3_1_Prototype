@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Object3dBasic.h"
+#include "CollisionManager.h"
 
 void Enemy::Initialize()
 {
@@ -12,13 +13,23 @@ void Enemy::Initialize()
     transform_ = {
         {1.0f,1.0f,1.0f},
         {0.0f,0.0f,0.0f},
-        {0.0f,0.0f,0.0f}
+        {0.0f,0.0f,5.0f}
     };
+	model_->SetScale(transform_.scale);
+	model_->SetRotate(transform_.rotate);
+    model_->SetTranslate(transform_.translate);
+
+    collider_ = std::make_unique<Collider>(this);
+    collider_->SetEvent([this](const Object* pObj) {this->OnCollision(pObj); });
 }
 
 void Enemy::Update()
 {
-	model_->Update();
+    prePos = transform_.translate;
+    model_->Update();
+    transform_.translate += Vector3{0.0f,0.0f,-0.1f};
+	model_->SetTranslate(transform_.translate);
+
 }
 
 void Enemy::Draw()
@@ -35,6 +46,7 @@ bool Enemy::IsDead()
 	return false;
 }
 
-void Enemy::OnCollisionTrigger(const Object* eObject)
+void Enemy::OnCollision(const Object* pObject)
 {
+	transform_.translate = prePos;
 }

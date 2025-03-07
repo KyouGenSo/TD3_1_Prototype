@@ -15,7 +15,7 @@ void GameScene::Initialize() {
 
 	ModelManager::GetInstance()->LoadModel("cube.gltf");
 	enemy_ = std::make_unique<Enemy>();
-	enemy_->Initialize();
+    enemy_->Initialize();
 
 	ModelManager::GetInstance()->LoadModel("bigCube.gltf");
 	boss_ = std::make_unique<Boss>();
@@ -39,11 +39,11 @@ void GameScene::Finalize() {
 void GameScene::Update() {
     camera_->Update();
     player_->Update();
-    guiLvUP_->Update();
+    //guiLvUP_->Update();
 
-    pCollisionManager_->Update();
 	enemy_->Update();
 	boss_->Update();
+    pCollisionManager_->Update();
 }
 
 void GameScene::Draw() {

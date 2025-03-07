@@ -13,12 +13,20 @@ void Boss::Initialize()
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,10.0f}
 	};
+	model_->SetScale(transform_.scale);
+	model_->SetRotate(transform_.rotate);
 	model_->SetTranslate(transform_.translate);
+
+	collider_ = std::make_unique<Collider>(this);
+	collider_->SetEvent([this](const Object* pObj) {this->OnCollision(pObj); });
 }
 
 void Boss::Update()
 {
+	prePos = transform_.translate;
 	model_->Update();
+	transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
+	model_->SetTranslate(transform_.translate);
 }
 
 void Boss::Draw()
@@ -35,6 +43,7 @@ bool Boss::IsDead()
 	return false;
 }
 
-void Boss::OnCollisionTrigger(const Object* bObject)
+void Boss::OnCollision(const Object* pObject)
 {
+	transform_.translate = prePos;
 }
