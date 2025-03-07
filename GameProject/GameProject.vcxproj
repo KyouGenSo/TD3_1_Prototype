@@ -181,8 +181,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="NiUI\Derived\Drawer.cpp" />
     <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
     <ClCompile Include="NiUI\Derived\ProcHandler.cpp" />
+    <ClCompile Include="NiUI\Impl\Impl_Button.cpp" />
+    <ClCompile Include="NiUI\Impl\Impl_Div.cpp" />
     <ClCompile Include="NiUI\Interface\NiUI_IDrawer.cpp" />
     <ClCompile Include="NiUI\Math\NiVec2.cpp" />
+    <ClCompile Include="NiUI\Math\NiVec3.cpp" />
+    <ClCompile Include="NiUI\Math\NiVec4.cpp" />
     <ClCompile Include="NiUI\NiUI.cpp" />
     <ClCompile Include="NiUI\NiUI_Input.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -199,6 +203,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h" />
     <ClInclude Include="NiUI\Interface\NiUI_IDebug.h" />
+    <ClInclude Include="NiUI\Math\NiVec3.h" />
+    <ClInclude Include="NiUI\Math\NiVec4.h" />
     <ClInclude Include="NiUI\Type\NiUI_Core_Type.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h" />

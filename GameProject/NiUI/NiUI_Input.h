@@ -20,6 +20,8 @@ public:
         bool isRightPre;
         bool isMiddle;
         bool isMiddlePre;
+        NiVec2 triggeredPos;
+        NiVec2 differencePos;
     };
 
 public: /// コンストラクタとデストラクタ
@@ -65,6 +67,12 @@ public: // 入力データ取得
 
     // マウス座標
     NiVec2 GetMousePos() const { return mouseData_.pos; }
+
+    // トリガーした座標
+    NiVec2 GetTriggeredPos() const { return mouseData_.triggeredPos; }
+
+    // マウスの移動量 ( 前フレームの座標からの差分 )
+    NiVec2 GetDifferencePos() const { return mouseData_.differencePos; }
 
 
 private:
