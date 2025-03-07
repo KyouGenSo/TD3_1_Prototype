@@ -1,16 +1,15 @@
 #pragma once
-#include <memory>
+#include "GameScene/Object/Object.h"
 
-#include "Object.h"
 #include "Camera.h"
-#include "Chain.h"
-#include "Collider.h"
-#include <Weapon.h>
+#include "Weapon/Chain.h"
+#include "GameScene/Object/Collision/Collider.h"
+
 
 class Player : public Object {
     std::unique_ptr<Collider> collider_;
-    std::unique_ptr<ChainManager> chainManager_;
-    std::unique_ptr<Weapon> weapon_;
+
+    std::unique_ptr<Chain> chain_;
 
     Vector3 move_{};
 

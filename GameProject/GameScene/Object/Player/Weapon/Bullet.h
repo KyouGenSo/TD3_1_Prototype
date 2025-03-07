@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include <memory>
 
-#include "Collider.h"
-#include "Object.h"
+#include "GameScene/Object/Object.h"
+#include "GameScene/Object/Collision/Collider.h"
 #include <Chain.h>
 
 
