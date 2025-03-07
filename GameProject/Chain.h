@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
-#include "Player.h"
 #include "Weapon.h"
 
 class Chain{
@@ -17,7 +17,6 @@ private:
 	std::vector<Type> types;
 	std::unordered_map<Type, std::unique_ptr<Weapon>> weapons_;
 
-	Player* pOwner_ = nullptr;
 public:
 	void Initialize();
 	void Fire();

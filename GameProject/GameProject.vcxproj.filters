@@ -117,6 +117,7 @@
     <ClCompile Include="Chain.cpp" />
     <ClCompile Include="RocketBullet.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Minimap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -207,6 +208,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Minimap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

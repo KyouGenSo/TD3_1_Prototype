@@ -175,6 +175,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Minimap.cpp" />
     <ClCompile Include="MyGame.cpp" />
     <ClCompile Include="NiUI\Derived\Drawer.cpp" />
     <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
@@ -197,6 +198,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="FollowCamera.h" />
+    <ClInclude Include="Minimap.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h" />
     <ClInclude Include="NiUI\Interface\NiUI_IDebug.h" />

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 
 #pragma comment(lib, "rpcrt4.lib")
 

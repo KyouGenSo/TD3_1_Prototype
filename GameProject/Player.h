@@ -1,13 +1,13 @@
 #pragma once
-#include <memory>
-
 #include "Object.h"
 #include "Camera.h"
-#include "Chain.h"
 #include "Collider.h"
+
+#include "Chain.h"
 
 class Player : public Object{
     std::unique_ptr<Collider> collider_;
+
     std::unique_ptr<Chain> chain_;
 
     Vector3 move_ {};
