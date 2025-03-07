@@ -2,7 +2,7 @@
 
 void IDrawer::DrawSetting()
 {
-    if(buttonDrawDataQueue_.empty())
+    if(buttonDrawDataList_.empty())
     {
         return;
     }

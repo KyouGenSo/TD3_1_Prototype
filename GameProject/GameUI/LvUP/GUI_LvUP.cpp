@@ -30,21 +30,29 @@ void GUI_LvUP::ShowLvUP()
 {
     auto center = NiUI_StandardPoint::Center;
 
+    auto confirm = NiUI_ButtonState::Confirm;
+
     /// レベルアップ画面を表示する処理
     bool isClose = false;
 
-    if (NiUI::Button("Card1", TEXTUREPATH_, { -200.0f, 50.0f }, { 240.0f, 360.0f }, center, center) == NiUI_ButtonState::Confirm)
+    if (NiUI::BeginDiv("LvUP", TEXTUREPATH_, NiUI::BLACK, { 0, 0 }, { 800, 450 }, center, center))
     {
-        isClose = true;
+        if (NiUI::Button("Close1", TEXTUREPATH_, { -250, 0 }, { 200, 350 }, center, center) == confirm)
+        {
+            isClose = true;
+        }
+        if (NiUI::Button("Close2", TEXTUREPATH_, { 0, 0 }, { 200, 350 }, center, center) == confirm)
+        {
+            isClose = true;
+        }
+        if (NiUI::Button("Close3", TEXTUREPATH_, { 250, 0 }, { 200, 350 }, center, center) == confirm)
+        {
+            isClose = true;
+        }
+        NiUI::EndDiv();
     }
-    if (NiUI::Button("Card2", TEXTUREPATH_, { 0.0f, 0.0f }, { 240.0f, 360.0f }, center, center) == NiUI_ButtonState::Confirm)
-    {
-        isClose = true;
-    }
-    if (NiUI::Button("Card3", TEXTUREPATH_, { 260.0f, 0.0f }, { 240.0f, 360.0f }, center, center) == NiUI_ButtonState::Confirm)
-    {
-        isClose = true;
-    }
+
+
 
     if (isClose)
     {
