@@ -146,8 +146,7 @@ void Drawer::SpriteSettingByDivData()
         sprite->SetPos(Vector2(data->leftTop.x, data->leftTop.y));
         sprite->SetSize(Vector2(data->size.x, data->size.y));
 
-        auto color = NiUI::GetStyle().color.backGround;
-        sprite->SetColor({ color.x, color.y, color.z, color.w });
+        sprite->SetColor({ data->color.x, data->color.y, data->color.z, data->color.w });
 
         spritesZOrdered_[data->zOrder] = sprite;
 

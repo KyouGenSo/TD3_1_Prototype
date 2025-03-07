@@ -64,6 +64,7 @@ public: /// UIコンポーネントの追加
     static bool BeginDiv(
         const std::string& _id,
         const std::string& _textureName,
+        const NiVec4& _color,
         const NiVec2& _position,
         const NiVec2& _size,
         const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
@@ -77,6 +78,7 @@ public: /// UIコンポーネントの追加
     static bool BeginDivMovable(
         const std::string& _id,
         const std::string& _textureName,
+        const NiVec4& _color,
         const NiVec2& _position,
         const NiVec2& _size,
         const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
@@ -167,4 +169,12 @@ private: /// その他
     static void CopyInputData();
     static void ClampRect(NiVec2& _leftTop, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize);
     static void OffsetUpdate(const std::string& _id, const NiVec2& _leftTop, const NiVec2& _posInRegion, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize);
+
+
+public: /// 色
+    static const NiVec4 WHITE;
+    static const NiVec4 BLACK;
+    static const NiVec4 RED;
+    static const NiVec4 GREEN;
+    static const NiVec4 BLUE;
 };

@@ -12,6 +12,12 @@ NiUICoreState       NiUI::state_        = NiUICoreState();
 INiUIDebug*         NiUI::debug_        = nullptr;
 NiUIStyle           NiUI::style_        = NiUIStyle();
 
+const NiVec4        NiUI::WHITE         = { 1.0f, 1.0f, 1.0f, 1.0f };
+const NiVec4        NiUI::BLACK         = { 0.0f, 0.0f, 0.0f, 1.0f };
+const NiVec4        NiUI::RED           = { 1.0f, 0.0f, 0.0f, 1.0f };
+const NiVec4        NiUI::GREEN         = { 0.0f, 1.0f, 0.0f, 1.0f };
+const NiVec4        NiUI::BLUE          = { 0.0f, 0.0f, 1.0f, 1.0f };
+
 std::unordered_map<std::string, ButtonData> NiUI::buttonImages_ = std::unordered_map<std::string, ButtonData>();
 std::unordered_map<std::string, DivData> NiUI::divData_ = std::unordered_map<std::string, DivData>();
 
