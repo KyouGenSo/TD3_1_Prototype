@@ -7,6 +7,7 @@
 
 #include <string> // string
 #include "../math/NiVec2.h" // NiVec2
+#include "../math/NiVec4.h" // NiVec4
 #include "NiUI_Enum.h" // enums
 
 
@@ -38,6 +39,7 @@ struct BaseRegionData
 {
     std::string id;
     std::string textureName;
+    NiVec4 color;
     NiVec2 leftTop;
     NiVec2 size;
     uint32_t zOrder;

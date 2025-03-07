@@ -3,7 +3,7 @@
 #include <stdexcept> // runtime_error
 
 
-bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
+bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, const NiVec4& _color, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
 {
     NiVec2 leftTop = _position;
     NiVec2 size = _size;
@@ -28,10 +28,11 @@ bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, con
     /// データの更新
     auto& divData = divData_[_id];
     divData.id = _id;
+    divData.textureName = _textureName;
+    divData.color = _color;
     divData.leftTop = leftTop;
     divData.size = size;
     divData.zOrder = state_.buffer.currentZOrder++;
-    divData.textureName = _textureName;
     divData.parent = state_.buffer.currentRegion;
 
     /// 現在のリージョンを更新
@@ -41,7 +42,7 @@ bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, con
     return true;
 }
 
-bool NiUI::BeginDivMovable(const std::string& _id, const std::string& _textureName, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
+bool NiUI::BeginDivMovable(const std::string& _id, const std::string& _textureName, const NiVec4& _color, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
 {
     NiVec2 leftTop = _position;
     NiVec2 size = _size;
@@ -73,10 +74,11 @@ bool NiUI::BeginDivMovable(const std::string& _id, const std::string& _textureNa
     /// データの更新
     auto& divData = divData_[_id];
     divData.id = _id;
+    divData.textureName = _textureName;
+    divData.color = _color;
     divData.leftTop = posClamped;
     divData.size = size;
     divData.zOrder = state_.buffer.currentZOrder++;
-    divData.textureName = _textureName;
     divData.parent = state_.buffer.currentRegion;
 
     /// 現在のリージョンを更新
