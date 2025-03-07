@@ -27,6 +27,11 @@ void GameScene::Initialize() {
 
     guiLvUP_ = std::make_unique<GUI_LvUP>();
     guiLvUP_->OnNotify("lvup");
+
+    minimap_ = make_unique<Minimap>();
+    minimap_->Initialize();
+    minimap_->Register(player_.get());
+    minimap_->SetSize({-30, 0, -30}, {30, 0, 30});
 }
 
 void GameScene::Finalize() {
@@ -39,7 +44,10 @@ void GameScene::Finalize() {
 void GameScene::Update() {
     camera_->Update();
     player_->Update();
-    //guiLvUP_->Update();
+
+    guiLvUP_->Update();
+    minimap_->Update();
+
 
 	enemy_->Update();
 	boss_->Update();
@@ -47,7 +55,9 @@ void GameScene::Update() {
 }
 
 void GameScene::Draw() {
-    //------------------背景Spriteの描画------------------//
+    Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+
+	//------------------背景Spriteの描画------------------//
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
@@ -62,7 +72,7 @@ void GameScene::Draw() {
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
-    Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    minimap_->Draw();
 }
 
 void GameScene::DrawImGui() {

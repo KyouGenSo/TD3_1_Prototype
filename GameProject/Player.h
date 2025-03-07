@@ -1,17 +1,14 @@
 #pragma once
-#include <memory>
-
 #include "Object.h"
-#include "Object3d.h"
 #include "Camera.h"
 #include "Collider.h"
 
+#include "Chain.h"
+
 class Player : public Object{
-    std::unique_ptr<Object3d> model_;
-
-    Camera* pCamera_ = nullptr;
-
     std::unique_ptr<Collider> collider_;
+
+    std::unique_ptr<Chain> chain_;
 
     Vector3 move_ {};
 
@@ -20,9 +17,9 @@ class Player : public Object{
     const float FLOOR = 0.f;
     const float GRAVITY = -.16f;
 public:
-	void Initialize();
-    void Update();
-    void Draw();
+	void Initialize() override;
+    void Update() override;
+    void Draw() override;
     void Finalize();
     void ImGui();
     bool IsDead() override;

@@ -7,10 +7,13 @@
 #include "Enemy.h"
 #include "Boss.h"
 
+#include "Minimap.h"
+
 class GameScene : public BaseScene {
     std::unique_ptr<Player> player_;
     std::unique_ptr<FollowCamera> camera_;
     std::unique_ptr<GUI_LvUP> guiLvUP_;
+    std::unique_ptr<Minimap> minimap_; 
     CollisionManager* pCollisionManager_ = nullptr;
 	std::unique_ptr<Enemy>enemy_;
 	std::unique_ptr<Boss>boss_;
