@@ -1,7 +1,7 @@
 #include "MyGame.h"
 #include"Audio.h"
 #include"Input.h"
-#include "SceneFactory.h"
+#include <Factory/SceneFactory.h>
 #include "SceneManager.h"
 #include "TextureManager.h"
 #include "ParticleManager.h"
@@ -83,9 +83,6 @@ void MyGame::Update()
     #ifdef _DEBUG
     imguiManager_->Begin();
     #endif // _DEBUG
-
-    // カメラの更新
-    defaultCamera_->Update();
 
     // 入力情報の更新
     Input::GetInstance()->Update();

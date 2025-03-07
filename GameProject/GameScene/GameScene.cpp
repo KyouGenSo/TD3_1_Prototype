@@ -1,4 +1,4 @@
-﻿#include "GameScene.h"
+#include "GameScene.h"
 
 #include "Draw2D.h"
 #include "ModelManager.h"
@@ -42,8 +42,8 @@ void GameScene::Finalize() {
 }
 
 void GameScene::Update() {
-    camera_->Update();
     player_->Update();
+    camera_->Update();
 
     guiLvUP_->Update();
     minimap_->Update();

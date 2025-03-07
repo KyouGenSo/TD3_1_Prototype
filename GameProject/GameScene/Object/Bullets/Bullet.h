@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <memory>
 
 #include "GameScene/Object/Object.h"
@@ -9,9 +9,9 @@
 class Bullet : public Object
 {
 public:
-    virtual void Initialize() = 0;
+    virtual void Initialize() override = 0;
     virtual void Fire();
-    virtual void OnCollisionTrigger(const Object* _other) = 0;
+    virtual void OnCollisionTrigger(const Object* _other) override = 0;
 
 
 public: /// Setter
@@ -30,6 +30,8 @@ protected:
 protected:
     virtual void AttackNormal() = 0;
     virtual void AttackChain() = 0;
+    virtual void MoveNormal() = 0;
+    virtual void MoveChain() = 0;
     void CreateNextBullet();
 
     // クールタイムがあがっていればtrueを返す

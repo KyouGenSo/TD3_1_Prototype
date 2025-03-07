@@ -15,7 +15,7 @@ void FollowCamera::Update() {
     } else{
         yaw += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.1f;
     }
-    pCamera_->SetRotate({0.f, yaw, 0.f});
+    pCamera_->SetRotate(Vector3{ 0, yaw, 0.f });
 
 	//translate
     if (pTarget_){
@@ -23,6 +23,8 @@ void FollowCamera::Update() {
 	    Vector3 offset = Mat4x4::TransFormNormal(rotation, offset_);
         pCamera_->SetTranslate(pTarget_->translate + offset);
     }
+
+    pCamera_->Update();
 }
 
 void FollowCamera::Finalize() {

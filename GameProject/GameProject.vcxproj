@@ -240,6 +240,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Timer\Timer.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
     <ClInclude Include="Type\Singleton.h" />
+    <ClInclude Include="Type\WeaponType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include <memory>
-#include <GameScene/System/ChainManager.h>
+
+#include <Type/WeaponType.h>
 
 class Bullet;
 

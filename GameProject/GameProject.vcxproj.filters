@@ -308,5 +308,8 @@
     <ClInclude Include="GameScene\System\ChainManager.h">
       <Filter>GameSystem\ChainManager</Filter>
     </ClInclude>
+    <ClInclude Include="Type\WeaponType.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
