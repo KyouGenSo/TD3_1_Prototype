@@ -7,7 +7,6 @@
 void Player::Initialize() {
 	model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    pCamera_ = Object3dBasic::GetInstance()->GetCamera();
     model_->SetCamera(pCamera_);
     model_->SetModel("AnimatedCube.gltf");
 
@@ -19,9 +18,17 @@ void Player::Initialize() {
 
     collider_ = std::make_unique<Collider>(this);
     collider_->SetEvent([this](const Object* obj){this->OnCollision(obj); });
+
+    chain_ = std::make_unique<Chain>();
 }
 
 void Player::Update() {
+    // Attack
+    if (Input::GetInstance()->PushKey(DIK_SPACE) || Input::GetInstance()->PushKey(JOY_BUTTON1)){
+        chain_->Fire();
+    }
+
+    // Movement
 	constexpr float speed = 0.3f;
     Vector3 move{};
 	if(Input::GetInstance()->IsConnect()){

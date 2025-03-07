@@ -166,6 +166,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Chain.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp" />
@@ -173,6 +175,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Minimap.cpp" />
     <ClCompile Include="MyGame.cpp" />
     <ClCompile Include="NiUI\Derived\Drawer.cpp" />
     <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
@@ -186,14 +189,20 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="NiUI\NiUI.cpp" />
     <ClCompile Include="NiUI\NiUI_Input.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RocketBullet.cpp" />
+    <ClCompile Include="RocketLauncher.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SingletonFinalizer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Chain.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="FollowCamera.h" />
+    <ClInclude Include="Minimap.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h" />
     <ClInclude Include="NiUI\Interface\NiUI_IDebug.h" />
@@ -214,10 +223,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="NiUI\Type\NiUI_ComponentData.h" />
     <ClInclude Include="NiUI\Type\NiUI_Enum.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RocketBullet.h" />
+    <ClInclude Include="RocketLauncher.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SingletonFinalizer.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

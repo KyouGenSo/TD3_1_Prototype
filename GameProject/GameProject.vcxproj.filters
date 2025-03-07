@@ -127,6 +127,12 @@
     <ClCompile Include="NiUI\Impl\Impl_Div.cpp">
       <Filter>NiUI\Impl</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="RocketLauncher.cpp" />
+    <ClCompile Include="Chain.cpp" />
+    <ClCompile Include="RocketBullet.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Minimap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -209,6 +215,24 @@
     </ClInclude>
     <ClInclude Include="NiUI\Math\NiVec3.h">
       <Filter>NiUI\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketLauncher.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Chain.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketBullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Minimap.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
