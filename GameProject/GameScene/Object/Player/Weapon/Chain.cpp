@@ -1,6 +1,6 @@
 #include "Chain.h"
 
-#include "RocketLauncher.h"
+#include "RocketLauncher/RocketLauncher.h"
 
 void Chain::Initialize() {
     weapons_[Type::RocketLauncher] = std::make_unique<RocketLauncher>();

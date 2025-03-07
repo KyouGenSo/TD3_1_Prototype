@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
 
-#include "Object.h"
 #include "Object3d.h"
 #include "Camera.h"
-#include "Collider.h"
+#include "GameScene/Object/Object.h"
+#include "GameScene/Object/Collision/Collider.h"
 
-class Boss : public Object
+class Enemy : public Object
 {
 public:
 	void Initialize();
@@ -24,7 +24,7 @@ public:
 private:
 	std::unique_ptr<Object3d> model_;
 
-	Camera* bCamera_ = nullptr;
+	Camera* eCamera_ = nullptr;
 
 	std::unique_ptr<Collider> collider_;
 

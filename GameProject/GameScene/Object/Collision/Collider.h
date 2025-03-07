@@ -2,8 +2,8 @@
 #include <functional>
 #include <string>
 
-#include "Object.h"
 #include "Transform.h"
+#include "GameScene/Object/Object.h"
 
 class CollisionManager;
 

@@ -1,13 +1,15 @@
 #pragma once
-#include "BaseScene.h"
-#include "CollisionManager.h"
-#include "FollowCamera.h"
-#include "Player.h"
-#include <GameUI/LvUP/GUI_LvUP.h>
-#include "Enemy.h"
-#include "Boss.h"
+#include <memory>
 
-#include "Minimap.h"
+#include "BaseScene.h"
+#include <GameUI/LvUP/GUI_LvUP.h>
+
+#include "HUD/Minimap.h"
+#include "Object/Camera/FollowCamera.h"
+#include "Object/Collision/CollisionManager.h"
+#include "Object/Enemy/Boss.h"
+#include "Object/Enemy/Enemy.h"
+#include "Object/Player/Player.h"
 
 class GameScene : public BaseScene {
     std::unique_ptr<Player> player_;
