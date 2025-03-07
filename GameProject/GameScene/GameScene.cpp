@@ -3,7 +3,7 @@
 #include "Draw2D.h"
 #include "ModelManager.h"
 #include "Object3dBasic.h"
-#include "Singleton.h"
+#include <Type/Singleton.h>
 #include "SpriteBasic.h"
 
 void GameScene::Initialize() {

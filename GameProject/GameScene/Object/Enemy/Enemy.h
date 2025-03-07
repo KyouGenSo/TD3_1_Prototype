@@ -17,8 +17,6 @@ public:
 
 	void Finalize();
 
-	bool IsDead() override;
-
 	void OnCollision(const Object* pObject) override;
 
 private:

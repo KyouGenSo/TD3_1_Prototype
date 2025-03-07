@@ -1,7 +1,7 @@
 #include "Collider.h"
-
 #include "CollisionManager.h"
-#include "Singleton.h"
+
+#include <Type/Singleton.h>
 
 Collider::Collider(Object* _owner)
 	: pManager_(Singleton<CollisionManager>::GetInstance()),
@@ -47,7 +47,7 @@ void Collider::OnCollisionTrigger(const Object* pObject) const {
     onCollisionTrigger_(pObject);
 }
 
-Transform& Collider::GetTransform() const {
+const Transform& Collider::GetTransform() const {
     return pOwner_->GetTransform();
 }
 

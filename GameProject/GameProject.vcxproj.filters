@@ -48,9 +48,6 @@
     <Filter Include="Object\Player">
       <UniqueIdentifier>{4bb56d39-90b3-4d7b-99c8-553ffbfd5511}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DeltaTimeManager">
-      <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameUI">
       <UniqueIdentifier>{9a0f21eb-8949-4e73-a570-f3fc2ef34baf}</UniqueIdentifier>
     </Filter>
@@ -63,8 +60,41 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{ce930390-efe0-4603-96d9-9a6e83349ada}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{06268caa-1c1f-4bb9-9718-07cb3f03bc70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\Timer">
+      <UniqueIdentifier>{84cc20f4-17b7-4c84-a730-ae94ffa2cb28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DeltaTimeManager">
+      <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
+    </Filter>
     <Filter Include="NiUI\Impl">
       <UniqueIdentifier>{8eede6ca-bab7-4ca9-a4c7-070da6dc8cc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss">
+      <UniqueIdentifier>{9d2a67d2-0c0c-43f2-9012-9d663b6820d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Bullets">
+      <UniqueIdentifier>{055f0f61-8fed-437d-a63d-397177037383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Weapons">
+      <UniqueIdentifier>{efe50125-f3dc-4977-a4f0-2d965ccfca74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\Collision">
+      <UniqueIdentifier>{549b4036-6036-462a-9e16-c81b96ee9001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy">
+      <UniqueIdentifier>{abb3b82a-2dc0-4dcc-8a58-8a05aafcf25a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Type">
+      <UniqueIdentifier>{793b80ad-0ce8-49ec-b5a5-4f9cdd4aaed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\ChainManager">
+      <UniqueIdentifier>{2b3a8871-3895-4fca-aec8-10ccd7362de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal">
+      <UniqueIdentifier>{81eeabda-5b66-497e-8d82-c872072fabb5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,20 +117,11 @@
     <ClCompile Include="GameScene\Object\Player\Player.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="MyGame.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\GameScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Object\Camera\FollowCamera.cpp">
       <Filter>GameSystem\FollowCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneFactory.cpp">
-      <Filter>Scene\ConcreteSceneFactory</Filter>
     </ClCompile>
     <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp">
       <Filter>DeltaTimeManager</Filter>
@@ -111,10 +132,6 @@
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp">
       <Filter>GameUI\LvUP</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Collision\Collider.cpp" />
-    <ClCompile Include="GameScene\Object\Collision\CollisionManager.cpp" />
-    <ClCompile Include="SingletonFinalizer.cpp" />
-    <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
     <ClCompile Include="NiUI\Math\NiVec4.cpp">
       <Filter>NiUI\Math</Filter>
     </ClCompile>
@@ -127,14 +144,57 @@
     <ClCompile Include="NiUI\Impl\Impl_Div.cpp">
       <Filter>NiUI\Impl</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Player\Weapon\Weapon.cpp" />
-    <ClCompile Include="GameScene\Object\Player\Weapon\RocketLauncher\RocketLauncher.cpp" />
-    <ClCompile Include="GameScene\Object\Player\Weapon\Chain.cpp" />
-    <ClCompile Include="GameScene\Object\Player\Weapon\RocketLauncher\RocketBullet.cpp" />
-    <ClCompile Include="GameScene\Object\Player\Weapon\Bullet.cpp" />
-    <ClCompile Include="GameScene\HUD\Minimap.cpp" />
-    <ClCompile Include="GameScene\Object\Enemy\Boss.cpp" />
-    <ClCompile Include="GameScene\Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="Timer\Timer.cpp">
+      <Filter>Utility\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Enemy\Boss.cpp">
+      <Filter>Object\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Collision\Collider.cpp">
+      <Filter>GameSystem\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Enemy\Enemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Collision\CollisionManager.cpp">
+      <Filter>GameSystem\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp">
+      <Filter>NiUI\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\HUD\Minimap.cpp">
+      <Filter>GameUI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Bullets\Bullet.cpp">
+      <Filter>Object\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Bullets\BulletFactory.cpp">
+      <Filter>Object\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Bullets\Rocket\RocketBullet.cpp">
+      <Filter>Object\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.cpp">
+      <Filter>Object\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Weapon\Weapon.cpp">
+      <Filter>Object\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Internal\SingletonFinalizer.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene\TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\SceneFactory.cpp">
+      <Filter>Scene\ConcreteSceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="MyGame\MyGame.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\System\ChainManager.cpp">
+      <Filter>GameSystem\ChainManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -161,20 +221,11 @@
     <ClInclude Include="GameScene\Object\Player\Player.h">
       <Filter>Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="MyGame.h">
-      <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\GameScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Camera\FollowCamera.h">
       <Filter>GameSystem\FollowCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneFactory.h">
-      <Filter>Scene\ConcreteSceneFactory</Filter>
     </ClInclude>
     <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h">
       <Filter>DeltaTimeManager</Filter>
@@ -187,21 +238,6 @@
     </ClInclude>
     <ClInclude Include="NiUI\Derived\ProcHandler.h">
       <Filter>NiUI\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Collision\Collider.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Object.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Collision\CollisionManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SingletonFinalizer.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="NiUI\Interface\NiUI_IDebug.h">
       <Filter>NiUI\Interface</Filter>
@@ -218,29 +254,59 @@
     <ClInclude Include="NiUI\Math\NiVec3.h">
       <Filter>NiUI\Math</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Player\Weapon\Weapon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Player\Weapon\RocketLauncher\RocketLauncher.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Player\Weapon\Chain.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Player\Weapon\RocketLauncher\RocketBullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Player\Weapon\Bullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\HUD\Minimap.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Timer\Timer.h">
+      <Filter>Utility\Timer</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\Boss.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Object\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Collision\Collider.h">
+      <Filter>GameSystem\Collision</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\Enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Collision\CollisionManager.h">
+      <Filter>GameSystem\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\HUD\Minimap.h">
+      <Filter>GameUI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Type\Singleton.h">
+      <Filter>Type</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Bullets\Bullet.h">
+      <Filter>Object\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Bullets\BulletFactory.h">
+      <Filter>Object\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Bullets\Rocket\RocketBullet.h">
+      <Filter>Object\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.h">
+      <Filter>Object\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Weapon\Weapon.h">
+      <Filter>Object\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Internal\SingletonFinalizer.h">
+      <Filter>Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene\TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\SceneFactory.h">
+      <Filter>Scene\ConcreteSceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="MyGame\MyGame.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\System\ChainManager.h">
+      <Filter>GameSystem\ChainManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

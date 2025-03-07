@@ -38,11 +38,6 @@ void Boss::Finalize()
 {
 }
 
-bool Boss::IsDead()
-{
-	return false;
-}
-
 void Boss::OnCollision(const Object* pObject)
 {
 	transform_.translate = prePos;
