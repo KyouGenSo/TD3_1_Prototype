@@ -118,6 +118,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,6 +142,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <Optimization>MinSpace</Optimization>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -166,11 +168,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Chain.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
@@ -197,6 +201,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Chain.h" />
     <ClInclude Include="Collider.h" />
