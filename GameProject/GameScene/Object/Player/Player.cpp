@@ -4,7 +4,7 @@
 #include "Input.h"
 
 // DEBUG
-#include <RocketLauncher.h>
+#include <GameScene/Object/Weapon/RocketLauncher/RocketLauncher.h>
 
 void Player::Initialize() {
 	model_ = std::make_unique<Object3d>();

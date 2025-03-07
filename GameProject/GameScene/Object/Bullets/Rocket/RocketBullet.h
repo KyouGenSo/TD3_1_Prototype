@@ -1,5 +1,5 @@
 #pragma once
-#include "GameScene/Object/Player/Weapon/Bullet.h"
+#include <GameScene/Object/Bullets/Bullet.h>
 
 class RocketBullet : public Bullet{
 public:

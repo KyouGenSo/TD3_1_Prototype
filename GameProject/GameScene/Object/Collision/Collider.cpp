@@ -1,7 +1,7 @@
 #include "Collider.h"
-
 #include "CollisionManager.h"
-#include "Singleton.h"
+
+#include <Type/Singleton.h>
 
 Collider::Collider(Object* _owner)
 	: pManager_(Singleton<CollisionManager>::GetInstance()),

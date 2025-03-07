@@ -1,4 +1,4 @@
-#include "Chain.h"
+ï»¿#include "ChainManager.h"
 
 void ChainManager::SetChain(WeaponType _1, WeaponType _2, WeaponType _3, WeaponType _4)
 {
@@ -25,13 +25,13 @@ void ChainManager::Initialize()
 
 void ChainManager::Update()
 {
-    /// ƒN[ƒ‹ƒ^ƒCƒ€‚ÌXV
+    /// ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ã®æ›´æ–°
     for (const auto& WeaponType : chain_)
     {
         auto now = coolTimeCounter_[WeaponType].GetNow();
-        float cooltime = COOLTIMES.at(WeaponType) - now;
+        float cooltime = static_cast<float>(COOLTIMES.at(WeaponType) - now);
 
-        /// ƒN[ƒ‹ƒ^ƒCƒ€‚ª‚ ‚ª‚Á‚Ä‚¢‚ê‚Î0‚É‚·‚é
+        /// ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ãŒã‚ãŒã£ã¦ã„ã‚Œã°0ã«ã™ã‚‹
         if (cooltime <= 0) cooltime = 0;
 
         coolTimes_[WeaponType] = cooltime;

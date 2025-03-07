@@ -1,6 +1,6 @@
 #include "RocketLauncher.h"
 
-#include <BulletFactory.h>
+#include <GameScene/Object/Bullets/BulletFactory.h>
 
 void RocketLauncher::Initialize() {
 

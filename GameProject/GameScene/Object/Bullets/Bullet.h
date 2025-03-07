@@ -3,7 +3,7 @@
 
 #include "GameScene/Object/Object.h"
 #include "GameScene/Object/Collision/Collider.h"
-#include <Chain.h>
+#include <GameScene/System/ChainManager.h>
 
 
 class Bullet : public Object

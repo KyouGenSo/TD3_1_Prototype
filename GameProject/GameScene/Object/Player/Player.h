@@ -2,14 +2,16 @@
 #include "GameScene/Object/Object.h"
 
 #include "Camera.h"
-#include "Weapon/Chain.h"
-#include "GameScene/Object/Collision/Collider.h"
+#include <GameScene/System/ChainManager.h>
+#include <GameScene/Object/Collision/Collider.h>
+#include <GameScene/Object/Weapon/Weapon.h>
 
 
 class Player : public Object {
     std::unique_ptr<Collider> collider_;
 
-    std::unique_ptr<Chain> chain_;
+    std::unique_ptr<ChainManager> chainManager_;
+    std::unique_ptr<Weapon> weapon_;
 
     Vector3 move_{};
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "GameScene/Object/Player/Weapon/Weapon.h"
+#include <GameScene/Object/Weapon/Weapon.h>
 
 class RocketLauncher final : public Weapon{
 public:

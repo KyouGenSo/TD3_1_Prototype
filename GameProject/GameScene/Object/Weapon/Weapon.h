@@ -4,8 +4,8 @@
 #include <memory>
 #include <list>
 
-#include <Bullet.h>
-#include <Chain.h>
+#include <GameScene/Object/Bullets/Bullet.h>
+#include <GameScene/System/ChainManager.h>
 
 class Weapon : public Object
 {

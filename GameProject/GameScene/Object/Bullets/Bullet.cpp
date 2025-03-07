@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-#include <BulletFactory.h>
+#include <GameScene/Object/Bullets/BulletFactory.h>
 
 void Bullet::Fire()
 {

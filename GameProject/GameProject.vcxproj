@@ -168,19 +168,25 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Factory\SceneFactory.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\Bullet.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\BulletFactory.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\Rocket\RocketBullet.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\Boss.cpp" />
-    <ClCompile Include="GameScene\Object\Player\Weapon\Bullet.cpp" />
-    <ClCompile Include="GameScene\Object\Player\Weapon\Chain.cpp" />
     <ClCompile Include="GameScene\Object\Collision\Collider.cpp" />
     <ClCompile Include="GameScene\Object\Collision\CollisionManager.cpp" />
     <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="GameScene\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
+    <ClCompile Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.cpp" />
+    <ClCompile Include="GameScene\Object\Weapon\Weapon.cpp" />
+    <ClCompile Include="GameScene\System\ChainManager.cpp" />
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
+    <ClCompile Include="Internal\SingletonFinalizer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameScene\HUD\Minimap.cpp" />
-    <ClCompile Include="MyGame.cpp" />
+    <ClCompile Include="MyGame\MyGame.cpp" />
     <ClCompile Include="NiUI\Derived\Drawer.cpp" />
     <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
     <ClCompile Include="NiUI\Derived\ProcHandler.cpp" />
@@ -193,24 +199,25 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="NiUI\NiUI.cpp" />
     <ClCompile Include="NiUI\NiUI_Input.cpp" />
     <ClCompile Include="GameScene\Object\Player\Player.cpp" />
-    <ClCompile Include="GameScene\Object\Player\Weapon\RocketLauncher\RocketBullet.cpp" />
-    <ClCompile Include="GameScene\Object\Player\Weapon\RocketLauncher\RocketLauncher.cpp" />
-    <ClCompile Include="SceneFactory.cpp" />
-    <ClCompile Include="SingletonFinalizer.cpp" />
     <ClCompile Include="Timer\Timer.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="GameScene\Object\Player\Weapon\Weapon.cpp" />
+    <ClCompile Include="TitleScene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Factory\SceneFactory.h" />
+    <ClInclude Include="GameScene\Object\Bullets\Bullet.h" />
+    <ClInclude Include="GameScene\Object\Bullets\BulletFactory.h" />
+    <ClInclude Include="GameScene\Object\Bullets\Rocket\RocketBullet.h" />
     <ClInclude Include="GameScene\Object\Enemy\Boss.h" />
     <ClInclude Include="GameScene\Object\Enemy\Enemy.h" />
-    <ClInclude Include="GameScene\Object\Player\Weapon\Bullet.h" />
-    <ClInclude Include="GameScene\Object\Player\Weapon\Chain.h" />
     <ClInclude Include="GameScene\Object\Collision\Collider.h" />
     <ClInclude Include="GameScene\Object\Collision\CollisionManager.h" />
     <ClInclude Include="GameScene\Object\Camera\FollowCamera.h" />
     <ClInclude Include="GameScene\HUD\Minimap.h" />
-    <ClInclude Include="MyGame.h" />
+    <ClInclude Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.h" />
+    <ClInclude Include="GameScene\Object\Weapon\Weapon.h" />
+    <ClInclude Include="GameScene\System\ChainManager.h" />
+    <ClInclude Include="Internal\SingletonFinalizer.h" />
+    <ClInclude Include="MyGame\MyGame.h" />
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h" />
     <ClInclude Include="NiUI\Interface\NiUI_IDebug.h" />
     <ClInclude Include="NiUI\Math\NiVec3.h" />
@@ -230,14 +237,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="NiUI\Type\NiUI_ComponentData.h" />
     <ClInclude Include="NiUI\Type\NiUI_Enum.h" />
     <ClInclude Include="GameScene\Object\Player\Player.h" />
-    <ClInclude Include="GameScene\Object\Player\Weapon\RocketLauncher\RocketBullet.h" />
-    <ClInclude Include="GameScene\Object\Player\Weapon\RocketLauncher\RocketLauncher.h" />
-    <ClInclude Include="SceneFactory.h" />
-    <ClInclude Include="Singleton.h" />
-    <ClInclude Include="SingletonFinalizer.h" />
     <ClInclude Include="Timer\Timer.h" />
-    <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="GameScene\Object\Player\Weapon\Weapon.h" />
+    <ClInclude Include="TitleScene\TitleScene.h" />
+    <ClInclude Include="Type\Singleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

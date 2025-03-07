@@ -2,7 +2,7 @@
 #include <cassert>
 #include <mutex>
 
-#include "SingletonFinalizer.h"
+#include <Internal/SingletonFinalizer.h>
 
 template <typename T>
 class Singleton final{

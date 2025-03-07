@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <memory>
-#include <Chain.h>
+#include <GameScene/System/ChainManager.h>
 
 class Bullet;
 
