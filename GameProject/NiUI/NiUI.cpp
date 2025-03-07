@@ -15,7 +15,7 @@ NiUIStyle           NiUI::style_        = NiUIStyle();
 std::unordered_map<std::string, ButtonData> NiUI::buttonImages_ = std::unordered_map<std::string, ButtonData>();
 std::unordered_map<std::string, DivData> NiUI::divData_ = std::unordered_map<std::string, DivData>();
 
-std::unordered_map<std::string, NiVec2> NiUI::regionLeftTopDifference_ = std::unordered_map<std::string, NiVec2>();
+std::unordered_map<std::string, NiVec2> NiUI::divOffset_ = std::unordered_map<std::string, NiVec2>();
 
 
 
@@ -28,7 +28,9 @@ void NiUI::Initialize(const NiVec2& _size, const NiVec2& _leftTop)
     input_.Initialize();
 
     style_.windowPadding = { 10, 10 };
-    style_.color.backGround = { 0.0f, 0.0f, 0.0f, 0.3f };
+    style_.itemSpacing = { 10, 10 };
+    style_.divPadding = { 10, 10 };
+    style_.color.backGround = { 0.0f, 0.0f, 0.0f, 0.7f };
 
     return;
 }
@@ -230,6 +232,7 @@ void NiUI::ClearData()
     state_.componentID.type = {};
 
     state_.buffer.currentRegion = nullptr;
+    state_.buffer.currentZOrder = 0;
     return;
 }
 
@@ -263,10 +266,33 @@ void NiUI::ClampRect(NiVec2& _leftTop, const NiVec2& _size, const NiVec2& _paren
     if (_leftTop.y + _size.y > _parentPos.y + _parentSize.y) _leftTop.y = _parentPos.y + _parentSize.y - _size.y;
 }
 
+void NiUI::OffsetUpdate(const std::string& _id, const NiVec2& _leftTop, const NiVec2& _posInRegion, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize)
+{
+    auto& offset = divOffset_[_id];
+
+    if (state_.componentID.active == _id)
+    {
+        offset += io_.input.differencePos;
+    }
+
+    if (input_.ReleaseLeft() && state_.componentID.active == _id)
+    {
+        if (_leftTop.x == _parentPos.x) offset.x = _parentPos.x - _posInRegion.x;
+        if (_leftTop.y == _parentPos.y) offset.y = _parentPos.y - _posInRegion.y;
+        if (_leftTop.x + _size.x == _parentPos.x + _parentSize.x) offset.x = _parentPos.x + _parentSize.x - _posInRegion.x - _size.x;
+        if (_leftTop.y + _size.y == _parentPos.y + _parentSize.y) offset.y = _parentPos.y + _parentSize.y - _posInRegion.y - _size.y;
+    }
+}
+
 void NiUI::PostProcessComponents()
 {
     auto& componentID = state_.componentID;
     auto& componentTime = state_.time;
+
+    if (!io_.input.isLeft && io_.input.isLeftPre)
+    {
+        componentID.active = {};
+    }
 
     /// =========
     /// Active

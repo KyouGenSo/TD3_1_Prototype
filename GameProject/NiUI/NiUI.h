@@ -59,8 +59,11 @@ public: /// UIコンポーネントの追加
         NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
     );
 
+    // Divの追加
+    // textureNameが空の場合はデフォルトの画像が使用されます。
     static bool BeginDiv(
         const std::string& _id,
+        const std::string& _textureName,
         const NiVec2& _position,
         const NiVec2& _size,
         const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
@@ -69,13 +72,21 @@ public: /// UIコンポーネントの追加
 
     static void EndDiv();
 
+    // 移動可能なDivの追加
+    // textureNameが空の場合はデフォルトの画像が使用されます。
     static bool BeginDivMovable(
         const std::string& _id,
+        const std::string& _textureName,
         const NiVec2& _position,
         const NiVec2& _size,
         const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
         const NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
     );
+
+    // 座標自動計算を有効にする
+    static void EnableAutoPosition() { state_.flags.autoPosition = true; };
+    // 座標自動計算を無効にする
+    static void DisableAutoPosition() { state_.flags.autoPosition = false; };
 
     
 public: /// セッター
@@ -126,13 +137,12 @@ private: /// メンバ変数
     static std::unordered_map<std::string, DivData> divData_;
 
     // エンドユーザーが変更したデータ
-    static std::unordered_map<std::string, NiVec2> regionLeftTopDifference_;
+    static std::unordered_map<std::string, NiVec2> divOffset_;
 
 
 private: /// 挙動
     static bool ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held);
     static void DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease);
-    static void DivBehaviorMovable(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease);
 
 
 private: /// 描画クラスにデータを送る関数
@@ -151,8 +161,10 @@ private: /// その他
     static void JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isTrigger, bool& _isRelease);
     static NiVec2 ComputeStandardPoint(NiUI_StandardPoint _stdpoint);
     static NiVec2 ComputeLeftTop(const NiVec2& _position, const NiVec2& _size, const NiVec2& _parentSize, NiUI_StandardPoint _anchor, NiUI_StandardPoint _pivot);
+    static void ComputeRect(const std::string& _id, NiVec2& _leftTop, NiVec2& _size, NiVec2& _parentPos, NiVec2& _parentSize, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot);
     static void ClearData();
     static void SavePreData();
     static void CopyInputData();
     static void ClampRect(NiVec2& _leftTop, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize);
+    static void OffsetUpdate(const std::string& _id, const NiVec2& _leftTop, const NiVec2& _posInRegion, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize);
 };

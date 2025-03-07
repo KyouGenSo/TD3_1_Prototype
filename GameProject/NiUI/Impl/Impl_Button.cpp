@@ -35,6 +35,7 @@ NiUI_ButtonState NiUI::Button(
     buttonImage.textureName = _textureName;
     buttonImage.leftTop = leftTop;
     buttonImage.size = _size;
+    buttonImage.zOrder = state_.buffer.currentZOrder++;
 
     NiUI_ButtonState result = NiUI_ButtonState::None;
     if (onButton)

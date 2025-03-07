@@ -24,6 +24,7 @@ private:
     std::unordered_map<std::string, SpriteList> spritesDiv_; // <テクスチャ名, スプライトリスト>
     std::unordered_map<std::string, uint32_t> buttonSpriteCount_; // <テクスチャ名, スプライト数>
     std::unordered_map<std::string, uint32_t> divSpriteCount_; // <テクスチャ名, スプライト数>
+    std::vector<Sprite*> spritesZOrdered_;
 
 private:
     void SpriteSettingByButtonData();

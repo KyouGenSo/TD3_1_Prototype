@@ -15,6 +15,7 @@ void Drawer::DrawSetting()
 
     buttonSpriteCount_.clear();
     divSpriteCount_.clear();
+    spritesZOrdered_.clear();
 
 
     /// 同じテクスチャの数をカウント
@@ -41,6 +42,12 @@ void Drawer::DrawSetting()
         CheckCountAndCreateSprite(path, spritesDiv_[path], divSpriteCount.second);
     }
 
+    /// Zオーダーのスプライトリストのリサイズ
+    size_t spriteCount = 0;
+    spriteCount += buttonDrawDataList_.size();
+    spriteCount += divDrawDataList_.size();
+    spritesZOrdered_.resize(spriteCount);
+
     SpriteSettingByButtonData();
     SpriteSettingByDivData();
 
@@ -49,8 +56,14 @@ void Drawer::DrawSetting()
 
 void Drawer::Draw()
 {
-    SpriteDraw(buttonSpriteCount_, spritesButton_);
-    SpriteDraw(divSpriteCount_, spritesDiv_);
+    //SpriteDraw(buttonSpriteCount_, spritesButton_);
+    //SpriteDraw(divSpriteCount_, spritesDiv_);
+
+    for (auto& sprite : spritesZOrdered_)
+    {
+        sprite->Update();
+        sprite->Draw();
+    }
 
     /// 描画データのクリア
     buttonDrawDataList_.clear();
@@ -103,6 +116,8 @@ void Drawer::SpriteSettingByButtonData()
             sprite->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
         }
 
+        spritesZOrdered_[data->zOrder] = sprite;
+
         /// イテレータを進める
         ++itr_sprites[data->textureName];
     }
@@ -133,6 +148,8 @@ void Drawer::SpriteSettingByDivData()
 
         auto color = NiUI::GetStyle().color.backGround;
         sprite->SetColor({ color.x, color.y, color.z, color.w });
+
+        spritesZOrdered_[data->zOrder] = sprite;
 
         /// イテレータを進める
         ++itr_sprites[path];
