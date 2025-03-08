@@ -55,7 +55,7 @@ void FollowCamera::ImGui() {
         {
             ImGui::DragFloat("Offset", &offset_, 0.1f);
             ImGui::DragFloat("Yaw", &yaw_, 0.01f);
-            shiftDir = ImGui::DragFloat3("##shift", &shiftDirection_.x, 0.01f);
+            shiftDir = ImGui::DragFloat3("ShiftDirection", &shiftDirection_.x, 0.01f);
             ImGui::TreePop();
         }
 
