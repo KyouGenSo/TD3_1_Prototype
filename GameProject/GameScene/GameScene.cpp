@@ -56,6 +56,8 @@ void GameScene::Update() {
 
 void GameScene::Draw() {
     Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    Draw2D::GetInstance()->Draw();
+    Draw2D::GetInstance()->Reset();
 
 	//------------------背景Spriteの描画------------------//
     // スプライト共通描画設定

@@ -43,10 +43,10 @@ void Player::Update() {
     model_->SetScale(transform_.scale);
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
-    model_->Update();
 }
 
 void Player::Draw() {
+    model_->Update();
     model_->Draw();
 }
 
