@@ -4,12 +4,7 @@
 #include <unordered_map>
 #include <Timer/Timer.h>
 
-enum class WeaponType : int{
-    None,
-    RocketLauncher,
-    MachineGun,
-    Lightning,
-};
+#include <Type/WeaponType.h>
 
 using Chain = std::array<WeaponType, 4>;
 
@@ -23,10 +18,20 @@ public:
         {WeaponType::Lightning, 2.0f},
     };
 
+    const std::array<WeaponType, 4> CHAIN_ARRAY =
+    {
+        WeaponType::None,
+        WeaponType::RocketLauncher,
+        WeaponType::MachineGun,
+        WeaponType::Lightning,
+    };
+
+
 public:
     void Initialize();
     void Update();
     void OnAttacked(WeaponType _weaponType);
+    void ImGui();
 
 
 public: /// Getter
@@ -34,11 +39,11 @@ public: /// Getter
     float GetCoolTime(WeaponType _weaponType) const { return coolTimes_.at(_weaponType); }
     float GetNextCoolTime(WeaponType _weaponType) const { return coolTimes_.at(chain_.at(static_cast<size_t>(_weaponType))); }
     WeaponType GetNextWeapon(WeaponType _weaponType) const { return chain_.at(static_cast<size_t>(_weaponType)); }
-    bool IsLastWeapon(WeaponType _weaponType) const { return chain_.back() == _weaponType; }
+    bool IsLastWeapon(WeaponType _weaponType) const;
 
 
 public: /// Setter
-    void SetChain(WeaponType _1, WeaponType _2, WeaponType _3, WeaponType _4);
+    void SetChain(WeaponType _1, WeaponType _2 = WeaponType::None, WeaponType _3 = WeaponType::None, WeaponType _4 = WeaponType::None);
 
 
 private:

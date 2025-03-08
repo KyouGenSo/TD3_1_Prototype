@@ -1,7 +1,7 @@
 #include "MyGame.h"
 #include"Audio.h"
 #include"Input.h"
-#include "SceneFactory.h"
+#include <Factory/SceneFactory.h>
 #include "SceneManager.h"
 #include "TextureManager.h"
 #include "ParticleManager.h"
@@ -84,9 +84,6 @@ void MyGame::Update()
     imguiManager_->Begin();
     #endif // _DEBUG
 
-    // カメラの更新
-    defaultCamera_->Update();
-
     // 入力情報の更新
     Input::GetInstance()->Update();
 
@@ -125,11 +122,6 @@ void MyGame::Draw()
     NiUI::DrawUI();
 
     ParticleManager::GetInstance()->Draw();
-
-    Draw2D::GetInstance()->Draw();
-
-    Draw2D::GetInstance()->Reset();
-
 
     /// ===================================================== ///
     /// ------------------ポストエフェクト描画-------------------///

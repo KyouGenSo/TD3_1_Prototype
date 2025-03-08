@@ -1,4 +1,4 @@
-﻿#include "GameScene.h"
+#include "GameScene.h"
 
 #include "Draw2D.h"
 #include "ModelManager.h"
@@ -42,8 +42,8 @@ void GameScene::Finalize() {
 }
 
 void GameScene::Update() {
-    camera_->Update();
     player_->Update();
+    camera_->Update();
 
     guiLvUP_->Update();
     minimap_->Update();
@@ -56,6 +56,8 @@ void GameScene::Update() {
 
 void GameScene::Draw() {
     Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    Draw2D::GetInstance()->Draw();
+    Draw2D::GetInstance()->Reset();
 
 	//------------------背景Spriteの描画------------------//
     // スプライト共通描画設定

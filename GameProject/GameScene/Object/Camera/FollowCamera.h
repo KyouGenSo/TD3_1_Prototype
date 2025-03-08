@@ -6,9 +6,15 @@ class FollowCamera{
 
 	const Transform* pTarget_ = nullptr;
 
-    Vector3 offset_ = {0, 3.f, -18.f};
+    Vector3 targetPositionPre_ = {};
 
-	float yaw = 0.f;
+    Vector3 shiftDirection_ = { 0.0f, 0.0f, -1.0f };
+
+	float offset_ = 20.0f;
+
+	float yaw_ = 0.f;
+
+    float factorLerp_ = 0.2f;
 
 public:
 	void Initialize();
@@ -16,6 +22,8 @@ public:
 	void Finalize();
 
     void SetTarget(const Transform* pTarget) {pTarget_ = pTarget;}
+
+    void SetTranslate(const Vector3& translate) { pCamera_->SetTranslate(translate); }
 
 	void ImGui();
 };

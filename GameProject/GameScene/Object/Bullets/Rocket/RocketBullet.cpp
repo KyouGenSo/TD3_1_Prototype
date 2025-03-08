@@ -1,4 +1,4 @@
-﻿#include "RocketBullet.h"
+#include "RocketBullet.h"
 
 #include <Quaternion.h>
 #include <QuatFunc.h>
@@ -13,7 +13,15 @@ void RocketBullet::Initialize()
 
 void RocketBullet::Update()
 {
-    transform_.translate += forward_ * speed_;
+    if (isChainBullet_)
+    {
+        MoveChain();
+    }
+    else
+    {
+        MoveNormal();
+    }
+
     model_->SetTranslate(transform_.translate);
     model_->Update();
 }
@@ -49,14 +57,24 @@ void RocketBullet::OnCollisionTrigger(const Object* _other)
 
 void RocketBullet::AttackNormal()
 {
+
+}
+
+void RocketBullet::AttackChain()
+{
+}
+
+void RocketBullet::MoveNormal()
+{
     Quaternion yaw = Quat::MakeRotateAxisAngle({0.0f, 1.0f, 0.0f}, transform_.rotate.y);
     Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);
 
     Quaternion rotate = yaw * pitch;
 
     forward_ = Quat::RotateVec3({ 0.0f, 0.0f, 1.0f }, rotate);
+    transform_.translate += forward_ * speed_;
 }
 
-void RocketBullet::AttackChain()
+void RocketBullet::MoveChain()
 {
 }

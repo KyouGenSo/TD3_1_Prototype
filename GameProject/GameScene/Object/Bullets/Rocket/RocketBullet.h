@@ -13,6 +13,8 @@ public:
 private:
     void AttackNormal() override;
     void AttackChain() override;
+    void MoveNormal() override;
+    void MoveChain() override;
 
     Vector3 forward_ = {};
 };

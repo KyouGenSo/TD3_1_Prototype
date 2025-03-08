@@ -5,6 +5,7 @@
 
 // DEBUG
 #include <GameScene/Object/Weapon/RocketLauncher/RocketLauncher.h>
+#include <QuatFunc.h>
 
 void Player::Initialize() {
 	model_ = std::make_unique<Object3d>();
@@ -22,9 +23,10 @@ void Player::Initialize() {
     collider_->SetEvent([this](const Object* obj){this->OnCollision(obj); });
 
     chainManager_ = std::make_unique<ChainManager>();
+    chainManager_->Initialize();
 
     // !DEBUG
-    chainManager_->SetChain(WeaponType::RocketLauncher, WeaponType::MachineGun, WeaponType::Lightning, WeaponType::None);
+    chainManager_->SetChain(WeaponType::RocketLauncher, WeaponType::None, WeaponType::None, WeaponType::None);
     weapon_ = std::make_unique<RocketLauncher>();
     weapon_->SetChainManager(chainManager_.get());
 }
@@ -35,15 +37,16 @@ void Player::Update() {
     UpdateMovement();
     
     weapon_->Update();
+    chainManager_->Update();
 
     /// Model Update
     model_->SetScale(transform_.scale);
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
-    model_->Update();
 }
 
 void Player::Draw() {
+    model_->Update();
     model_->Draw();
 }
 
@@ -51,6 +54,9 @@ void Player::Finalize() {
 }
 
 void Player::ImGui() {
+
+    chainManager_->ImGui();
+
     ImGui::Begin("Player");
     ImGui::Text("Position : ");
     ImGui::SameLine();
@@ -67,7 +73,7 @@ void Player::OnCollision(const Object* pObject) {
 void Player::UpdateInputCommands()
 {
     // Attack
-    if (Input::GetInstance()->PushKey(DIK_SPACE) || Input::GetInstance()->PushKey(JOY_BUTTON1)){
+    if (Input::GetInstance()->PushKey(DIK_RETURN) || Input::GetInstance()->PushKey(JOY_BUTTON1)){
         weapon_->Fire();
     }
 }
@@ -79,14 +85,21 @@ void Player::UpdateMovement()
     Vector3 move{};
     if(Input::GetInstance()->IsConnect()){
         // Joycon Movement
-    } else{
-        move += {
-            static_cast<float>(Input::GetInstance()->PushKey(DIK_D) - Input::GetInstance()->PushKey(DIK_A)),
-                0.f,
-                static_cast<float>(Input::GetInstance()->PushKey(DIK_W) - Input::GetInstance()->PushKey(DIK_S))
-        };
     }
-    move_ = move.Normalize() * speed;
+    else
+    {
+        transform_.rotate = pCamera_->GetRotate();
+        Quaternion yaw = Quat::MakeRotateAxisAngle({ 0.0f, 1.0f, 0.0f }, transform_.rotate.y);
+        Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);
+
+        Quaternion rotate = yaw * pitch;
+
+        Vector3 forward_ = Quat::RotateVec3({ 0.0f, 0.0f, 1.0f }, rotate);
+        Vector3 right = Quat::RotateVec3({ 1.0f, 0.0f, 0.0f }, rotate);
+
+        move += forward_ * speed * (Input::GetInstance()->PushKey(DIK_W) - Input::GetInstance()->PushKey(DIK_S));
+        move += right * speed * (Input::GetInstance()->PushKey(DIK_D) - Input::GetInstance()->PushKey(DIK_A));
+    }
 
     // Jump
     if (isGround_){
@@ -94,16 +107,19 @@ void Player::UpdateMovement()
             move_.y = 1.6f;
             isGround_ = false;
         }
-    }else{
+    }
+    else
+    {
         move_.y += GRAVITY;
-        if (transform_.translate.y + move_.y <= FLOOR){
+        if (transform_.translate.y + move_.y <= FLOOR)
+        {
             transform_.translate.y = FLOOR;
             move_.y = 0;
             isGround_ = true;
         }
     }
 
-    // À•W‚ð‘ã“ü
-    transform_.translate += Mat4x4::TransFormNormal(pCamera_->GetWorldMatrix(), move_);
+    // åº§æ¨™ã‚’ä»£å…¥
+    transform_.translate += move;
 }
 
