@@ -96,6 +96,9 @@
     <Filter Include="Internal">
       <UniqueIdentifier>{81eeabda-5b66-497e-8d82-c872072fabb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Terrain">
+      <UniqueIdentifier>{d2dfb195-363f-4891-82cd-a5ff9e05ae2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -195,6 +198,7 @@
     <ClCompile Include="GameScene\System\ChainManager.cpp">
       <Filter>GameSystem\ChainManager</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Object\Terrain\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -307,6 +311,12 @@
     </ClInclude>
     <ClInclude Include="GameScene\System\ChainManager.h">
       <Filter>GameSystem\ChainManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Type\WeaponType.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Terrain\Terrain.h">
+      <Filter>Object\Terrain</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
