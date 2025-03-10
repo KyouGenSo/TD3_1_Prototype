@@ -4,43 +4,55 @@
 #include "GameScene/Object/Object.h"
 #include "GameScene/Object/Collision/Collider.h"
 #include <GameScene/System/ChainManager.h>
+#include <Timer/Timer.h>
 
 
-class Bullet : public Object
+class BulletBase : public Object
 {
 public:
-    virtual void Initialize() override = 0;
+    virtual void Initialize() override;
     virtual void Fire();
     virtual void OnCollisionTrigger(const Object* _other) override = 0;
+    bool IsDead();
 
 
 public: /// Setter
     void SetIsChainBullet(bool _flag) { isChainBullet_ = _flag; }
     void SetChainManager(ChainManager* _chainManager) { pChainManager_ = _chainManager; }
+    void SetForward(const Vector3& _forward) { forward_ = _forward; }
 
 
 protected:
     std::unique_ptr<Collider> pCollider_ = nullptr;
-    std::unique_ptr<Bullet> pNext_ = nullptr;
+    std::unique_ptr<BulletBase> pNext_ = nullptr;
+    std::unique_ptr<Timer> pLifeTimer_ = nullptr;
+    std::unique_ptr<Timer> pNextBulletTimer_ = nullptr;
+    Vector3 forward_ = {};
     bool isChainBullet_ = false;
     WeaponType type_;
     float speed_ = 1.f;
+    float lifeTime_ = 150.0f / speed_ * 0.0166f;
 
 
 protected:
-    virtual void AttackNormal() = 0;
-    virtual void AttackChain() = 0;
-    virtual void MoveNormal() = 0;
-    virtual void MoveChain() = 0;
+    virtual void AttackNormalInitialize() = 0;
+    virtual void AttackChainInitialize() = 0;
+    virtual void UpdateNormal() = 0;
+    virtual void UpdateChain() = 0;
     void CreateNextBullet();
 
     // クールタイムがあがっていればtrueを返す
     bool CheckCoolTime();
+    
+    // ライフタイムを算出
+    void CalcLifeTime() { lifeTime_ = 150.0f / speed_ * 0.0166f; }
+    // ライフタイムをチェック
+    bool CheckLifeTime() { return pLifeTimer_->GetNow() >= lifeTime_; }
 
 
 protected:
     ChainManager* pChainManager_;
 
 private:
-    void SetNextBullet(std::unique_ptr<Bullet> _bullet);
+    void SetNextBullet(std::unique_ptr<BulletBase> _bullet);
 };

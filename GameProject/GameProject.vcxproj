@@ -169,6 +169,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factory\SceneFactory.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\Assault\AssaultBullet.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\Assault\Impl_AssaultBullet.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\Bullet.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\BulletFactory.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\Rocket\RocketBullet.cpp" />
@@ -184,6 +186,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="GameScene\System\ChainManager.cpp" />
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
+    <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="Internal\SingletonFinalizer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameScene\HUD\Minimap.cpp" />
@@ -205,6 +208,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factory\SceneFactory.h" />
+    <ClInclude Include="GameScene\Object\Bullets\Assault\AssaultBullet.h" />
     <ClInclude Include="GameScene\Object\Bullets\Bullet.h" />
     <ClInclude Include="GameScene\Object\Bullets\BulletFactory.h" />
     <ClInclude Include="GameScene\Object\Bullets\Rocket\RocketBullet.h" />
@@ -218,6 +222,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.h" />
     <ClInclude Include="GameScene\Object\Weapon\Weapon.h" />
     <ClInclude Include="GameScene\System\ChainManager.h" />
+    <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h" />
     <ClInclude Include="Internal\SingletonFinalizer.h" />
     <ClInclude Include="MyGame\MyGame.h" />
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h" />

@@ -1,4 +1,4 @@
-﻿#include "GUI_LvUP.h"
+#include "GUI_LvUP.h"
 
 #include <NiUI/NiUI.h>
 #include <cassert>
@@ -7,13 +7,17 @@
 
 void GUI_LvUP::OnNotify(const std::string& _event)
 {
-    if (_event == "lvup")
+    if (_event == "open_lvup")
     {
         isDisplay_ = true;
     }
-    else
+    else if (_event == "close_lvup")
     {
-        assert(false && "Invalid event");
+        isDisplay_ = false;
+    }
+    else if (_event == "toggle_lvup")
+    {
+        isDisplay_ = !isDisplay_;
     }
 }
 

@@ -13,10 +13,16 @@ void RocketLauncher::Update()
     {
         bullet->Update();
     }
+
+    Weapon::DeleteDeadBullet();
 }
 
 void RocketLauncher::Draw() 
 {
+    for (auto& bullet : bullets_)
+    {
+        bullet->Draw();
+    }
 }
 
 void RocketLauncher::Fire()

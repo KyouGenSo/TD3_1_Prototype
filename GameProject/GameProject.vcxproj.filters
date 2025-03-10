@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="リソース ファイル">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -98,6 +94,9 @@
     </Filter>
     <Filter Include="Object\Terrain">
       <UniqueIdentifier>{d2dfb195-363f-4891-82cd-a5ff9e05ae2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameUI\PauseMenu">
+      <UniqueIdentifier>{67ea3658-01a4-4d55-a176-2693e1dbe180}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -198,7 +197,16 @@
     <ClCompile Include="GameScene\System\ChainManager.cpp">
       <Filter>GameSystem\ChainManager</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Terrain\Terrain.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\Assault\AssaultBullet.cpp">
+      <Filter>Object\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Bullets\Assault\Impl_AssaultBullet.cpp">
+      <Filter>Object\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Terrain\Terrain.cpp">
+      <Filter>Object\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -312,11 +320,17 @@
     <ClInclude Include="GameScene\System\ChainManager.h">
       <Filter>GameSystem\ChainManager</Filter>
     </ClInclude>
-    <ClInclude Include="Type\WeaponType.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\Object\Terrain\Terrain.h">
       <Filter>Object\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Bullets\Assault\AssaultBullet.h">
+      <Filter>Object\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="Type\WeaponType.h">
+      <Filter>Object\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h">
+      <Filter>GameUI\PauseMenu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

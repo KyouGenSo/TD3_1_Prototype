@@ -14,6 +14,7 @@ public:
     const std::unordered_map<WeaponType, float> COOLTIMES = 
     {
         {WeaponType::RocketLauncher, 1.0f},
+        {WeaponType::Assault, 0.5f},
         {WeaponType::MachineGun, 0.1f},
         {WeaponType::Lightning, 2.0f},
     };

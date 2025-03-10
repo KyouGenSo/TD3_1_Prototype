@@ -4,10 +4,10 @@
 
 #include <Type/WeaponType.h>
 
-class Bullet;
+class BulletBase;
 
 class BulletFactory
 {
 public:
-    static std::unique_ptr<Bullet> CreateBullet(WeaponType _type);
+    static std::unique_ptr<BulletBase> CreateBullet(WeaponType _type);
 };

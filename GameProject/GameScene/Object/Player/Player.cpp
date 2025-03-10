@@ -3,20 +3,26 @@
 #include "imgui.h"
 #include "Input.h"
 
+#include <ModelManager.h>
+
 // DEBUG
 #include <GameScene/Object/Weapon/RocketLauncher/RocketLauncher.h>
 #include <QuatFunc.h>
 
 void Player::Initialize() {
+    Object::Initialize();
+
+    ModelManager::GetInstance()->LoadModel("box.gltf");
+
 	model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetCamera(pCamera_);
-    model_->SetModel("AnimatedCube.gltf");
+    model_->SetModel("box.gltf");
 
     transform_ = {
         .scale = { 1.0f, 1.0f, 1.0f },
         .rotate = { 0.0f, 0.0f, 0.0f },
-        .translate = { 0.0f, 0.0f, -100.0f },
+        .translate = { 0.0f, 0.5f, -180.0f },
     };
 
     collider_ = std::make_unique<Collider>(this);
@@ -25,8 +31,8 @@ void Player::Initialize() {
     chainManager_ = std::make_unique<ChainManager>();
     chainManager_->Initialize();
 
-    // !DEBUG
-    chainManager_->SetChain(WeaponType::RocketLauncher, WeaponType::None, WeaponType::None, WeaponType::None);
+    /// !!Debug!!
+    chainManager_->SetChain(WeaponType::RocketLauncher, WeaponType::Assault, WeaponType::None, WeaponType::None);
     weapon_ = std::make_unique<RocketLauncher>();
     weapon_->SetChainManager(chainManager_.get());
 }
@@ -36,6 +42,8 @@ void Player::Update() {
     UpdateInputCommands();
     UpdateMovement();
     
+    weapon_->SetPosition(transform_.translate);
+    weapon_->SetRotation(transform_.rotate);
     weapon_->Update();
     chainManager_->Update();
 
@@ -46,6 +54,7 @@ void Player::Update() {
 }
 
 void Player::Draw() {
+    weapon_->Draw();
     model_->Update();
     model_->Draw();
 }
@@ -73,12 +82,28 @@ void Player::OnCollision(const Object* pObject) {
 void Player::UpdateInputCommands()
 {
     // Attack
-    if (Input::GetInstance()->PushKey(DIK_RETURN) || Input::GetInstance()->PushKey(JOY_BUTTON1)){
+    if (pInput_->PushKey(DIK_RETURN) || pInput_->PushButton(JOY_BUTTON1)){
         weapon_->Fire();
+    }
+
+    if (pInput_->TriggerKey(DIK_ESCAPE))
+    {
+        for (auto observer : observers_)
+        {
+            observer->OnNotify("toggle_pause_menu");
+        }
+    }
+    if (pInput_->TriggerKey(DIK_TAB))
+    {
+        for (auto observer : observers_)
+        {
+            observer->OnNotify("toggle_lvup");
+        }
     }
 
     // Perspective
     transform_.rotate.y += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;
+    transform_.rotate.x += static_cast<float>(Input::GetInstance()->PushKey(DIK_UPARROW) - Input::GetInstance()->PushKey(DIK_DOWNARROW)) * 0.03f;
 }
 
 void Player::UpdateMovement()
@@ -116,7 +141,7 @@ void Player::UpdateMovement()
         if (transform_.translate.y + move_.y <= FLOOR)
         {
             transform_.translate.y = FLOOR;
-            move_.y = 0;
+            move_.y = 0.0f;
             isGround_ = true;
         }
     }

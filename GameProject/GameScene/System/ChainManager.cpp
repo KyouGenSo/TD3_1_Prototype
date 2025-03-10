@@ -31,6 +31,7 @@ void ChainManager::ImGui()
     {
         ImGui::SeparatorText("CoolTime");
         ImGui::Text("RocketLauncher : %.2f", coolTimes_[WeaponType::RocketLauncher]);
+        ImGui::Text("Assault : %.2f", coolTimes_[WeaponType::Assault]);
         ImGui::Text("MachineGun : %.2f", coolTimes_[WeaponType::MachineGun]);
         ImGui::Text("Lightning : %.2f", coolTimes_[WeaponType::Lightning]);
     }

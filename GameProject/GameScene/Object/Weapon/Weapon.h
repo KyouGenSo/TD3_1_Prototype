@@ -21,12 +21,13 @@ public:
 
 
 protected:
-    std::list<std::unique_ptr<Bullet>> bullets_;
+    std::list<std::unique_ptr<BulletBase>> bullets_;
     ChainManager* pChainManager_ = nullptr;
 
 
 protected:
     void Initialize() override = 0;
-    void AddNewBullet(std::unique_ptr<Bullet> _bullet);
+    void AddNewBullet(std::unique_ptr<BulletBase> _bullet);
+    void DeleteDeadBullet();
 };
 
