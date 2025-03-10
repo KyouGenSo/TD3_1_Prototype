@@ -14,9 +14,9 @@ void Player::Initialize() {
     model_->SetModel("AnimatedCube.gltf");
 
     transform_ = {
-        {1,1,1},
-        {0,0.f,0},
-        {0,0,0}
+        .scale = { 1.0f, 1.0f, 1.0f },
+        .rotate = { 0.0f, 0.0f, 0.0f },
+        .translate = { 0.0f, 0.0f, -100.0f },
     };
 
     collider_ = std::make_unique<Collider>(this);
@@ -76,6 +76,9 @@ void Player::UpdateInputCommands()
     if (Input::GetInstance()->PushKey(DIK_RETURN) || Input::GetInstance()->PushKey(JOY_BUTTON1)){
         weapon_->Fire();
     }
+
+    // Perspective
+    transform_.rotate.y += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;
 }
 
 void Player::UpdateMovement()
@@ -88,7 +91,6 @@ void Player::UpdateMovement()
     }
     else
     {
-        transform_.rotate = pCamera_->GetRotate();
         Quaternion yaw = Quat::MakeRotateAxisAngle({ 0.0f, 1.0f, 0.0f }, transform_.rotate.y);
         Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);
 

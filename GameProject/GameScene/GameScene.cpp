@@ -32,9 +32,13 @@ void GameScene::Initialize() {
     minimap_->Initialize();
     minimap_->Register(player_.get());
     minimap_->SetSize({-30, 0, -30}, {30, 0, 30});
+
+    terrain_ = std::make_unique<Terrain>();
+    terrain_->Initialize();
 }
 
 void GameScene::Finalize() {
+    terrain_->Finalize();
     player_->Finalize();
 	enemy_->Finalize();
 	boss_->Finalize();
@@ -42,6 +46,8 @@ void GameScene::Finalize() {
 }
 
 void GameScene::Update() {
+    terrain_->Update();
+
     player_->Update();
     camera_->Update();
 
@@ -66,6 +72,7 @@ void GameScene::Draw() {
     //-------------------Modelの描画-------------------//
     // 3Dモデル共通描画設定
     Object3dBasic::GetInstance()->SetCommonRenderSetting();
+    terrain_->Draw();
     player_->Draw();
 	enemy_->Draw();
 	boss_->Draw();
@@ -78,6 +85,7 @@ void GameScene::Draw() {
 }
 
 void GameScene::DrawImGui() {
+    terrain_->ImGui();
     player_->ImGui();
     camera_->ImGui();
 }
