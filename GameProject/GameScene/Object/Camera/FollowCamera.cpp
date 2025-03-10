@@ -1,7 +1,6 @@
 #include "FollowCamera.h"
 
 #include "imgui.h"
-#include "Input.h"
 #include "Object3dBasic.h"
 
 void FollowCamera::Initialize() {

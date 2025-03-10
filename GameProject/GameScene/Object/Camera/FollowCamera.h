@@ -7,11 +7,11 @@ class FollowCamera{
 
     // Parameters
     Vector3 targetPositionPre_ = {};
-    Vector3 shiftDirection_ = { 0.0f, 0.0f, -1.0f };
+    Vector3 shiftDirection_ = { 0.0f, 0.2f, -0.98f };
     Vector3 targetPositionOffset_ = { 0.0f, 0.0f, 0.0f };
 	float offset_ = 20.0f;
     float factorLerp_ = 0.2f;
-    float rotationX_ = 0.0f;
+    float rotationX_ = 0.1f;
 
 public:
 	void Initialize();
