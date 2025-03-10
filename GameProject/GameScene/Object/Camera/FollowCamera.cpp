@@ -9,25 +9,20 @@ void FollowCamera::Initialize() {
 }
 
 void FollowCamera::Update() {
-    // rotation
-    if(Input::GetInstance()->IsConnect()){
-    // Joycon
-    } else{
-        yaw_ += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;
-    }
-    pCamera_->SetRotate(Vector3{ 0, yaw_, 0.f });
+    if (!pTarget_) return;
     
     // direction
+    Vector3 rotate = { rotationX_, pTarget_->rotate.y, 0.0f };
     Vector3 direction = {};
-    if (!pTarget_) return;
-	Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(pCamera_->GetRotate());
+	Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(rotate);
     direction = Mat4x4::TransFormNormal(rotation, shiftDirection_);
 
     // interpolation
     Vector3 targetPosition = {};
-    targetPosition = targetPositionPre_ * (1.0f - factorLerp_) + pTarget_->translate * factorLerp_;
+    targetPosition = targetPositionPre_ * (1.0f - factorLerp_) + (pTarget_->translate + targetPositionOffset_) * factorLerp_;
 
     pCamera_->SetTranslate(direction.Normalize() * offset_ + targetPosition);
+    pCamera_->SetRotate(rotate);
     pCamera_->Update();
 
     targetPositionPre_ = targetPosition;
@@ -46,16 +41,17 @@ void FollowCamera::ImGui() {
     {
         if (ImGui::TreeNode("Common"))
         {
-            ImGui::DragFloat3("Position", &translate.x, 0.1f);
-            ImGui::DragFloat3("##rotate", &rotate.x, 0.1f);
+            ImGui::DragFloat3("Position", &translate.x);
+            ImGui::DragFloat3("Rotation", &rotate.x);
+            ImGui::DragFloat("RotationX", &rotationX_, 0.01f);
             ImGui::TreePop();
         }
 
         if (ImGui::TreeNode("Follow"))
         {
             ImGui::DragFloat("Offset", &offset_, 0.1f);
-            ImGui::DragFloat("Yaw", &yaw_, 0.01f);
             shiftDir = ImGui::DragFloat3("ShiftDirection", &shiftDirection_.x, 0.01f);
+            ImGui::DragFloat3("TargetPositionOffset", &targetPositionOffset_.x, 0.1f);
             ImGui::TreePop();
         }
 
