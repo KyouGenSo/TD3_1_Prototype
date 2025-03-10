@@ -23,6 +23,15 @@ public:
 
 	void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
 
+	void SetIsAppearing(bool isAppearing) { isAppearing_ = true; }
+
+	void SetAppearCounter(float appearCounter) { appearCounter_ = appearCounter; }
+
+	float GetAmoRotate() { return amoRotate; }
+
+	void ImGui();
+
+
 private:
 	std::unique_ptr<Object3d> model_;
 
@@ -33,5 +42,15 @@ private:
 	Vector3 prePos;
 
 	Object* pTarget_ = nullptr;
+
+	bool isAppearing_;
+	float appearCounter_ = 0.0f;
+
+	float rotation = 0.0f;
+
+	float amoRotate = 0.1f;
+	float targetRotate = 2.0f;
+	float rotateSpeed = 0.1f;
+	float preRotateSpeed = 0.1f;
 };
 
