@@ -19,6 +19,10 @@ public:
 
 	void OnCollision(const Object* pObject) override;
 
+	void SetTranslate(Vector3 translate) { transform_.translate = translate; }
+
+	void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
+
 private:
 	std::unique_ptr<Object3d> model_;
 
@@ -27,5 +31,7 @@ private:
 	std::unique_ptr<Collider> collider_;
 
 	Vector3 prePos;
+
+	Object* pTarget_ = nullptr;
 };
 

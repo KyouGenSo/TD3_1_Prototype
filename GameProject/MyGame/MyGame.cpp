@@ -1,7 +1,7 @@
 #include "MyGame.h"
 #include"Audio.h"
 #include"Input.h"
-#include "SceneFactory.h"
+#include "Factory/SceneFactory.h"
 #include "SceneManager.h"
 #include "TextureManager.h"
 #include "ParticleManager.h"
@@ -12,6 +12,7 @@
 #include "GlobalVariables.h"
 #include "Vector4.h"
 #include <NiUI/NiUI.h>
+
 
 
 void MyGame::Initialize()

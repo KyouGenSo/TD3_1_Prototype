@@ -103,7 +103,7 @@ void Player::UpdateMovement()
         }
     }
 
-    // À•W‚ð‘ã“ü
+    // åº§æ¨™ã‚’ä»£å…¥
     transform_.translate += Mat4x4::TransFormNormal(pCamera_->GetWorldMatrix(), move_);
 }
 
