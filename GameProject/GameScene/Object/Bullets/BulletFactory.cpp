@@ -1,6 +1,6 @@
 #include "BulletFactory.h"
 
-#include "Bullet.h"
+#include "BulletBase.h"
 
 #include "Rocket/RocketBullet.h"
 #include "Assault/AssaultBullet.h"

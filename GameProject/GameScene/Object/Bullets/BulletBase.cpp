@@ -1,4 +1,4 @@
-#include "Bullet.h"
+#include "BulletBase.h"
 
 #include <GameScene/Object/Bullets/BulletFactory.h>
 
@@ -14,11 +14,11 @@ void BulletBase::Fire()
 {
     if (isChainBullet_)
     {
-        AttackChainInitialize();
+        InitializeChain();
     }
     else
     {
-        AttackNormalInitialize();
+        InitializeNormal();
     }
 
     pNextBulletTimer_->Start();
