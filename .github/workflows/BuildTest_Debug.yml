@@ -20,6 +20,9 @@ jobs:
         with:
           msbuild-architecture: x64
 
+      - name: Success in failure
+        run: exit 1
+
       - name: Build
         run: |
           msbuild ${{env.SOLUTION_FILE_PATH}} /t:Clean /p:Platform=x64,Configuration=${{env.CONFIGURATION}}
