@@ -1,5 +1,5 @@
 name: Build Test
-on: [pull_request]
+on: [push]
 
 env:
   SOLUTION_FILE_PATH: TD3_1.sln
