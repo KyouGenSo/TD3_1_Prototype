@@ -1,7 +1,5 @@
 name: Build Test
-on:
-  pull_request:
-    branches: dev/*
+on: [pull_request]
 
 env:
   SOLUTION_FILE_PATH: TD3_1.sln
