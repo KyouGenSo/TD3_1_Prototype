@@ -16,7 +16,7 @@ void Terrain::Initialize()
     object_->SetTranslate(transform_.translate);
     object_->SetMaterialColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
     object_->SetEnableLighting(true);
-    object_->SetEnableHighlight(true);
+    object_->SetEnableHighlight(false);
 }
 
 void Terrain::Update()

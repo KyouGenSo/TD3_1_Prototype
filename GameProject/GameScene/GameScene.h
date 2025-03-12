@@ -26,6 +26,15 @@ class GameScene : public BaseScene {
     std::unique_ptr<Terrain> terrain_;
 	EnemyManager enemyManager_;
 
+public:
+    struct DirectionalLightParam {
+        Vector3 direction;
+        Vector4 color;
+        int32_t lightType;
+        float intensity;
+    };
+
+    DirectionalLightParam directLightParam_;
 
 public:
     void Initialize() override;
