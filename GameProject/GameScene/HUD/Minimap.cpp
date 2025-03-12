@@ -15,6 +15,7 @@ void Minimap::Initialize() {
 
 void Minimap::Update() {
     for (size_t i = 0; i < pObjects_.size(); i++){
+
         Vector2 pos = {pObjects_[i]->GetTransform().translate.x, pObjects_[i]->GetTransform().translate.z};
 
 		pos.x = std::clamp(pos.x, stageRange_.min.x + OBJECT_SIZE/2.f, stageRange_.max.x - OBJECT_SIZE/2.f);
@@ -52,6 +53,15 @@ void Minimap::Register(Object* object) {
 	objects_.push_back(std::move(sprite));
 
 	assert(pObjects_.size() == objects_.size());
+}
+
+void Minimap::Unregister(Object* object) {
+    auto it = std::ranges::find(pObjects_, object);
+    if (it == pObjects_.end()) return;
+    auto index = std::distance(pObjects_.begin(), it);
+    pObjects_.erase(it);
+    objects_.erase(objects_.begin() + index);
+    assert(pObjects_.size() == objects_.size());
 }
 
 void Minimap::SetSize(const Vector3 min, const Vector3 max) {
