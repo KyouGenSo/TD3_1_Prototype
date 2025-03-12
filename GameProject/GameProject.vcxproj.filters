@@ -167,9 +167,6 @@
     <ClCompile Include="GameScene\HUD\Minimap.cpp">
       <Filter>GameUI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Bullets\Bullet.cpp">
-      <Filter>Object\Bullets</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\Object\Bullets\BulletFactory.cpp">
       <Filter>Object\Bullets</Filter>
     </ClCompile>
@@ -208,6 +205,9 @@
     </ClCompile>
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\BulletBase.cpp">
+      <Filter>Object\Bullets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -291,9 +291,6 @@
     <ClInclude Include="Type\Singleton.h">
       <Filter>Type</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Bullets\Bullet.h">
-      <Filter>Object\Bullets</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\Object\Bullets\BulletFactory.h">
       <Filter>Object\Bullets</Filter>
     </ClInclude>
@@ -333,8 +330,9 @@
     <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h">
       <Filter>GameUI\PauseMenu</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h" />
+    <ClInclude Include="GameScene\Object\Bullets\BulletBase.h">
+      <Filter>Object\Bullets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

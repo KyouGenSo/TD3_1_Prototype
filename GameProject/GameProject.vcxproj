@@ -168,11 +168,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameScene\Object\Bullets\BulletBase.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Factory\SceneFactory.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\Assault\AssaultBullet.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\Assault\Impl_AssaultBullet.cpp" />
-    <ClCompile Include="GameScene\Object\Bullets\Bullet.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\BulletFactory.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\Rocket\RocketBullet.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\Boss.cpp" />
@@ -208,10 +208,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="TitleScene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameScene\Object\Bullets\BulletBase.h" />
     <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h" />
     <ClInclude Include="Factory\SceneFactory.h" />
     <ClInclude Include="GameScene\Object\Bullets\Assault\AssaultBullet.h" />
-    <ClInclude Include="GameScene\Object\Bullets\Bullet.h" />
     <ClInclude Include="GameScene\Object\Bullets\BulletFactory.h" />
     <ClInclude Include="GameScene\Object\Bullets\Rocket\RocketBullet.h" />
     <ClInclude Include="GameScene\Object\Enemy\Boss.h" />

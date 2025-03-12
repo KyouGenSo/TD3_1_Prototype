@@ -74,12 +74,12 @@ void RocketBullet::OnCollisionTrigger(const Object* _other)
 
 }
 
-void RocketBullet::AttackNormalInitialize()
+void RocketBullet::InitializeNormal()
 {
 
 }
 
-void RocketBullet::AttackChainInitialize()
+void RocketBullet::InitializeChain()
 {
 }
 

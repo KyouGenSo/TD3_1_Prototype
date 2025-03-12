@@ -35,8 +35,8 @@ protected:
 
 
 protected:
-    virtual void AttackNormalInitialize() = 0;
-    virtual void AttackChainInitialize() = 0;
+    virtual void InitializeNormal() = 0;
+    virtual void InitializeChain() = 0;
     virtual void UpdateNormal() = 0;
     virtual void UpdateChain() = 0;
     void CreateNextBullet();

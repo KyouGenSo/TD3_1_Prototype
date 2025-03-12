@@ -1,5 +1,5 @@
 #pragma once
-#include <GameScene/Object/Bullets/Bullet.h>
+#include <GameScene/Object/Bullets/BulletBase.h>
 
 class RocketBullet : public BulletBase{
 public:
@@ -11,8 +11,8 @@ public:
     void OnCollisionTrigger(const Object* _other) override;
 
 private:
-    void AttackNormalInitialize() override;
-    void AttackChainInitialize() override;
+    void InitializeNormal() override;
+    void InitializeChain() override;
     void UpdateNormal() override;
     void UpdateChain() override;
 
