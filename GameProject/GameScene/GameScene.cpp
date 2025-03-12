@@ -5,8 +5,18 @@
 #include "Object3dBasic.h"
 #include <Type/Singleton.h>
 #include "SpriteBasic.h"
+#include "ImGuiManager.h"
+
 
 void GameScene::Initialize() {
+
+    directLightParam_ = {
+        .direction = { 0.0f, -1.0f, 0.0f },
+        .color = { 1.0f, 1.0f, 1.0f, 1.0f },
+        .lightType = 1,
+        .intensity = 2.0f
+    };
+
     ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
     pCollisionManager_ = Singleton<CollisionManager>::GetInstance();
 
@@ -55,6 +65,8 @@ void GameScene::Finalize() {
 }
 
 void GameScene::Update() {
+    Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
+
     terrain_->Update();
 
     player_->Update();
@@ -101,4 +113,10 @@ void GameScene::DrawImGui() {
 	enemy_->ImGui();
     enemyManager_.ImGui();
     camera_->ImGui();
+
+    ImGui::Begin("Directional Light");
+    ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);
+    ImGui::ColorEdit4("Color", &directLightParam_.color.x);
+    ImGui::DragFloat("Intensity", &directLightParam_.intensity, 0.01f);
+    ImGui::End();
 }
