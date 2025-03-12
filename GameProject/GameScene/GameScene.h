@@ -11,6 +11,7 @@
 #include "Object/Enemy/Enemy.h"
 #include "Object/Player/Player.h"
 #include "Object/Terrain/Terrain.h"
+#include "Object/Enemy/EnemyManager.h"
 
 class GameScene : public BaseScene {
     std::unique_ptr<Player> player_;
@@ -21,6 +22,7 @@ class GameScene : public BaseScene {
 	std::unique_ptr<Enemy>enemy_;
 	std::unique_ptr<Boss>boss_;
     std::unique_ptr<Terrain> terrain_;
+	EnemyManager enemyManager_;
 
 
 public:

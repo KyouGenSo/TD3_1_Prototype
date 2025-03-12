@@ -199,6 +199,7 @@
       <Filter>GameSystem\ChainManager</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Object\Terrain\Terrain.cpp" />
+    <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -317,6 +318,9 @@
     </ClInclude>
     <ClInclude Include="GameScene\Object\Terrain\Terrain.h">
       <Filter>Object\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
