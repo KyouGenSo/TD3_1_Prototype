@@ -1,0 +1,28 @@
+name: Build Test
+on:
+  pull_request:
+    branches: dev/*
+
+env:
+  SOLUTION_FILE_PATH: TD3_1.sln
+  CONFIGURATION: Debug
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: x64
+
+      - name: Build
+        run: |
+          msbuild ${{env.SOLUTION_FILE_PATH}} /t:Clean /p:Platform=x64,Configuration=${{env.CONFIGURATION}}
+          msbuild ${{env.SOLUTION_FILE_PATH}} /t:Build /p:Platform=x64,Configuration=${{env.CONFIGURATION}}
