@@ -50,7 +50,7 @@ public: /// Setter
 
 
 public: /// Getter
-	const Transform& GetTransform() {
+	const Transform& GetTransform() const {
 	    return transform_;
     }
 

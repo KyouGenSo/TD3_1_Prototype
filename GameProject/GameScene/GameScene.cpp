@@ -24,15 +24,6 @@ void GameScene::Initialize() {
     player_ = std::make_unique<Player>();
     player_->Initialize();
 
-    // 敵の初期化
-	ModelManager::GetInstance()->LoadModel("cube.gltf");
-	enemyManager_.Initialize();
-
-    // ボスの初期化
-	ModelManager::GetInstance()->LoadModel("bigCube.gltf");
-	boss_ = std::make_unique<Boss>();
-	boss_->Initialize();
-
     // Camera
     camera_ = std::make_unique<FollowCamera>();
     camera_->Initialize();
@@ -48,8 +39,18 @@ void GameScene::Initialize() {
     // Minimap
     minimap_ = make_unique<Minimap>();
     minimap_->Initialize();
-    minimap_->Register(player_.get());
     minimap_->SetSize({-30, 0, -30}, {30, 0, 30});
+    minimap_->Register(player_.get());
+
+    // 敵の初期化
+	ModelManager::GetInstance()->LoadModel("cube.gltf");
+    enemyManager_.SetMinimap(minimap_.get());
+    enemyManager_.Initialize();
+
+    // ボスの初期化
+	ModelManager::GetInstance()->LoadModel("bigCube.gltf");
+	boss_ = std::make_unique<Boss>();
+	boss_->Initialize();
 
     // Terrain
     terrain_ = std::make_unique<Terrain>();
@@ -75,18 +76,18 @@ void GameScene::Update() {
     guiLvUP_->Update();
     guiPauseMenu_->Update();
 
-    minimap_->Update();
-
-
 	boss_->Update();
 	enemyManager_.Update();
+
+    minimap_->Update();
+
     pCollisionManager_->Update();
 }
 
 void GameScene::Draw() {
-    Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-    Draw2D::GetInstance()->Draw();
-    Draw2D::GetInstance()->Reset();
+    //Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    //Draw2D::GetInstance()->Draw();
+    //Draw2D::GetInstance()->Reset();
 
 	//------------------背景Spriteの描画------------------//
     // スプライト共通描画設定

@@ -32,6 +32,7 @@ public:
     void Draw();
 
     void Register(Object* object);
+    void Unregister(Object* object);
 
 	void SetSize(const Vector3 min, const Vector3 max);
 };
