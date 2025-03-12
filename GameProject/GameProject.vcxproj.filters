@@ -207,6 +207,7 @@
       <Filter>Object\Terrain</Filter>
     </ClCompile>
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
+    <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -331,6 +332,9 @@
     </ClInclude>
     <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h">
       <Filter>GameUI\PauseMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
