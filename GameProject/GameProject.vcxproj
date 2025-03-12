@@ -168,6 +168,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameScene\Object\Castle\Castle.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Factory\SceneFactory.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\Assault\AssaultBullet.cpp" />
@@ -208,6 +209,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="TitleScene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameScene\Object\Castle\Castle.h" />
     <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h" />
     <ClInclude Include="Factory\SceneFactory.h" />
     <ClInclude Include="GameScene\Object\Bullets\Assault\AssaultBullet.h" />
