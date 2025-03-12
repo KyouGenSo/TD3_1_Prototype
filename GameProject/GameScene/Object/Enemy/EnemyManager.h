@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include "Enemy.h"
+#include "GameScene/HUD/Minimap.h"
 
 class EnemyManager {
 public:
@@ -12,10 +13,13 @@ public:
 	void AddEnemy(const Vector3& position);
     void ImGui();
 
+    void SetMinimap(Minimap* pMinimap);
+
     void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
 
 private:
     std::vector<std::unique_ptr<Enemy>> enemies_;
+    Minimap* pMinimap_ = nullptr;
 
     Object* pTarget_ = nullptr;
 };
