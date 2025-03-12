@@ -100,5 +100,6 @@ void GameScene::DrawImGui() {
     player_->ImGui();
 	enemy_->ImGui();
     enemyManager_.ImGui();
+    boss_->ImGui();
     camera_->ImGui();
 }
