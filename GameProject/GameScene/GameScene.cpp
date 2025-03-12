@@ -55,6 +55,9 @@ void GameScene::Initialize() {
     // Terrain
     terrain_ = std::make_unique<Terrain>();
     terrain_->Initialize();
+
+    castle_ = std::make_unique<Castle>();
+    castle_->Initialize();
 }
 
 void GameScene::Finalize() {
@@ -69,6 +72,7 @@ void GameScene::Update() {
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
 
     terrain_->Update();
+    castle_->Update();
 
     player_->Update();
     camera_->Update();
@@ -97,6 +101,7 @@ void GameScene::Draw() {
     // 3Dモデル共通描画設定
     Object3dBasic::GetInstance()->SetCommonRenderSetting();
     terrain_->Draw();
+    castle_->Draw();
     player_->Draw();
 	boss_->Draw();
 	enemyManager_.Draw();
