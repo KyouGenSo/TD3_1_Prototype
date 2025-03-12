@@ -98,7 +98,6 @@ void GameScene::Draw() {
 void GameScene::DrawImGui() {
     terrain_->ImGui();
     player_->ImGui();
-	enemy_->ImGui();
     enemyManager_.ImGui();
     camera_->ImGui();
 }
