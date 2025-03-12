@@ -7,6 +7,7 @@
 
 #include "HUD/Minimap.h"
 #include "Object/Camera/FollowCamera.h"
+#include "Object/Castle/Castle.h"
 #include "Object/Collision/CollisionManager.h"
 #include "Object/Enemy/Boss.h"
 #include "Object/Enemy/Enemy.h"
@@ -25,6 +26,8 @@ class GameScene : public BaseScene {
 	std::unique_ptr<Boss>boss_;
     std::unique_ptr<Terrain> terrain_;
 	EnemyManager enemyManager_;
+
+    std::unique_ptr<Castle> castle_;
 
 public:
     struct DirectionalLightParam {
