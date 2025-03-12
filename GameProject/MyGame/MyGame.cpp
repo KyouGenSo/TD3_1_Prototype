@@ -85,9 +85,6 @@ void MyGame::Update()
     imguiManager_->Begin();
     #endif // _DEBUG
 
-    // カメラの更新
-    defaultCamera_->Update();
-
     // 入力情報の更新
     Input::GetInstance()->Update();
 
@@ -126,11 +123,6 @@ void MyGame::Draw()
     NiUI::DrawUI();
 
     ParticleManager::GetInstance()->Draw();
-
-    Draw2D::GetInstance()->Draw();
-
-    Draw2D::GetInstance()->Reset();
-
 
     /// ===================================================== ///
     /// ------------------ポストエフェクト描画-------------------///

@@ -1,4 +1,4 @@
-﻿#include "GameScene.h"
+#include "GameScene.h"
 
 #include "Draw2D.h"
 #include "ModelManager.h"
@@ -31,9 +31,13 @@ void GameScene::Initialize() {
     minimap_->Initialize();
     minimap_->Register(player_.get());
     minimap_->SetSize({-30, 0, -30}, {30, 0, 30});
+
+    terrain_ = std::make_unique<Terrain>();
+    terrain_->Initialize();
 }
 
 void GameScene::Finalize() {
+    terrain_->Finalize();
     player_->Finalize();
 	boss_->Finalize();
 	enemyManager_.Finalize();
@@ -41,9 +45,10 @@ void GameScene::Finalize() {
 }
 
 void GameScene::Update() {
+    terrain_->Update();
 
-    camera_->Update();
     player_->Update();
+    camera_->Update();
 
     guiLvUP_->Update();
     minimap_->Update();
@@ -56,6 +61,8 @@ void GameScene::Update() {
 
 void GameScene::Draw() {
     Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    Draw2D::GetInstance()->Draw();
+    Draw2D::GetInstance()->Reset();
 
 	//------------------背景Spriteの描画------------------//
     // スプライト共通描画設定
@@ -64,6 +71,7 @@ void GameScene::Draw() {
     //-------------------Modelの描画-------------------//
     // 3Dモデル共通描画設定
     Object3dBasic::GetInstance()->SetCommonRenderSetting();
+    terrain_->Draw();
     player_->Draw();
 	boss_->Draw();
 	enemyManager_.Draw();
@@ -76,6 +84,7 @@ void GameScene::Draw() {
 }
 
 void GameScene::DrawImGui() {
+    terrain_->ImGui();
     player_->ImGui();
 	enemy_->ImGui();
     enemyManager_.ImGui();

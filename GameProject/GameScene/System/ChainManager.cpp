@@ -1,4 +1,15 @@
-﻿#include "ChainManager.h"
+#include "ChainManager.h"
+
+#ifdef _DEBUG
+#include <imgui.h>
+#endif // _DEBUG
+
+bool ChainManager::IsLastWeapon(WeaponType _weaponType) const
+{
+    if (chain_.back() == _weaponType) return true;
+    if (GetNextWeapon(_weaponType) == WeaponType::None) return true;
+    return false;
+}
 
 void ChainManager::SetChain(WeaponType _1, WeaponType _2, WeaponType _3, WeaponType _4)
 {
@@ -14,9 +25,21 @@ void ChainManager::OnAttacked(WeaponType _weaponType)
     coolTimeCounter_[_weaponType].Start();
 }
 
+void ChainManager::ImGui()
+{
+    if (ImGui::Begin("Chain Debug"))
+    {
+        ImGui::SeparatorText("CoolTime");
+        ImGui::Text("RocketLauncher : %.2f", coolTimes_[WeaponType::RocketLauncher]);
+        ImGui::Text("MachineGun : %.2f", coolTimes_[WeaponType::MachineGun]);
+        ImGui::Text("Lightning : %.2f", coolTimes_[WeaponType::Lightning]);
+    }
+    ImGui::End();
+}
+
 void ChainManager::Initialize() 
 {
-    for (auto& WeaponType : chain_)
+    for (auto& WeaponType : CHAIN_ARRAY)
     {
         coolTimeCounter_[WeaponType].Reset();
         coolTimeCounter_[WeaponType].Start();
@@ -26,14 +49,15 @@ void ChainManager::Initialize()
 void ChainManager::Update()
 {
     /// クールタイムの更新
-    for (const auto& WeaponType : chain_)
+    for (const auto& type : chain_)
     {
-        auto now = coolTimeCounter_[WeaponType].GetNow();
-        float cooltime = static_cast<float>(COOLTIMES.at(WeaponType) - now);
+        if (type == WeaponType::None) continue;
+        auto now = coolTimeCounter_[type].GetNow();
+        float cooltime = static_cast<float>(COOLTIMES.at(type) - now);
 
         /// クールタイムがあがっていれば0にする
         if (cooltime <= 0) cooltime = 0;
 
-        coolTimes_[WeaponType] = cooltime;
+        coolTimes_[type] = cooltime;
     }
 }

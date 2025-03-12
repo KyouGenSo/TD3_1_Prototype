@@ -180,6 +180,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="GameScene\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
+    <ClCompile Include="GameScene\Object\Terrain\Terrain.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="GameScene\System\ChainManager.cpp" />
@@ -215,6 +216,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene\Object\Collision\CollisionManager.h" />
     <ClInclude Include="GameScene\Object\Camera\FollowCamera.h" />
     <ClInclude Include="GameScene\HUD\Minimap.h" />
+    <ClInclude Include="GameScene\Object\Terrain\Terrain.h" />
     <ClInclude Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.h" />
     <ClInclude Include="GameScene\Object\Weapon\Weapon.h" />
     <ClInclude Include="GameScene\System\ChainManager.h" />
@@ -242,6 +244,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Timer\Timer.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
     <ClInclude Include="Type\Singleton.h" />
+    <ClInclude Include="Type\WeaponType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

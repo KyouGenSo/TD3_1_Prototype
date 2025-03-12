@@ -1,7 +1,6 @@
 #include "FollowCamera.h"
 
 #include "imgui.h"
-#include "Input.h"
 #include "Object3dBasic.h"
 
 void FollowCamera::Initialize() {
@@ -9,20 +8,23 @@ void FollowCamera::Initialize() {
 }
 
 void FollowCamera::Update() {
-    // rotation
-    if(Input::GetInstance()->IsConnect()){
-    // Joycon
-    } else{
-        yaw += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.1f;
-    }
-    pCamera_->SetRotate({0.f, yaw, 0.f});
+    if (!pTarget_) return;
+    
+    // direction
+    Vector3 rotate = { rotationX_, pTarget_->rotate.y, 0.0f };
+    Vector3 direction = {};
+	Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(rotate);
+    direction = Mat4x4::TransFormNormal(rotation, shiftDirection_);
 
-	//translate
-    if (pTarget_){
-	    Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(pCamera_->GetRotate());
-	    Vector3 offset = Mat4x4::TransFormNormal(rotation, offset_);
-        pCamera_->SetTranslate(pTarget_->translate + offset);
-    }
+    // interpolation
+    Vector3 targetPosition = {};
+    targetPosition = targetPositionPre_ * (1.0f - factorLerp_) + (pTarget_->translate + targetPositionOffset_) * factorLerp_;
+
+    pCamera_->SetTranslate(direction.Normalize() * offset_ + targetPosition);
+    pCamera_->SetRotate(rotate);
+    pCamera_->Update();
+
+    targetPositionPre_ = targetPosition;
 }
 
 void FollowCamera::Finalize() {
@@ -31,15 +33,39 @@ void FollowCamera::Finalize() {
 void FollowCamera::ImGui() {
     Vector3 translate = pCamera_->GetTranslate();
     Vector3 rotate = pCamera_->GetRotate();
-    ImGui::Begin("Camera");
-    ImGui::Text("Position : ");
-    ImGui::SameLine();
-    ImGui::DragFloat3("##pos", &translate.x, 0.1f);
-    ImGui::Text("Rotate   : ");
-    ImGui::SameLine();
-    ImGui::DragFloat3("##rotate", &rotate.x, 0.1f);
-	ImGui::Text("Offset : ");
-    ImGui::SameLine();
-    ImGui::DragFloat3("##offset", &offset_.x, 0.1f);
+
+    bool shiftDir = false;
+
+    if (ImGui::Begin("Camera"))
+    {
+        if (ImGui::TreeNode("Common"))
+        {
+            ImGui::DragFloat3("Position", &translate.x);
+            ImGui::DragFloat3("Rotation", &rotate.x);
+            ImGui::DragFloat("RotationX", &rotationX_, 0.01f);
+            ImGui::TreePop();
+        }
+
+        if (ImGui::TreeNode("Follow"))
+        {
+            ImGui::DragFloat("Offset", &offset_, 0.1f);
+            shiftDir = ImGui::DragFloat3("ShiftDirection", &shiftDirection_.x, 0.01f);
+            ImGui::DragFloat3("TargetPositionOffset", &targetPositionOffset_.x, 0.1f);
+            ImGui::TreePop();
+        }
+
+        if (ImGui::TreeNode("Linear Interpolation"))
+        {
+            ImGui::DragFloat("Factor", &factorLerp_, 0.01f);
+            ImGui::TreePop();
+        }
+    }
     ImGui::End();
+
+
+    // post process
+    if (shiftDir)
+    {
+        shiftDirection_ = shiftDirection_.Normalize();
+    }
 }
