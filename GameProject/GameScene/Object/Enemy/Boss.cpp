@@ -1,4 +1,6 @@
 #include "Boss.h"
+
+#include "imgui.h"
 #include "Object3dBasic.h"
 
 void Boss::Initialize()
@@ -19,14 +21,20 @@ void Boss::Initialize()
 
 	collider_ = std::make_unique<Collider>(this);
 	collider_->SetEvent([this](const Object* pObj) {this->OnCollision(pObj); });
+
+    isValid_ = false;
 }
 
 void Boss::Update()
 {
-	prePos = transform_.translate;
-	model_->Update();
-	transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
-	model_->SetTranslate(transform_.translate);
+    if(isValid_){
+	    prePos = transform_.translate;
+	    transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
+	    model_->SetTranslate(transform_.translate);
+    }else {
+        
+    }
+	    model_->Update();
 }
 
 void Boss::Draw()
@@ -36,6 +44,13 @@ void Boss::Draw()
 
 void Boss::Finalize()
 {
+}
+
+void Boss::ImGui()
+{
+    ImGui::Begin("Boss");
+    ImGui::Checkbox("isValid", &isValid_);
+    ImGui::End();
 }
 
 void Boss::OnCollision(const Object* pObject)

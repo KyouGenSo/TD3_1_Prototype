@@ -17,7 +17,13 @@ public:
 
 	void Finalize();
 
+    void ImGui();
+
 	void OnCollision(const Object* pObject) override;
+
+    bool GetIsValid() const { return isValid_; }
+
+    void SetIsValid(bool isValid) { isValid_ = isValid; }
 
 private:
 	std::unique_ptr<Object3d> model_;
@@ -27,5 +33,7 @@ private:
 	std::unique_ptr<Collider> collider_;
 
 	Vector3 prePos;
+
+    bool isValid_;
 };
 

@@ -208,6 +208,7 @@
     <ClCompile Include="GameScene\Object\Bullets\BulletBase.cpp">
       <Filter>Object\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Object\Castle\Castle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -334,5 +335,6 @@
     <ClInclude Include="GameScene\Object\Bullets\BulletBase.h">
       <Filter>Object\Bullets</Filter>
     </ClInclude>
+    <ClInclude Include="GameScene\Object\Castle\Castle.h" />
   </ItemGroup>
 </Project>
