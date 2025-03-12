@@ -4,7 +4,7 @@
 
 void Terrain::Initialize()
 {
-    transform_.scale = Vector3(40.0f, 3.0f, 240.0f);
+    transform_.scale = Vector3(100.0f, 2.0f, 400.0f);
     transform_.translate = Vector3(0.0f, -transform_.scale.y * 0.5f, 0.0f);
 
     ModelManager::GetInstance()->LoadModel("box.gltf");
@@ -14,8 +14,9 @@ void Terrain::Initialize()
     object_->SetModel("box.gltf");
     object_->SetScale(transform_.scale);
     object_->SetTranslate(transform_.translate);
-    object_->SetEnableLighting(false);
-    object_->SetEnableHighlight(false);
+    object_->SetMaterialColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
+    object_->SetEnableLighting(true);
+    object_->SetEnableHighlight(true);
 }
 
 void Terrain::Update()

@@ -17,7 +17,8 @@
 
 void MyGame::Initialize()
 {
-
+    winApp_->SetWindowSize(1600, 900);
+    
     TakoFramework::Initialize();
 
 #pragma region 汎用機能初期化-------------------------------------------------------------------------------------------------------------------
@@ -47,7 +48,7 @@ void MyGame::Initialize()
     OverrideImGuiStyle();
 
     /// UIの初期化
-    NiUI::Initialize({ 1280,720 });
+    NiUI::Initialize({ WinApp::clientWidth, WinApp::clientHeight });
 
     /// 描画クラスの設定
     drawer_ = std::make_unique<Drawer>();

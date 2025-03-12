@@ -8,6 +8,7 @@
 #include "Object3d.h"
 #include "Object3dBasic.h"
 #include "Transform.h"
+#include <Input.h>
 
 class Object{
 	std::string uuid_;
@@ -17,11 +18,14 @@ protected:
 	Transform transform_ {};
     bool isDead_ = false;
 
+protected:
+    Input* pInput_ = nullptr;
+
 public:
 	Object();
 	virtual ~Object() = default;
 
-    virtual void Initialize() = 0;
+    virtual void Initialize();
     virtual void Update() = 0;
     virtual void Draw() = 0;
 
@@ -74,5 +78,10 @@ inline Object::Object() {
     uuid_ = reinterpret_cast<char*>(szUuid);
 
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
+}
+
+inline void Object::Initialize()
+{
+    pInput_ = Input::GetInstance();
 }
 

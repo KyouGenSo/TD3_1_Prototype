@@ -10,28 +10,38 @@ void GameScene::Initialize() {
     ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
     pCollisionManager_ = Singleton<CollisionManager>::GetInstance();
 
+    // プレイヤーの初期化
     player_ = std::make_unique<Player>();
     player_->Initialize();
 
+    // 敵の初期化
 	ModelManager::GetInstance()->LoadModel("cube.gltf");
 	enemyManager_.Initialize();
 
+    // ボスの初期化
 	ModelManager::GetInstance()->LoadModel("bigCube.gltf");
 	boss_ = std::make_unique<Boss>();
 	boss_->Initialize();
 
+    // Camera
     camera_ = std::make_unique<FollowCamera>();
     camera_->Initialize();
     camera_->SetTarget(&player_->GetTransform());
 
     guiLvUP_ = std::make_unique<GUI_LvUP>();
-    guiLvUP_->OnNotify("lvup");
+    guiPauseMenu_ = std::make_unique<GUI_PauseMenu>();
 
+    // Observer登録
+    player_->AddObserver(guiLvUP_.get());
+    player_->AddObserver(guiPauseMenu_.get());
+
+    // Minimap
     minimap_ = make_unique<Minimap>();
     minimap_->Initialize();
     minimap_->Register(player_.get());
     minimap_->SetSize({-30, 0, -30}, {30, 0, 30});
 
+    // Terrain
     terrain_ = std::make_unique<Terrain>();
     terrain_->Initialize();
 }
@@ -51,6 +61,8 @@ void GameScene::Update() {
     camera_->Update();
 
     guiLvUP_->Update();
+    guiPauseMenu_->Update();
+
     minimap_->Update();
 
 

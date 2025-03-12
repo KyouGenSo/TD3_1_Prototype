@@ -3,6 +3,7 @@
 
 #include "BaseScene.h"
 #include <GameUI/LvUP/GUI_LvUP.h>
+#include <GameUI/PauseMenu/GUI_PauseMenu.h>
 
 #include "HUD/Minimap.h"
 #include "Object/Camera/FollowCamera.h"
@@ -17,6 +18,7 @@ class GameScene : public BaseScene {
     std::unique_ptr<Player> player_;
     std::unique_ptr<FollowCamera> camera_;
     std::unique_ptr<GUI_LvUP> guiLvUP_;
+    std::unique_ptr<GUI_PauseMenu> guiPauseMenu_;
     std::unique_ptr<Minimap> minimap_; 
     CollisionManager* pCollisionManager_ = nullptr;
 	std::unique_ptr<Enemy>enemy_;
