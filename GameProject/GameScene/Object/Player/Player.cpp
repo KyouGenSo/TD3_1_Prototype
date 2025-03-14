@@ -22,7 +22,7 @@ void Player::Initialize() {
     transform_ = {
         .scale = { 1.0f, 1.0f, 1.0f },
         .rotate = { 0.0f, 0.0f, 0.0f },
-        .translate = { 0.0f, 0.5f, -180.0f },
+        .translate = { 0.0f, 0.5f, -80.0f },
     };
 
     collider_ = std::make_unique<Collider>(this);

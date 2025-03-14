@@ -30,10 +30,10 @@ void Boss::Update()
     if(isValid_){
 	    prePos = transform_.translate;
 	    transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
-	    model_->SetTranslate(transform_.translate);
     }else {
         
     }
+	    model_->SetTranslate(transform_.translate);
 	    model_->Update();
 }
 

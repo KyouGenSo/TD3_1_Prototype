@@ -42,10 +42,14 @@ void GameScene::Initialize() {
     minimap_->SetSize({-30, 0, -30}, {30, 0, 30});
     minimap_->Register(player_.get());
 
+    castle_ = std::make_unique<Castle>();
+    castle_->Initialize();
+
     // 敵の初期化
 	ModelManager::GetInstance()->LoadModel("cube.gltf");
-    enemyManager_.SetMinimap(minimap_.get());
-    enemyManager_.Initialize();
+    enemyManager_ = std::make_unique<EnemyManager>();
+    //enemyManager_->SetMinimap(minimap_.get());
+    enemyManager_->Initialize(player_.get(), castle_.get());
 
     // ボスの初期化
 	ModelManager::GetInstance()->LoadModel("bigCube.gltf");
@@ -56,15 +60,13 @@ void GameScene::Initialize() {
     terrain_ = std::make_unique<Terrain>();
     terrain_->Initialize();
 
-    castle_ = std::make_unique<Castle>();
-    castle_->Initialize();
 }
 
 void GameScene::Finalize() {
     terrain_->Finalize();
     player_->Finalize();
 	boss_->Finalize();
-	enemyManager_.Finalize();
+	enemyManager_->Finalize();
     camera_->Finalize();
 }
 
@@ -81,7 +83,7 @@ void GameScene::Update() {
     guiPauseMenu_->Update();
 
 	boss_->Update();
-	enemyManager_.Update();
+	enemyManager_->Update();
 
     minimap_->Update();
 
@@ -104,7 +106,7 @@ void GameScene::Draw() {
     castle_->Draw();
     player_->Draw();
 	boss_->Draw();
-	enemyManager_.Draw();
+	enemyManager_->Draw();
 
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定
@@ -116,8 +118,7 @@ void GameScene::Draw() {
 void GameScene::DrawImGui() {
     terrain_->ImGui();
     player_->ImGui();
-	enemy_->ImGui();
-    enemyManager_.ImGui();
+    enemyManager_->ImGui();
     boss_->ImGui();
     camera_->ImGui();
 

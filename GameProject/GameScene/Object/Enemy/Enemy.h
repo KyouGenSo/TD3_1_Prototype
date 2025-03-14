@@ -19,9 +19,11 @@ public:
 
 	void OnCollision(const Object* pObject) override;
 
-	void SetTranslate(Vector3 translate) { transform_.translate = translate; }
+    void Move();
 
-	void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
+    void AppearanceProduction();
+
+	void SetTranslate(Vector3 translate) { transform_.translate = translate; }
 
 	void SetIsAppearing(bool isAppearing) { isAppearing_ = true; }
 
@@ -29,28 +31,37 @@ public:
 
 	float GetAmoRotate() { return amoRotate; }
 
-	void ImGui();
+    void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
+
+    Vector3 GetDirection() { return direction; }
 
 
 private:
 	std::unique_ptr<Object3d> model_;
 
-	Camera* eCamera_ = nullptr;
+	Camera* pCamera_ = nullptr;
 
 	std::unique_ptr<Collider> collider_;
 
 	Vector3 prePos;
 
-	Object* pTarget_ = nullptr;
-
 	bool isAppearing_;
 	float appearCounter_ = 0.0f;
-
-	float rotation = 0.0f;
 
 	float amoRotate = 0.1f;
 	float targetRotate = 2.0f;
 	float rotateSpeed = 0.1f;
 	float preRotateSpeed = 0.1f;
+
+    Object* pTarget_ = nullptr;
+
+    Vector3 direction{ 0.0f,0.0f,0.0f };
+
+    float speed = 0.2f;
+
+    float appearDuration = 60.0f;
+
+    Vector3 defaultScale = { 1.0f,1.0f,1.0f };
+    Vector3 defaultRotate = { 0.0f,0.0f,0.0f };
 };
 
