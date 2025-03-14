@@ -54,7 +54,10 @@ void Enemy::Move()
     if(isAppearing_) {
         AppearanceProduction();
     }else {
-        transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
+        Vector3 direction = pTarget_->GetTransform().translate - transform_.translate;
+        direction /= direction.Length();
+        transform_.translate += direction * speed; 
+        
     }
     model_->SetTranslate(transform_.translate);
 }

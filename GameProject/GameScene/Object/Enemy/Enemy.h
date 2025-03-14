@@ -31,6 +31,10 @@ public:
 
 	float GetAmoRotate() { return amoRotate; }
 
+    void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
+
+    Vector3 GetDirection() { return direction; }
+
 
 private:
 	std::unique_ptr<Object3d> model_;
@@ -50,5 +54,11 @@ private:
 	float targetRotate = 2.0f;
 	float rotateSpeed = 0.1f;
 	float preRotateSpeed = 0.1f;
+
+    Object* pTarget_ = nullptr;
+
+    Vector3 direction{ 0.0f,0.0f,0.0f };
+
+    float speed = 0.2f;
 };
 
