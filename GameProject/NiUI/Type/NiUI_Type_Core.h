@@ -4,7 +4,7 @@
 
 #include "../Math/NiVec2.h" // NiVec2
 #include "../Math/NiVec4.h" // NiVec4
-#include "NiUI_ComponentData.h"
+#include "NiUI_Type_Component.h"
 
 
 // Included in NiUICoreState

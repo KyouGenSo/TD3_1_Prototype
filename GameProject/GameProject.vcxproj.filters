@@ -217,9 +217,6 @@
     <ClInclude Include="NiUI\NiUI.h">
       <Filter>NiUI</Filter>
     </ClInclude>
-    <ClInclude Include="NiUI\Type\NiUI_ComponentData.h">
-      <Filter>NiUI\Type</Filter>
-    </ClInclude>
     <ClInclude Include="NiUI\Type\NiUI_Enum.h">
       <Filter>NiUI\Type</Filter>
     </ClInclude>
@@ -258,9 +255,6 @@
     </ClInclude>
     <ClInclude Include="NiUI\Interface\NiUI_IDebug.h">
       <Filter>NiUI\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Type\NiUI_Core_Type.h">
-      <Filter>NiUI\Type</Filter>
     </ClInclude>
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h">
       <Filter>NiUI\Derived</Filter>
@@ -339,5 +333,14 @@
       <Filter>Object\Bullets</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Castle\Castle.h" />
+    <ClInclude Include="NiUI\Type\NiUI_Type_Component.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Type\NiUI_Type_Core.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Type\NiUI_Type_Various.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

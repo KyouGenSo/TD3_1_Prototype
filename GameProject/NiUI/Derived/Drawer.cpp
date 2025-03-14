@@ -15,6 +15,8 @@ void Drawer::DrawSetting()
 
     buttonSpriteCount_.clear();
     divSpriteCount_.clear();
+    dragItemAreaSpriteCount_.clear();
+    dragItemSpriteCount_.clear();
     spritesZOrdered_.clear();
 
 
@@ -29,6 +31,14 @@ void Drawer::DrawSetting()
         if (path == "") path = "white.png";
         divSpriteCount_[path]++;
     }
+    for (auto& areaData : dragItemAreaDrawDataList_)
+    {
+        dragItemAreaSpriteCount_[areaData->textureName]++;
+    }
+    for (auto& itemData : dragItemDrawDataList_)
+    {
+        dragItemSpriteCount_[itemData->textureName]++;
+    }
 
     /// スプライトの数が足りない場合は追加
     for (auto& buttonSpriteCount : buttonSpriteCount_)
@@ -41,24 +51,33 @@ void Drawer::DrawSetting()
         if (divSpriteCount.first == "") path = "white.png";
         CheckCountAndCreateSprite(path, spritesDiv_[path], divSpriteCount.second);
     }
+    for (auto& areaSpriteCount : dragItemAreaSpriteCount_)
+    {
+        CheckCountAndCreateSprite(areaSpriteCount.first, spritesDragItemArea_[areaSpriteCount.first], areaSpriteCount.second);
+    }
+    for (auto& itemSpriteCount : dragItemSpriteCount_)
+    {
+        CheckCountAndCreateSprite(itemSpriteCount.first, spritesDragItem_[itemSpriteCount.first], itemSpriteCount.second);
+    }
 
     /// Zオーダーのスプライトリストのリサイズ
     size_t spriteCount = 0;
     spriteCount += buttonDrawDataList_.size();
     spriteCount += divDrawDataList_.size();
+    spriteCount += dragItemAreaDrawDataList_.size();
+    spriteCount += dragItemDrawDataList_.size();
     spritesZOrdered_.resize(spriteCount);
 
     SpriteSettingByButtonData();
     SpriteSettingByDivData();
+    SpriteSettingByDragItemAreaData();
+    SpriteSettingByDragItemData();
 
     return;
 }
 
 void Drawer::Draw()
 {
-    //SpriteDraw(buttonSpriteCount_, spritesButton_);
-    //SpriteDraw(divSpriteCount_, spritesDiv_);
-
     for (auto& sprite : spritesZOrdered_)
     {
         sprite->Update();
@@ -68,6 +87,8 @@ void Drawer::Draw()
     /// 描画データのクリア
     buttonDrawDataList_.clear();
     divDrawDataList_.clear();
+    dragItemAreaDrawDataList_.clear();
+    dragItemDrawDataList_.clear();
 
     return;
 }
@@ -152,6 +173,51 @@ void Drawer::SpriteSettingByDivData()
 
         /// イテレータを進める
         ++itr_sprites[path];
+    }
+}
+
+void Drawer::SpriteSettingByDragItemAreaData()
+{
+    /// イテレータの初期化
+    std::unordered_map<std::string, SpriteList::iterator> itr_sprites;
+    for (auto& spriteList : spritesDragItemArea_)
+    {
+        itr_sprites[spriteList.first] = spriteList.second.begin();
+    }
+
+    /// ボタンの描画データをスプライトに変換
+    for (auto& data : dragItemAreaDrawDataList_)
+    {
+        auto sprite = itr_sprites[data->textureName]->get();
+        sprite->SetPos(Vector2(data->leftTop.x, data->leftTop.y));
+        sprite->SetSize(Vector2(data->size.x, data->size.y));
+        sprite->SetColor({ data->color.x, data->color.y, data->color.z, data->color.w });
+        spritesZOrdered_[data->zOrder] = sprite;
+
+        /// イテレータを進める
+        ++itr_sprites[data->textureName];
+    }
+}
+
+void Drawer::SpriteSettingByDragItemData()
+{
+    /// イテレータの初期化
+    std::unordered_map<std::string, SpriteList::iterator> itr_sprites;
+    for (auto& spriteList : spritesDragItem_)
+    {
+        itr_sprites[spriteList.first] = spriteList.second.begin();
+    }
+
+    /// ボタンの描画データをスプライトに変換
+    for (auto& data : dragItemDrawDataList_)
+    {
+        auto sprite = itr_sprites[data->textureName]->get();
+        sprite->SetPos(Vector2(data->leftTop.x, data->leftTop.y));
+        sprite->SetSize(Vector2(data->size.x, data->size.y));
+        sprite->SetColor({ data->color.x, data->color.y, data->color.z, data->color.w });
+        spritesZOrdered_[data->zOrder] = sprite;
+        /// イテレータを進める
+        ++itr_sprites[data->textureName];
     }
 }
 
