@@ -17,5 +17,7 @@ private:
     void UpdateChain() override;
 
     Vector3 forward_ = {};
+
+    std::unique_ptr<Collider> explosion_;
 };
 

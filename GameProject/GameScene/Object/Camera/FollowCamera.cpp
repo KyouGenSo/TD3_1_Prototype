@@ -5,6 +5,7 @@
 
 void FollowCamera::Initialize() {
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
+    pCamera_->SetFarClip(1000);
 }
 
 void FollowCamera::Update() {

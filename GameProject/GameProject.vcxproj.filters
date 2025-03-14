@@ -209,6 +209,7 @@
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp" />
     <ClCompile Include="GameScene\Object\Castle\Castle.cpp" />
+    <ClCompile Include="GameScene\Object\Collision\LimitedCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -336,5 +337,6 @@
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h" />
     <ClInclude Include="GameScene\Object\Castle\Castle.h" />
+    <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
   </ItemGroup>
 </Project>

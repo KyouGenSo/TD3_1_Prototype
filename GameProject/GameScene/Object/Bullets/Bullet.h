@@ -33,7 +33,6 @@ protected:
     float speed_ = 1.f;
     float lifeTime_ = 150.0f / speed_ * 0.0166f;
 
-
 protected:
     virtual void AttackNormalInitialize() = 0;
     virtual void AttackChainInitialize() = 0;

@@ -190,6 +190,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="Internal\SingletonFinalizer.cpp" />
+    <ClCompile Include="GameScene\Object\Collision\LimitedCollider.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameScene\HUD\Minimap.cpp" />
     <ClCompile Include="MyGame\MyGame.cpp" />
@@ -228,6 +229,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene\System\ChainManager.h" />
     <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h" />
     <ClInclude Include="Internal\SingletonFinalizer.h" />
+    <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
     <ClInclude Include="MyGame\MyGame.h" />
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h" />
     <ClInclude Include="NiUI\Interface\NiUI_IDebug.h" />

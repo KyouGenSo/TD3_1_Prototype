@@ -10,8 +10,10 @@ Collider::Collider(Object* _owner)
 }
 
 void Collider::Update() {
-    if(pOwner_->IsDead()){
-        pManager_->Remove(this);
+    if (disable_)return;
+
+    if(pOwner_){
+        position_ = pOwner_->GetTransform().translate;
     }
 }
 
@@ -47,10 +49,14 @@ void Collider::OnCollisionTrigger(const Object* pObject) const {
     onCollisionTrigger_(pObject);
 }
 
-const Transform& Collider::GetTransform() const {
-    return pOwner_->GetTransform();
+Vector3 Collider::GetPosition() const {
+    return position_;
 }
 
-void Collider::SetRadius(const float r) {
-    radius_ = r;
+std::variant<float, Vector3> Collider::GetSize() const {
+    return size_;
+}
+
+void Collider::SetSize(const std::variant<float, Vector3> size) {
+    size_ = size;
 }

@@ -3,6 +3,8 @@
 #include <Quaternion.h>
 #include <QuatFunc.h>
 
+#include "GameScene/Object/Collision/LimitedCollider.h"
+
 void RocketBullet::Initialize()
 {
     BulletBase::Initialize();
@@ -15,6 +17,9 @@ void RocketBullet::Initialize()
     model_->SetModel("AnimatedCube.gltf");
 
     CalcLifeTime();
+
+    pCollider_ = std::make_unique<Collider>(this);
+    pCollider_->SetEvent([this](const Object* obj){this->OnCollisionTrigger(obj); }, Collider::Event::TRIGGER);
 }
 
 void RocketBullet::Update()
@@ -71,7 +76,10 @@ void RocketBullet::Fire()
 
 void RocketBullet::OnCollisionTrigger(const Object* _other)
 {
-
+    //爆発オブジェクトを生成
+    explosion_ = std::make_unique<LimitedCollider>(this, 1);
+    explosion_->SetSize(5.0f);
+    pCollider_->Disable();
 }
 
 void RocketBullet::AttackNormalInitialize()
