@@ -209,6 +209,9 @@
       <Filter>Object\Bullets</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Object\Castle\Castle.cpp" />
+    <ClCompile Include="NiUI\Impl\Impl_DragItem.cpp">
+      <Filter>NiUI\Impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">

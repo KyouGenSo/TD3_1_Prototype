@@ -117,15 +117,15 @@ void Player::UpdateMovement()
     else
     {
         Quaternion yaw = Quat::MakeRotateAxisAngle({ 0.0f, 1.0f, 0.0f }, transform_.rotate.y);
-        Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);
+        Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, 0.0f);
 
         Quaternion rotate = yaw * pitch;
 
         Vector3 forward_ = Quat::RotateVec3({ 0.0f, 0.0f, 1.0f }, rotate);
         Vector3 right = Quat::RotateVec3({ 1.0f, 0.0f, 0.0f }, rotate);
 
-        move += forward_ * speed * (Input::GetInstance()->PushKey(DIK_W) - Input::GetInstance()->PushKey(DIK_S));
-        move += right * speed * (Input::GetInstance()->PushKey(DIK_D) - Input::GetInstance()->PushKey(DIK_A));
+        move += forward_ * speed * static_cast<float>(Input::GetInstance()->PushKey(DIK_W) - Input::GetInstance()->PushKey(DIK_S));
+        move += right * speed * static_cast<float>(Input::GetInstance()->PushKey(DIK_D) - Input::GetInstance()->PushKey(DIK_A));
     }
 
     // Jump

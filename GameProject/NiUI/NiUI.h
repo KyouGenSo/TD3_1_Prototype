@@ -85,6 +85,26 @@ public: /// UIコンポーネントの追加
         const NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
     );
 
+    static std::string DragItemArea(
+        const std::string& _id,
+        const std::string& _textureName,
+        const NiVec4& _color,
+        const NiVec2& _position,
+        const NiVec2& _size,
+        const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
+        const NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
+    );
+
+    static std::string DragItem(
+        const std::string& _id,
+        const std::string& _textureName,
+        const NiVec4& _color,
+        const NiVec2& _position,
+        const NiVec2& _size,
+        const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
+        const NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
+    );
+
     // 座標自動計算を有効にする
     static void EnableAutoPosition() { state_.flags.autoPosition = true; };
     // 座標自動計算を無効にする
@@ -137,19 +157,23 @@ private: /// メンバ変数
     // コンポーネントのリスト
     static std::unordered_map<std::string, ButtonData> buttonImages_;
     static std::unordered_map<std::string, DivData> divData_;
+    static std::unordered_map<std::string, DragItemAreaData> dragItemAreaData_;
 
     // エンドユーザーが変更したデータ
     static std::unordered_map<std::string, NiVec2> divOffset_;
+    static std::unordered_map<std::string, NiVec2> dragItemOffset_;
 
 
 private: /// 挙動
     static bool ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held);
     static void DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease);
+    static void DragItemAreaBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease);
 
 
 private: /// 描画クラスにデータを送る関数
     static void ButtonDataEnqueue();
     static void DivDataEnqueue();
+    static void DragItemAreaDataEnqueue();
 
 
 private: /// ボタンの処理
