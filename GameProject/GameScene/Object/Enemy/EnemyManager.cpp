@@ -9,7 +9,7 @@ void EnemyManager::Initialize(Object* player, Object* castle)
     pPlayer_ = player;
     pCastle_ = castle;
 
-    AddEnemy({ 0.0f,0.0f,0.0f });
+    AddEnemy(appearancePos_);
 }
 
 void EnemyManager::Update()
@@ -70,7 +70,7 @@ void EnemyManager::ImGui()
     ImGui::Begin("EnemyManager");
     if (ImGui::Button("Add Enemy")) {
         for (int i = 0; i < 3; ++i) {
-            AddEnemy({ 3.0f*i, 0.0f, 0.0f });
+            AddEnemy({ appearancePos_.x * i, appearancePos_.y, appearancePos_.z });
         }
     }
     ImGui::End();
