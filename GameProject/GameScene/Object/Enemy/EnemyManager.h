@@ -29,4 +29,6 @@ private:
     Object* pCastle_ = nullptr;
 
     const float leave = 10.0f;
+
+    Vector3 appearancePos_ = { 3.0f,0.0f,0.0f };
 };

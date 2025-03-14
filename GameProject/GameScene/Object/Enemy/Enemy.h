@@ -48,8 +48,6 @@ private:
 	bool isAppearing_;
 	float appearCounter_ = 0.0f;
 
-	float rotation = 0.0f;
-
 	float amoRotate = 0.1f;
 	float targetRotate = 2.0f;
 	float rotateSpeed = 0.1f;
@@ -60,5 +58,10 @@ private:
     Vector3 direction{ 0.0f,0.0f,0.0f };
 
     float speed = 0.2f;
+
+    float appearDuration = 60.0f;
+
+    Vector3 defaultScale = { 1.0f,1.0f,1.0f };
+    Vector3 defaultRotate = { 0.0f,0.0f,0.0f };
 };
 

@@ -23,9 +23,6 @@ void Enemy::Initialize()
 
     collider_ = std::make_unique<Collider>(this);
     collider_->SetEvent([this](const Object* pObj) {this->OnCollision(pObj); });
-
-	rotation = 0.0f;
-
 }
 
 void Enemy::Update()
@@ -64,10 +61,8 @@ void Enemy::Move()
 
 void Enemy::AppearanceProduction()
 {
-    float appearDuration = 60.0f;
     float t = appearCounter_ / appearDuration;
 
-    // スケール (0 → 1)
     transform_.scale = { t, t, t };
     model_->SetScale(transform_.scale);
 
@@ -78,9 +73,9 @@ void Enemy::AppearanceProduction()
 
     appearCounter_++;
     if (appearCounter_ >= appearDuration) {
-        transform_.scale = { 1.0f, 1.0f, 1.0f };
+        transform_.scale = defaultScale;
         model_->SetScale(transform_.scale);
-        transform_.rotate = { 0.0f, 0.0f, 0.0f };
+        transform_.rotate = defaultRotate;
         model_->SetRotate(transform_.rotate);
         isAppearing_ = false;
     }
