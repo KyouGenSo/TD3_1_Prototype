@@ -24,10 +24,14 @@ void GameScene::Initialize() {
     ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
     pCollisionManager_ = Singleton<CollisionManager>::GetInstance();
 
+    // Terrain
+    terrain_ = std::make_unique<Terrain>();
+    terrain_->Initialize();
+
     // プレイヤーの初期化
     player_ = std::make_unique<Player>();
     player_->Initialize();
-    player_->SetFloor(0.5f);
+    player_->SetFloor(terrain_->GetFloorHeight());
     player_->SetTransform(currentStageData.playerTransform);
 
     // Camera
@@ -63,10 +67,6 @@ void GameScene::Initialize() {
 	boss_ = std::make_unique<Boss>();
 	boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
-
-    // Terrain
-    terrain_ = std::make_unique<Terrain>();
-    terrain_->Initialize();
 
 }
 

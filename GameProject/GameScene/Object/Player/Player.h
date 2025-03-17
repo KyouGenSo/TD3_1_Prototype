@@ -21,6 +21,10 @@ class Player : public Object {
 
     float floor_ = 0.5f;
     const float GRAVITY = -.16f;
+    float jumpPower_ = 1.0f;
+    float moveSpeed_ = 1.0f;
+    float deltaTime_ = 0.0f;
+
 public:
     void Initialize() override;
     void Update() override;

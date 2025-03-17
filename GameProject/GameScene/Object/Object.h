@@ -9,6 +9,7 @@
 #include "Object3dBasic.h"
 #include "Transform.h"
 #include <Input.h>
+#include <array>
 
 class Collider;
 
@@ -17,7 +18,9 @@ class Object{
 protected:
     Camera* pCamera_ = nullptr;
     std::unique_ptr<Object3d> model_;
-	Transform transform_ {};
+	Transform transform_ = {};
+    Vector3 velocity_ = {};
+    Vector3 acceleration_ = {};
     bool isDead_ = false;
 
 protected:

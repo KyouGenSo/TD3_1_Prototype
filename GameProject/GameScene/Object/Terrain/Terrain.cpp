@@ -77,3 +77,8 @@ void Terrain::ImGui()
 void Terrain::OnCollision(const Collider* pCollider) const {
     (void)pCollider;
 }
+
+float Terrain::GetFloorHeight() const
+{
+    return transform_.translate.y + transform_.scale.y * 0.5f;
+}
