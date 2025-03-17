@@ -19,6 +19,9 @@ public:
 
     void OnCollision(const Collider* pCollider) const;
 
+public:
+    float GetFloorHeight() const;
+
 private:
     std::unique_ptr<Object3d> terrainObj_;
     std::unique_ptr<Object3d> boxObj_;

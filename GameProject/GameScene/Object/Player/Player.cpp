@@ -4,6 +4,7 @@
 #include "Input.h"
 
 #include <ModelManager.h>
+#include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 
 // DEBUG
 #include <GameScene/Object/Weapon/RocketLauncher/RocketLauncher.h>
@@ -36,9 +37,12 @@ void Player::Initialize() {
     chainManager_->SetChain(WeaponType::RocketLauncher, WeaponType::Assault, WeaponType::None, WeaponType::None);
     weapon_ = std::make_unique<RocketLauncher>();
     weapon_->SetChainManager(chainManager_.get());
+    gravity_ = 1.8f;
 }
 
 void Player::Update() {
+
+    deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(0);
 
     UpdateInputCommands();
     UpdateMovement();
@@ -67,13 +71,22 @@ void Player::ImGui() {
 
     chainManager_->ImGui();
 
-    ImGui::Begin("Player");
-    ImGui::Text("Position : ");
-    ImGui::SameLine();
-	ImGui::DragFloat3("##pos", &transform_.translate.x, 0.1f);
-    ImGui::Text("Rotate   : ");
-    ImGui::SameLine();
-	ImGui::DragFloat3("##rotate", &transform_.rotate.x, 0.1f);
+    if (ImGui::Begin("Player"))
+    {
+        if (ImGui::TreeNode("Object"))
+        {
+            Object::DebugObject();
+            ImGui::TreePop();
+        }
+
+        if (ImGui::TreeNode("Common"))
+        {
+            ImGui::DragFloat("JumpPower", &jumpPower_, 0.01f);
+            ImGui::DragFloat("MoveSpeed", &moveSpeed_, 0.01f);
+            ImGui::DragFloat("FrictionCoefficient", &frictionCoefficient_, 0.01f);
+            ImGui::TreePop();
+        }
+    }
     ImGui::End();
 }
 
@@ -116,8 +129,6 @@ void Player::UpdateMovement()
     }
 
     // Movement
-    constexpr float speed = 0.3f;
-    Vector3 move{};
     if(Input::GetInstance()->IsConnect()){
         // Joycon Movement
     }
@@ -131,29 +142,41 @@ void Player::UpdateMovement()
         Vector3 forward_ = Quat::RotateVec3({ 0.0f, 0.0f, 1.0f }, rotate);
         Vector3 right = Quat::RotateVec3({ 1.0f, 0.0f, 0.0f }, rotate);
 
-        move += forward_ * speed * static_cast<float>(Input::GetInstance()->PushKey(DIK_W) - Input::GetInstance()->PushKey(DIK_S));
-        move += right * speed * static_cast<float>(Input::GetInstance()->PushKey(DIK_D) - Input::GetInstance()->PushKey(DIK_A));
+        int directionForward = Input::GetInstance()->PushKey(DIK_W) - Input::GetInstance()->PushKey(DIK_S);
+        int directionRight = Input::GetInstance()->PushKey(DIK_D) - Input::GetInstance()->PushKey(DIK_A);
+        acceleration_ += forward_ * moveSpeed_ * static_cast<float>(directionForward) * deltaTime_;
+        acceleration_ += right * moveSpeed_ * static_cast<float>(directionRight) * deltaTime_;
     }
+
 
     // Jump
     if (isGround_){
         if(Input::GetInstance()->TriggerKey(DIK_SPACE)){
-            move_.y = 1.6f;
+            acceleration_.y += jumpPower_;
             isGround_ = false;
         }
+        ApplyFriction(frictionCoefficient_);
     }
     else
     {
-        move_.y += GRAVITY;
-        if (transform_.translate.y + move_.y <= floor_)
-        {
-            transform_.translate.y = floor_;
-            move_.y = 0.0f;
-            isGround_ = true;
-        }
+        // 重力を加算
+        acceleration_.y += -gravity_;
     }
 
-    // 座標を代入
-    transform_.translate += move;
+    // 速度を加算
+    velocity_ += acceleration_;
+    
+
+    transform_.translate += velocity_ * deltaTime_;
+
+    if (transform_.translate.y < floor_ + HEIGHT_HALF)
+    {
+        transform_.translate.y = floor_ + HEIGHT_HALF;
+        isGround_ = true;
+        velocity_.y = 0.0f;
+    }
+
+    // 加速度初期化
+    acceleration_ = {};
 }
 
