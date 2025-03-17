@@ -42,6 +42,7 @@ void Enemy::Finalize()
 
 void Enemy::OnCollision(const Object* pObject)
 {
+    //isDead_ = true;
 	transform_.translate = prePos;
 }
 
