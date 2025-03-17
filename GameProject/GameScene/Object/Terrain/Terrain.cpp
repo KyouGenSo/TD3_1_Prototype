@@ -33,7 +33,7 @@ void Terrain::Initialize()
     collider_ = std::make_unique<Collider>();
     collider_->SetEvent([&](const Collider* pCol){OnCollision(pCol); });
     collider_->SetPosition(transform_.translate);
-    collider_->SetSize(Vector3 {100, 2, 400});
+    collider_->SetSize(Vector3 {100, 0, 400});
     collider_->SetType(Collider::Type::STAGE);
 }
 
