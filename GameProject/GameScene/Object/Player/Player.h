@@ -19,11 +19,12 @@ class Player : public Object {
 
     bool isGround_ = true;
 
+    const float HEIGHT_HALF = 0.5f;
+
     float floor_ = 0.5f;
-    const float GRAVITY = -.16f;
-    float jumpPower_ = 1.0f;
-    float moveSpeed_ = 1.0f;
-    float deltaTime_ = 0.0f;
+    float jumpPower_ = 20.0f; // ジャンプ力
+    float moveSpeed_ = 20.0f; // 移動速度
+    float frictionCoefficient_ = 6.5f; // 摩擦係数
 
 public:
     void Initialize() override;

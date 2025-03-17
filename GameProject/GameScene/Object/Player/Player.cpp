@@ -37,6 +37,7 @@ void Player::Initialize() {
     chainManager_->SetChain(WeaponType::RocketLauncher, WeaponType::Assault, WeaponType::None, WeaponType::None);
     weapon_ = std::make_unique<RocketLauncher>();
     weapon_->SetChainManager(chainManager_.get());
+    gravity_ = 1.8f;
 }
 
 void Player::Update() {
@@ -72,10 +73,9 @@ void Player::ImGui() {
 
     if (ImGui::Begin("Player"))
     {
-        if (ImGui::TreeNode("Transform"))
+        if (ImGui::TreeNode("Object"))
         {
-            ImGui::DragFloat3("Position", &transform_.translate.x, 0.1f);
-            ImGui::DragFloat3("Rotation", &transform_.rotate.x, 0.1f);
+            Object::DebugObject();
             ImGui::TreePop();
         }
 
@@ -83,6 +83,7 @@ void Player::ImGui() {
         {
             ImGui::DragFloat("JumpPower", &jumpPower_, 0.01f);
             ImGui::DragFloat("MoveSpeed", &moveSpeed_, 0.01f);
+            ImGui::DragFloat("FrictionCoefficient", &frictionCoefficient_, 0.01f);
             ImGui::TreePop();
         }
     }
@@ -128,7 +129,6 @@ void Player::UpdateMovement()
     }
 
     // Movement
-    Vector3 move{};
     if(Input::GetInstance()->IsConnect()){
         // Joycon Movement
     }
@@ -144,8 +144,8 @@ void Player::UpdateMovement()
 
         int directionForward = Input::GetInstance()->PushKey(DIK_W) - Input::GetInstance()->PushKey(DIK_S);
         int directionRight = Input::GetInstance()->PushKey(DIK_D) - Input::GetInstance()->PushKey(DIK_A);
-        move += forward_ * moveSpeed_ * static_cast<float>(directionForward) * deltaTime_;
-        move += right * moveSpeed_ * static_cast<float>(directionRight) * deltaTime_;
+        acceleration_ += forward_ * moveSpeed_ * static_cast<float>(directionForward) * deltaTime_;
+        acceleration_ += right * moveSpeed_ * static_cast<float>(directionRight) * deltaTime_;
     }
 
 
@@ -155,25 +155,25 @@ void Player::UpdateMovement()
             acceleration_.y += jumpPower_;
             isGround_ = false;
         }
+        ApplyFriction(frictionCoefficient_);
     }
     else
     {
         // 重力を加算
-        acceleration_.y += GRAVITY;
+        acceleration_.y += -gravity_;
     }
 
     // 速度を加算
     velocity_ += acceleration_;
-    move_ += velocity_ * deltaTime_;
+    
 
-    // 座標を代入
-    transform_.translate += move;
+    transform_.translate += velocity_ * deltaTime_;
 
-    if (transform_.translate.y < floor_)
+    if (transform_.translate.y < floor_ + HEIGHT_HALF)
     {
-        transform_.translate.y = floor_;
+        transform_.translate.y = floor_ + HEIGHT_HALF;
         isGround_ = true;
-        velocity_.y = floor_;
+        velocity_.y = 0.0f;
     }
 
     // 加速度初期化
