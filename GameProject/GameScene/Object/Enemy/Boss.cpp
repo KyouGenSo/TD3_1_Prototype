@@ -22,7 +22,7 @@ void Boss::Initialize()
 	model_->SetTranslate(transform_.translate);
 
 	collider_ = std::make_unique<Collider>(this);
-	collider_->SetEvent([this](const Object* pObj) {this->OnCollision(pObj); });
+	collider_->SetEvent([this](const Collider* pCol) {this->OnCollision(pCol); });
 
     isValid_ = false;
 }
@@ -55,7 +55,7 @@ void Boss::ImGui()
     ImGui::End();
 }
 
-void Boss::OnCollision(const Object* pObject)
+void Boss::OnCollision(const Collider* pCollider)
 {
 	transform_.translate = prePos;
 }

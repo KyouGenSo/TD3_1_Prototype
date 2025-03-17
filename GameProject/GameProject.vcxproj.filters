@@ -218,6 +218,7 @@
     <ClCompile Include="GameSystem\StageManager\StageManager.cpp">
       <Filter>GameSystem\StageManager</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Object\Collision\LimitedCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -351,5 +352,6 @@
     <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h">
       <Filter>GameSystem\DeltaTimeManager</Filter>
     </ClInclude>
+    <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@ public:
     void Draw() override;
     void Fire() override;
 
-    void OnCollisionTrigger(const Object* _other) override;
+    void OnCollisionTrigger(const Collider* _other) override;
 
 private:
     void InitializeNormal() override;
@@ -17,5 +17,7 @@ private:
     void UpdateChain() override;
 
     Vector3 forward_ = {};
+
+    std::unique_ptr<Collider> explosion_;
 };
 
