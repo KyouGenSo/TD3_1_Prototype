@@ -75,7 +75,7 @@ void AssaultBullet::Fire()
     pChainManager_->OnAttacked(type_);
 }
 
-void AssaultBullet::OnCollisionTrigger(const Object* _other)
+void AssaultBullet::OnCollisionTrigger(const Collider* _other)
 {
 }
 

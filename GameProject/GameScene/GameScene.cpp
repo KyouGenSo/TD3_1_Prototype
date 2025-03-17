@@ -6,9 +6,13 @@
 #include <Type/Singleton.h>
 #include "SpriteBasic.h"
 #include "ImGuiManager.h"
+#include <GameSystem/StageManager/StageManager.h>
 
 
 void GameScene::Initialize() {
+
+    // ステージデータの取得
+    const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
 
     directLightParam_ = {
         .direction = { 0.0f, -1.0f, 0.0f },
@@ -23,6 +27,8 @@ void GameScene::Initialize() {
     // プレイヤーの初期化
     player_ = std::make_unique<Player>();
     player_->Initialize();
+    player_->SetFloor(0.5f);
+    player_->SetTransform(currentStageData.playerTransform);
 
     // Camera
     camera_ = std::make_unique<FollowCamera>();
@@ -44,6 +50,7 @@ void GameScene::Initialize() {
 
     castle_ = std::make_unique<Castle>();
     castle_->Initialize();
+    castle_->SetTransform(currentStageData.castleTransform);
 
     // 敵の初期化
 	ModelManager::GetInstance()->LoadModel("cube.gltf");
@@ -55,6 +62,7 @@ void GameScene::Initialize() {
 	ModelManager::GetInstance()->LoadModel("bigCube.gltf");
 	boss_ = std::make_unique<Boss>();
 	boss_->Initialize();
+    boss_->SetTransform(currentStageData.bossTransform);
 
     // Terrain
     terrain_ = std::make_unique<Terrain>();

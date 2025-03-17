@@ -10,9 +10,9 @@
 class BulletBase : public Object
 {
 public:
-    virtual void Initialize() override;
+    void Initialize() override;
     virtual void Fire();
-    virtual void OnCollisionTrigger(const Object* _other) override = 0;
+    void OnCollisionTrigger(const Collider* _collider) override = 0;
     bool IsDead();
 
 
@@ -33,7 +33,6 @@ protected:
     float speed_ = 1.f;
     float lifeTime_ = 150.0f / speed_ * 0.0166f;
 
-
 protected:
     virtual void InitializeNormal() = 0;
     virtual void InitializeChain() = 0;
@@ -51,7 +50,7 @@ protected:
 
 
 protected:
-    ChainManager* pChainManager_;
+    ChainManager* pChainManager_ = nullptr;
 
 private:
     void SetNextBullet(std::unique_ptr<BulletBase> _bullet);

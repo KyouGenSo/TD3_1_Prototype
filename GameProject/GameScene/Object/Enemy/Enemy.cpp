@@ -22,7 +22,7 @@ void Enemy::Initialize()
     model_->SetTranslate(transform_.translate);
 
     collider_ = std::make_unique<Collider>(this);
-    collider_->SetEvent([this](const Object* pObj) {this->OnCollision(pObj); });
+    collider_->SetEvent([this](const Collider* pObj) {this->OnCollision(pObj); });
 }
 
 void Enemy::Update()
@@ -40,7 +40,7 @@ void Enemy::Finalize()
 {
 }
 
-void Enemy::OnCollision(const Object* pObject)
+void Enemy::OnCollision(const Collider* pCollider)
 {
     //isDead_ = true;
 	transform_.translate = prePos;
