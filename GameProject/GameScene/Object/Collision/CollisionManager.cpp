@@ -1,7 +1,9 @@
 #include "CollisionManager.h"
 
 #include <algorithm>
+#include <array>
 #include <ranges>
+#include <set>
 
 #include "Collider.h"
 
@@ -33,8 +35,8 @@ void CollisionManager::CheckAll() {
                 continue;
             }
             //filter
-            if (pCollider->GetAttribute() & pOther->GetIgnore() || 
-                pOther->GetAttribute() & pCollider->GetIgnore()){
+            if ((pCollider->GetAttribute() & pOther->GetIgnore()) &&
+                (pOther->GetAttribute() & pCollider->GetIgnore())){
                 continue;
             }
 
@@ -73,10 +75,15 @@ void CollisionManager::Check(const std::string& col, const std::string& other) {
             (std::abs(pCollider->GetPosition().z - pOther->GetPosition().z) < size.z + std::get<float>(pOther->GetSize()));
     }
 
-
     if (isHit){
-        if (pairs_.end() == std::ranges::find(pairs_, Pair {col, other})){
-            pairs_.emplace_back(col, other);
+        Pair p {col, other};
+
+        if (p.first > p.second){
+            std::swap(p.first, p.second);
+        }
+
+        if (std::ranges::find_if(pairs_, [&p](const Pair& pair){return pair == p;}) == pairs_.end()){
+            pairs_.push_back(p);
 
             pCollider->OnCollisionTrigger(pOther);
             pOther->OnCollisionTrigger(pCollider);

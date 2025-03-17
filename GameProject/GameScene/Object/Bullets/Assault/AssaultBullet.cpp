@@ -29,22 +29,6 @@ void AssaultBullet::Update()
         UpdateNormal();
     }
 
-    if (pNextBulletTimer_->GetNow() > 1.0 && pNextBulletTimer_->GetIsStart())
-    {
-        pNextBulletTimer_->Reset();
-
-        if (pChainManager_->IsLastWeapon(type_)) return;
-
-        // クールタイムの確認
-        if (BulletBase::CheckCoolTime() == false) return;
-
-        // 次の弾の生成
-        BulletBase::CreateNextBullet();
-
-        // 次の弾の発射
-        pNext_->Fire();
-    }
-
     if (pNext_)
     {
         pNext_->Update();
@@ -58,9 +42,8 @@ void AssaultBullet::Draw()
     if (isDead_) return;
     if (isChainBullet_)
     {
-        for (int i = 0; i < bullets_.size(); i++)
-        {
-            bullets_[i]->Draw();
+        for (const auto& bullet : bullets_){
+            bullet->Draw();
         }
     }
     else
@@ -77,6 +60,21 @@ void AssaultBullet::Fire()
 
 void AssaultBullet::OnCollisionTrigger(const Collider* _other)
 {
+    if(pNextBulletTimer_->GetIsStart())
+    {
+        pNextBulletTimer_->Reset();
+
+        if (pChainManager_->IsLastWeapon(type_)) return;
+
+        // クールタイムの確認
+        if (BulletBase::CheckCoolTime() == false) return;
+
+        // 次の弾の生成
+        BulletBase::CreateNextBullet();
+
+        // 次の弾の発射
+        pNext_->Fire();
+    }
 }
 
 void AssaultBullet::InitializeNormal()
@@ -90,6 +88,8 @@ void AssaultBullet::InitializeNormal()
 
 void AssaultBullet::InitializeChain()
 {
+    Vector3 position = transform_.translate;
+    position.y = min(0.5f, position.y);
     float angle = 0;
     for (int i = 0; i < bullets_.size(); i++)
     {
@@ -104,7 +104,7 @@ void AssaultBullet::InitializeChain()
 
         bullets_[i] = std::make_unique<Bullet>();
         bullets_[i]->Initialize();
-        bullets_[i]->SetPosition(transform_.translate);
+        bullets_[i]->SetPosition(position);
         bullets_[i]->SetForward(forward_);
         bullets_[i]->SetSpeed(speed_);
     }
@@ -117,8 +117,7 @@ void AssaultBullet::UpdateNormal()
 
 void AssaultBullet::UpdateChain()
 {
-    for (int i = 0; i < bullets_.size(); i++)
-    {
-        bullets_[i]->Update();
+    for (const auto& bullet : bullets_){
+        bullet->Update();
     }
 }

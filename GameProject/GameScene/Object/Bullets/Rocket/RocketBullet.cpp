@@ -15,11 +15,15 @@ void RocketBullet::Initialize()
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("AnimatedCube.gltf");
+    model_->SetScale({0.4f, 0.4f, 0.4f});
 
     CalcLifeTime();
 
     pCollider_ = std::make_unique<Collider>(this);
     pCollider_->SetEvent([this](const Collider* pCol){this->OnCollisionTrigger(pCol); }, Collider::Event::TRIGGER);
+    pCollider_->SetSize(0.4f);
+    pCollider_->SetType(Collider::Type::ALLY);
+    pCollider_->SetIgnore(Collider::Type::ALLY);
 }
 
 void RocketBullet::Update()
@@ -37,7 +41,39 @@ void RocketBullet::Update()
     model_->SetTranslate(transform_.translate);
     model_->Update();
 
-    if (pNextBulletTimer_->GetNow() > 1.0 && pNextBulletTimer_->GetIsStart())
+    if (pNext_)
+    {
+        pNext_->Update();
+    }
+    isDead_ = CheckLifeTime();
+}
+
+void RocketBullet::Draw()
+{
+    // 描画処理
+    model_->SetMaterialColor(color);
+    model_->Draw();
+    model_->SetMaterialColor({1,1,1,1});
+
+    if (pNext_) pNext_->Draw();
+}
+
+void RocketBullet::Fire()
+{
+    BulletBase::Fire();
+    pChainManager_->OnAttacked(type_); // チェインマネージャーに攻撃されたことを通知
+}
+
+void RocketBullet::OnCollisionTrigger(const Collider* _other)
+{
+    pCollider_->Disable();
+
+    color = {1, 0,0,1};
+    //爆発オブジェクトを生成
+    explosion_ = std::make_unique<LimitedCollider>(this, 1);
+    explosion_->SetSize(5.0f);
+
+    if(pNextBulletTimer_->GetIsStart())
     {
         pNextBulletTimer_->Reset();
 
@@ -51,35 +87,8 @@ void RocketBullet::Update()
 
         // 次の弾の発射
         pNext_->Fire();
-    }
-
-    if (pNext_)
-    {
         pNext_->Update();
     }
-    isDead_ = CheckLifeTime();
-}
-
-void RocketBullet::Draw()
-{
-    // 描画処理
-    model_->Draw();
-
-    if (pNext_) pNext_->Draw();
-}
-
-void RocketBullet::Fire()
-{
-    BulletBase::Fire();
-    pChainManager_->OnAttacked(type_); // チェインマネージャーに攻撃されたことを通知
-}
-
-void RocketBullet::OnCollisionTrigger(const Collider* _other)
-{
-    //爆発オブジェクトを生成
-    explosion_ = std::make_unique<LimitedCollider>(this, 1);
-    explosion_->SetSize(5.0f);
-    pCollider_->Disable();
 }
 
 void RocketBullet::InitializeNormal()

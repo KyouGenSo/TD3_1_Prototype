@@ -19,5 +19,7 @@ private:
     Vector3 forward_ = {};
 
     std::unique_ptr<Collider> explosion_;
+
+    Vector4 color = {1,1,1,1};
 };
 
