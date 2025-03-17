@@ -34,6 +34,7 @@ void Terrain::Initialize()
     collider_->SetEvent([&](const Collider* pCol){OnCollision(pCol); });
     collider_->SetPosition(transform_.translate);
     collider_->SetSize(Vector3 {100, 2, 400});
+    collider_->SetType(Collider::Type::STAGE);
 }
 
 void Terrain::Update()

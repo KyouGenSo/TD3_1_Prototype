@@ -1,10 +1,20 @@
 #include "Collider.h"
 
+#include <map>
 #include <sstream>
 
 #include "CollisionManager.h"
 
 #include <Type/Singleton.h>
+
+namespace  {
+    std::map<Collider::Type, uint32_t> filterTable = {
+        {Collider::Type::ALLY, 0b1},
+        {Collider::Type::ENEMY, 0b1<<1},
+        {Collider::Type::STAGE, 0b1<<2}
+    };
+}
+
 
 Collider::Collider(): pManager_(Singleton<CollisionManager>::GetInstance()) {
     pManager_->Add(this);
@@ -37,7 +47,7 @@ void Collider::OnCollisionExit(const Collider* pCollider) const {
     onCollisionExit_(pCollider);
 }
 
-void Collider::SetEvent(const std::function<void(const Collider*)>& callback, const Event event) {
+Collider* Collider::SetEvent(const std::function<void(const Collider*)>& callback, const Event event) {
 	switch (event){
 	case Event::TRIGGER:
 		onCollisionTrigger_ = callback;
@@ -49,6 +59,8 @@ void Collider::SetEvent(const std::function<void(const Collider*)>& callback, co
 		onCollisionExit_ = callback;
 		break;
 	}
+
+    return this;
 }
 
 std::string Collider::GetUniqueId() const {
@@ -73,6 +85,41 @@ std::variant<float, Vector3> Collider::GetSize() const {
     return size_;
 }
 
-void Collider::SetSize(const std::variant<float, Vector3> size) {
+uint32_t Collider::GetAttribute() const {
+    return attribute_;
+}
+
+Collider* Collider::SetSize(const std::variant<float, Vector3> size) {
     size_ = size;
+    return this;
+}
+
+uint32_t Collider::GetIgnore() const {
+    return ignore_;
+}
+
+Collider::Type Collider::GetType() const {
+    return type_;
+}
+
+void Collider::Disable() {
+    disable_ = true;
+}
+
+Collider* Collider::SetPosition(const Vector3 _pos) {
+    position_ = _pos;
+    return this;
+}
+
+Collider* Collider::SetType(const Type type) {
+    type_ = type;
+    attribute_ |= filterTable[type];
+
+    return this;
+}
+
+Collider* Collider::SetIgnore(Type type) {
+    ignore_ |= filterTable[type];
+
+    return this;
 }
