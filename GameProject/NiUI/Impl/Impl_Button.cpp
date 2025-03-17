@@ -1,4 +1,4 @@
-﻿#include "../NiUI.h"
+#include "../NiUI.h"
 
 NiUI_ButtonState NiUI::Button(
     const std::string& _id,
@@ -9,9 +9,7 @@ NiUI_ButtonState NiUI::Button(
     NiUI_StandardPoint _pivot)
 {
     auto& buttonImage = buttonImages_[_id];
-    bool isTrigger = false;
-    bool isHover = false;
-    bool isRelease = false;
+    NiUI_InputState istate = {};
     bool isHeld = false;
 
     NiVec2 posInRegion = _position;
@@ -25,10 +23,10 @@ NiUI_ButtonState NiUI::Button(
     auto leftTop = ComputeLeftTop(posInRegion, _size, size, _anchor, _pivot);
 
     // 当たり判定
-    JudgeClickRect(leftTop, _size, isHover, isTrigger, isRelease);
+    JudgeClickRect(leftTop, _size, istate);
 
     // ボタンの挙動
-    bool onButton = ButtonBehavior(_id, isHover, isTrigger, isRelease, isHeld);
+    bool onButton = ButtonBehavior(_id, istate, isHeld);
 
     /// ボタンのデータを更新
     buttonImage.id = _id;
@@ -42,7 +40,7 @@ NiUI_ButtonState NiUI::Button(
     {
         result = NiUI_ButtonState::Confirm;
     }
-    else if (isHover)
+    else if (istate.isHover)
     {
         result = NiUI_ButtonState::Hover;
     }
@@ -50,16 +48,16 @@ NiUI_ButtonState NiUI::Button(
     return result;
 }
 
-bool NiUI::ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held)
+bool NiUI::ButtonBehavior(const std::string& _id, const NiUI_InputState& _inputState, bool& _out_held)
 {
-    if (_isHover)
+    if (_inputState.isHover)
     {
         state_.componentID.type = "Button";
         state_.componentID.hover = _id;
     }
 
 
-    if(_isTrigger)
+    if(_inputState.isTrigger)
     {
         state_.componentID.type = "Button";
         state_.componentID.active = _id;
@@ -70,14 +68,9 @@ bool NiUI::ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger
     {
         _out_held = true;
 
-        if (_isRelease && _isHover)
+        if (_inputState.isRelease && _inputState.isHover)
         {
-            state_.componentID.active = {};
             return true;
-        }
-        else if(_isRelease)
-        {
-            state_.componentID.active = {};
         }
     }
 

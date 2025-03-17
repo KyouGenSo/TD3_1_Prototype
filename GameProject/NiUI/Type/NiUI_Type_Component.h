@@ -50,3 +50,11 @@ struct BaseRegionData
 struct DivData : public BaseRegionData 
 {
 };
+
+struct DragItemAreaData : public BaseRegionData
+{
+};
+
+struct DragItemData : public BaseRegionData
+{
+};

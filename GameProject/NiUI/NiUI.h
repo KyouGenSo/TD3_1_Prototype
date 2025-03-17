@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Type/NiUI_ComponentData.h" // ComponentData
-#include "Type/NiUI_Core_Type.h" // NiUICoreState
+#include "Type/NiUI_Type_Component.h" // ComponentTypes
+#include "Type/NiUI_Type_Core.h" // NiUICoreState
+#include "Type/NiUI_Type_Various.h" // 
 #include "Type/NiUI_Enum.h" // enums
 #include "math/NiVec2.h" // NiVec2
 #include "NiUI_Input.h" // NiUI_Input
@@ -67,8 +68,8 @@ public: /// UIコンポーネントの追加
         const NiVec4& _color,
         const NiVec2& _position,
         const NiVec2& _size,
-        const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
-        const NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
+        NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
+        NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
     );
 
     static void EndDiv();
@@ -76,6 +77,26 @@ public: /// UIコンポーネントの追加
     // 移動可能なDivの追加
     // textureNameが空の場合はデフォルトの画像が使用されます。
     static bool BeginDivMovable(
+        const std::string& _id,
+        const std::string& _textureName,
+        const NiVec4& _color,
+        const NiVec2& _position,
+        const NiVec2& _size,
+        const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
+        const NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
+    );
+
+    static std::string DragItemArea(
+        const std::string& _id,
+        const std::string& _textureName,
+        const NiVec4& _color,
+        const NiVec2& _position,
+        const NiVec2& _size,
+        const NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
+        const NiUI_StandardPoint _pivot = NiUI_StandardPoint::LeftTop
+    );
+
+    static std::string DragItem(
         const std::string& _id,
         const std::string& _textureName,
         const NiVec4& _color,
@@ -137,19 +158,26 @@ private: /// メンバ変数
     // コンポーネントのリスト
     static std::unordered_map<std::string, ButtonData> buttonImages_;
     static std::unordered_map<std::string, DivData> divData_;
+    static std::unordered_map<std::string, DragItemAreaData> dragItemAreaData_;
+    static std::unordered_map<std::string, DragItemData> dragItemData_;
 
     // エンドユーザーが変更したデータ
     static std::unordered_map<std::string, NiVec2> divOffset_;
+    static std::unordered_map<std::string, NiVec2> dragItemOffset_;
 
 
 private: /// 挙動
-    static bool ButtonBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease, bool& _out_held);
-    static void DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease);
+    static bool ButtonBehavior(const std::string& _id, const NiUI_InputState& _inputState, bool& _out_held);
+    static void DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger);
+    static std::string DragItemAreaBehavior(const std::string& _id, bool _isHover, bool _isTrigger, NiUI_Transform2dEx& _transform, const NiVec2& _leftTop);
+    static std::string DragItemBehavior(const std::string& _id, const NiUI_InputState& _inputState, NiUI_Transform2dEx& _transform, const NiVec2& originLeftTop);
 
 
 private: /// 描画クラスにデータを送る関数
     static void ButtonDataEnqueue();
     static void DivDataEnqueue();
+    static void DragItemAreaDataEnqueue();
+    static void DragItemDataEnqueue();
 
 
 private: /// ボタンの処理
@@ -160,21 +188,25 @@ private: /// ボタンの処理
 private: /// その他
     static void CheckValid_BeginFrame();
     static void CheckValid_DrawUI();
-    static void JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isTrigger, bool& _isRelease);
+    static void JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, NiUI_InputState& _istate);
     static NiVec2 ComputeStandardPoint(NiUI_StandardPoint _stdpoint);
     static NiVec2 ComputeLeftTop(const NiVec2& _position, const NiVec2& _size, const NiVec2& _parentSize, NiUI_StandardPoint _anchor, NiUI_StandardPoint _pivot);
-    static void ComputeRect(const std::string& _id, NiVec2& _leftTop, NiVec2& _size, NiVec2& _parentPos, NiVec2& _parentSize, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot);
+    // 各種座標を取得
+    static void ComputeRect(NiUI_Transform2dEx& _transform, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot);
     static void ClearData();
     static void SavePreData();
     static void CopyInputData();
     static void ClampRect(NiVec2& _leftTop, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize);
-    static void OffsetUpdate(const std::string& _id, const NiVec2& _leftTop, const NiVec2& _posInRegion, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize);
+    static void OffsetUpdate(const std::string& _id, const NiVec2& _originLeftTop, const NiUI_Transform2dEx& _transform, NiVec2& _offset); 
 
 
-public: /// 色
+public:
     static const NiVec4 WHITE;
     static const NiVec4 BLACK;
     static const NiVec4 RED;
     static const NiVec4 GREEN;
     static const NiVec4 BLUE;
+    static const NiVec4 YELLOW;
+    static const NiVec4 CIAN;
+    static const NiVec4 MAGENTA;
 };
