@@ -19,10 +19,11 @@ void Player::Initialize() {
     model_->SetCamera(pCamera_);
     model_->SetModel("box.gltf");
 
+    // 初期化用 - 外部から設定するためこの値は適用されない
     transform_ = {
         .scale = { 1.0f, 1.0f, 1.0f },
         .rotate = { 0.0f, 0.0f, 0.0f },
-        .translate = { 0.0f, 0.5f, -80.0f },
+        .translate = { 0.0f, 0.0f, 0.0f },
     };
 
     collider_ = std::make_unique<Collider>(this);
@@ -108,6 +109,12 @@ void Player::UpdateInputCommands()
 
 void Player::UpdateMovement()
 {
+    // floor clamp
+    if (transform_.translate.y < floor_)
+    {
+        transform_.translate.y = floor_;
+    }
+
     // Movement
     constexpr float speed = 0.3f;
     Vector3 move{};
@@ -138,9 +145,9 @@ void Player::UpdateMovement()
     else
     {
         move_.y += GRAVITY;
-        if (transform_.translate.y + move_.y <= FLOOR)
+        if (transform_.translate.y + move_.y <= floor_)
         {
-            transform_.translate.y = FLOOR;
+            transform_.translate.y = floor_;
             move_.y = 0.0f;
             isGround_ = true;
         }
