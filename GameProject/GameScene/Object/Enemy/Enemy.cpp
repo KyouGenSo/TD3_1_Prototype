@@ -42,7 +42,8 @@ void Enemy::Finalize()
 
 void Enemy::OnCollision(const Collider* pCollider)
 {
-	transform_.translate = prePos;
+    //isDead_ = true;
+	//transform_.translate = prePos;
 }
 
 void Enemy::Move()

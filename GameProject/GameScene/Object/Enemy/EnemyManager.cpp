@@ -4,24 +4,29 @@
 #include "GameScene/Object/Player/Player.h"
 #include "GameScene/Object/Castle/Castle.h"
 
+#include <random>
+
 void EnemyManager::Initialize(Object* player, Object* castle)
 {
     pPlayer_ = player;
     pCastle_ = castle;
 
     AddEnemy(appearancePos_);
+    spawnTimer_ = 0.0f;
 }
 
 void EnemyManager::Update()
 {
-	for (auto& enemy : enemies_) {
-        if (enemy->IsDead()){
-            pMinimap_->Unregister(enemy.get());
-            std::erase_if(enemies_, [&](const auto& e){ return e->IsDead(); });
+    SpawnEnemy();
+    for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {
+        if ((*enemy)->IsDead()){
+            //pMinimap_->Unregister(enemy.get());
+            enemy = enemies_.erase(enemy);
             continue;
         }
-        SelectTarget(enemy.get());
-		enemy->Update();
+        SelectTarget(enemy->get());
+        (*enemy)->Update();
+        ++enemy;
 	}
 }
 
@@ -76,6 +81,34 @@ void EnemyManager::ImGui()
     ImGui::End();
 }
 
+void EnemyManager::SpawnEnemy()
+{
+    spawnTimer_ += deltaTime_;
+    if (spawnTimer_ > spawnInterval_) {
+        AddEnemy(RandomSpawnPosition());
+        spawnTimer_ = 0.0f;
+    }
+}
+
 void EnemyManager::SetMinimap(Minimap* pMinimap) {
     pMinimap_ = pMinimap;
+}
+
+Vector3 EnemyManager::RandomSpawnPosition()
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    Vector3 randomPos;
+
+    while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z)) {
+
+        std::uniform_real_distribution<float> disX(minSpawnPoint_.x, maxSpawnPoint_.x);
+        std::uniform_real_distribution<float> disY(minSpawnPoint_.y, maxSpawnPoint_.y);
+        std::uniform_real_distribution<float> disZ(minSpawnPoint_.z, maxSpawnPoint_.z);
+
+        randomPos = Vector3{ disX(gen), disY(gen), disZ(gen) };
+    }
+
+    return randomPos;
 }
