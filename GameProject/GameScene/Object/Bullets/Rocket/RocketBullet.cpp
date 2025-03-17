@@ -82,12 +82,12 @@ void RocketBullet::OnCollisionTrigger(const Collider* _other)
     pCollider_->Disable();
 }
 
-void RocketBullet::AttackNormalInitialize()
+void RocketBullet::InitializeNormal()
 {
 
 }
 
-void RocketBullet::AttackChainInitialize()
+void RocketBullet::InitializeChain()
 {
 }
 

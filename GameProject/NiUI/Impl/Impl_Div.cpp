@@ -1,37 +1,34 @@
-﻿#include "../NiUI.h"
+#include "../NiUI.h"
 
 #include <stdexcept> // runtime_error
 
 
 bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, const NiVec4& _color, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
 {
-    NiVec2 leftTop = _position;
-    NiVec2 size = _size;
-    NiVec2 parentPos = {};
-    NiVec2 parentSize = {};
+    NiUI_Transform2dEx transformEx = {};
+    transformEx.position = _position;
+    transformEx.size = _size;
 
-    ComputeRect(_id, leftTop, size, parentPos, parentSize, _anchor, _pivot);
+    ComputeRect(transformEx, _anchor, _pivot);
 
     /// =============
     /// 当たり判定と挙動
 
-    bool isTrigger = false;
-    bool isHover = false;
-    bool isRelease = false;
+    NiUI_InputState input = {};
 
     /// 当たり判定
-    JudgeClickRect(leftTop, size, isHover, isTrigger, isRelease);
+    JudgeClickRect(transformEx.position, transformEx.size, input);
 
     /// 挙動
-    DivBehavior(_id, isHover, isTrigger, isRelease);
+    DivBehavior(_id, input.isHover, input.isTrigger);
 
     /// データの更新
     auto& divData = divData_[_id];
     divData.id = _id;
     divData.textureName = _textureName;
     divData.color = _color;
-    divData.leftTop = leftTop;
-    divData.size = size;
+    divData.leftTop = transformEx.position;
+    divData.size = transformEx.size;
     divData.zOrder = state_.buffer.currentZOrder++;
     divData.parent = state_.buffer.currentRegion;
 
@@ -44,44 +41,43 @@ bool NiUI::BeginDiv(const std::string& _id, const std::string& _textureName, con
 
 bool NiUI::BeginDivMovable(const std::string& _id, const std::string& _textureName, const NiVec4& _color, const NiVec2& _position, const NiVec2& _size, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
 {
-    NiVec2 leftTop = _position;
-    NiVec2 size = _size;
-    NiVec2 parentPos = {};
-    NiVec2 parentSize = {};
+    NiUI_Transform2dEx transformEx = {};
+    transformEx.position = _position;
+    transformEx.size = _size;
 
-    ComputeRect(_id, leftTop, size, parentPos, parentSize, _anchor, _pivot);
+    ComputeRect(transformEx, _anchor, _pivot);
+
+    NiVec2 originLeftTop = transformEx.position;
 
     /// =============
     /// 当たり判定と挙動
     
-    bool isTrigger = false;
-    bool isHover = false;
-    bool isRelease = false;
+    NiUI_InputState istate = {};
 
-    NiVec2 posClamped = leftTop + divOffset_[_id];
-    ClampRect(posClamped, _size, parentPos, parentSize);
+    transformEx.position += divOffset_[_id];
+    ClampRect(transformEx.position, _size, transformEx.parentPos, transformEx.parentSize);
 
     /// 当たり判定
-    JudgeClickRect(posClamped, size, isHover, isTrigger, isRelease);
+    JudgeClickRect(transformEx.position, transformEx.size, istate);
 
     /// 挙動
     auto& regionDiff = divOffset_[_id];
 
-    DivBehavior(_id, isHover, isTrigger, isRelease);
+    DivBehavior(_id, istate.isHover, istate.isTrigger);
 
-    OffsetUpdate(_id, posClamped, leftTop, size, parentPos, parentSize);
+    OffsetUpdate(_id, originLeftTop, transformEx, regionDiff);
 
     /// データの更新
     auto& divData = divData_[_id];
     divData.id = _id;
     divData.textureName = _textureName;
     divData.color = _color;
-    divData.leftTop = posClamped;
-    divData.size = size;
+    divData.leftTop = transformEx.position;
+    divData.size = transformEx.size;
     divData.zOrder = state_.buffer.currentZOrder++;
     divData.parent = state_.buffer.currentRegion;
 
-    /// 現在のリージョンを更新
+    /// 現在のリージョンをこのDivに更新
     state_.buffer.currentRegion = dynamic_cast<BaseRegionData*>(&divData);
 
     return true;
@@ -99,7 +95,7 @@ void NiUI::EndDiv()
     state_.buffer.currentRegion = state_.buffer.currentRegion->parent;
 }
 
-void NiUI::DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger, bool _isRelease)
+void NiUI::DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger)
 {
     // ネストカウントを増やす
     state_.valid.nestCount++;
@@ -125,25 +121,25 @@ void NiUI::DivDataEnqueue()
     }
 }
 
-void NiUI::ComputeRect(const std::string& _id, NiVec2& _leftTop, NiVec2& _size, NiVec2& _parentPos, NiVec2& _parentSize, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
+void NiUI::ComputeRect(NiUI_Transform2dEx& _transform, const NiUI_StandardPoint _anchor, const NiUI_StandardPoint _pivot)
 {
     /// 親の座標とサイズを取得
     if (state_.buffer.currentRegion == nullptr)
     {
-        _parentSize = size_;
+        _transform.parentSize = size_;
     }
     else
     {
-        _parentPos = state_.buffer.currentRegion->leftTop;
-        _parentSize = state_.buffer.currentRegion->size;
+        _transform.parentPos = state_.buffer.currentRegion->leftTop;
+        _transform.parentSize = state_.buffer.currentRegion->size;
     }
 
     /// 親の座標を考慮した座標を計算
     if (state_.buffer.currentRegion != nullptr)
     {
-        _leftTop += state_.buffer.currentRegion->leftTop;
+        _transform.position += state_.buffer.currentRegion->leftTop;
     }
 
     /// ピボットとアンカーを考慮した座標を計算
-    _leftTop = ComputeLeftTop(_leftTop, _size, _parentSize, _anchor, _pivot);
+    _transform.position = ComputeLeftTop(_transform.position, _transform.size, _transform.parentSize, _anchor, _pivot);
 }

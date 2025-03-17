@@ -1,12 +1,15 @@
 #include "EnemyManager.h"
 
 #include "imgui.h"
+#include "GameScene/Object/Player/Player.h"
+#include "GameScene/Object/Castle/Castle.h"
 
-void EnemyManager::Initialize()
+void EnemyManager::Initialize(Object* player, Object* castle)
 {
-    for (int i = 0; i < 3; ++i) {
-		AddEnemy({ 3.0f*i, 0.0f, 0.0f });
-    }
+    pPlayer_ = player;
+    pCastle_ = castle;
+
+    AddEnemy(appearancePos_);
 }
 
 void EnemyManager::Update()
@@ -17,7 +20,7 @@ void EnemyManager::Update()
             std::erase_if(enemies_, [&](const auto& e){ return e->IsDead(); });
             continue;
         }
-
+        SelectTarget(enemy.get());
 		enemy->Update();
 	}
 }
@@ -44,19 +47,33 @@ void EnemyManager::AddEnemy(const Vector3& position)
     enemy->SetTranslate(position);
     enemy->SetIsAppearing(true);
     enemy->SetAppearCounter(0.0f);
-    pMinimap_->Register(enemy.get());
+    //pMinimap_->Register(enemy.get());
     enemies_.push_back(std::move(enemy));
+}
+
+void EnemyManager::SelectTarget(Enemy* enemy)
+{
+    Vector3 enemyPos = enemy->GetTransform().translate;
+    Vector3 playerPos = pPlayer_->GetTransform().translate;
+    float distanceToPlayer = (enemyPos - playerPos).Length();
+
+    if (distanceToPlayer < leave) { 
+        enemy->SetTarget(pPlayer_);
+    }
+    else {
+        enemy->SetTarget(pCastle_);
+    }
 }
 
 void EnemyManager::ImGui()
 {
-	ImGui::Begin("EnemyManager");
-	if (ImGui::Button("Add Enemy")) {
+    ImGui::Begin("EnemyManager");
+    if (ImGui::Button("Add Enemy")) {
         for (int i = 0; i < 3; ++i) {
-            AddEnemy({ 3.0f*i, 0.0f, 0.0f });
+            AddEnemy({ appearancePos_.x * i, appearancePos_.y, appearancePos_.z });
         }
-	}
-	ImGui::End();
+    }
+    ImGui::End();
 }
 
 void EnemyManager::SetMinimap(Minimap* pMinimap) {

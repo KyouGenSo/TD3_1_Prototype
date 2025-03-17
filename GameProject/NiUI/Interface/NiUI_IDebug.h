@@ -1,6 +1,6 @@
-﻿#pragma once
+#pragma once
 
-#include "../Type/NiUI_Core_Type.h"
+#include "../Type/NiUI_Type_Core.h"
 
 class INiUIDebug
 {

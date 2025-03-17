@@ -19,7 +19,7 @@ class Player : public Object {
 
     bool isGround_ = true;
 
-    const float FLOOR = 0.5f;
+    float floor_ = 0.5f;
     const float GRAVITY = -.16f;
 public:
     void Initialize() override;
@@ -29,6 +29,7 @@ public:
     void ImGui();
     void OnCollision(const Collider* pCollider) override;
     void AddObserver(IObserver* _observer) { observers_.push_back(_observer); }
+    void SetFloor(float _floor) { floor_ = _floor; }
 
 private:
     void UpdateInputCommands();

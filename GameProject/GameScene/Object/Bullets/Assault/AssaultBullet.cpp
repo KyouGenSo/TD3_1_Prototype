@@ -79,7 +79,7 @@ void AssaultBullet::OnCollisionTrigger(const Collider* _other)
 {
 }
 
-void AssaultBullet::AttackNormalInitialize()
+void AssaultBullet::InitializeNormal()
 {
     bullet_ = std::make_unique<Bullet>();
     bullet_->Initialize();
@@ -88,7 +88,7 @@ void AssaultBullet::AttackNormalInitialize()
     bullet_->SetSpeed(speed_);
 }
 
-void AssaultBullet::AttackChainInitialize()
+void AssaultBullet::InitializeChain()
 {
     float angle = 0;
     for (int i = 0; i < bullets_.size(); i++)

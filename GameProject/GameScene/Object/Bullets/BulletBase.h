@@ -34,8 +34,8 @@ protected:
     float lifeTime_ = 150.0f / speed_ * 0.0166f;
 
 protected:
-    virtual void AttackNormalInitialize() = 0;
-    virtual void AttackChainInitialize() = 0;
+    virtual void InitializeNormal() = 0;
+    virtual void InitializeChain() = 0;
     virtual void UpdateNormal() = 0;
     virtual void UpdateChain() = 0;
     void CreateNextBullet();

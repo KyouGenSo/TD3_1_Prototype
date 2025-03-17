@@ -17,11 +17,17 @@ const NiVec4        NiUI::BLACK         = { 0.0f, 0.0f, 0.0f, 1.0f };
 const NiVec4        NiUI::RED           = { 1.0f, 0.0f, 0.0f, 1.0f };
 const NiVec4        NiUI::GREEN         = { 0.0f, 1.0f, 0.0f, 1.0f };
 const NiVec4        NiUI::BLUE          = { 0.0f, 0.0f, 1.0f, 1.0f };
+const NiVec4        NiUI::YELLOW        = { 1.0f, 1.0f, 0.0f, 1.0f };
+const NiVec4        NiUI::CIAN          = { 0.0f, 1.0f, 1.0f, 1.0f };
+const NiVec4        NiUI::MAGENTA       = { 1.0f, 0.0f, 1.0f, 1.0f };
 
 std::unordered_map<std::string, ButtonData> NiUI::buttonImages_ = std::unordered_map<std::string, ButtonData>();
 std::unordered_map<std::string, DivData> NiUI::divData_ = std::unordered_map<std::string, DivData>();
+std::unordered_map<std::string, DragItemAreaData> NiUI::dragItemAreaData_ = std::unordered_map<std::string, DragItemAreaData>();
+std::unordered_map<std::string, DragItemData> NiUI::dragItemData_ = std::unordered_map<std::string, DragItemData>();
 
 std::unordered_map<std::string, NiVec2> NiUI::divOffset_ = std::unordered_map<std::string, NiVec2>();
+std::unordered_map<std::string, NiVec2> NiUI::dragItemOffset_ = std::unordered_map<std::string, NiVec2>();
 
 
 
@@ -68,6 +74,8 @@ void NiUI::DrawUI()
     // コンポーネントの描画データを追加
     ButtonDataEnqueue();
     DivDataEnqueue();
+    DragItemAreaDataEnqueue();
+    DragItemDataEnqueue();
 
     // 描画前処理
     drawer_->DrawSetting();
@@ -127,36 +135,40 @@ void NiUI::CheckValid_DrawUI()
     }
 }
 
-void NiUI::JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, bool& _isHover, bool& _isTrigger, bool& _isRelease)
+void NiUI::JudgeClickRect(const NiVec2& _leftTop, const NiVec2& _size, NiUI_InputState& _input)
 {
     NiVec2 leftTop = _leftTop + leftTop_;
+
+    bool& hover = _input.isHover;
+    bool& trigger = _input.isTrigger;
+    bool& release = _input.isRelease;
 
     if(leftTop.x <= input_.GetMousePos().x && input_.GetMousePos().x <= leftTop.x + _size.x &&
         leftTop.y <= input_.GetMousePos().y && input_.GetMousePos().y <= leftTop.y + _size.y)
     {
-        _isHover = true;
+        hover = true;
         if(input_.TriggerLeft())
         {
-            _isTrigger = true;
+            trigger = true;
         }
         else
         {
-            _isTrigger = false;
+            trigger = false;
         }
     }
     else
     {
-        _isHover = false;
-        _isTrigger = false;
+        hover = false;
+        trigger = false;
     }
 
     if(input_.ReleaseLeft())
     {
-        _isRelease = true;
+        release = true;
     }
     else
     {
-        _isRelease = false;
+        release = false;
     }
 }
 
@@ -234,6 +246,9 @@ void NiUI::ClearData()
 {
     buttonImages_.clear();
     divData_.clear();
+    dragItemAreaData_.clear();
+    dragItemData_.clear();
+
     state_.componentID.hover = {};
     state_.componentID.type = {};
 
@@ -272,21 +287,23 @@ void NiUI::ClampRect(NiVec2& _leftTop, const NiVec2& _size, const NiVec2& _paren
     if (_leftTop.y + _size.y > _parentPos.y + _parentSize.y) _leftTop.y = _parentPos.y + _parentSize.y - _size.y;
 }
 
-void NiUI::OffsetUpdate(const std::string& _id, const NiVec2& _leftTop, const NiVec2& _posInRegion, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize)
+void NiUI::OffsetUpdate(
+    const std::string& _id, 
+    const NiVec2& _originLeftTop,
+    const NiUI_Transform2dEx& _transform,
+    NiVec2& _offset)
 {
-    auto& offset = divOffset_[_id];
-
     if (state_.componentID.active == _id)
     {
-        offset += io_.input.differencePos;
+        _offset += io_.input.differencePos;
     }
 
     if (input_.ReleaseLeft() && state_.componentID.active == _id)
     {
-        if (_leftTop.x == _parentPos.x) offset.x = _parentPos.x - _posInRegion.x;
-        if (_leftTop.y == _parentPos.y) offset.y = _parentPos.y - _posInRegion.y;
-        if (_leftTop.x + _size.x == _parentPos.x + _parentSize.x) offset.x = _parentPos.x + _parentSize.x - _posInRegion.x - _size.x;
-        if (_leftTop.y + _size.y == _parentPos.y + _parentSize.y) offset.y = _parentPos.y + _parentSize.y - _posInRegion.y - _size.y;
+        if (_transform.position.x == _transform.parentPos.x) _offset.x = _transform.parentPos.x - _originLeftTop.x;
+        if (_transform.position.y == _transform.parentPos.y) _offset.y = _transform.parentPos.y - _originLeftTop.y;
+        if (_transform.position.x + _transform.size.x == _transform.parentPos.x + _transform.parentSize.x) _offset.x = _transform.parentPos.x + _transform.parentSize.x - _originLeftTop.x - _transform.size.x;
+        if (_transform.position.y + _transform.size.y == _transform.parentPos.y + _transform.parentSize.y) _offset.y = _transform.parentPos.y + _transform.parentSize.y - _originLeftTop.y - _transform.size.y;
     }
 }
 

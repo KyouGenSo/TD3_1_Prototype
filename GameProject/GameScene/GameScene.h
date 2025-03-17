@@ -10,7 +10,6 @@
 #include "Object/Castle/Castle.h"
 #include "Object/Collision/CollisionManager.h"
 #include "Object/Enemy/Boss.h"
-#include "Object/Enemy/Enemy.h"
 #include "Object/Player/Player.h"
 #include "Object/Terrain/Terrain.h"
 #include "Object/Enemy/EnemyManager.h"
@@ -22,10 +21,9 @@ class GameScene : public BaseScene {
     std::unique_ptr<GUI_PauseMenu> guiPauseMenu_;
     std::unique_ptr<Minimap> minimap_; 
     CollisionManager* pCollisionManager_ = nullptr;
-	std::unique_ptr<Enemy>enemy_;
 	std::unique_ptr<Boss>boss_;
     std::unique_ptr<Terrain> terrain_;
-	EnemyManager enemyManager_;
+	std::unique_ptr<EnemyManager> enemyManager_;
 
     std::unique_ptr<Castle> castle_;
 

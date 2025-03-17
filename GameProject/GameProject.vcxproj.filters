@@ -62,9 +62,6 @@
     <Filter Include="Utility\Timer">
       <UniqueIdentifier>{84cc20f4-17b7-4c84-a730-ae94ffa2cb28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DeltaTimeManager">
-      <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NiUI\Impl">
       <UniqueIdentifier>{8eede6ca-bab7-4ca9-a4c7-070da6dc8cc4}</UniqueIdentifier>
     </Filter>
@@ -98,6 +95,12 @@
     <Filter Include="GameUI\PauseMenu">
       <UniqueIdentifier>{67ea3658-01a4-4d55-a176-2693e1dbe180}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSystem\StageManager">
+      <UniqueIdentifier>{71841bad-5f8b-4759-8c8b-5b612f343dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\DeltaTimeManager">
+      <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -124,9 +127,6 @@
     </ClCompile>
     <ClCompile Include="GameScene\Object\Camera\FollowCamera.cpp">
       <Filter>GameSystem\FollowCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp">
-      <Filter>DeltaTimeManager</Filter>
     </ClCompile>
     <ClCompile Include="NiUI\Derived\ProcHandler.cpp">
       <Filter>NiUI\Derived</Filter>
@@ -167,9 +167,6 @@
     <ClCompile Include="GameScene\HUD\Minimap.cpp">
       <Filter>GameUI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Bullets\Bullet.cpp">
-      <Filter>Object\Bullets</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\Object\Bullets\BulletFactory.cpp">
       <Filter>Object\Bullets</Filter>
     </ClCompile>
@@ -208,15 +205,24 @@
     </ClCompile>
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\BulletBase.cpp">
+      <Filter>Object\Bullets</Filter>
+    </ClCompile>
     <ClCompile Include="GameScene\Object\Castle\Castle.cpp" />
+    <ClCompile Include="NiUI\Impl\Impl_DragItem.cpp">
+      <Filter>NiUI\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\DeltaTimeManager\DeltaTimeManager.cpp">
+      <Filter>GameSystem\DeltaTimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\StageManager\StageManager.cpp">
+      <Filter>GameSystem\StageManager</Filter>
+    </ClCompile>
     <ClCompile Include="GameScene\Object\Collision\LimitedCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
       <Filter>NiUI</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Type\NiUI_ComponentData.h">
-      <Filter>NiUI\Type</Filter>
     </ClInclude>
     <ClInclude Include="NiUI\Type\NiUI_Enum.h">
       <Filter>NiUI\Type</Filter>
@@ -242,9 +248,6 @@
     <ClInclude Include="GameScene\Object\Camera\FollowCamera.h">
       <Filter>GameSystem\FollowCamera</Filter>
     </ClInclude>
-    <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h">
-      <Filter>DeltaTimeManager</Filter>
-    </ClInclude>
     <ClInclude Include="GameUI\LvUP\GUI_LvUP.h">
       <Filter>GameUI\LvUP</Filter>
     </ClInclude>
@@ -256,9 +259,6 @@
     </ClInclude>
     <ClInclude Include="NiUI\Interface\NiUI_IDebug.h">
       <Filter>NiUI\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Type\NiUI_Core_Type.h">
-      <Filter>NiUI\Type</Filter>
     </ClInclude>
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h">
       <Filter>NiUI\Derived</Filter>
@@ -292,9 +292,6 @@
     </ClInclude>
     <ClInclude Include="Type\Singleton.h">
       <Filter>Type</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Bullets\Bullet.h">
-      <Filter>Object\Bullets</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Bullets\BulletFactory.h">
       <Filter>Object\Bullets</Filter>
@@ -336,7 +333,25 @@
       <Filter>GameUI\PauseMenu</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h" />
+    <ClInclude Include="GameScene\Object\Bullets\BulletBase.h">
+      <Filter>Object\Bullets</Filter>
+    </ClInclude>
     <ClInclude Include="GameScene\Object\Castle\Castle.h" />
+    <ClInclude Include="NiUI\Type\NiUI_Type_Component.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Type\NiUI_Type_Core.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="NiUI\Type\NiUI_Type_Various.h">
+      <Filter>NiUI\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\StageManager\StageManager.h">
+      <Filter>GameSystem\StageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h">
+      <Filter>GameSystem\DeltaTimeManager</Filter>
+    </ClInclude>
     <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
   </ItemGroup>
 </Project>

@@ -12,6 +12,7 @@
 #include "GlobalVariables.h"
 #include "Vector4.h"
 #include <NiUI/NiUI.h>
+#include <GameSystem/StageManager/StageManager.h>
 
 
 
@@ -67,6 +68,10 @@ void MyGame::Initialize()
     auto& state = NiUI::GetState();
     niUI_Debug_ = std::make_unique<NiUI_Debug>(io, state);
     NiUI::SetDebug(niUI_Debug_.get());
+
+    /// StageManagerの初期化
+    StageManager::GetInstance()->Initialize();
+    StageManager::GetInstance()->SetCurrent("Stage1");
 }
 
 void MyGame::Finalize()

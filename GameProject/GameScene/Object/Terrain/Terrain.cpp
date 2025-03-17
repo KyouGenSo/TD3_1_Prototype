@@ -8,15 +8,27 @@ void Terrain::Initialize()
     transform_.translate = Vector3(0.0f, -transform_.scale.y * 0.5f, 0.0f);
 
     ModelManager::GetInstance()->LoadModel("box.gltf");
+    ModelManager::GetInstance()->LoadModel("boxInv.gltf");
 
-    object_ = std::make_unique<Object3d>();
-    object_->Initialize();
-    object_->SetModel("box.gltf");
-    object_->SetScale(transform_.scale);
-    object_->SetTranslate(transform_.translate);
-    object_->SetMaterialColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
-    object_->SetEnableLighting(true);
-    object_->SetEnableHighlight(false);
+    terrainObj_ = std::make_unique<Object3d>();
+    terrainObj_->Initialize();
+    terrainObj_->SetModel("box.gltf");
+    terrainObj_->SetScale(transform_.scale);
+    terrainObj_->SetTranslate(transform_.translate);
+    terrainObj_->SetMaterialColor(Vector4(0.5f, 0.5f, 0.5f, 1.0f));
+    terrainObj_->SetEnableLighting(true);
+    terrainObj_->SetEnableHighlight(false);
+
+    Vector3 boxScale = Vector3(transform_.scale.x, 300.0f, transform_.scale.z);
+    Vector3 boxTranslate = Vector3(0.0f, boxScale.y * 0.5f - transform_.scale.y * 0.5f, 0.0f);
+    boxObj_ = std::make_unique<Object3d>();
+    boxObj_->Initialize();
+    boxObj_->SetModel("boxInv.gltf");
+    boxObj_->SetScale(boxScale);
+    boxObj_->SetTranslate(boxTranslate);
+    boxObj_->SetMaterialColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    boxObj_->SetEnableLighting(true);
+    boxObj_->SetEnableHighlight(false);
 
     collider_ = std::make_unique<Collider>();
     collider_->SetEvent([&](const Collider* pCol){OnCollision(pCol); });
@@ -26,12 +38,14 @@ void Terrain::Initialize()
 
 void Terrain::Update()
 {
-    object_->Update();
+    terrainObj_->Update();
+    boxObj_->Update();
 }
 
 void Terrain::Draw()
 {
-    object_->Draw();
+    terrainObj_->Draw();
+    boxObj_->Draw();
 }
 
 void Terrain::Finalize()
@@ -44,17 +58,17 @@ void Terrain::ImGui()
     {
         if (ImGui::DragFloat3("Scale", &transform_.scale.x, 0.01f))
         {
-            object_->SetScale(transform_.scale);
+            terrainObj_->SetScale(transform_.scale);
         }
         
         if (ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f))
         {
-            object_->SetRotate(transform_.rotate);
+            terrainObj_->SetRotate(transform_.rotate);
         }
 
         if (ImGui::DragFloat3("Translate", &transform_.translate.x, 0.01f))
         {
-            object_->SetTranslate(transform_.translate);
+            terrainObj_->SetTranslate(transform_.translate);
         }
     }
     ImGui::End();

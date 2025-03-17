@@ -10,6 +10,8 @@ void Boss::Initialize()
 	bCamera_ = Object3dBasic::GetInstance()->GetCamera();
 	model_->SetCamera(bCamera_);
 	model_->SetModel("bigCube.gltf");
+
+    // 初期化用 - 外部から設定するためこの値は適用されない
 	transform_ = {
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
@@ -30,10 +32,10 @@ void Boss::Update()
     if(isValid_){
 	    prePos = transform_.translate;
 	    transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
-	    model_->SetTranslate(transform_.translate);
     }else {
         
     }
+	    model_->SetTranslate(transform_.translate);
 	    model_->Update();
 }
 

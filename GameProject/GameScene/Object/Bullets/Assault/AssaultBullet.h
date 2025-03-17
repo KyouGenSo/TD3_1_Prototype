@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GameScene/Object/Bullets/Bullet.h>
+#include <GameScene/Object/Bullets/BulletBase.h>
 #include <array>
 
 class AssaultBullet : public BulletBase
@@ -38,8 +38,8 @@ private:
     std::array<std::unique_ptr<Bullet>, 16> bullets_ = {};
 
 private:
-    void AttackNormalInitialize() override;
-    void AttackChainInitialize() override;
+    void InitializeNormal() override;
+    void InitializeChain() override;
     void UpdateNormal() override;
     void UpdateChain() override;
 };
