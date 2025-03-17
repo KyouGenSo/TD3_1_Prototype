@@ -87,6 +87,7 @@ void RocketBullet::OnCollisionTrigger(const Collider* _other)
 
         // 次の弾の発射
         pNext_->Fire();
+        pNext_->Update();
     }
 }
 
