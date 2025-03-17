@@ -17,6 +17,11 @@ void Terrain::Initialize()
     object_->SetMaterialColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
     object_->SetEnableLighting(true);
     object_->SetEnableHighlight(false);
+
+    collider_ = std::make_unique<Collider>();
+    collider_->SetEvent([&](const Collider* pCol){OnCollision(pCol); });
+    collider_->SetPosition(transform_.translate);
+    collider_->SetSize(Vector3 {100, 2, 400});
 }
 
 void Terrain::Update()
@@ -53,4 +58,8 @@ void Terrain::ImGui()
         }
     }
     ImGui::End();
+}
+
+void Terrain::OnCollision(const Collider* pCollider) const {
+    (void)pCollider;
 }

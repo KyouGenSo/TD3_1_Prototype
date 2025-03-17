@@ -9,17 +9,17 @@
 class Boss : public Object
 {
 public:
-	void Initialize();
+	void Initialize() override;
 
-	void Update();
+	void Update() override;
 
-	void Draw();
+	void Draw() override;
 
 	void Finalize();
 
     void ImGui();
 
-	void OnCollision(const Object* pObject) override;
+	void OnCollision(const Collider* pObject) override;
 
     bool GetIsValid() const { return isValid_; }
 

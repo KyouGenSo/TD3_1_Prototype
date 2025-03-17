@@ -27,7 +27,7 @@ public:
     void Draw() override;
     void Finalize();
     void ImGui();
-    void OnCollision(const Object* pObject) override;
+    void OnCollision(const Collider* pCollider) override;
     void AddObserver(IObserver* _observer) { observers_.push_back(_observer); }
 
 private:

@@ -12,7 +12,7 @@ private:
         void Initialize();
         void Update();
         void Draw();
-        void OnCollisionTrigger(const Object* _other);
+        void OnCollisionTrigger(const Collider* _other);
         void SetPosition(const Vector3& _pos) { transform_.translate = _pos; }
         void SetForward(const Vector3& _forward) { forward_ = _forward; }
         void SetSpeed(float _speed) { speed_ = _speed; }
@@ -31,7 +31,7 @@ public:
     void Draw() override;
     void Fire() override;
 
-    void OnCollisionTrigger(const Object* _other) override;
+    void OnCollisionTrigger(const Collider* _other) override;
 
 private:
     std::unique_ptr<Bullet> bullet_;

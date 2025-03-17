@@ -26,7 +26,7 @@ void Player::Initialize() {
     };
 
     collider_ = std::make_unique<Collider>(this);
-    collider_->SetEvent([this](const Object* obj){this->OnCollision(obj); });
+    collider_->SetEvent([this](const Collider* pCol){this->OnCollision(pCol); });
 
     chainManager_ = std::make_unique<ChainManager>();
     chainManager_->Initialize();
@@ -76,7 +76,7 @@ void Player::ImGui() {
     ImGui::End();
 }
 
-void Player::OnCollision(const Object* pObject) {
+void Player::OnCollision(const Collider* pCollider) {
 }
 
 void Player::UpdateInputCommands()

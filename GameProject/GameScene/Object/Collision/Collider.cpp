@@ -1,7 +1,14 @@
 #include "Collider.h"
+
+#include <sstream>
+
 #include "CollisionManager.h"
 
 #include <Type/Singleton.h>
+
+Collider::Collider(): pManager_(Singleton<CollisionManager>::GetInstance()) {
+    pManager_->Add(this);
+}
 
 Collider::Collider(Object* _owner)
 	: pManager_(Singleton<CollisionManager>::GetInstance()),
@@ -14,22 +21,23 @@ void Collider::Update() {
 
     if(pOwner_){
         position_ = pOwner_->GetTransform().translate;
+        disable_ = pOwner_->IsDead();
     }
 }
 
-void Collider::OnCollision(const Object* pObject) const {
+void Collider::OnCollision(const Collider* pCollider) const {
     if (!onCollision_)return;
 
-    onCollision_(pObject);
+    onCollision_(pCollider);
 }
 
-void Collider::OnCollisionExit(const Object* pObject) const {
+void Collider::OnCollisionExit(const Collider* pCollider) const {
     if (!onCollisionExit_)return;
 
-    onCollisionExit_(pObject);
+    onCollisionExit_(pCollider);
 }
 
-void Collider::SetEvent(const std::function<void(const Object*)>& callback, const Event event) {
+void Collider::SetEvent(const std::function<void(const Collider*)>& callback, const Event event) {
 	switch (event){
 	case Event::TRIGGER:
 		onCollisionTrigger_ = callback;
@@ -43,10 +51,18 @@ void Collider::SetEvent(const std::function<void(const Object*)>& callback, cons
 	}
 }
 
-void Collider::OnCollisionTrigger(const Object* pObject) const {
+std::string Collider::GetUniqueId() const {
+    if (pOwner_)return pOwner_->GetUniqueId();
+
+    std::stringstream ss;
+    ss << this;
+    return ss.str();
+}
+
+void Collider::OnCollisionTrigger(const Collider* pCollider) const {
     if(!onCollisionTrigger_)return;
 
-    onCollisionTrigger_(pObject);
+    onCollisionTrigger_(pCollider);
 }
 
 Vector3 Collider::GetPosition() const {

@@ -10,6 +10,8 @@
 #include "Transform.h"
 #include <Input.h>
 
+class Collider;
+
 class Object{
 	std::string uuid_;
 protected:
@@ -29,9 +31,9 @@ public:
     virtual void Update() = 0;
     virtual void Draw() = 0;
 
-    virtual void OnCollisionTrigger(const Object* pObject){}
-    virtual void OnCollision(const Object* pObject){}
-    virtual void OnCollisionExit(const Object* pObject){}
+    virtual void OnCollisionTrigger(const Collider* pObject){}
+    virtual void OnCollision(const Collider* pObject){}
+    virtual void OnCollisionExit(const Collider* pObject){}
 
 
 public: /// Setter

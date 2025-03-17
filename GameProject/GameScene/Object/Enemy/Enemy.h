@@ -9,15 +9,15 @@
 class Enemy : public Object
 {
 public:
-	void Initialize();
+	void Initialize() override;
 
-	void Update();
+	void Update() override;
 
-	void Draw();
+	void Draw() override;
 
 	void Finalize();
 
-	void OnCollision(const Object* pObject) override;
+	void OnCollision(const Collider* pCollider) override;
 
 	void SetTranslate(Vector3 translate) { transform_.translate = translate; }
 

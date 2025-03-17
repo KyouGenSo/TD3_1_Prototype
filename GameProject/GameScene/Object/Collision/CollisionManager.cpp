@@ -15,9 +15,13 @@ void CollisionManager::Remove(const Collider* pCollider) {
 }
 
 void CollisionManager::Update() {
-    std::erase_if(pColliders_, [](const auto& p){ return p.second->GetOwner()->IsDead(); });
-    for (auto& pCollider : pColliders_ | std::views::values){
-        pCollider->Update();
+    for (auto itr = pColliders_.begin(); itr != pColliders_.end();){
+        if (itr->second->IsDisable()){
+            itr = pColliders_.erase(itr);
+            continue;
+        }
+        itr->second->Update();
+        ++itr;
     }
     CheckAll();
 }
@@ -32,6 +36,10 @@ void CollisionManager::CheckAll() {
             if (pCollider->GetAttribute() & pOther->GetIgnore() || 
                 pOther->GetAttribute() & pCollider->GetIgnore()){
                 continue;
+            }
+
+            if(!pCollider->GetOwner()){
+                (void)pCollider;
             }
 
             Check(key, kOther);
@@ -70,18 +78,18 @@ void CollisionManager::Check(const std::string& col, const std::string& other) {
         if (pairs_.end() == std::ranges::find(pairs_, Pair {col, other})){
             pairs_.emplace_back(col, other);
 
-             pCollider->OnCollisionTrigger(pOther->GetOwner());
-            pOther->OnCollisionTrigger(pCollider->GetOwner());
+            pCollider->OnCollisionTrigger(pOther);
+            pOther->OnCollisionTrigger(pCollider);
         }
 
-        pCollider->OnCollision(pOther->GetOwner());
-        pOther->OnCollision(pCollider->GetOwner());
+        pCollider->OnCollision(pOther);
+        pOther->OnCollision(pCollider);
         return;
     }
 
     if (pairs_.end() != std::ranges::find(pairs_, Pair {col, other})){
         pairs_.erase(std::ranges::find(pairs_, Pair {col, other}));
-        pCollider->OnCollisionExit(pOther->GetOwner());
-        pOther->OnCollisionExit(pCollider->GetOwner());
+        pCollider->OnCollisionExit(pOther);
+        pOther->OnCollisionExit(pCollider);
     }
 }
