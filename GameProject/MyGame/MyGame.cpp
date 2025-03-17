@@ -13,6 +13,7 @@
 #include "Vector4.h"
 #include <NiUI/NiUI.h>
 #include <GameSystem/StageManager/StageManager.h>
+#include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 
 
 
@@ -47,6 +48,9 @@ void MyGame::Initialize()
 
     // テーマ編集
     OverrideImGuiStyle();
+
+    // デルタタイムマネージャの初期化
+    DeltaTimeManager::GetInstance()->SetDeltaTime(0, 1.0f / 60.0f);
 
     /// UIの初期化
     NiUI::Initialize({ WinApp::clientWidth, WinApp::clientHeight });

@@ -9,6 +9,7 @@
 #include "Object3dBasic.h"
 #include "Transform.h"
 #include <Input.h>
+#include <array>
 
 class Collider;
 
@@ -17,7 +18,14 @@ class Object{
 protected:
     Camera* pCamera_ = nullptr;
     std::unique_ptr<Object3d> model_;
-	Transform transform_ {};
+
+	Transform transform_ = {};
+    Vector3 velocity_ = {};
+    Vector3 acceleration_ = {};
+    float gravity_ = 9.8f;
+    float mass_ = 30.0f;
+
+    float deltaTime_ = 0.0f;
     bool isDead_ = false;
 
 protected:
@@ -63,6 +71,18 @@ public: /// Getter
     bool IsDead() const
     {
         return isDead_;
+    }
+
+protected:
+    void DebugObject();
+    void ApplyForce(const Vector3& _force)
+    {
+        acceleration_ += _force / mass_;
+    }
+    void ApplyFriction(const float _frictionCoef)
+    {
+        Vector3 frictionForce = velocity_ * -_frictionCoef;
+        velocity_ += frictionForce * deltaTime_;
     }
 };
 

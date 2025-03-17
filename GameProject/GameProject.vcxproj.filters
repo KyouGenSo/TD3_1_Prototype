@@ -219,6 +219,9 @@
       <Filter>GameSystem\StageManager</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Object\Collision\LimitedCollider.cpp" />
+    <ClCompile Include="GameScene\Object\Object.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">

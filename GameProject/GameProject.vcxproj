@@ -188,6 +188,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="GameScene\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
+    <ClCompile Include="GameScene\Object\Object.cpp" />
     <ClCompile Include="GameScene\Object\Terrain\Terrain.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\Weapon.cpp" />
