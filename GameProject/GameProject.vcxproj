@@ -185,7 +185,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\Object\Enemy\Boss.cpp" />
     <ClCompile Include="GameScene\Object\Collision\Collider.cpp" />
     <ClCompile Include="GameScene\Object\Collision\CollisionManager.cpp" />
-    <ClCompile Include="DeltaTimeManager\DeltaTimeManager.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="GameScene\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
@@ -193,6 +192,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="GameScene\System\ChainManager.cpp" />
+    <ClCompile Include="GameSystem\DeltaTimeManager\DeltaTimeManager.cpp" />
+    <ClCompile Include="GameSystem\StageManager\StageManager.cpp" />
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="Internal\SingletonFinalizer.cpp" />
@@ -233,6 +234,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.h" />
     <ClInclude Include="GameScene\Object\Weapon\Weapon.h" />
     <ClInclude Include="GameScene\System\ChainManager.h" />
+    <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h" />
+    <ClInclude Include="GameSystem\StageManager\StageManager.h" />
     <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h" />
     <ClInclude Include="Internal\SingletonFinalizer.h" />
     <ClInclude Include="MyGame\MyGame.h" />
@@ -241,7 +244,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="NiUI\Math\NiVec3.h" />
     <ClInclude Include="NiUI\Math\NiVec4.h" />
     <ClInclude Include="GameScene\Object\Object.h" />
-    <ClInclude Include="DeltaTimeManager\DeltaTimeManager.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="GameUI\LvUP\GUI_LvUP.h" />
     <ClInclude Include="Interfaces\IObserver.h" />

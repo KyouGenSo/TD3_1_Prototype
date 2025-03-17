@@ -34,6 +34,6 @@ private:
 
 	Vector3 prePos;
 
-    bool isValid_;
+    bool isValid_; // ボスの有効無効
 };
 
