@@ -8,18 +8,6 @@
     <Filter Include="NiUI">
       <UniqueIdentifier>{344f19be-d96f-4824-b7fa-e251f8bd2248}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NiUI\Math">
-      <UniqueIdentifier>{6ea7fd46-c530-4bd2-a94f-f1c433566ad7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NiUI\Input">
-      <UniqueIdentifier>{eecdb033-f978-4c58-83f4-f644a3c1e309}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NiUI\Interface">
-      <UniqueIdentifier>{53d175c0-5fcd-431c-a7c5-b736f277efc3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NiUI\Type">
-      <UniqueIdentifier>{968f9e6c-5edc-46d2-85c9-93fe08c38614}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NiUI\Derived">
       <UniqueIdentifier>{704d2649-6cdf-4e01-a4d9-5ee12955b7fe}</UniqueIdentifier>
     </Filter>
@@ -61,9 +49,6 @@
     </Filter>
     <Filter Include="Utility\Timer">
       <UniqueIdentifier>{84cc20f4-17b7-4c84-a730-ae94ffa2cb28}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NiUI\Impl">
-      <UniqueIdentifier>{8eede6ca-bab7-4ca9-a4c7-070da6dc8cc4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Boss">
       <UniqueIdentifier>{9d2a67d2-0c0c-43f2-9012-9d663b6820d9}</UniqueIdentifier>
@@ -107,18 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="NiUI\NiUI.cpp">
-      <Filter>NiUI</Filter>
-    </ClCompile>
-    <ClCompile Include="NiUI\Interface\NiUI_IDrawer.cpp">
-      <Filter>NiUI\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="NiUI\NiUI_Input.cpp">
-      <Filter>NiUI\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="NiUI\Math\NiVec2.cpp">
-      <Filter>NiUI\Math</Filter>
-    </ClCompile>
     <ClCompile Include="NiUI\Derived\Drawer.cpp">
       <Filter>NiUI\Derived</Filter>
     </ClCompile>
@@ -136,18 +109,6 @@
     </ClCompile>
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp">
       <Filter>GameUI\LvUP</Filter>
-    </ClCompile>
-    <ClCompile Include="NiUI\Math\NiVec4.cpp">
-      <Filter>NiUI\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="NiUI\Math\NiVec3.cpp">
-      <Filter>NiUI\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="NiUI\Impl\Impl_Button.cpp">
-      <Filter>NiUI\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="NiUI\Impl\Impl_Div.cpp">
-      <Filter>NiUI\Impl</Filter>
     </ClCompile>
     <ClCompile Include="Timer\Timer.cpp">
       <Filter>Utility\Timer</Filter>
@@ -212,9 +173,6 @@
       <Filter>Object\Bullets</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Object\Castle\Castle.cpp" />
-    <ClCompile Include="NiUI\Impl\Impl_DragItem.cpp">
-      <Filter>NiUI\Impl</Filter>
-    </ClCompile>
     <ClCompile Include="GameSystem\DeltaTimeManager\DeltaTimeManager.cpp">
       <Filter>GameSystem\DeltaTimeManager</Filter>
     </ClCompile>
@@ -228,21 +186,6 @@
     <ClCompile Include="GameUI\Chain\GUI_Chain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NiUI\NiUI.h">
-      <Filter>NiUI</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Type\NiUI_Enum.h">
-      <Filter>NiUI\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Interface\NiUI_IDrawer.h">
-      <Filter>NiUI\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\NiUI_Input.h">
-      <Filter>NiUI\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Math\NiVec2.h">
-      <Filter>NiUI\Math</Filter>
-    </ClInclude>
     <ClInclude Include="NiUI\Derived\Drawer.h">
       <Filter>NiUI\Derived</Filter>
     </ClInclude>
@@ -264,17 +207,8 @@
     <ClInclude Include="NiUI\Derived\ProcHandler.h">
       <Filter>NiUI\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="NiUI\Interface\NiUI_IDebug.h">
-      <Filter>NiUI\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="NiUI\Derived\NiUI_Debug.h">
       <Filter>NiUI\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Math\NiVec4.h">
-      <Filter>NiUI\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Math\NiVec3.h">
-      <Filter>NiUI\Math</Filter>
     </ClInclude>
     <ClInclude Include="Timer\Timer.h">
       <Filter>Utility\Timer</Filter>
@@ -344,15 +278,6 @@
       <Filter>Object\Bullets</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Castle\Castle.h" />
-    <ClInclude Include="NiUI\Type\NiUI_Type_Component.h">
-      <Filter>NiUI\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Type\NiUI_Type_Core.h">
-      <Filter>NiUI\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Type\NiUI_Type_Various.h">
-      <Filter>NiUI\Type</Filter>
-    </ClInclude>
     <ClInclude Include="GameSystem\StageManager\StageManager.h">
       <Filter>GameSystem\StageManager</Filter>
     </ClInclude>
