@@ -50,18 +50,7 @@ NiUI_ButtonState NiUI::Button(
 
 bool NiUI::ButtonBehavior(const std::string& _id, const NiUI_InputState& _inputState, bool& _out_held)
 {
-    if (_inputState.isHover)
-    {
-        state_.componentID.type = "Button";
-        state_.componentID.hover = _id;
-    }
-
-
-    if(_inputState.isTrigger)
-    {
-        state_.componentID.type = "Button";
-        state_.componentID.active = _id;
-    }
+    SetComponentId(_inputState, _id, "Button");
 
 
     if(state_.componentID.active == _id)

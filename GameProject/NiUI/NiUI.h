@@ -125,6 +125,7 @@ public: /// セッター
 public: /// ゲッター
     static const NiUIIO& GetIO() { return io_; }
     static const NiUICoreState& GetState() { return state_; }
+    static NiUISetting& GetSetting() { return setting_; }
     static const NiUIStyle& GetStyle() { return style_; }
 
     static std::string GetActiveComponentID() { return state_.componentID.active; }
@@ -140,6 +141,7 @@ private: /// メンバ変数
 
     static NiUIIO           io_;
     static NiUICoreState    state_;
+    static NiUISetting      setting_;
     static NiUIStyle        style_;
 
     // 入力データ
@@ -197,7 +199,8 @@ private: /// その他
     static void SavePreData();
     static void CopyInputData();
     static void ClampRect(NiVec2& _leftTop, const NiVec2& _size, const NiVec2& _parentPos, const NiVec2& _parentSize);
-    static void OffsetUpdate(const std::string& _id, const NiVec2& _originLeftTop, const NiUI_Transform2dEx& _transform, NiVec2& _offset); 
+    static void OffsetUpdate(const std::string& _id, const NiVec2& _originLeftTop, const NiUI_Transform2dEx& _transform, NiVec2& _offset);
+    static void SetComponentId(const NiUI_InputState& _inputState, const std::string& _id, const std::string& _type);
 
 
 public:

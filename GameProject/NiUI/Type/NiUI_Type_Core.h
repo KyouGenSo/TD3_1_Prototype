@@ -1,16 +1,22 @@
 #pragma once
 
 #include <string> // std::string
+#include <unordered_map> // std::unordered_map
 
 #include "../Math/NiVec2.h" // NiVec2
 #include "../Math/NiVec4.h" // NiVec4
 #include "NiUI_Type_Component.h"
 
+using NiID = unsigned int;
+
+template <typename T>
+using StringMap = std::unordered_map<std::string, T>;
 
 // Included in NiUICoreState
 struct NiUIComponentID
 {
-    std::string type;
+    std::string typeHover;
+    std::string typeActive;
     std::string active;
     std::string hover;
     std::string preHover;
@@ -43,6 +49,8 @@ struct NiUIBuffer
     BaseRegionData* currentRegion;
     uint32_t currentZOrder;
     NiVec2 currentPos;
+    BaseDrawData* currentDrawData;
+    StringMap<std::string> areaToItem;
 };
 
 // Included in NiUIIO
@@ -104,4 +112,9 @@ struct NiUICoreState
     NiUIFlags flags;
     NiUITime time;
     NiUIBuffer buffer;
+};
+
+struct NiUISetting
+{
+    int deleteElementThreshold;
 };

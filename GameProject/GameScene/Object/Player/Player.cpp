@@ -114,6 +114,13 @@ void Player::UpdateInputCommands()
             observer->OnNotify("toggle_lvup");
         }
     }
+    if (pInput_->TriggerKey(DIK_C))
+    {
+        for (auto observer : observers_)
+        {
+            observer->OnNotify("toggle_chain");
+        }
+    }
 
     // Perspective
     transform_.rotate.y += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;

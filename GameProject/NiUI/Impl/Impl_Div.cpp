@@ -100,16 +100,7 @@ void NiUI::DivBehavior(const std::string& _id, bool _isHover, bool _isTrigger)
     // ネストカウントを増やす
     state_.valid.nestCount++;
 
-    if (_isHover)
-    {
-        state_.componentID.hover = _id;
-        state_.componentID.type = "Div";
-    }
-
-    if (_isTrigger)
-    {
-        state_.componentID.active = _id;
-    }
+    SetComponentId({ .isHover = _isHover, .isTrigger = _isTrigger }, _id, "Div");
 }
 
 void NiUI::DivDataEnqueue()

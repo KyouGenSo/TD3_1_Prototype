@@ -5,10 +5,14 @@
 class INiUIDebug
 {
 public:
-    INiUIDebug(const NiUIIO& _io, const NiUICoreState& _state) : io_(_io) , state_(_state){}
+    INiUIDebug() = default;
     virtual void DrawDebugUI() = 0;
+    void SetIO(const NiUIIO* _io) { io_ = _io; }
+    void SetState(const NiUICoreState* _state) { state_ = _state; }
+    void SetSetting(NiUISetting* _setting) { setting_ = _setting; }
 
 protected:
-    const NiUIIO& io_;
-    const NiUICoreState& state_;
+    const NiUIIO* io_ = nullptr;
+    const NiUICoreState* state_ = nullptr;
+    NiUISetting* setting_ = nullptr;
 };

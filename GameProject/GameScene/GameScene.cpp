@@ -41,10 +41,12 @@ void GameScene::Initialize() {
 
     guiLvUP_ = std::make_unique<GUI_LvUP>();
     guiPauseMenu_ = std::make_unique<GUI_PauseMenu>();
+    guiChain_ = std::make_unique<GUI_Chain>();
 
     // Observer登録
     player_->AddObserver(guiLvUP_.get());
     player_->AddObserver(guiPauseMenu_.get());
+    player_->AddObserver(guiChain_.get());
 
     // Minimap
     minimap_ = make_unique<Minimap>();
@@ -89,6 +91,7 @@ void GameScene::Update() {
 
     guiLvUP_->Update();
     guiPauseMenu_->Update();
+    guiChain_->Update();
 
 	boss_->Update();
 	enemyManager_->Update();
@@ -129,6 +132,7 @@ void GameScene::DrawImGui() {
     enemyManager_->ImGui();
     boss_->ImGui();
     camera_->ImGui();
+    guiChain_->ImGui();
 
     ImGui::Begin("Directional Light");
     ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);

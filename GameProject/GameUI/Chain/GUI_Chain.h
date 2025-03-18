@@ -1,14 +1,13 @@
 #pragma once
 
-#include <string> // std::string
-
 #include <Interfaces/IObserver.h>
+#include <string>
 
-class GUI_LvUP : public IObserver
+class GUI_Chain : public IObserver
 {
 public:
-    GUI_LvUP() = default;
-    ~GUI_LvUP() = default;
+    GUI_Chain() = default;
+    ~GUI_Chain() = default;
 
     // 通知する
     void OnNotify(const std::string& _event) override;
@@ -18,17 +17,13 @@ public:
     void ImGui();
 
 private:
-    // レベルアップ画面を表示する
-    void ShowLvUP();
-
-
-private:
     const std::string TEXTUREPATH_ = "white.png";
-
-    // レベルアップ画面を表示するかどうか
     bool isDisplay_ = false;
-
     std::string area1_ = "";
     std::string area2_ = "";
     std::string area3_ = "";
+
+private:
+    // チェイン画面を表示する
+    void ShowChain();
 };
