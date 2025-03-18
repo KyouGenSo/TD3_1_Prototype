@@ -1,3 +1,6 @@
 [submodule "Externals/Engine"]
 	path = Externals/Engine
 	url = https://github.com/KyouGenSo/TakoEngine.git
+[submodule "Externals/NiGui"]
+	path = Externals/NiGui
+	url = https://github.com/Souto-Naitou/NiGui.git
