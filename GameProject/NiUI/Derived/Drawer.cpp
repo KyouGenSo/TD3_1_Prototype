@@ -3,7 +3,7 @@
 #include <TextureManager.h>
 #include <Audio.h>
 
-void Drawer::Draw()
+void NiGuiDrawer::Draw()
 {
     textureCount_.clear();
 
@@ -40,7 +40,7 @@ void Drawer::Draw()
     return;
 }
 
-void Drawer::PlayAudio(uint32_t _handle)
+void NiGuiDrawer::PlayAudio(uint32_t _handle)
 {
     Audio::GetInstance()->Play(_handle);
     return;

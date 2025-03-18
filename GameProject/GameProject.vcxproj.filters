@@ -125,7 +125,7 @@
     <ClCompile Include="GameScene\Object\Collision\CollisionManager.cpp">
       <Filter>GameSystem\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp">
+    <ClCompile Include="NiUI\Derived\NiGui_Debug.cpp">
       <Filter>NiUI\Derived</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\HUD\Minimap.cpp">
@@ -167,7 +167,6 @@
     <ClCompile Include="GameScene\Object\Terrain\Terrain.cpp">
       <Filter>Object\Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\BulletBase.cpp">
       <Filter>Object\Bullets</Filter>
@@ -183,7 +182,12 @@
     <ClCompile Include="GameScene\Object\Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI\Chain\GUI_Chain.cpp" />
+    <ClCompile Include="GameUI\Chain\GUI_Chain.cpp">
+      <Filter>GameUI\Chain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp">
+      <Filter>GameUI\PauseMenu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\Derived\Drawer.h">
@@ -207,7 +211,7 @@
     <ClInclude Include="NiUI\Derived\ProcHandler.h">
       <Filter>NiUI\Derived</Filter>
     </ClInclude>
-    <ClInclude Include="NiUI\Derived\NiUI_Debug.h">
+    <ClInclude Include="NiUI\Derived\NiGui_Debug.h">
       <Filter>NiUI\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Timer\Timer.h">

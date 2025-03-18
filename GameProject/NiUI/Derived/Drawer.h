@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../Interface/NiUI_IDrawer.h"
+#include <Interface/NiGui_IDrawer.h>
 
 #include <Sprite.h>
 #include <memory>
-#include <NiUI/Type/NiUI_Type_Core.h>
+#include <Type/NiGui_Type_Core.h>
 
-class Drawer : public IDrawer
+class NiGuiDrawer : public INiGuiDrawer
 {
 public:
-    Drawer() = default;
-    ~Drawer() = default;
+    NiGuiDrawer() = default;
+    ~NiGuiDrawer() = default;
 
     void Draw() override;
     void PlayAudio(uint32_t _handle) override;

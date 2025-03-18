@@ -1,6 +1,6 @@
 #include "GUI_PauseMenu.h"
 
-#include <NiUI/NiUI.h>
+#include <NiGui.h>
 
 void GUI_PauseMenu::Initialize()
 {
@@ -33,19 +33,20 @@ void GUI_PauseMenu::OnNotify(const std::string& _event)
 
 void GUI_PauseMenu::ShowPauseMenu()
 {
-    auto center = NiUI_StandardPoint::Center;
-    auto confirm = NiUI_ButtonState::Confirm;
+    auto center = NiGui_StandardPoint::Center;
+    auto confirm = NiGui_ButtonState::Confirm;
 
-    if (NiUI::BeginDiv("PauseMenu", "white.png", NiUI::BLACK, {}, { 250, 250 }, center, center))
+
+    if (NiGui::BeginDiv("PauseMenu", "white.png", NiGui::BLACK, {}, { 250, 250 }, center, center))
     {
-        if (NiUI::Button("Resume", "white.png", NiUI::WHITE, { 0.0f, -50.0f }, { 150.0f, 50.0f }, center, center) == confirm)
+        if (NiGui::Button("Resume", "white.png", NiGui::WHITE, { 0.0f, -50.0f }, { 150.0f, 50.0f }, center, center) == confirm)
         {
             showPauseMenu_ = false;
         }
-        if (NiUI::Button("Exit", "white.png", NiUI::WHITE, { 0.0f, 50.0f }, { 150.0f, 50.0f }, center, center) == confirm)
+        if (NiGui::Button("Exit", "white.png", NiGui::WHITE, { 0.0f, 50.0f }, { 150.0f, 50.0f }, center, center) == confirm)
         {
             showPauseMenu_ = false;
         }
     }
-    NiUI::EndDiv();
+    NiGui::EndDiv();
 }

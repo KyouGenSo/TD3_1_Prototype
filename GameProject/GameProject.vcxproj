@@ -172,6 +172,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ProjectReference Include="..\Externals\Engine\project\TakoEngine.vcxproj">
       <Project>{5667d840-f080-4f39-b016-fd2c1b9375e7}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Externals\NiGui\NiGui.vcxproj">
+      <Project>{e3e0f431-57ab-47bd-9cad-db622644b99c}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameScene\Object\Bullets\BulletBase.cpp" />
@@ -204,7 +207,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\HUD\Minimap.cpp" />
     <ClCompile Include="MyGame\MyGame.cpp" />
     <ClCompile Include="NiUI\Derived\Drawer.cpp" />
-    <ClCompile Include="NiUI\Derived\NiUI_Debug.cpp" />
+    <ClCompile Include="NiUI\Derived\NiGui_Debug.cpp" />
     <ClCompile Include="NiUI\Derived\ProcHandler.cpp" />
     <ClCompile Include="GameScene\Object\Player\Player.cpp" />
     <ClCompile Include="Timer\Timer.cpp" />
@@ -235,7 +238,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Internal\SingletonFinalizer.h" />
     <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
     <ClInclude Include="MyGame\MyGame.h" />
-    <ClInclude Include="NiUI\Derived\NiUI_Debug.h" />
+    <ClInclude Include="NiUI\Derived\NiGui_Debug.h" />
     <ClInclude Include="GameScene\Object\Object.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="GameUI\LvUP\GUI_LvUP.h" />
