@@ -1,9 +1,9 @@
 #pragma once
 #include"TakoFramework.h"
 #include"Vector2.h"
-#include <NiUI/Derived/Drawer.h>
-#include <NiUI/Derived/ProcHandler.h>
-#include <NiUI/Derived/NiGui_Debug.h>
+#include <NiGui/Derived/Drawer.h>
+#include <NiGui/Derived/ProcHandler.h>
+#include <NiGui/Derived/NiGui_Debug.h>
 #include <memory>
 
 class MyGame : public TakoFramework

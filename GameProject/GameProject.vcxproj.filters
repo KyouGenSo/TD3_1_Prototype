@@ -5,12 +5,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="NiUI">
-      <UniqueIdentifier>{344f19be-d96f-4824-b7fa-e251f8bd2248}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NiUI\Derived">
-      <UniqueIdentifier>{704d2649-6cdf-4e01-a4d9-5ee12955b7fe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MyGame">
       <UniqueIdentifier>{60520dc7-409e-4a32-a37a-2419a6e465c7}</UniqueIdentifier>
     </Filter>
@@ -89,12 +83,15 @@
     <Filter Include="GameUI\Chain">
       <UniqueIdentifier>{a7116316-41be-4eed-af7c-d3520105b73c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NiGui">
+      <UniqueIdentifier>{344f19be-d96f-4824-b7fa-e251f8bd2248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NiGui\Derived">
+      <UniqueIdentifier>{704d2649-6cdf-4e01-a4d9-5ee12955b7fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="NiUI\Derived\Drawer.cpp">
-      <Filter>NiUI\Derived</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\Object\Player\Player.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
@@ -103,9 +100,6 @@
     </ClCompile>
     <ClCompile Include="GameScene\Object\Camera\FollowCamera.cpp">
       <Filter>GameSystem\FollowCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="NiUI\Derived\ProcHandler.cpp">
-      <Filter>NiUI\Derived</Filter>
     </ClCompile>
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp">
       <Filter>GameUI\LvUP</Filter>
@@ -124,9 +118,6 @@
     </ClCompile>
     <ClCompile Include="GameScene\Object\Collision\CollisionManager.cpp">
       <Filter>GameSystem\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="NiUI\Derived\NiGui_Debug.cpp">
-      <Filter>NiUI\Derived</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\HUD\Minimap.cpp">
       <Filter>GameUI\HUD</Filter>
@@ -188,11 +179,17 @@
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp">
       <Filter>GameUI\PauseMenu</Filter>
     </ClCompile>
+    <ClCompile Include="NiGui\Derived\Drawer.cpp">
+      <Filter>NiGui\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="NiGui\Derived\NiGui_Debug.cpp">
+      <Filter>NiGui\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="NiGui\Derived\ProcHandler.cpp">
+      <Filter>NiGui\Derived</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NiUI\Derived\Drawer.h">
-      <Filter>NiUI\Derived</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\Object\Player\Player.h">
       <Filter>Object\Player</Filter>
     </ClInclude>
@@ -207,12 +204,6 @@
     </ClInclude>
     <ClInclude Include="Interfaces\IObserver.h">
       <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Derived\ProcHandler.h">
-      <Filter>NiUI\Derived</Filter>
-    </ClInclude>
-    <ClInclude Include="NiUI\Derived\NiGui_Debug.h">
-      <Filter>NiUI\Derived</Filter>
     </ClInclude>
     <ClInclude Include="Timer\Timer.h">
       <Filter>Utility\Timer</Filter>
@@ -291,6 +282,15 @@
     <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
     <ClInclude Include="GameUI\Chain\GUI_Chain.h">
       <Filter>GameUI\Chain</Filter>
+    </ClInclude>
+    <ClInclude Include="NiGui\Derived\Drawer.h">
+      <Filter>NiGui\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="NiGui\Derived\NiGui_Debug.h">
+      <Filter>NiGui\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="NiGui\Derived\ProcHandler.h">
+      <Filter>NiGui\Derived</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

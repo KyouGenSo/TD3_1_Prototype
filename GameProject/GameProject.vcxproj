@@ -206,10 +206,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameScene\HUD\Minimap.cpp" />
     <ClCompile Include="MyGame\MyGame.cpp" />
-    <ClCompile Include="NiUI\Derived\Drawer.cpp" />
-    <ClCompile Include="NiUI\Derived\NiGui_Debug.cpp" />
-    <ClCompile Include="NiUI\Derived\ProcHandler.cpp" />
     <ClCompile Include="GameScene\Object\Player\Player.cpp" />
+    <ClCompile Include="NiGui\Derived\Drawer.cpp" />
+    <ClCompile Include="NiGui\Derived\NiGui_Debug.cpp" />
+    <ClCompile Include="NiGui\Derived\ProcHandler.cpp" />
     <ClCompile Include="Timer\Timer.cpp" />
     <ClCompile Include="TitleScene\TitleScene.cpp" />
   </ItemGroup>
@@ -238,14 +238,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Internal\SingletonFinalizer.h" />
     <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
     <ClInclude Include="MyGame\MyGame.h" />
-    <ClInclude Include="NiUI\Derived\NiGui_Debug.h" />
     <ClInclude Include="GameScene\Object\Object.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="GameUI\LvUP\GUI_LvUP.h" />
     <ClInclude Include="Interfaces\IObserver.h" />
-    <ClInclude Include="NiUI\Derived\Drawer.h" />
-    <ClInclude Include="NiUI\Derived\ProcHandler.h" />
     <ClInclude Include="GameScene\Object\Player\Player.h" />
+    <ClInclude Include="NiGui\Derived\Drawer.h" />
+    <ClInclude Include="NiGui\Derived\NiGui_Debug.h" />
+    <ClInclude Include="NiGui\Derived\ProcHandler.h" />
     <ClInclude Include="Timer\Timer.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
     <ClInclude Include="Type\Singleton.h" />
