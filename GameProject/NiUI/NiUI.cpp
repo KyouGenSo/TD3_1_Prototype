@@ -1,6 +1,7 @@
 #include "NiUI.h"
 
 #include <stdexcept> // runtime_error
+#include <cassert>
 
 NiUI_Input          NiUI::input_        = NiUI_Input();
 NiVec2              NiUI::leftTop_      = { 0, 0 };
@@ -10,6 +11,7 @@ IDrawer*            NiUI::drawer_       = nullptr;
 NiUIIO              NiUI::io_           = NiUIIO();
 NiUICoreState       NiUI::state_        = NiUICoreState();
 INiUIDebug*         NiUI::debug_        = nullptr;
+NiUISetting         NiUI::setting_      = NiUISetting();
 NiUIStyle           NiUI::style_        = NiUIStyle();
 
 const NiVec4        NiUI::WHITE         = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -39,10 +41,13 @@ void NiUI::Initialize(const NiVec2& _size, const NiVec2& _leftTop)
 
     input_.Initialize();
 
+    setting_.deleteElementThreshold = 35;
+
     style_.windowPadding = { 10, 10 };
     style_.itemSpacing = { 10, 10 };
     style_.divPadding = { 10, 10 };
     style_.color.backGround = { 0.0f, 0.0f, 0.0f, 0.7f };
+
 
     return;
 }
@@ -68,7 +73,7 @@ void NiUI::DrawUI()
     // 描画処理に必要なデータの確認
     CheckValid_DrawUI();
 
-    // ボタンの確定処理
+    // コンポーネントの確定処理
     PostProcessComponents();
 
     // コンポーネントの描画データを追加
@@ -249,11 +254,32 @@ void NiUI::ClearData()
     dragItemAreaData_.clear();
     dragItemData_.clear();
 
-    state_.componentID.hover = {};
-    state_.componentID.type = {};
+    auto& cid = state_.componentID;
+    auto& buffer = state_.buffer;
 
-    state_.buffer.currentRegion = nullptr;
-    state_.buffer.currentZOrder = 0;
+    cid.hover = {};
+    cid.typeHover = {};
+
+    buffer.currentRegion = nullptr;
+    buffer.currentZOrder = 0;
+
+    if (buffer.areaToItem.size() > setting_.deleteElementThreshold)
+    {
+        std::vector<std::string> deleteKeys;
+        for (auto& areaToItem : buffer.areaToItem)
+        {
+            if (areaToItem.second.empty())
+            {
+                deleteKeys.push_back(areaToItem.first);
+            }
+        }
+        for (auto& key : deleteKeys)
+        {
+            buffer.areaToItem.erase(key);
+        }
+        if (buffer.areaToItem.size() > setting_.deleteElementThreshold) setting_.deleteElementThreshold *= 2;
+    }
+    
     return;
 }
 
@@ -307,6 +333,22 @@ void NiUI::OffsetUpdate(
     }
 }
 
+void NiUI::SetComponentId(const NiUI_InputState& _inputState, const std::string& _id, const std::string& _type)
+{
+    if (_id.empty()) assert(false && "unexpected");
+
+    if (_inputState.isHover)
+    {
+        state_.componentID.hover = _id;
+        state_.componentID.typeHover = _type;
+    }
+    if (_inputState.isTrigger)
+    {
+        state_.componentID.active = _id;
+        state_.componentID.typeActive = _type;
+    }
+}
+
 void NiUI::PostProcessComponents()
 {
     auto& componentID = state_.componentID;
@@ -315,6 +357,7 @@ void NiUI::PostProcessComponents()
     if (!io_.input.isLeft && io_.input.isLeftPre)
     {
         componentID.active = {};
+        componentID.typeActive = {};
     }
 
     /// =========
@@ -334,6 +377,48 @@ void NiUI::PostProcessComponents()
         componentTime.active = 0;
     }
 
+    if (componentID.typeActive == "DragItem" && !componentID.active.empty())
+    {
+        int max = state_.buffer.currentZOrder - 1;
+        int missingIndex = 0;
+        int currentIndex = 0;
+        StringMap<int> newZMap;
+
+        for (auto itr = dragItemData_.begin(); itr != dragItemData_.end(); ++itr)
+        {
+            auto& current = itr->second;
+            auto& missing = std::next(dragItemData_.begin(), missingIndex)->second;
+
+            if (current.zOrder < dragItemData_[componentID.active].zOrder)
+            {
+                newZMap[current.id] = current.zOrder;
+                ++currentIndex;
+                continue;
+            }
+
+            if (currentIndex == 0)
+            {
+                newZMap[current.id] = current.zOrder;
+            }
+            else if (current.zOrder > missing.zOrder)
+            {
+                newZMap[current.id] = missing.zOrder;
+                missingIndex = currentIndex;
+            }
+            else
+            {
+                newZMap[current.id] = newZMap[missing.id];
+                newZMap[missing.id] = current.zOrder;
+            }
+            ++currentIndex;
+        }
+
+        newZMap[componentID.active] = max;
+        for (auto& itr : newZMap)
+        {
+            dragItemData_[itr.first].zOrder = itr.second;
+        }
+    }
 
     /// ========
     /// Hover
@@ -360,7 +445,7 @@ void NiUI::PlaySE(const std::string& _type, uint32_t _hoverSE, uint32_t _confirm
     auto& componentID = state_.componentID;
     auto& componentTime = state_.time;
 
-    if (componentID.type != _type) return;
+    if (componentID.typeHover != _type) return;
 
     if (componentTime.active == 0 && componentID.preActive == componentID.preHover && !componentID.preActive.empty())
     {

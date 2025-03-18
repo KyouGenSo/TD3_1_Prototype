@@ -17,7 +17,7 @@ std::string NiUI::DragItemArea(const std::string & _id, const std::string & _tex
     JudgeClickRect(transformEx.position, transformEx.size, istate);
 
     /// 挙動
-    DragItemAreaBehavior(_id, istate.isHover, istate.isTrigger, transformEx, _position);
+    std::string result = DragItemAreaBehavior(_id, istate.isHover, istate.isTrigger, transformEx, _position);
 
     auto& areaData = dragItemAreaData_[_id];
     areaData.id = _id;
@@ -27,35 +27,32 @@ std::string NiUI::DragItemArea(const std::string & _id, const std::string & _tex
     areaData.size = _size;
     areaData.zOrder = state_.buffer.currentZOrder++;
 
-    return {};
+    return result;
 }
 
 std::string NiUI::DragItemAreaBehavior(const std::string& _id, bool _isHover, bool _isTrigger, NiUI_Transform2dEx& _transform, const NiVec2& _leftTop)
 {
-    if (_isHover)
+    SetComponentId({ .isHover = _isHover, .isTrigger = _isTrigger }, _id, "DragItemArea");
+
+    auto item = state_.buffer.areaToItem.find(_id);
+    if (item != state_.buffer.areaToItem.end())
     {
-        state_.componentID.hover = _id;
-        state_.componentID.type = "DragItemArea";
+        return item->second;
     }
-    return {};
+    else
+    {
+        return {};
+    }
+    
 }
 
 std::string NiUI::DragItemBehavior(const std::string& _id, const NiUI_InputState& _inputState, NiUI_Transform2dEx& _transform, const NiVec2& _originLeftTop)
 {
     std::string preHoverId = state_.componentID.hover;
-    std::string preTypeId = state_.componentID.type;
+    std::string preTypeId = state_.componentID.typeHover;
     std::string result = {};
 
-    if (_inputState.isHover)
-    {
-        state_.componentID.hover = _id;
-        state_.componentID.type = "DragItem";
-    }
-
-    if (_inputState.isTrigger)
-    {
-        state_.componentID.active = _id;
-    }
+    SetComponentId(_inputState, _id, "DragItem");
 
     /// offsetの更新
     auto& offset = dragItemOffset_[_id];
@@ -64,13 +61,26 @@ std::string NiUI::DragItemBehavior(const std::string& _id, const NiUI_InputState
 
     if (_inputState.isRelease && state_.componentID.active == _id) 
     {
-        if (preTypeId == "DragItemArea")
+        for (auto& areaToItem : state_.buffer.areaToItem)
+        {
+            if (areaToItem.second == _id)
+            {
+                areaToItem.second = {};
+            }
+        }
+        if (preTypeId == "DragItemArea" && (state_.buffer.areaToItem[preHoverId].empty() || state_.buffer.areaToItem[preHoverId] == _id))
         {
             const auto& area = dragItemAreaData_[preHoverId];
             NiVec2 diff = area.size - _transform.size;
             _transform.position = area.leftTop + diff * 0.5f;
             offset = _transform.position - _originLeftTop;
+            state_.buffer.areaToItem[preHoverId] = _id;
             result = preHoverId;
+        }
+        else if (preTypeId != "DragItemArea")
+        {
+            _transform.position = _originLeftTop;
+            offset = {};
         }
         else
         {

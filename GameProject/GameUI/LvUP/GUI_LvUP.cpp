@@ -1,9 +1,8 @@
 #include "GUI_LvUP.h"
 
 #include <NiUI/NiUI.h>
-#include <cassert>
 
-#include <Audio.h>
+#include <imgui.h>
 
 void GUI_LvUP::OnNotify(const std::string& _event)
 {
@@ -28,6 +27,11 @@ void GUI_LvUP::Update()
     {
         ShowLvUP();
     }
+}
+
+void GUI_LvUP::ImGui()
+{
+
 }
 
 void GUI_LvUP::ShowLvUP()
@@ -55,13 +59,6 @@ void GUI_LvUP::ShowLvUP()
         }
         NiUI::EndDiv();
     }
-
-    NiUI::DragItemArea("DragItemArea1", TEXTUREPATH_, NiUI::BLUE, { -240, 150 }, { 120, 120 }, center, center);
-    NiUI::DragItemArea("DragItemArea2", TEXTUREPATH_, NiUI::BLUE, { 0, 150 }, { 120, 120 }, center, center);
-    NiUI::DragItemArea("DragItemArea3", TEXTUREPATH_, NiUI::BLUE, { 240, 150 }, { 120, 120 }, center, center);
-    NiUI::DragItem("DragItem1", TEXTUREPATH_, NiUI::YELLOW, { -240, -150 }, { 100, 100 }, center, center);
-    NiUI::DragItem("DragItem2", TEXTUREPATH_, NiUI::CIAN, { 0, -150 }, { 100, 100 }, center, center);
-    NiUI::DragItem("DragItem3", TEXTUREPATH_, NiUI::MAGENTA, { 240, -150 }, { 100, 100 }, center, center);
 
 
     if (isClose)

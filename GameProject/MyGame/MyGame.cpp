@@ -68,9 +68,10 @@ void MyGame::Initialize()
     NiUI::SetConfirmSound(Audio::GetInstance()->LoadWaveFile("ui_confirm.wav"));
 
     /// デバッグUIの設定
-    auto& io = NiUI::GetIO();
-    auto& state = NiUI::GetState();
-    niUI_Debug_ = std::make_unique<NiUI_Debug>(io, state);
+    niUI_Debug_ = std::make_unique<NiUI_Debug>();
+    niUI_Debug_->SetIO(&NiUI::GetIO());
+    niUI_Debug_->SetState(&NiUI::GetState());
+    niUI_Debug_->SetSetting(&NiUI::GetSetting());
     NiUI::SetDebug(niUI_Debug_.get());
 
     /// StageManagerの初期化

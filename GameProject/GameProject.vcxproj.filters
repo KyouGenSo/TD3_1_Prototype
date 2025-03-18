@@ -101,6 +101,9 @@
     <Filter Include="GameSystem\DeltaTimeManager">
       <UniqueIdentifier>{ef59b76f-0256-417b-918b-f78dda01e8ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameUI\Chain">
+      <UniqueIdentifier>{a7116316-41be-4eed-af7c-d3520105b73c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -222,6 +225,7 @@
     <ClCompile Include="GameScene\Object\Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI\Chain\GUI_Chain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NiUI\NiUI.h">
@@ -356,5 +360,8 @@
       <Filter>GameSystem\DeltaTimeManager</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
+    <ClInclude Include="GameUI\Chain\GUI_Chain.h">
+      <Filter>GameUI\Chain</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

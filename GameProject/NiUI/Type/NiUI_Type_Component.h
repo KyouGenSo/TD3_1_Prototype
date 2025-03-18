@@ -25,8 +25,7 @@ struct FlexContainerData
 };
 
 
-// ボタンデータ
-struct ButtonData
+struct BaseDrawData
 {
     std::string id;
     std::string textureName;
@@ -35,15 +34,14 @@ struct ButtonData
     uint32_t zOrder;
 };
 
-struct BaseRegionData
+// ボタンデータ
+struct ButtonData : public BaseDrawData
 {
-    std::string id;
-    std::string textureName;
-    NiVec4 color;
-    NiVec2 leftTop;
-    NiVec2 size;
-    uint32_t zOrder;
+};
 
+struct BaseRegionData : public BaseDrawData
+{
+    NiVec4 color;
     BaseRegionData* parent = nullptr;
 };
 
