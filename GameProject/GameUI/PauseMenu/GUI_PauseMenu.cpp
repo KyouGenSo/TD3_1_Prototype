@@ -38,11 +38,11 @@ void GUI_PauseMenu::ShowPauseMenu()
 
     if (NiUI::BeginDiv("PauseMenu", "white.png", NiUI::BLACK, {}, { 250, 250 }, center, center))
     {
-        if (NiUI::Button("Resume", "white.png", { 0.0f, -50.0f }, { 150.0f, 50.0f }, center, center) == confirm)
+        if (NiUI::Button("Resume", "white.png", NiUI::WHITE, { 0.0f, -50.0f }, { 150.0f, 50.0f }, center, center) == confirm)
         {
             showPauseMenu_ = false;
         }
-        if (NiUI::Button("Exit", "white.png", { 0.0f, 50.0f }, { 150.0f, 50.0f }, center, center) == confirm)
+        if (NiUI::Button("Exit", "white.png", NiUI::WHITE, { 0.0f, 50.0f }, { 150.0f, 50.0f }, center, center) == confirm)
         {
             showPauseMenu_ = false;
         }

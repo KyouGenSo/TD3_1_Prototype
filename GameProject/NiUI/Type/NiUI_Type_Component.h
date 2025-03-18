@@ -29,6 +29,7 @@ struct BaseDrawData
 {
     std::string id;
     std::string textureName;
+    NiVec4 color;
     NiVec2 leftTop;
     NiVec2 size;
     uint32_t zOrder;
@@ -41,7 +42,6 @@ struct ButtonData : public BaseDrawData
 
 struct BaseRegionData : public BaseDrawData
 {
-    NiVec4 color;
     BaseRegionData* parent = nullptr;
 };
 

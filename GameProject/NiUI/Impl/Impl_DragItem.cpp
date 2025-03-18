@@ -75,7 +75,6 @@ std::string NiUI::DragItemBehavior(const std::string& _id, const NiUI_InputState
             _transform.position = area.leftTop + diff * 0.5f;
             offset = _transform.position - _originLeftTop;
             state_.buffer.areaToItem[preHoverId] = _id;
-            result = preHoverId;
         }
         else if (preTypeId != "DragItemArea")
         {
@@ -86,6 +85,14 @@ std::string NiUI::DragItemBehavior(const std::string& _id, const NiUI_InputState
         {
             _transform.position = _originLeftTop;
             offset = {};
+        }
+    }
+
+    for (auto& areaToItem : state_.buffer.areaToItem)
+    {
+        if (areaToItem.second == _id)
+        {
+            result = areaToItem.first;
         }
     }
 

@@ -45,15 +45,15 @@ void GUI_LvUP::ShowLvUP()
 
     if (NiUI::BeginDiv("LvUP", TEXTUREPATH_, NiUI::BLACK, { 0, 0 }, { 800, 450 }, center, center))
     {
-        if (NiUI::Button("Close1", TEXTUREPATH_, { -250, 0 }, { 200, 350 }, center, center) == confirm)
+        if (NiUI::Button("Close1", TEXTUREPATH_, NiUI::WHITE, { -250, 0 }, { 200, 350 }, center, center) == confirm)
         {
             isClose = true;
         }
-        if (NiUI::Button("Close2", TEXTUREPATH_, { 0, 0 }, { 200, 350 }, center, center) == confirm)
+        if (NiUI::Button("Close2", TEXTUREPATH_, NiUI::WHITE, { 0, 0 }, { 200, 350 }, center, center) == confirm)
         {
             isClose = true;
         }
-        if (NiUI::Button("Close3", TEXTUREPATH_, { 250, 0 }, { 200, 350 }, center, center) == confirm)
+        if (NiUI::Button("Close3", TEXTUREPATH_, NiUI::WHITE, { 250, 0 }, { 200, 350 }, center, center) == confirm)
         {
             isClose = true;
         }

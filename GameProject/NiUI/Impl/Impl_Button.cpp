@@ -3,6 +3,7 @@
 NiUI_ButtonState NiUI::Button(
     const std::string& _id,
     const std::string& _textureName,
+    const NiVec4& _color,
     const NiVec2& _position,
     const NiVec2& _size,
     NiUI_StandardPoint _anchor,
@@ -31,6 +32,7 @@ NiUI_ButtonState NiUI::Button(
     /// ボタンのデータを更新
     buttonImage.id = _id;
     buttonImage.textureName = _textureName;
+    buttonImage.color = _color;
     buttonImage.leftTop = leftTop;
     buttonImage.size = _size;
     buttonImage.zOrder = state_.buffer.currentZOrder++;

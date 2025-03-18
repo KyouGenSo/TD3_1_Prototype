@@ -54,6 +54,7 @@ public: /// UIコンポーネントの追加
     static NiUI_ButtonState Button(
         const std::string& _id,
         const std::string& _textureName,
+        const NiVec4& _color,
         const NiVec2& _position,
         const NiVec2& _size,
         NiUI_StandardPoint _anchor = NiUI_StandardPoint::LeftTop,
@@ -130,6 +131,8 @@ public: /// ゲッター
 
     static std::string GetActiveComponentID() { return state_.componentID.active; }
     static std::string GetHoverComponentID() { return state_.componentID.hover; }
+    static std::string GetActiveComponentType() { return state_.componentID.typeActive; }
+    static std::string GetHoverComponentType() { return state_.componentID.typeHover; }
 
     static uint32_t GetActiveTime() { return state_.time.active; }
     static uint32_t GetHoverTime() { return state_.time.hover; }
