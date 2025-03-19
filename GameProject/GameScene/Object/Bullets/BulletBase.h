@@ -46,8 +46,7 @@ protected:
     // ライフタイムを算出
     void CalcLifeTime() { lifeTime_ = 150.0f / speed_ * 0.0166f; }
     // ライフタイムをチェック
-    bool CheckLifeTime() { return pLifeTimer_->GetNow() >= lifeTime_; }
-
+    bool CheckLifeTime() const;
 
 protected:
     ChainManager* pChainManager_ = nullptr;

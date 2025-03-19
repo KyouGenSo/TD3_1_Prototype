@@ -16,6 +16,7 @@ void AssaultBullet::Bullet::Initialize()
     collider_->SetEvent([&](auto c){OnCollisionTrigger(c); });
     collider_->SetSize(0.1f);
     collider_->SetType(Collider::Type::ALLY);
+    collider_->SetIgnore(Collider::Type::STAGE);
 }
 
 void AssaultBullet::Bullet::Update()
