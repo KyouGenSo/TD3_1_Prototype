@@ -1,8 +1,6 @@
 #include "EnemyManager.h"
 
 #include "imgui.h"
-#include "GameScene/Object/Player/Player.h"
-#include "GameScene/Object/Castle/Castle.h"
 
 #include <random>
 
@@ -99,7 +97,7 @@ Vector3 EnemyManager::RandomSpawnPosition()
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    Vector3 randomPos;
+    Vector3 randomPos = {};
 
     while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z)) {
 

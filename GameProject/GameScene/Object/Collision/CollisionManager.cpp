@@ -18,8 +18,10 @@ void CollisionManager::Remove(const Collider* pCollider) {
 }
 
 void CollisionManager::Update() {
-    for (auto itr = pColliders_.begin(); itr != pColliders_.end();){
-        if (itr->second->IsDisable()){
+    for (auto itr = pColliders_.begin(); itr != pColliders_.end();)
+    {
+        if (itr->second->IsDisable())
+        {
             itr = pColliders_.erase(itr);
             continue;
         }
@@ -27,9 +29,7 @@ void CollisionManager::Update() {
         ++itr;
     }
 
-    EventTimer::GetInstance()->Measure("Collision Check", [&]() { CheckAll(); });
-
-    //CheckAll();
+    CheckAll();
 }
 
 void CollisionManager::CheckAll() {
