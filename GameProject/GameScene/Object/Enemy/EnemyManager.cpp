@@ -86,6 +86,7 @@ void EnemyManager::ImGui()
             AddEnemy({ appearancePos_.x * i, appearancePos_.y, appearancePos_.z });
         }
     }
+    ImGui::DragFloat("SpawnInterval", &spawnInterval_, 0.1f);
     ImGui::End();
 }
 
