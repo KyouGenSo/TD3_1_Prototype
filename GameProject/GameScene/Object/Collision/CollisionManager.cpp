@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <array>
-#include <ranges>
 #include <set>
 
 #include "Collider.h"
@@ -38,10 +37,6 @@ void CollisionManager::CheckAll() {
             if ((pCollider->GetAttribute() & pOther->GetIgnore()) &&
                 (pOther->GetAttribute() & pCollider->GetIgnore())){
                 continue;
-            }
-
-            if(!pCollider->GetOwner()){
-                (void)pCollider;
             }
 
             Check(key, kOther);

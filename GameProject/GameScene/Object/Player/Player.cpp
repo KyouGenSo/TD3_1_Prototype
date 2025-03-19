@@ -29,6 +29,7 @@ void Player::Initialize() {
 
     collider_ = std::make_unique<Collider>(this);
     collider_->SetEvent([this](const Collider* pCol){this->OnCollision(pCol); });
+    collider_->SetType(Collider::Type::ALLY);
 
     chainManager_ = std::make_unique<ChainManager>();
     chainManager_->Initialize();
