@@ -2,7 +2,6 @@
 
 #include "imgui.h"
 #include "GameScene/Object/Player/Player.h"
-#include "GameScene/Object/Castle/Castle.h"
 
 #include <random>
 

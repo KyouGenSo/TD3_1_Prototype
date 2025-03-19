@@ -23,11 +23,15 @@ void Enemy::Initialize()
     collider_ = std::make_unique<Collider>(this);
     collider_->SetEvent([this](const Collider* pObj) {this->OnCollision(pObj); });
     collider_->SetType(Collider::Type::ENEMY);
+    collider_->SetIgnore(Collider::Type::ENEMY);
+    collider_->SetIgnore(Collider::Type::STAGE);
     collider_->SetSize(1.f);
 }
 
 void Enemy::Update()
 {
+    if (isDead_) return;
+
     model_->Update();
     Move();
 }
@@ -50,6 +54,7 @@ void Enemy::OnCollision(const Collider* pCollider)
             hp_--;
         }else{
             isDead_ = true;
+            return;
         }
 
         transform_.translate = prePos;

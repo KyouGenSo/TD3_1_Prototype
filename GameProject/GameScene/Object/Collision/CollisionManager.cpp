@@ -5,19 +5,21 @@
 #include <set>
 
 #include "Collider.h"
+#include "imgui.h"
 
 void CollisionManager::Add(Collider* pCollider) {
     pColliders_[pCollider->GetUniqueId()] = pCollider;
 }
 
-void CollisionManager::Remove(const Collider* pCollider) {
-    pColliders_.erase(pCollider->GetUniqueId());
-    pCollider = nullptr;
+void CollisionManager::Remove(const std::string& uuid) {
+    pairs_.erase(std::ranges::remove_if(pairs_, [uuid](const Pair& pair){return pair.first == uuid || pair.second == uuid; }).begin(), pairs_.end());
+    pColliders_.erase(uuid);
 }
 
 void CollisionManager::Update() {
+    debug_.frame = 0;
     for (auto itr = pColliders_.begin(); itr != pColliders_.end();){
-        if (itr->second->IsDisable()){
+        if (!itr->second || itr->second->IsDisable()){
             itr = pColliders_.erase(itr);
             continue;
         }
@@ -25,17 +27,38 @@ void CollisionManager::Update() {
         ++itr;
     }
     CheckAll();
+
+    debug_.total += debug_.frame;
+
+
+    ImGui::Begin("CollisionManager");
+    ImGui::Text("Total: %llu", debug_.total);
+    ImGui::Text("Frame: %llu", debug_.frame);
+    ImGui::Text("Filtered: %llu", debug_.filtered);
+    //ImGui::TableHeader();
+    ImGui::End();
 }
 
 void CollisionManager::CheckAll() {
 	for (auto& [key, pCollider] : pColliders_){
+        if (pCollider->IsDisable()) continue;
+        if (pCollider->GetOwner()){
+            if (pCollider->GetOwner()->IsDead())continue;
+        }
+
         for (auto& [kOther,  pOther ] : pColliders_){
+            if (pOther->IsDisable()) continue;
+            if (pOther->GetOwner()){
+                if(pOther->GetOwner()->IsDead())continue;
+            }
+
             if (pCollider == pOther){
                 continue;
             }
             //filter
             if ((pCollider->GetAttribute() & pOther->GetIgnore()) ||
                 (pOther->GetAttribute() & pCollider->GetIgnore())){
+                ++debug_.filtered;
                 continue;
             }
 
@@ -71,6 +94,7 @@ void CollisionManager::Check(const std::string& col, const std::string& other) {
     }
 
     if (isHit){
+
         Pair p {col, other};
 
         if (p.first > p.second){
@@ -86,6 +110,7 @@ void CollisionManager::Check(const std::string& col, const std::string& other) {
 
         pCollider->OnCollision(pOther);
         pOther->OnCollision(pCollider);
+        ++debug_.frame;
         return;
     }
 
