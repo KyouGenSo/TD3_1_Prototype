@@ -63,9 +63,18 @@ void Enemy::Move()
     if(isAppearing_) {
         AppearanceProduction();
     }else {
-        Vector3 direction = pTarget_->GetTransform().translate - transform_.translate;
-        direction /= direction.Length();
-        transform_.translate += direction * speed; 
+        Vector3 direction;
+        direction.x = pTarget_->GetTransform().translate.x - transform_.translate.x;
+        direction.z = pTarget_->GetTransform().translate.z - transform_.translate.z;
+
+        float length = std::sqrt(direction.x * direction.x + direction.z * direction.z);
+        if (length != 0) {
+            direction.x /= length;
+            direction.z /= length;
+        }
+
+        transform_.translate.x += direction.x * speed;
+        transform_.translate.z += direction.z * speed;
         
     }
     model_->SetTranslate(transform_.translate);
