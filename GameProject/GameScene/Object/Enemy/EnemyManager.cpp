@@ -5,6 +5,15 @@
 
 #include <random>
 
+EnemyManager::EnemyManager()
+    : gen_(rd_())
+{
+}
+
+EnemyManager::~EnemyManager()
+{
+}
+
 void EnemyManager::Initialize(Object* player, Object* castle)
 {
     pPlayer_ = player;
@@ -77,6 +86,7 @@ void EnemyManager::ImGui()
             AddEnemy({ appearancePos_.x * i, appearancePos_.y, appearancePos_.z });
         }
     }
+    ImGui::DragFloat("SpawnInterval", &spawnInterval_, 0.1f);
     ImGui::End();
 }
 
@@ -95,9 +105,6 @@ void EnemyManager::SetMinimap(Minimap* pMinimap) {
 
 Vector3 EnemyManager::RandomSpawnPosition()
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-
     Vector3 randomPos = {};
 
     while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z)) {
@@ -106,7 +113,7 @@ Vector3 EnemyManager::RandomSpawnPosition()
         std::uniform_real_distribution<float> disY(minSpawnPoint_.y, maxSpawnPoint_.y);
         std::uniform_real_distribution<float> disZ(minSpawnPoint_.z, maxSpawnPoint_.z);
 
-        randomPos = Vector3{ disX(gen), disY(gen), disZ(gen) };
+        randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
     }
 
     return randomPos;
