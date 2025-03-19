@@ -73,10 +73,10 @@ void RocketBullet::OnCollisionTrigger(const Collider* _other)
 
     color = {1, 0,0,1};
     //爆発オブジェクトを生成
-    explosion_ = std::make_unique<LimitedCollider>(this, 1);
-    explosion_->SetSize(5.0f);
-    explosion_->SetType(Collider::Type::ALLY);
-    explosion_->SetIgnore(Collider::Type::STAGE);
+    //explosion_ = std::make_unique<LimitedCollider>(this, 1);
+    //explosion_->SetSize(5.0f);
+    //explosion_->SetType(Collider::Type::ALLY);
+    //explosion_->SetIgnore(Collider::Type::STAGE);
 
     if(pNextBulletTimer_->GetIsStart())
     {

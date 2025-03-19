@@ -26,6 +26,10 @@ Collider::Collider(Object* _owner)
     pManager_->Add(this);
 }
 
+Collider::~Collider() {
+    pManager_->Remove(GetUniqueId());
+}
+
 void Collider::Update() {
     if (disable_)return;
 

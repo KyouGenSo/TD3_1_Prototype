@@ -23,7 +23,7 @@ class CollisionManager{
 
 public:
 	void Add(Collider* pCollider);
-	void Remove(const Collider* pCollider);
+    void Remove(const std::string& uuid);
 
 	void Update();
 
