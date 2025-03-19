@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <random>
+
 #include "Enemy.h"
 #include "GameScene/HUD/Minimap.h"
 
@@ -8,6 +10,9 @@ class Player;
 class Castle;
 class EnemyManager {
 public:
+    EnemyManager();
+    ~EnemyManager();
+
     void Initialize(Object* player, Object* castle);
     void Update();
     void Draw();
@@ -45,4 +50,6 @@ private:
 
     float deltaTime_ = 1.0f / 60.0f;
 
+    std::random_device rd_;
+    std::mt19937 gen_;
 };
