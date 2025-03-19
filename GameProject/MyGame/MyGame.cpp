@@ -77,6 +77,9 @@ void MyGame::Initialize()
     /// StageManagerの初期化
     StageManager::GetInstance()->Initialize();
     StageManager::GetInstance()->SetCurrent("Stage1");
+
+    /// EventTimerの初期化
+    eventTimer_ = EventTimer::GetInstance();
 }
 
 void MyGame::Finalize()
@@ -92,6 +95,10 @@ void MyGame::Finalize()
 
 void MyGame::Update()
 {
+    eventTimer_->NewFrame();
+
+    eventTimer_->BeginEvent("Update");
+
     #ifdef _DEBUG
     imguiManager_->Begin();
     #endif // _DEBUG
@@ -109,6 +116,8 @@ void MyGame::Update()
 
     // ゲームパッドの状態をリフレッシュ
     Input::GetInstance()->RefreshGamePadState();
+
+    eventTimer_->EndEvent("Update");
 }
 
 void MyGame::Draw()
@@ -116,6 +125,8 @@ void MyGame::Draw()
     /// ============================================= ///
     /// ------------------シーン描画-------------------///
     /// ============================================= ///
+
+    eventTimer_->BeginEvent("Draw");
 
     // 描画前の処理(レンダーテクスチャを描画対象に設定)
     dx12_->SetRenderTexture();
@@ -167,11 +178,16 @@ void MyGame::Draw()
         break;
     }
 
+    eventTimer_->EndEvent("Draw");
+
+    eventTimer_->EndFrame();
 
     /// ========================================= ///
     ///-------------------ImGui-------------------///
     /// ========================================= ///
 #ifdef _DEBUG
+
+    eventTimer_->ImGui();
 
     SceneManager::GetInstance()->DrawImGui();
 

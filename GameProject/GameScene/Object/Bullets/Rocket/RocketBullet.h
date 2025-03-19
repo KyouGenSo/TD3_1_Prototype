@@ -1,6 +1,8 @@
 #pragma once
 #include <GameScene/Object/Bullets/BulletBase.h>
 
+#include <Timer/Timer.h>
+
 class RocketBullet : public BulletBase{
 public:
     void Initialize() override;
@@ -21,5 +23,7 @@ private:
     std::unique_ptr<Collider> explosion_;
 
     Vector4 color = {1,1,1,1};
+
+    Timer timer;
 };
 

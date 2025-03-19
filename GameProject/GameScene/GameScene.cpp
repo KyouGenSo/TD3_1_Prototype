@@ -9,10 +9,12 @@
 #include <GameSystem/StageManager/StageManager.h>
 
 
+
 void GameScene::Initialize() {
 
     // ステージデータの取得
     const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
+    eventTimer_ = EventTimer::GetInstance();
 
     directLightParam_ = {
         .direction = { 0.0f, -1.0f, 0.0f },
@@ -86,7 +88,8 @@ void GameScene::Update() {
     terrain_->Update();
     castle_->Update();
 
-    player_->Update();
+    eventTimer_->Measure("Player Update", [&]() { player_->Update(); });
+
     camera_->Update();
 
     guiLvUP_->Update();
@@ -98,7 +101,7 @@ void GameScene::Update() {
 
     minimap_->Update();
 
-    pCollisionManager_->Update();
+    eventTimer_->Measure("Collision Update", [&]() { pCollisionManager_->Update(); });
 }
 
 void GameScene::Draw() {

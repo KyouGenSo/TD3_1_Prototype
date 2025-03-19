@@ -6,6 +6,8 @@
 
 #include "Collider.h"
 
+#include <EventTimer/EventTimer.h>
+
 void CollisionManager::Add(Collider* pCollider) {
     pColliders_[pCollider->GetUniqueId()] = pCollider;
 }
@@ -24,7 +26,10 @@ void CollisionManager::Update() {
         itr->second->Update();
         ++itr;
     }
-    CheckAll();
+
+    EventTimer::GetInstance()->Measure("Collision Check", [&]() { CheckAll(); });
+
+    //CheckAll();
 }
 
 void CollisionManager::CheckAll() {
