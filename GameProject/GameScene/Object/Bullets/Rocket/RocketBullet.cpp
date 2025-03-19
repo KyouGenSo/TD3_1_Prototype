@@ -52,9 +52,7 @@ void RocketBullet::Draw()
 {
     if (!isDead_){
         // 描画処理
-        model_->SetMaterialColor(color);
         model_->Draw();
-        model_->SetMaterialColor({1,1,1,1});
     }
 
     if (pNext_) pNext_->Draw();
@@ -68,6 +66,9 @@ void RocketBullet::Fire()
 
 void RocketBullet::OnCollisionTrigger(const Collider* _other)
 {
+    if (isDead_ || pCollider_->IsDisable()) return;
+
+    isDead_ = true;
     pCollider_->Disable();
 
     color = {1, 0,0,1};
@@ -75,6 +76,7 @@ void RocketBullet::OnCollisionTrigger(const Collider* _other)
     explosion_ = std::make_unique<LimitedCollider>(this, 1);
     explosion_->SetSize(5.0f);
     explosion_->SetType(Collider::Type::ALLY);
+    explosion_->SetIgnore(Collider::Type::STAGE);
 
     if(pNextBulletTimer_->GetIsStart())
     {

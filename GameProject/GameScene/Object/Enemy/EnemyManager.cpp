@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 
 #include "imgui.h"
+#include "GameScene/Object/Player/Player.h"
 
 #include <random>
 

@@ -43,7 +43,7 @@ protected:
 public:
     Collider();
 	Collider(Object* _owner);
-    virtual ~Collider() = default;
+    virtual ~Collider();
 
     virtual void Update();
 

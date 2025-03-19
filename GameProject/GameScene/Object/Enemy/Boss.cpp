@@ -1,5 +1,6 @@
 #include "Boss.h"
 
+#include "Enemy.h"
 #include "imgui.h"
 #include "Object3dBasic.h"
 
@@ -23,6 +24,8 @@ void Boss::Initialize()
 
 	collider_ = std::make_unique<Collider>(this);
 	collider_->SetEvent([this](const Collider* pCol) {this->OnCollision(pCol); });
+    collider_->SetType(Collider::Type::ENEMY);
+    collider_->SetIgnore(Collider::Type::ENEMY);
 
     isValid_ = false;
 }
