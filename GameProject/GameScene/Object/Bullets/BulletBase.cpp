@@ -52,3 +52,9 @@ bool BulletBase::CheckCoolTime()
     float coolTime = pChainManager_->GetNextCoolTime(type_);
     return coolTime <= 0;
 }
+
+bool BulletBase::CheckLifeTime() const {
+    if (isDead_)return true;
+
+    return pLifeTimer_->GetNow() >= lifeTime_;
+}
