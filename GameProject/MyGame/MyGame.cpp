@@ -1,6 +1,6 @@
 #include "MyGame.h"
-#include"Audio.h"
-#include"Input.h"
+#include "Audio.h"
+#include "Input.h"
 #include "Factory/SceneFactory.h"
 #include "SceneManager.h"
 #include "TextureManager.h"
@@ -11,7 +11,7 @@
 #include "FrameTimer.h"
 #include "GlobalVariables.h"
 #include "Vector4.h"
-#include <NiUI/NiUI.h>
+#include <NiGui.h>
 #include <GameSystem/StageManager/StageManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 
@@ -53,26 +53,26 @@ void MyGame::Initialize()
     DeltaTimeManager::GetInstance()->SetDeltaTime(0, 1.0f / 60.0f);
 
     /// UIの初期化
-    NiUI::Initialize({ WinApp::clientWidth, WinApp::clientHeight });
+    NiGui::Initialize({ WinApp::clientWidth, WinApp::clientHeight });
 
     /// 描画クラスの設定
-    drawer_ = std::make_unique<Drawer>();
-    NiUI::SetDrawer(drawer_.get());
+    drawer_ = std::make_unique<NiGuiDrawer>();
+    NiGui::SetDrawer(drawer_.get());
 
     /// ウィンドウプロシージャハンドラの設定
     procHandler_ = std::make_unique<ProcHandler>();
     winApp_->SetWndProcHandler(procHandler_.get());
 
     /// UIサウンドの設定
-    NiUI::SetHoverSound(Audio::GetInstance()->LoadWaveFile("ui_hover.wav"));
-    NiUI::SetConfirmSound(Audio::GetInstance()->LoadWaveFile("ui_confirm.wav"));
+    NiGui::SetHoverSound(Audio::GetInstance()->LoadWaveFile("ui_hover.wav"));
+    NiGui::SetConfirmSound(Audio::GetInstance()->LoadWaveFile("ui_confirm.wav"));
 
     /// デバッグUIの設定
-    niUI_Debug_ = std::make_unique<NiUI_Debug>();
-    niUI_Debug_->SetIO(&NiUI::GetIO());
-    niUI_Debug_->SetState(&NiUI::GetState());
-    niUI_Debug_->SetSetting(&NiUI::GetSetting());
-    NiUI::SetDebug(niUI_Debug_.get());
+    niguiDebug_ = std::make_unique<NiGuiDebug>();
+    niguiDebug_->SetIO(&NiGui::GetIO());
+    niguiDebug_->SetState(&NiGui::GetState());
+    niguiDebug_->SetSetting(&NiGui::GetSetting());
+    NiGui::SetDebug(niguiDebug_.get());
 
     /// StageManagerの初期化
     StageManager::GetInstance()->Initialize();
@@ -100,7 +100,7 @@ void MyGame::Update()
     Input::GetInstance()->Update();
 
     // UIの更新
-    NiUI::BeginFrame();
+    NiGui::BeginFrame();
 
     TakoFramework::Update();
 
@@ -127,11 +127,11 @@ void MyGame::Draw()
     SceneManager::GetInstance()->Draw();
 
     #ifdef _DEBUG
-    NiUI::DrawDebug();
+    NiGui::DrawDebug();
     #endif // _DEBUG
 
     // UIの描画
-    NiUI::DrawUI();
+    NiGui::DrawUI();
 
     ParticleManager::GetInstance()->Draw();
 

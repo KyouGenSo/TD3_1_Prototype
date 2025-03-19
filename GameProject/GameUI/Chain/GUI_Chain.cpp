@@ -1,6 +1,6 @@
 #include "GUI_Chain.h"
 
-#include <NiUI/NiUI.h>
+#include <NiGui.h>
 #include <imgui.h>
 
 void GUI_Chain::OnNotify(const std::string& _event)
@@ -40,15 +40,15 @@ void GUI_Chain::ImGui()
 
 void GUI_Chain::ShowChain()
 {
-    auto center = NiUI_StandardPoint::Center;
-    if (NiUI::BeginDiv("Chain", TEXTUREPATH_, NiUI::WHITE, { 0, 0 }, { 800, 450 }, center, center))
+    auto center = NiGui_StandardPoint::Center;
+    if (NiGui::BeginDiv("Chain", TEXTUREPATH_, NiGui::WHITE, { 0, 0 }, { 800, 450 }, center, center))
     {
-        area1_ = NiUI::DragItemArea("DragItemArea1", TEXTUREPATH_, NiUI::BLUE, { -240, 150 }, { 120, 120 }, center, center);
-        area2_ = NiUI::DragItemArea("DragItemArea2", TEXTUREPATH_, NiUI::BLUE, { 0, 150 }, { 120, 120 }, center, center);
-        area3_ = NiUI::DragItemArea("DragItemArea3", TEXTUREPATH_, NiUI::BLUE, { 240, 150 }, { 120, 120 }, center, center);
-        NiUI::DragItem("Yellow", TEXTUREPATH_, NiUI::YELLOW, { -240, -150 }, { 100, 100 }, center, center);
-        NiUI::DragItem("Cian", TEXTUREPATH_, NiUI::CIAN, { 0, -150 }, { 100, 100 }, center, center);
-        NiUI::DragItem("Magenta", TEXTUREPATH_, NiUI::MAGENTA, { 240, -150 }, { 100, 100 }, center, center);
-        NiUI::EndDiv();
+        area1_ = NiGui::DragItemArea("DragItemArea1", TEXTUREPATH_, NiGui::BLUE, { -240, 150 }, { 120, 120 }, center, center);
+        area2_ = NiGui::DragItemArea("DragItemArea2", TEXTUREPATH_, NiGui::BLUE, { 0, 150 }, { 120, 120 }, center, center);
+        area3_ = NiGui::DragItemArea("DragItemArea3", TEXTUREPATH_, NiGui::BLUE, { 240, 150 }, { 120, 120 }, center, center);
+        NiGui::DragItem("Yellow", TEXTUREPATH_, NiGui::YELLOW, { -240, -150 }, { 100, 100 }, center, center);
+        NiGui::DragItem("Cian", TEXTUREPATH_, NiGui::CIAN, { 0, -150 }, { 100, 100 }, center, center);
+        NiGui::DragItem("Magenta", TEXTUREPATH_, NiGui::MAGENTA, { 240, -150 }, { 100, 100 }, center, center);
+        NiGui::EndDiv();
     }
 }

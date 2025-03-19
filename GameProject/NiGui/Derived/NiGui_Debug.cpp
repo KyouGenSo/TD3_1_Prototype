@@ -1,8 +1,8 @@
-#include "NiUI_Debug.h"
+#include "NiGui_Debug.h"
 
 #include <imgui.h>
 
-void NiUI_Debug::DrawDebugUI()
+void NiGuiDebug::DrawDebugUI()
 {
     ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
 
