@@ -12,6 +12,7 @@ void CollisionManager::Add(Collider* pCollider) {
 }
 
 void CollisionManager::Remove(const std::string& uuid) {
+    pairs_.erase(std::ranges::remove_if(pairs_, [uuid](const Pair& pair){return pair.first == uuid || pair.second == uuid; }).begin(), pairs_.end());
     pColliders_.erase(uuid);
 }
 
