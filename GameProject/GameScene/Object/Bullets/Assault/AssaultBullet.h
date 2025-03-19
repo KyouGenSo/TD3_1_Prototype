@@ -20,6 +20,7 @@ private:
     private:
         std::unique_ptr<Timer> pLifeTimer_ = nullptr;
         std::unique_ptr<Object3d> model_ = nullptr;
+        std::unique_ptr<Collider> collider_;
         Transform transform_ = {};
         Vector3 forward_ = {};
         float speed_ = 0.0f;

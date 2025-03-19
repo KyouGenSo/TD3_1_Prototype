@@ -1,6 +1,5 @@
 #include "Enemy.h"
 
-#include "imgui.h"
 #include "Object3dBasic.h"
 #include "cmath"
 
@@ -23,6 +22,8 @@ void Enemy::Initialize()
 
     collider_ = std::make_unique<Collider>(this);
     collider_->SetEvent([this](const Collider* pObj) {this->OnCollision(pObj); });
+    collider_->SetType(Collider::Type::ENEMY);
+    collider_->SetSize(1.f);
 }
 
 void Enemy::Update()
@@ -42,8 +43,18 @@ void Enemy::Finalize()
 
 void Enemy::OnCollision(const Collider* pCollider)
 {
-    //isDead_ = true;
-	//transform_.translate = prePos;
+    if (isDead_) return;
+
+    if (pCollider->GetType() == Collider::Type::ALLY){
+        if (0 < hp_){
+            hp_--;
+        }else{
+            isDead_ = true;
+        }
+
+        transform_.translate = prePos;
+        model_->SetTranslate(transform_.translate);
+    }
 }
 
 void Enemy::Move()

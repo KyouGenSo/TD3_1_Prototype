@@ -50,10 +50,12 @@ void RocketBullet::Update()
 
 void RocketBullet::Draw()
 {
-    // 描画処理
-    model_->SetMaterialColor(color);
-    model_->Draw();
-    model_->SetMaterialColor({1,1,1,1});
+    if (!isDead_){
+        // 描画処理
+        model_->SetMaterialColor(color);
+        model_->Draw();
+        model_->SetMaterialColor({1,1,1,1});
+    }
 
     if (pNext_) pNext_->Draw();
 }
@@ -72,6 +74,7 @@ void RocketBullet::OnCollisionTrigger(const Collider* _other)
     //爆発オブジェクトを生成
     explosion_ = std::make_unique<LimitedCollider>(this, 1);
     explosion_->SetSize(5.0f);
+    explosion_->SetType(Collider::Type::ALLY);
 
     if(pNextBulletTimer_->GetIsStart())
     {

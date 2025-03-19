@@ -113,7 +113,7 @@ Collider* Collider::SetPosition(const Vector3 _pos) {
 
 Collider* Collider::SetType(const Type type) {
     type_ = type;
-    attribute_ |= filterTable[type];
+    attribute_ = filterTable[type];
 
     return this;
 }
