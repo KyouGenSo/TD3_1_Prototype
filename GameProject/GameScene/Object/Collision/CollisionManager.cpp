@@ -34,7 +34,7 @@ void CollisionManager::CheckAll() {
                 continue;
             }
             //filter
-            if ((pCollider->GetAttribute() & pOther->GetIgnore()) &&
+            if ((pCollider->GetAttribute() & pOther->GetIgnore()) ||
                 (pOther->GetAttribute() & pCollider->GetIgnore())){
                 continue;
             }
