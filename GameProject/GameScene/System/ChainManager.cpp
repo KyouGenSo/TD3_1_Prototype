@@ -27,6 +27,7 @@ void ChainManager::OnAttacked(WeaponType _weaponType)
 
 void ChainManager::ImGui()
 {
+#ifdef _DEBUG
     if (ImGui::Begin("Chain Debug"))
     {
         ImGui::SeparatorText("CoolTime");
@@ -36,6 +37,8 @@ void ChainManager::ImGui()
         ImGui::Text("Lightning : %.2f", coolTimes_[WeaponType::Lightning]);
     }
     ImGui::End();
+#endif
+
 }
 
 void ChainManager::Initialize() 

@@ -80,6 +80,7 @@ void EnemyManager::SelectTarget(Enemy* enemy)
 
 void EnemyManager::ImGui()
 {
+#ifdef _DEBUG
     ImGui::Begin("EnemyManager");
     if (ImGui::Button("Add Enemy")) {
         for (int i = 0; i < 3; ++i) {
@@ -88,6 +89,7 @@ void EnemyManager::ImGui()
     }
     ImGui::DragFloat("SpawnInterval", &spawnInterval_, 0.1f);
     ImGui::End();
+#endif
 }
 
 void EnemyManager::SpawnEnemy()

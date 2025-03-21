@@ -282,7 +282,10 @@ void MyGame::Draw()
 
 void MyGame::OverrideImGuiStyle()
 {
+#ifdef _DEBUG
     auto& style = ImGui::GetStyle();
     style.FramePadding = ImVec2(3.0f, 3.4f);
     style.IndentSpacing = 22.0f;
+#endif
+
 }
