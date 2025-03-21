@@ -177,6 +177,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ease\Ease.cpp" />
     <ClCompile Include="EventTimer\EventTimer.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\BulletBase.cpp" />
     <ClCompile Include="GameScene\Object\Castle\Castle.cpp" />
@@ -216,6 +217,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="TitleScene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ease\Ease.h" />
     <ClInclude Include="EventTimer\EventTimer.h" />
     <ClInclude Include="GameScene\Object\Bullets\BulletBase.h" />
     <ClInclude Include="GameScene\Object\Castle\Castle.h" />

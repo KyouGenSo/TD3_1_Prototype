@@ -203,6 +203,7 @@
       <Filter>Object\Castle</Filter>
     </ClCompile>
     <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp" />
+    <ClCompile Include="Ease\Ease.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -315,5 +316,6 @@
     <ClInclude Include="GameSystem\TimeKeeper\TimeKeeper.h">
       <Filter>GameSystem\TimeKeeper</Filter>
     </ClInclude>
+    <ClInclude Include="Ease\Ease.h" />
   </ItemGroup>
 </Project>
