@@ -194,6 +194,7 @@
     <ClCompile Include="EventTimer\EventTimer.cpp">
       <Filter>Utility\EventTimer</Filter>
     </ClCompile>
+    <ClCompile Include="Ease\Ease.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -301,5 +302,6 @@
     <ClInclude Include="EventTimer\EventTimer.h">
       <Filter>Utility\EventTimer</Filter>
     </ClInclude>
+    <ClInclude Include="Ease\Ease.h" />
   </ItemGroup>
 </Project>
