@@ -10,7 +10,7 @@ class CollisionManager{
 	std::unordered_map<std::string, Collider*> pColliders_; 
     std::vector<Pair> pairs_;
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
     struct Debug{
         uint64_t total;
         uint64_t frame;
@@ -18,7 +18,7 @@ class CollisionManager{
     };
 
     Debug debug_{};
-#endif
+//#endif
 
 
 public:

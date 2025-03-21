@@ -6,6 +6,7 @@
 
 void Object::DebugObject()
 {
+#ifdef _DEBUG
     ImGui::PushID("DebugObject");
     ImGui::SeparatorText("Transform");
     ImGui::DragFloat3("Scale", &transform_.scale.x, 0.01f);
@@ -18,4 +19,5 @@ void Object::DebugObject()
     ImGui::DragFloat("Gravity", &gravity_, 0.01f);
     ImGui::DragFloat("Mass", &mass_, 0.01f);
     ImGui::PopID();
+#endif
 }
