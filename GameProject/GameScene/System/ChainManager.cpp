@@ -56,7 +56,7 @@ void ChainManager::Update()
     for (const auto& type : chain_)
     {
         if (type == WeaponType::None) continue;
-        auto now = coolTimeCounter_[type].GetNow();
+        auto now = coolTimeCounter_[type].GetNow<float>();
         float cooltime = static_cast<float>(COOLTIMES.at(type) - now);
 
         /// クールタイムがあがっていれば0にする

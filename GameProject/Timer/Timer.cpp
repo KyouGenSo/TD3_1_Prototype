@@ -17,13 +17,3 @@ void Timer::Reset()
     now_ = 0.0;
     isStart_ = false;
 }
-
-double Timer::GetNow()
-{
-    LARGE_INTEGER mNow = {};
-    QueryPerformanceCounter(&mNow);
-
-    now_ = static_cast<double>(mNow.QuadPart - mStart_.QuadPart) / static_cast<double>(mFreq_.QuadPart);
-
-    return now_;
-}

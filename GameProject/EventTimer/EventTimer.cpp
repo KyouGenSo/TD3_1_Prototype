@@ -16,8 +16,8 @@ void EventTimer::BeginEvent(const std::string& _eventName)
 
 void EventTimer::EndEvent(const std::string& _eventName)
 {
-    auto now = timers_[_eventName].GetNow();
-    events_[_eventName] = static_cast<float>(now);
+    float now = timers_[_eventName].GetNow<float>();
+    events_[_eventName] = now;
 }
 
 void EventTimer::Measure(const std::string& _eventName, const std::function<void()>& _func)
@@ -29,7 +29,7 @@ void EventTimer::Measure(const std::string& _eventName, const std::function<void
 
 void EventTimer::EndFrame()
 {
-    deltaTime_ = static_cast<float>(globalTimer_.GetNow());
+    deltaTime_ = globalTimer_.GetNow<float>();
     globalTimer_.Reset();
 }
 
