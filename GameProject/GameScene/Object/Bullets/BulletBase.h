@@ -29,7 +29,7 @@ protected:
     std::unique_ptr<Timer> pNextBulletTimer_ = nullptr;
     Vector3 forward_ = {};
     bool isChainBullet_ = false;
-    WeaponType type_;
+    WeaponType type_ = WeaponType::None;
     float speed_ = 1.f;
     float lifeTime_ = 150.0f / speed_ * 0.0166f;
 
