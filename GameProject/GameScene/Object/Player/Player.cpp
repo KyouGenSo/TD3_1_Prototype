@@ -10,6 +10,8 @@
 #include <GameScene/Object/Weapon/RocketLauncher/RocketLauncher.h>
 #include <QuatFunc.h>
 
+#include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
+
 void Player::Initialize() {
     Object::Initialize();
 
@@ -35,8 +37,8 @@ void Player::Initialize() {
     chainManager_->Initialize();
 
     /// !!Debug!!
-    chainManager_->SetChain(WeaponType::RocketLauncher, WeaponType::Assault, WeaponType::None, WeaponType::None);
-    weapon_ = std::make_unique<RocketLauncher>();
+    chainManager_->SetChain(WeaponType::Assault, WeaponType::Assault, WeaponType::None, WeaponType::None);
+    weapon_ = std::make_unique<AssaultRifle>();
     weapon_->SetChainManager(chainManager_.get());
     gravity_ = 1.8f;
 }

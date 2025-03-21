@@ -29,12 +29,16 @@ void AssaultBullet::Update()
         UpdateNormal();
     }
 
+    model_->SetRotate(transform_.rotate);
+    model_->SetTranslate(transform_.translate);
+    model_->Update();
+
     if (pNext_)
     {
         pNext_->Update();
     }
 
-    isDead_ =  BulletBase::CheckLifeTime();
+    isDead_ = CheckLifeTime();
 }
 
 void AssaultBullet::Draw()
@@ -82,7 +86,8 @@ void AssaultBullet::InitializeNormal()
     bullet_ = std::make_unique<Bullet>();
     bullet_->Initialize();
     bullet_->SetPosition(transform_.translate);
-    bullet_->SetForward(Vector3(0, 0, 1));
+    bullet_->SetRotate(transform_.rotate);
+    bullet_->SetForward(forward_);
     bullet_->SetSpeed(speed_);
 }
 
@@ -93,7 +98,7 @@ void AssaultBullet::InitializeChain()
     float angle = 0;
     for (int i = 0; i < bullets_.size(); i++)
     {
-        angle = std::numbers::pi_v<float> / bullets_.size() * i * 2.0f;
+        angle = std::numbers::pi_v<float> / static_cast<float>(bullets_.size()) * i * 2.0f;
 
         Quaternion yaw = Quat::MakeRotateAxisAngle({ 0.0f, 1.0f, 0.0f }, angle);
         Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);

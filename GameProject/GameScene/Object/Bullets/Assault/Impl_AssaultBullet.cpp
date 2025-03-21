@@ -2,6 +2,8 @@
 
 #include <ModelManager.h>
 
+#include "QuatFunc.h"
+
 void AssaultBullet::Bullet::Initialize()
 {
     ModelManager::GetInstance()->LoadModel("box.gltf");

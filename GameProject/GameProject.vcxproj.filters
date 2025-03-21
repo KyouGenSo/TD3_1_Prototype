@@ -195,6 +195,7 @@
       <Filter>Utility\EventTimer</Filter>
     </ClCompile>
     <ClCompile Include="Ease\Ease.cpp" />
+    <ClCompile Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -303,5 +304,6 @@
       <Filter>Utility\EventTimer</Filter>
     </ClInclude>
     <ClInclude Include="Ease\Ease.h" />
+    <ClInclude Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.h" />
   </ItemGroup>
 </Project>
