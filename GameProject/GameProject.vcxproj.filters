@@ -89,6 +89,9 @@
     <Filter Include="NiGui\Derived">
       <UniqueIdentifier>{704d2649-6cdf-4e01-a4d9-5ee12955b7fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utility\EventTimer">
+      <UniqueIdentifier>{f8fde37a-04d8-40d6-9eb2-a6b6de5465d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -187,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="NiGui\Derived\ProcHandler.cpp">
       <Filter>NiGui\Derived</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTimer\EventTimer.cpp">
+      <Filter>Utility\EventTimer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -291,6 +297,9 @@
     </ClInclude>
     <ClInclude Include="NiGui\Derived\ProcHandler.h">
       <Filter>NiGui\Derived</Filter>
+    </ClInclude>
+    <ClInclude Include="EventTimer\EventTimer.h">
+      <Filter>Utility\EventTimer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

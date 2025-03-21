@@ -42,7 +42,6 @@ void Player::Initialize() {
 }
 
 void Player::Update() {
-
     deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(0);
 
     UpdateInputCommands();

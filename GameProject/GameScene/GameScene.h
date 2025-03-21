@@ -14,6 +14,7 @@
 #include "Object/Player/Player.h"
 #include "Object/Terrain/Terrain.h"
 #include "Object/Enemy/EnemyManager.h"
+#include <EventTimer/EventTimer.h>
 
 class GameScene : public BaseScene {
     std::unique_ptr<Player> player_;
@@ -29,6 +30,7 @@ class GameScene : public BaseScene {
 	std::unique_ptr<EnemyManager> enemyManager_;
 
     std::unique_ptr<Castle> castle_;
+    EventTimer* eventTimer_ = nullptr;
 
 public:
     struct DirectionalLightParam {

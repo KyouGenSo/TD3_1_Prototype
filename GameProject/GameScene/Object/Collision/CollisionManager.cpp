@@ -7,6 +7,8 @@
 #include "Collider.h"
 #include "imgui.h"
 
+#include <EventTimer/EventTimer.h>
+
 void CollisionManager::Add(Collider* pCollider) {
     pColliders_[pCollider->GetUniqueId()] = pCollider;
 }
@@ -26,6 +28,7 @@ void CollisionManager::Update() {
         itr->second->Update();
         ++itr;
     }
+
     CheckAll();
 
     debug_.total += debug_.frame;

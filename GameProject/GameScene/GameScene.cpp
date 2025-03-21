@@ -9,10 +9,12 @@
 #include <GameSystem/StageManager/StageManager.h>
 
 
+
 void GameScene::Initialize() {
 
     // ステージデータの取得
     const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
+    eventTimer_ = EventTimer::GetInstance();
 
     directLightParam_ = {
         .direction = { 0.0f, -1.0f, 0.0f },
@@ -80,25 +82,25 @@ void GameScene::Finalize() {
     camera_->Finalize();
 }
 
-void GameScene::Update() {
+void GameScene::Update()
+{
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
 
-    terrain_->Update();
-    castle_->Update();
+    eventTimer_->Measure("Update Terrain", [&]() { terrain_->Update(); });
+    eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });
+    eventTimer_->Measure("Update Player", [&]() { player_->Update(); });
+    eventTimer_->Measure("Update Camera", [&]() {camera_->Update(); });
 
-    player_->Update();
-    camera_->Update();
-
-    guiLvUP_->Update();
-    guiPauseMenu_->Update();
-    guiChain_->Update();
+    eventTimer_->Measure("Update GUI", [&]() { 
+        guiLvUP_->Update();
+        guiPauseMenu_->Update();
+        guiChain_->Update();
+    });
 
 	boss_->Update();
-	enemyManager_->Update();
-
-    minimap_->Update();
-
-    pCollisionManager_->Update();
+    eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
+    eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
+    eventTimer_->Measure("Update CollisionManager", [&]() { pCollisionManager_->Update(); });
 }
 
 void GameScene::Draw() {

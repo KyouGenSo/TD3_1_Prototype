@@ -107,7 +107,7 @@ void EnemyManager::SetMinimap(Minimap* pMinimap) {
 
 Vector3 EnemyManager::RandomSpawnPosition()
 {
-    Vector3 randomPos = { };
+    Vector3 randomPos = {};
 
     while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z)) {
 
