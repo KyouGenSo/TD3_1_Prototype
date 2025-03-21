@@ -56,5 +56,5 @@ bool BulletBase::CheckCoolTime()
 bool BulletBase::CheckLifeTime() const {
     if (isDead_)return true;
 
-    return pLifeTimer_->GetNow() >= lifeTime_;
+    return pLifeTimer_->GetNow<float>() >= lifeTime_;
 }

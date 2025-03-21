@@ -199,6 +199,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\System\ChainManager.cpp" />
     <ClCompile Include="GameSystem\DeltaTimeManager\DeltaTimeManager.cpp" />
     <ClCompile Include="GameSystem\StageManager\StageManager.cpp" />
+    <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp" />
     <ClCompile Include="GameUI\Chain\GUI_Chain.cpp" />
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
@@ -235,6 +236,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene\System\ChainManager.h" />
     <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h" />
     <ClInclude Include="GameSystem\StageManager\StageManager.h" />
+    <ClInclude Include="GameSystem\TimeKeeper\TimeKeeper.h" />
     <ClInclude Include="GameUI\Chain\GUI_Chain.h" />
     <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h" />
     <ClInclude Include="Internal\SingletonFinalizer.h" />

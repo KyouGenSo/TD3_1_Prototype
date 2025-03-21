@@ -72,6 +72,10 @@ void GameScene::Initialize() {
 	boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
 
+    timeKeeper_ = std::make_unique<TimeKeeper>();
+    timeKeeper_->Initialize();
+    timeKeeper_->AddEvent("CountDown", 3.0f);
+    timeKeeper_->AddEvent("JunbiPhase", 12.0f);
 }
 
 void GameScene::Finalize() {
@@ -85,6 +89,8 @@ void GameScene::Finalize() {
 void GameScene::Update()
 {
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
+
+    timeKeeper_->Update();
 
     eventTimer_->Measure("Update Terrain", [&]() { terrain_->Update(); });
     eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });
@@ -135,6 +141,7 @@ void GameScene::DrawImGui() {
     boss_->ImGui();
     camera_->ImGui();
     guiChain_->ImGui();
+    timeKeeper_->ImGui();
 
     ImGui::Begin("Directional Light");
     ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);

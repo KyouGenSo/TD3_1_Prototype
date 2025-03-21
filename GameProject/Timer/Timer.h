@@ -11,7 +11,8 @@ public:
 
     void Start();
     void Reset();
-    double GetNow();
+    template <typename T>
+    T GetNow();
 
     bool GetIsStart() const { return isStart_; }
 
@@ -21,3 +22,16 @@ private:
     double now_             = 0.0;
     bool isStart_           = false;
 };
+
+template <typename T>
+inline T Timer::GetNow()
+{
+    if (!isStart_) return T();
+
+    LARGE_INTEGER mNow = {};
+    QueryPerformanceCounter(&mNow);
+
+    now_ = static_cast<double>(mNow.QuadPart - mStart_.QuadPart) / static_cast<double>(mFreq_.QuadPart);
+
+    return static_cast<T>(now_);
+}

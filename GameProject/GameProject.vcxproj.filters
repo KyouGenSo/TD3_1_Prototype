@@ -92,6 +92,12 @@
     <Filter Include="Utility\EventTimer">
       <UniqueIdentifier>{f8fde37a-04d8-40d6-9eb2-a6b6de5465d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Castle">
+      <UniqueIdentifier>{6706a06e-dab1-4ab0-8021-1c3ce0cba9b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\TimeKeeper">
+      <UniqueIdentifier>{7166de4f-27ad-4b8d-95f5-6bb8fc8ecb72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -165,7 +171,6 @@
     <ClCompile Include="GameScene\Object\Bullets\BulletBase.cpp">
       <Filter>Object\Bullets</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Castle\Castle.cpp" />
     <ClCompile Include="GameSystem\DeltaTimeManager\DeltaTimeManager.cpp">
       <Filter>GameSystem\DeltaTimeManager</Filter>
     </ClCompile>
@@ -194,6 +199,10 @@
     <ClCompile Include="EventTimer\EventTimer.cpp">
       <Filter>Utility\EventTimer</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Object\Castle\Castle.cpp">
+      <Filter>Object\Castle</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -278,7 +287,6 @@
     <ClInclude Include="GameScene\Object\Bullets\BulletBase.h">
       <Filter>Object\Bullets</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Castle\Castle.h" />
     <ClInclude Include="GameSystem\StageManager\StageManager.h">
       <Filter>GameSystem\StageManager</Filter>
     </ClInclude>
@@ -300,6 +308,12 @@
     </ClInclude>
     <ClInclude Include="EventTimer\EventTimer.h">
       <Filter>Utility\EventTimer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Castle\Castle.h">
+      <Filter>Object\Castle</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\TimeKeeper\TimeKeeper.h">
+      <Filter>GameSystem\TimeKeeper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
