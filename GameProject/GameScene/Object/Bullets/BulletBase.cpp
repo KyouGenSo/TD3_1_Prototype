@@ -43,13 +43,13 @@ void BulletBase::SetNextBullet(std::unique_ptr<BulletBase> _bullet)
 
 void BulletBase::CreateNextBullet()
 {
-    auto bullet = BulletFactory::CreateBullet(pChainManager_->GetChain().at(static_cast<size_t>(type_)));
+    auto bullet = BulletFactory::CreateBullet(pChainManager_->Data().at(static_cast<size_t>(type_)));
     SetNextBullet(std::move(bullet));
 }
 
 bool BulletBase::CheckCoolTime()
 {
-    float coolTime = pChainManager_->GetNextCoolTime(type_);
+    float coolTime = pChainManager_->NextCoolTime(type_);
     return coolTime <= 0;
 }
 

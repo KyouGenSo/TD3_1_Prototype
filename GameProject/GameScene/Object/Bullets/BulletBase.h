@@ -3,7 +3,7 @@
 
 #include "GameScene/Object/Object.h"
 #include "GameScene/Object/Collision/Collider.h"
-#include <GameScene/System/ChainManager.h>
+#include <GameSystem/Chain/Chain.h>
 #include <Timer/Timer.h>
 
 
@@ -18,7 +18,7 @@ public:
 
 public: /// Setter
     void SetIsChainBullet(bool _flag) { isChainBullet_ = _flag; }
-    void SetChainManager(ChainManager* _chainManager) { pChainManager_ = _chainManager; }
+    void SetChainManager(Chain* _chainManager) { pChainManager_ = _chainManager; }
     void SetForward(const Vector3& _forward) { forward_ = _forward; }
 
 
@@ -49,7 +49,7 @@ protected:
     bool CheckLifeTime() const;
 
 protected:
-    ChainManager* pChainManager_ = nullptr;
+    Chain* pChainManager_ = nullptr;
 
 private:
     void SetNextBullet(std::unique_ptr<BulletBase> _bullet);
