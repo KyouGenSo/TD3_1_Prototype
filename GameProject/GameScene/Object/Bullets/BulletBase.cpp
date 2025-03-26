@@ -1,5 +1,6 @@
 #include "BulletBase.h"
 
+#include <assert.h>
 #include <GameScene/Object/Bullets/BulletFactory.h>
 
 void BulletBase::Initialize()
@@ -21,6 +22,7 @@ void BulletBase::Fire()
         InitializeNormal();
     }
 
+    pChainManager_->OnAttacked(type_); // �`�F�C���}�l�[�W���[�ɍU�����ꂽ���Ƃ�ʒm
     pNextBulletTimer_->Start();
 }
 
@@ -41,15 +43,33 @@ void BulletBase::SetNextBullet(std::unique_ptr<BulletBase> _bullet)
     pNext_ = std::move(_bullet);
 }
 
+void BulletBase::Next() {
+    if (pNextBulletTimer_->GetIsStart()){
+        pNextBulletTimer_->Reset();
+
+        if (pChainManager_->IsLastWeapon(type_)) return;
+
+        // �N�[���^�C���̊m�F
+        if (!BulletBase::CheckCoolTime()) return;
+
+        // ���̒e�̐���
+        BulletBase::CreateNextBullet();
+
+        // ���̒e�̔���
+        pNext_->Fire();
+    }
+}
+
 void BulletBase::CreateNextBullet()
 {
-    auto bullet = BulletFactory::CreateBullet(pChainManager_->Data().at(static_cast<size_t>(type_)));
+    auto bullet = BulletFactory::CreateBullet(pChainManager_->GetNextWeapon(type_));
+    assert(bullet);
     SetNextBullet(std::move(bullet));
 }
 
 bool BulletBase::CheckCoolTime()
 {
-    float coolTime = pChainManager_->NextCoolTime(type_);
+    float coolTime = pChainManager_->GetNextCoolTime(type_);
     return coolTime <= 0;
 }
 

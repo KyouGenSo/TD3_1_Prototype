@@ -40,10 +40,10 @@ public:
 
 
 public: /// Getter
-    const auto& Data() const { return data_; }
-    float CoolTime(WeaponType _weaponType) const { return coolTimes_.at(_weaponType); }
-    float NextCoolTime(WeaponType _weaponType) const { return coolTimes_.at(data_.at(static_cast<size_t>(_weaponType))); }
-    WeaponType NextWeapon(WeaponType _weaponType) const { return data_.at(static_cast<size_t>(_weaponType)); }
+    const auto& GetChain() const { return data_; }
+    float GetCoolTime(WeaponType _weaponType) const { return coolTimes_.at(_weaponType); }
+    float GetNextCoolTime(WeaponType _weaponType) const { return coolTimes_.at(GetNextWeapon(_weaponType)); }
+    WeaponType GetNextWeapon(WeaponType _weaponType) const;
     bool IsLastWeapon(WeaponType _weaponType) const;
     WeaponType Front() const { return data_.front(); }
 

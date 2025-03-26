@@ -11,6 +11,7 @@
 #include <QuatFunc.h>
 
 #include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
+#include "GameScene/Object/Weapon/SMG/SMG.h"
 
 void Player::Initialize() {
     Object::Initialize();
@@ -34,9 +35,8 @@ void Player::Initialize() {
     collider_->SetType(Collider::Type::ALLY);
 
     /// !!Debug!!
-    weapon_ = std::make_unique<AssaultRifle>();
+    weapon_ = std::make_unique<SMG>();
     gravity_ = 1.8f;
-
 }
 
 void Player::Update() {

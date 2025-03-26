@@ -27,7 +27,7 @@ void RocketLauncher::Draw()
 
 void RocketLauncher::Fire()
 {
-    auto coolTime = pChain_->CoolTime(WeaponType::RocketLauncher);
+    auto coolTime = pChain_->GetCoolTime(WeaponType::RocketLauncher);
     if (coolTime > 0) return;
 
     auto bullet = BulletFactory::CreateBullet(WeaponType::RocketLauncher);

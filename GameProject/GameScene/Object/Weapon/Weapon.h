@@ -10,7 +10,7 @@
 class WeaponBase : public Object
 {
 public:
-    virtual void Fire() = 0;
+    virtual void Fire();
 
     void Update() override = 0;
     void Draw() override = 0;

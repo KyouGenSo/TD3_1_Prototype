@@ -222,6 +222,8 @@
     <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp">
       <Filter>GameSystem\TimeKeeper</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -345,5 +347,7 @@
     <ClInclude Include="GameScene\Object\Weapon\WeaponFactory.h">
       <Filter>Object\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h" />
+    <ClInclude Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.h" />
   </ItemGroup>
 </Project>

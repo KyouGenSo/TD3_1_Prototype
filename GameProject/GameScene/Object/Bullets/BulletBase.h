@@ -38,11 +38,9 @@ protected:
     virtual void InitializeChain() = 0;
     virtual void UpdateNormal() = 0;
     virtual void UpdateChain() = 0;
-    void CreateNextBullet();
 
-    // クールタイムがあがっていればtrueを返す
-    bool CheckCoolTime();
-    
+    void Next();
+
     // ライフタイムを算出
     void CalcLifeTime() { lifeTime_ = 150.0f / speed_ * 0.0166f; }
     // ライフタイムをチェック
@@ -52,5 +50,8 @@ protected:
     Chain* pChainManager_ = nullptr;
 
 private:
+    void CreateNextBullet();
     void SetNextBullet(std::unique_ptr<BulletBase> _bullet);
+    // クールタイムがあがっていればtrueを返す
+    bool CheckCoolTime();
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include "GameScene/Object/Weapon/Weapon.h"
 
-class AssaultRifle : public WeaponBase{
+class SMG : public WeaponBase{
 public:
     void Initialize() override;
     void Update() override;
