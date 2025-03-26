@@ -41,6 +41,23 @@ void BulletBase::SetNextBullet(std::unique_ptr<BulletBase> _bullet)
     pNext_ = std::move(_bullet);
 }
 
+void BulletBase::Next() {
+    if (pNextBulletTimer_->GetIsStart()){
+        pNextBulletTimer_->Reset();
+
+        if (pChainManager_->IsLastWeapon(type_)) return;
+
+        // クールタイムの確認
+        if (BulletBase::CheckCoolTime() == false) return;
+
+        // 次の弾の生成
+        BulletBase::CreateNextBullet();
+
+        // 次の弾の発射
+        pNext_->Fire();
+    }
+}
+
 void BulletBase::CreateNextBullet()
 {
     auto bullet = BulletFactory::CreateBullet(pChainManager_->GetChain().at(static_cast<size_t>(type_)));

@@ -205,6 +205,8 @@
     <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp" />
     <ClCompile Include="Ease\Ease.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.cpp" />
+    <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -319,5 +321,7 @@
     </ClInclude>
     <ClInclude Include="Ease\Ease.h" />
     <ClInclude Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.h" />
+    <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h" />
+    <ClInclude Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.h" />
   </ItemGroup>
 </Project>

@@ -14,7 +14,9 @@ void MachineGunBullet::Initialize() {
     CalcLifeTime();
 
     pCollider_ = std::make_unique<Collider>(this);
-    pCollider_->SetEvent([this](const auto& pCol){})
+    pCollider_
+        ->SetEvent([&](const Collider* pCol){ OnCollisionTrigger(pCol); })
+        ->SetSize(0.2f)
         ->SetType(Collider::Type::ALLY)
         ->SetIgnore(Collider::Type::ALLY)
         ->SetIgnore(Collider::Type::STAGE);
@@ -60,6 +62,11 @@ void MachineGunBullet::InitializeChain() {
 }
 
 void MachineGunBullet::UpdateNormal() {
+    transform_.translate += forward_ * speed_;
+
+    model_->SetRotate(transform_.rotate);
+    model_->SetTranslate(transform_.translate);
+    model_->Update();
 }
 
 void MachineGunBullet::UpdateChain() {

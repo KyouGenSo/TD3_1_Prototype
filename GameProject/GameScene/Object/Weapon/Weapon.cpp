@@ -1,7 +1,14 @@
 #include "Weapon.h"
 
 #include "QuatFunc.h"
+#include "GameScene/Object/Bullets/BulletFactory.h"
 
+void Weapon::Fire() {
+    auto coolTime = pChainManager_->GetCoolTime(pChainManager_->GetChain().front());
+    if (coolTime > 0) return;
+    auto bullet = BulletFactory::CreateBullet(pChainManager_->GetChain().front());
+    AddNewBullet(std::move(bullet));
+}
 
 void Weapon::AddNewBullet(std::unique_ptr<BulletBase> _bullet)
 {

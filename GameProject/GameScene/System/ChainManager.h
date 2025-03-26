@@ -19,10 +19,11 @@ public:
         {WeaponType::Lightning, 2.0f},
     };
 
-    const std::array<WeaponType, 4> CHAIN_ARRAY =
+    const std::array<WeaponType, 5> CHAIN_ARRAY =
     {
         WeaponType::None,
         WeaponType::RocketLauncher,
+        WeaponType::Assault,
         WeaponType::MachineGun,
         WeaponType::Lightning,
     };

@@ -64,21 +64,7 @@ void AssaultBullet::Fire()
 
 void AssaultBullet::OnCollisionTrigger(const Collider* _other)
 {
-    if(pNextBulletTimer_->GetIsStart())
-    {
-        pNextBulletTimer_->Reset();
-
-        if (pChainManager_->IsLastWeapon(type_)) return;
-
-        // クールタイムの確認
-        if (BulletBase::CheckCoolTime() == false) return;
-
-        // 次の弾の生成
-        BulletBase::CreateNextBullet();
-
-        // 次の弾の発射
-        pNext_->Fire();
-    }
+    Next();
 }
 
 void AssaultBullet::InitializeNormal()

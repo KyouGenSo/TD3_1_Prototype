@@ -11,6 +11,7 @@
 #include <QuatFunc.h>
 
 #include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
+#include "GameScene/Object/Weapon/SMG/SMG.h"
 
 void Player::Initialize() {
     Object::Initialize();
@@ -37,8 +38,8 @@ void Player::Initialize() {
     chainManager_->Initialize();
 
     /// !!Debug!!
-    chainManager_->SetChain(WeaponType::Assault, WeaponType::Assault, WeaponType::None, WeaponType::None);
-    weapon_ = std::make_unique<AssaultRifle>();
+    chainManager_->SetChain(WeaponType::MachineGun, WeaponType::Assault, WeaponType::None, WeaponType::None);
+    weapon_ = std::make_unique<SMG>();
     weapon_->SetChainManager(chainManager_.get());
     gravity_ = 1.8f;
 }
