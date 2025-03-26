@@ -41,9 +41,15 @@ void GameScene::Initialize() {
     camera_->Initialize();
     camera_->SetTarget(&player_->GetTransform());
 
+    // ChainViewModel
+    chainViewModel_ = std::make_unique<ChainViewModel>();
+    chainViewModel_->Initialize();
+
+    // GUIの初期化
     guiLvUP_ = std::make_unique<GUI_LvUP>();
     guiPauseMenu_ = std::make_unique<GUI_PauseMenu>();
     guiChain_ = std::make_unique<GUI_Chain>();
+    guiChain_->SetViewModel(chainViewModel_.get());
 
     // Observer登録
     player_->AddObserver(guiLvUP_.get());
@@ -56,6 +62,7 @@ void GameScene::Initialize() {
     minimap_->SetSize({-30, 0, -30}, {30, 0, 30});
     minimap_->Register(player_.get());
 
+    // Castle
     castle_ = std::make_unique<Castle>();
     castle_->Initialize();
     castle_->SetTransform(currentStageData.castleTransform);
@@ -72,6 +79,19 @@ void GameScene::Initialize() {
 	boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
 
+    // TimeKeeper
+    timeKeeper_ = std::make_unique<TimeKeeper>();
+    timeKeeper_->Initialize();
+    timeKeeper_->AddEvent("CountDown", 3.0f);
+    timeKeeper_->AddEvent("JunbiPhase", 12.0f);
+
+    player_->SetChain(chainViewModel_->GetChain());
+
+    gameController_ = std::make_unique<GameController>();
+    gameController_->SetPlayerModel(player_.get());
+    gameController_->SetGUIChainView(guiChain_.get());
+
+    guiChain_->SetGameController(gameController_.get());
 }
 
 void GameScene::Finalize() {
@@ -85,6 +105,9 @@ void GameScene::Finalize() {
 void GameScene::Update()
 {
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
+
+    timeKeeper_->Update();
+    chainViewModel_->Update();
 
     eventTimer_->Measure("Update Terrain", [&]() { terrain_->Update(); });
     eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });
@@ -135,6 +158,7 @@ void GameScene::DrawImGui() {
     boss_->ImGui();
     camera_->ImGui();
     guiChain_->ImGui();
+    timeKeeper_->ImGui();
 
     ImGui::Begin("Directional Light");
     ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);

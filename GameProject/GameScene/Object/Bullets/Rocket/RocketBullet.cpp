@@ -98,7 +98,12 @@ void RocketBullet::OnCollisionTrigger(const Collider* _other)
 
 void RocketBullet::InitializeNormal()
 {
+    Quaternion yaw = Quat::MakeRotateAxisAngle({0.0f, 1.0f, 0.0f}, transform_.rotate.y);
+    Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);
 
+    Quaternion rotate = yaw * pitch;
+
+    forward_ = Quat::RotateVec3({ 0.0f, 0.0f, 1.0f }, rotate);
 }
 
 void RocketBullet::InitializeChain()
@@ -107,12 +112,6 @@ void RocketBullet::InitializeChain()
 
 void RocketBullet::UpdateNormal()
 {
-    Quaternion yaw = Quat::MakeRotateAxisAngle({0.0f, 1.0f, 0.0f}, transform_.rotate.y);
-    Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);
-
-    Quaternion rotate = yaw * pitch;
-
-    forward_ = Quat::RotateVec3({ 0.0f, 0.0f, 1.0f }, rotate);
     transform_.translate += forward_ * speed_;
 }
 

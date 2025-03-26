@@ -6,9 +6,12 @@
 
 #include <Type/WeaponType.h>
 
-using Chain = std::array<WeaponType, 4>;
+using ChainData = std::array<WeaponType, 4>;
 
-class ChainManager
+/// <summary>
+/// チェーンデータを保持するクラス
+/// </summary>
+class Chain
 {
 public:
     const std::unordered_map<WeaponType, float> COOLTIMES = 
@@ -19,10 +22,11 @@ public:
         {WeaponType::Lightning, 2.0f},
     };
 
-    const std::array<WeaponType, 4> CHAIN_ARRAY =
+    const std::array<WeaponType, 5> CHAIN_ARRAY =
     {
         WeaponType::None,
         WeaponType::RocketLauncher,
+        WeaponType::Assault,
         WeaponType::MachineGun,
         WeaponType::Lightning,
     };
@@ -36,19 +40,20 @@ public:
 
 
 public: /// Getter
-    const auto& GetChain() const { return chain_; }
-    float GetCoolTime(WeaponType _weaponType) const { return coolTimes_.at(_weaponType); }
-    float GetNextCoolTime(WeaponType _weaponType) const { return coolTimes_.at(chain_.at(static_cast<size_t>(_weaponType))); }
-    WeaponType GetNextWeapon(WeaponType _weaponType) const { return chain_.at(static_cast<size_t>(_weaponType)); }
+    const auto& Data() const { return data_; }
+    float CoolTime(WeaponType _weaponType) const { return coolTimes_.at(_weaponType); }
+    float NextCoolTime(WeaponType _weaponType) const { return coolTimes_.at(data_.at(static_cast<size_t>(_weaponType))); }
+    WeaponType NextWeapon(WeaponType _weaponType) const { return data_.at(static_cast<size_t>(_weaponType)); }
     bool IsLastWeapon(WeaponType _weaponType) const;
+    WeaponType Front() const { return data_.front(); }
 
 
 public: /// Setter
-    void SetChain(WeaponType _1, WeaponType _2 = WeaponType::None, WeaponType _3 = WeaponType::None, WeaponType _4 = WeaponType::None);
+    void Data(WeaponType _1, WeaponType _2 = WeaponType::None, WeaponType _3 = WeaponType::None, WeaponType _4 = WeaponType::None);
 
 
 private:
     std::unordered_map<WeaponType, Timer> coolTimeCounter_;
     std::unordered_map<WeaponType, float> coolTimes_;
-    Chain chain_;
+    ChainData data_;
 };

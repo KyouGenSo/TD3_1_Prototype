@@ -14,7 +14,7 @@ void RocketLauncher::Update()
         bullet->Update();
     }
 
-    Weapon::DeleteDeadBullet();
+    WeaponBase::DeleteDeadBullet();
 }
 
 void RocketLauncher::Draw() 
@@ -27,7 +27,7 @@ void RocketLauncher::Draw()
 
 void RocketLauncher::Fire()
 {
-    auto coolTime = pChainManager_->GetCoolTime(WeaponType::RocketLauncher);
+    auto coolTime = pChain_->CoolTime(WeaponType::RocketLauncher);
     if (coolTime > 0) return;
 
     auto bullet = BulletFactory::CreateBullet(WeaponType::RocketLauncher);

@@ -2,6 +2,9 @@
 
 #include <Interfaces/IObserver.h>
 #include <string>
+#include <GameSystem/ChainViewModel/ChainViewModel.h>
+
+class GameController;
 
 class GUI_Chain : public IObserver
 {
@@ -11,6 +14,8 @@ public:
 
     // 通知する
     void OnNotify(const std::string& _event) override;
+    void SetViewModel(ChainViewModel* _viewModel) { chainViewModel_ = _viewModel; }
+    void SetGameController(GameController* _gameController) { gameController_ = _gameController; }
 
 public:
     void Update();
@@ -19,6 +24,7 @@ public:
 private:
     const std::string TEXTUREPATH_ = "white.png";
     bool isDisplay_ = false;
+    bool isConfirm_ = false;
     std::string area1_ = "";
     std::string area2_ = "";
     std::string area3_ = "";
@@ -26,4 +32,8 @@ private:
 private:
     // チェイン画面を表示する
     void ShowChain();
+
+private:
+    ChainViewModel* chainViewModel_;
+    GameController* gameController_;
 };

@@ -5,9 +5,9 @@
 #include <list>
 
 #include <GameScene/Object/Bullets/BulletBase.h>
-#include <GameScene/System/ChainManager.h>
+#include <GameSystem/Chain/Chain.h>
 
-class Weapon : public Object
+class WeaponBase : public Object
 {
 public:
     virtual void Fire() = 0;
@@ -17,12 +17,12 @@ public:
 
 
 public:
-    void SetChainManager(ChainManager* _chainManager) { pChainManager_ = _chainManager; }
+    void SetChain(Chain* _chainManager) { pChain_ = _chainManager; }
 
 
 protected:
     std::list<std::unique_ptr<BulletBase>> bullets_;
-    ChainManager* pChainManager_ = nullptr;
+    Chain* pChain_;
 
 
 protected:
