@@ -1,5 +1,6 @@
 @echo off
 cd../Externals/Engine
-echo %cd%
+git pull
+cd../NiGui
 git pull
 exit 0
