@@ -17,7 +17,12 @@ MachineGunBullet::Bullet* MachineGunBullet::Bullet::Initialize() {
 }
 
 void MachineGunBullet::Bullet::Update() {
+    if (dead)return;
     transform_.translate += forward_ * speed_;
+
+    if (50.f <= (transform_.translate - origin).Length()){
+        dead = true;
+    }
 
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
