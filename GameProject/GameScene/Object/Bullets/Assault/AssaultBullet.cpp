@@ -56,12 +56,6 @@ void AssaultBullet::Draw()
     }
 }
 
-void AssaultBullet::Fire()
-{
-    BulletBase::Fire();
-    pChainManager_->OnAttacked(type_);
-}
-
 void AssaultBullet::OnCollisionTrigger(const Collider* _other)
 {
     Next();

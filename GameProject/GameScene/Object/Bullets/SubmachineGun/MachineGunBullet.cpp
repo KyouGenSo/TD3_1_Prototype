@@ -35,6 +35,7 @@ void MachineGunBullet::Update() {
         pNext_->Update();
     }
     isDead_ = CheckLifeTime();
+    isDead_ = isDead_ ? true : 20.f <= (transform_.translate - origin).Length();
 }
 
 void MachineGunBullet::Draw() {
@@ -56,6 +57,7 @@ void MachineGunBullet::OnCollisionTrigger(const Collider* _collider) {
 }
 
 void MachineGunBullet::InitializeNormal() {
+    origin = transform_.translate;
 }
 
 void MachineGunBullet::InitializeChain() {

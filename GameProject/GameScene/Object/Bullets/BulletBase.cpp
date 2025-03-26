@@ -1,5 +1,6 @@
 #include "BulletBase.h"
 
+#include <assert.h>
 #include <GameScene/Object/Bullets/BulletFactory.h>
 
 void BulletBase::Initialize()
@@ -21,6 +22,7 @@ void BulletBase::Fire()
         InitializeNormal();
     }
 
+    pChainManager_->OnAttacked(type_); // チェインマネージャーに攻撃されたことを通知
     pNextBulletTimer_->Start();
 }
 
@@ -48,7 +50,7 @@ void BulletBase::Next() {
         if (pChainManager_->IsLastWeapon(type_)) return;
 
         // クールタイムの確認
-        if (BulletBase::CheckCoolTime() == false) return;
+        if (!BulletBase::CheckCoolTime()) return;
 
         // 次の弾の生成
         BulletBase::CreateNextBullet();
@@ -60,7 +62,8 @@ void BulletBase::Next() {
 
 void BulletBase::CreateNextBullet()
 {
-    auto bullet = BulletFactory::CreateBullet(pChainManager_->GetChain().at(static_cast<size_t>(type_)));
+    auto bullet = BulletFactory::CreateBullet(pChainManager_->GetNextWeapon(type_));
+    assert(bullet);
     SetNextBullet(std::move(bullet));
 }
 

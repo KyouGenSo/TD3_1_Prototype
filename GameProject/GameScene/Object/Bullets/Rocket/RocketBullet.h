@@ -8,7 +8,6 @@ public:
     void Initialize() override;
     void Update() override;
     void Draw() override;
-    void Fire() override;
 
     void OnCollisionTrigger(const Collider* _other) override;
 

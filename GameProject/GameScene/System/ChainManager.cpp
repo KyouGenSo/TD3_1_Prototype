@@ -4,6 +4,15 @@
 #include <imgui.h>
 #endif // _DEBUG
 
+WeaponType ChainManager::GetNextWeapon(WeaponType _weaponType) const {
+    auto n = std::next(std::ranges::find(chain_, _weaponType));
+    if(n != chain_.end()) {
+        return *n;
+    }
+
+    return WeaponType::None;
+}
+
 bool ChainManager::IsLastWeapon(WeaponType _weaponType) const
 {
     if (chain_.back() == _weaponType) return true;

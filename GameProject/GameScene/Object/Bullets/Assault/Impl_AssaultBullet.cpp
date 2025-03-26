@@ -20,6 +20,7 @@ void AssaultBullet::Bullet::Initialize()
         ->SetType(Collider::Type::ALLY)
         ->SetIgnore(Collider::Type::ALLY)
         ->SetIgnore(Collider::Type::STAGE);
+    Update();
 }
 
 void AssaultBullet::Bullet::Update()

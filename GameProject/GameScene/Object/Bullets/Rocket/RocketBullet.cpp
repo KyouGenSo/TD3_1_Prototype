@@ -58,12 +58,6 @@ void RocketBullet::Draw()
     if (pNext_) pNext_->Draw();
 }
 
-void RocketBullet::Fire()
-{
-    BulletBase::Fire();
-    pChainManager_->OnAttacked(type_); // チェインマネージャーに攻撃されたことを通知
-}
-
 void RocketBullet::OnCollisionTrigger(const Collider* _other)
 {
     if (isDead_ || pCollider_->IsDisable()) return;
