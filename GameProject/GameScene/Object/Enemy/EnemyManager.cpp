@@ -5,6 +5,8 @@
 
 #include <random>
 
+#include "GlobalVariables.h"
+
 EnemyManager::EnemyManager()
     : gen_(rd_())
 {
@@ -19,8 +21,13 @@ void EnemyManager::Initialize(Object* player, Object* castle)
     pPlayer_ = player;
     pCastle_ = castle;
 
-    AddEnemy(appearancePos_);
     spawnTimer_ = 0.0f;
+    spawnCount_ = 0;
+
+    key_ = "0101";
+
+    InitializeWaveFile("0101");
+    InitializeWaveFile("0102");
 }
 
 void EnemyManager::Update()
@@ -82,27 +89,54 @@ void EnemyManager::ImGui()
 {
 #ifdef _DEBUG
     ImGui::Begin("EnemyManager");
+    if (ImGui::RadioButton("Key 0101", keyIndex_ == 0)) {
+        keyIndex_ = 0;
+        key_ = "0101";
+    }
+    if (ImGui::RadioButton("Key 0102", keyIndex_ == 1)) {
+        keyIndex_ = 1;
+        key_ = "0102";
+    }
+    if(ImGui::Button("ChangeWave")) {
+        ChangeWave(key_);
+    }
     if (ImGui::Button("Add Enemy")) {
         for (int i = 0; i < 3; ++i) {
             AddEnemy({ appearancePos_.x * i, appearancePos_.y, appearancePos_.z });
         }
     }
-    ImGui::DragFloat("SpawnInterval", &spawnInterval_, 0.1f);
+    ImGui::DragInt("SpawnAmount", &waves_[key_].amount, 1);
+    ImGui::DragFloat("SpawnInterval", &waves_[key_].interval, 0.1f);
     ImGui::End();
 #endif
 }
 
 void EnemyManager::SpawnEnemy()
 {
+    if (spawnCount_ >= waves_[key_].amount) {
+        return;
+    }
+
     spawnTimer_ += deltaTime_;
-    if (spawnTimer_ > spawnInterval_) {
+    if (spawnTimer_ > waves_[key_].interval) {
         AddEnemy(RandomSpawnPosition());
         spawnTimer_ = 0.0f;
+        spawnCount_++;
     }
 }
 
 void EnemyManager::SetMinimap(Minimap* pMinimap) {
     pMinimap_ = pMinimap;
+}
+
+void EnemyManager::InitializeWaveFile(std::string key)
+{
+    GlobalVariables::GetInstance()->CreateGroup(key);
+    GlobalVariables::GetInstance()->AddItem(key, "type", wave_.type);
+    GlobalVariables::GetInstance()->AddItem(key, "interval", wave_.interval);
+    GlobalVariables::GetInstance()->AddItem(key, "amount", wave_.amount);
+    GlobalVariables::GetInstance()->AddItem(key, "hpMultiplier", wave_.hpMultiplier);
+    GlobalVariables::GetInstance()->LoadFile(key);
 }
 
 Vector3 EnemyManager::RandomSpawnPosition()
@@ -119,4 +153,14 @@ Vector3 EnemyManager::RandomSpawnPosition()
     }
 
     return randomPos;
+}
+
+void EnemyManager::ChangeWave(std::string key)
+{
+    key_ = key;
+    waves_[key_].type = static_cast<Type>(GlobalVariables::GetInstance()->GetValueInt(key_, "type"));
+    waves_[key_].interval = GlobalVariables::GetInstance()->GetValueFloat(key_, "interval");
+    waves_[key_].amount = GlobalVariables::GetInstance()->GetValueInt(key_, "amount");
+    waves_[key_].hpMultiplier = GlobalVariables::GetInstance()->GetValueFloat(key_, "hpMultiplier");
+    spawnCount_ = 0;
 }
