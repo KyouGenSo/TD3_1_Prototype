@@ -5,9 +5,9 @@
 
 #include <ModelManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
+#include <GameScene/Object/Weapon/WeaponFactory.h>
 
 // DEBUG
-#include <GameScene/Object/Weapon/RocketLauncher/RocketLauncher.h>
 #include <QuatFunc.h>
 
 #include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
@@ -33,14 +33,10 @@ void Player::Initialize() {
     collider_->SetEvent([this](const Collider* pCol){this->OnCollision(pCol); });
     collider_->SetType(Collider::Type::ALLY);
 
-    chainManager_ = std::make_unique<ChainManager>();
-    chainManager_->Initialize();
-
     /// !!Debug!!
-    chainManager_->SetChain(WeaponType::Assault, WeaponType::Assault, WeaponType::None, WeaponType::None);
     weapon_ = std::make_unique<AssaultRifle>();
-    weapon_->SetChainManager(chainManager_.get());
     gravity_ = 1.8f;
+
 }
 
 void Player::Update() {
@@ -52,7 +48,6 @@ void Player::Update() {
     weapon_->SetPosition(transform_.translate);
     weapon_->SetRotation(transform_.rotate);
     weapon_->Update();
-    chainManager_->Update();
 
     /// Model Update
     model_->SetScale(transform_.scale);
@@ -70,8 +65,6 @@ void Player::Finalize() {
 }
 
 void Player::ImGui() {
-
-    chainManager_->ImGui();
 
     if (ImGui::Begin("Player"))
     {
@@ -93,6 +86,13 @@ void Player::ImGui() {
 }
 
 void Player::OnCollision(const Collider* pCollider) {
+}
+
+void Player::OnChainConfirm()
+{
+    weapon_.reset();
+    weapon_ = WeaponFactory::CreateWeapon(chain_->Front());
+    weapon_->SetChain(chain_);
 }
 
 void Player::UpdateInputCommands()

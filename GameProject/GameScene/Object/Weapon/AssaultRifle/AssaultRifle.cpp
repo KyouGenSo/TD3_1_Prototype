@@ -19,7 +19,7 @@ void AssaultRifle::Draw() {
 }
 
 void AssaultRifle::Fire() {
-    auto coolTime = pChainManager_->GetCoolTime(WeaponType::Assault);
+    auto coolTime = pChain_->CoolTime(WeaponType::Assault);
     if (coolTime > 0) return;
     auto bullet = BulletFactory::CreateBullet(WeaponType::Assault);
     AddNewBullet(std::move(bullet));
