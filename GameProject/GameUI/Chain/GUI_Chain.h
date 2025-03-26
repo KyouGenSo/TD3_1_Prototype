@@ -3,6 +3,7 @@
 #include <Interfaces/IObserver.h>
 #include <string>
 #include <GameSystem/ChainViewModel/ChainViewModel.h>
+#include <filesystem>
 
 class GameController;
 
@@ -23,6 +24,10 @@ public:
 
 private:
     const std::string TEXTUREPATH_ = "white.png";
+    const std::filesystem::path ICONDIR_ = "ico";
+    const std::filesystem::path FRAMEDIR_ = "frame";
+    const std::filesystem::path TEX_ROCKETLAUNCHER_ = "RocketLauncher_WhiteBase.png";
+    const std::filesystem::path TEX_FRAME_ = "Simple.png";
     bool isDisplay_ = false;
     bool isConfirm_ = false;
     std::string area1_ = "";

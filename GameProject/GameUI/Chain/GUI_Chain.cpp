@@ -57,10 +57,10 @@ void GUI_Chain::ShowChain()
     auto confirm = NiGui_ButtonState::Confirm;
     if (NiGui::BeginDiv("Chain", TEXTUREPATH_, NiGui::WHITE, { 0, 0 }, { 800, 450 }, center, center))
     {
-        area1_ = NiGui::DragItemArea("DragItemArea1", TEXTUREPATH_, NiGui::BLUE, { -240, 150 }, { 120, 120 }, center, center);
-        area2_ = NiGui::DragItemArea("DragItemArea2", TEXTUREPATH_, NiGui::BLUE, { 0, 150 }, { 120, 120 }, center, center);
-        area3_ = NiGui::DragItemArea("DragItemArea3", TEXTUREPATH_, NiGui::BLUE, { 240, 150 }, { 120, 120 }, center, center);
-        NiGui::DragItem("RocketLauncher", TEXTUREPATH_, NiGui::YELLOW, { -240, -150 }, { 100, 100 }, center, center);
+        area1_ = NiGui::DragItemArea("DragItemArea1", (FRAMEDIR_/TEX_FRAME_).string(), NiGui::WHITE, { -240, 150 }, { 120, 120 }, center, center);
+        area2_ = NiGui::DragItemArea("DragItemArea2", (FRAMEDIR_/TEX_FRAME_).string(), NiGui::WHITE, { 0, 150 }, { 120, 120 }, center, center);
+        area3_ = NiGui::DragItemArea("DragItemArea3", (FRAMEDIR_/TEX_FRAME_).string(), NiGui::WHITE, { 240, 150 }, { 120, 120 }, center, center);
+        NiGui::DragItem("RocketLauncher", (ICONDIR_/TEX_ROCKETLAUNCHER_).string(), NiGui::WHITE, {-240, -150}, {100, 100}, center, center);
         NiGui::DragItem("Assault", TEXTUREPATH_, NiGui::CIAN, { 0, -150 }, { 100, 100 }, center, center);
         NiGui::DragItem("MachineGun", TEXTUREPATH_, NiGui::MAGENTA, { 240, -150 }, { 100, 100 }, center, center);
 
