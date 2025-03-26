@@ -16,6 +16,8 @@
 #include "Object/Enemy/EnemyManager.h"
 #include <EventTimer/EventTimer.h>
 #include <GameSystem/TimeKeeper/TimeKeeper.h>
+#include <GameSystem/ChainViewModel/ChainViewModel.h>
+#include <GameSystem/GameController/GameController.h>
 
 class GameScene : public BaseScene {
     std::unique_ptr<Player> player_;
@@ -23,6 +25,9 @@ class GameScene : public BaseScene {
     std::unique_ptr<GUI_LvUP> guiLvUP_;
     std::unique_ptr<GUI_PauseMenu> guiPauseMenu_;
     std::unique_ptr<GUI_Chain> guiChain_;
+    std::unique_ptr<GameController> gameController_;
+
+    std::unique_ptr<ChainViewModel> chainViewModel_;
 
     std::unique_ptr<Minimap> minimap_; 
     CollisionManager* pCollisionManager_ = nullptr;

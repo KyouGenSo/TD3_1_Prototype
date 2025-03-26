@@ -62,9 +62,6 @@
     <Filter Include="Type">
       <UniqueIdentifier>{793b80ad-0ce8-49ec-b5a5-4f9cdd4aaed9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSystem\ChainManager">
-      <UniqueIdentifier>{2b3a8871-3895-4fca-aec8-10ccd7362de9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Internal">
       <UniqueIdentifier>{81eeabda-5b66-497e-8d82-c872072fabb5}</UniqueIdentifier>
     </Filter>
@@ -97,6 +94,15 @@
     </Filter>
     <Filter Include="GameSystem\TimeKeeper">
       <UniqueIdentifier>{7166de4f-27ad-4b8d-95f5-6bb8fc8ecb72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\Chain">
+      <UniqueIdentifier>{2b3a8871-3895-4fca-aec8-10ccd7362de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\ChainViewModel">
+      <UniqueIdentifier>{cab2fd0a-6921-4304-abaf-aeea7652fa79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\GameController">
+      <UniqueIdentifier>{59779506-533d-4d2c-8ce9-49847b50bae6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +161,6 @@
     <ClCompile Include="MyGame\MyGame.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\System\ChainManager.cpp">
-      <Filter>GameSystem\ChainManager</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\Object\Bullets\Assault\AssaultBullet.cpp">
       <Filter>Object\Bullets</Filter>
     </ClCompile>
@@ -202,9 +205,23 @@
     <ClCompile Include="GameScene\Object\Castle\Castle.cpp">
       <Filter>Object\Castle</Filter>
     </ClCompile>
-    <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp" />
     <ClCompile Include="Ease\Ease.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.cpp" />
+    <ClCompile Include="GameSystem\Chain\Chain.cpp">
+      <Filter>GameSystem\Chain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\ChainViewModel\ChainViewModel.cpp">
+      <Filter>GameSystem\ChainViewModel</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\GameController\GameController.cpp">
+      <Filter>GameSystem\GameController</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Weapon\WeaponFactory.cpp">
+      <Filter>Object\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp">
+      <Filter>GameSystem\TimeKeeper</Filter>
+    </ClCompile>
     <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp" />
   </ItemGroup>
@@ -272,9 +289,6 @@
     <ClInclude Include="MyGame\MyGame.h">
       <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\System\ChainManager.h">
-      <Filter>GameSystem\ChainManager</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\Object\Terrain\Terrain.h">
       <Filter>Object\Terrain</Filter>
     </ClInclude>
@@ -321,6 +335,18 @@
     </ClInclude>
     <ClInclude Include="Ease\Ease.h" />
     <ClInclude Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.h" />
+    <ClInclude Include="GameSystem\ChainViewModel\ChainViewModel.h">
+      <Filter>GameSystem\ChainViewModel</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\Chain\Chain.h">
+      <Filter>GameSystem\Chain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\GameController\GameController.h">
+      <Filter>GameSystem\GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Weapon\WeaponFactory.h">
+      <Filter>Object\Weapons</Filter>
+    </ClInclude>
     <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h" />
     <ClInclude Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.h" />
   </ItemGroup>

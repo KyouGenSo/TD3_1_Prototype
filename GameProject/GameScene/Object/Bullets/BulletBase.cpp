@@ -22,7 +22,7 @@ void BulletBase::Fire()
         InitializeNormal();
     }
 
-    pChainManager_->OnAttacked(type_); // チェインマネージャーに攻撃されたことを通知
+    pChainManager_->OnAttacked(type_); // �`�F�C���}�l�[�W���[�ɍU�����ꂽ���Ƃ�ʒm
     pNextBulletTimer_->Start();
 }
 
@@ -49,13 +49,13 @@ void BulletBase::Next() {
 
         if (pChainManager_->IsLastWeapon(type_)) return;
 
-        // クールタイムの確認
+        // �N�[���^�C���̊m�F
         if (!BulletBase::CheckCoolTime()) return;
 
-        // 次の弾の生成
+        // ���̒e�̐���
         BulletBase::CreateNextBullet();
 
-        // 次の弾の発射
+        // ���̒e�̔���
         pNext_->Fire();
     }
 }
