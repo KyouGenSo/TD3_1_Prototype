@@ -1,5 +1,7 @@
 #include "MachineGunBullet.h"
 
+#include <numbers>
+
 void MachineGunBullet::Initialize() {
     BulletBase::Initialize();
 
@@ -39,9 +41,16 @@ void MachineGunBullet::Update() {
 }
 
 void MachineGunBullet::Draw() {
-    if (!isDead_){
+    if (isDead_ && !pNext_)return;
+
+    if(isChainBullet_){
+        for(const auto& bullet : bullets_){
+            bullet->Draw();
+        }
+    } else{
         model_->Draw();
     }
+    
     if (pNext_){
         pNext_->Draw();
     }
@@ -61,6 +70,19 @@ void MachineGunBullet::InitializeNormal() {
 }
 
 void MachineGunBullet::InitializeChain() {
+    Vector3 pos = transform_.translate;
+    pos.y = min(0.5f, pos.y);
+    bullets_.resize(32);
+    float angle = 0.0f;
+    for (size_t i = 0; i < bullets_.size(); i++){
+        angle = std::numbers::pi_v<float> / static_cast<float>(bullets_.size()) * i * 2.0f;
+        bullets_[i] = std::make_unique<Bullet>();
+        bullets_[i]->Initialize()
+            ->SetOriginalPosition(pos)
+            ->SetRotate({0.0f, angle, 0.0f})
+            ->SetForward({sin(angle), 0.0f, cos(angle)})
+            ->SetSpeed(speed_);
+    }
 }
 
 void MachineGunBullet::UpdateNormal() {
@@ -72,4 +94,8 @@ void MachineGunBullet::UpdateNormal() {
 }
 
 void MachineGunBullet::UpdateChain() {
+    std::erase_if(bullets_, [&](const auto& b) {return b->IsDead();});
+    for (const auto& bullet : bullets_){
+        bullet->Update();
+    }
 }
