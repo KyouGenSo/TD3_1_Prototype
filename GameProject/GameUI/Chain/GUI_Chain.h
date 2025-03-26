@@ -23,7 +23,7 @@ public:
     void ImGui();
 
 private:
-    const std::string TEXTUREPATH_ = "white.png";
+    const std::string TEX_WHITE_ = "white.png";
     const std::filesystem::path ICONDIR_ = "ico";
     const std::filesystem::path FRAMEDIR_ = "frame";
     const std::filesystem::path TEX_ROCKETLAUNCHER_ = "RocketLauncher_WhiteBase.png";
