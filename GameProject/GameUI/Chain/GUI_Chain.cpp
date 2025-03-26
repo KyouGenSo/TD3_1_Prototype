@@ -3,6 +3,8 @@
 #include <NiGui.h>
 #include <imgui.h>
 
+#include <GameSystem/GameController/GameController.h>
+
 void GUI_Chain::OnNotify(const std::string& _event)
 {
     if (_event == "open_chain")
@@ -28,7 +30,14 @@ void GUI_Chain::Update()
     }
     if (isConfirm_)
     {
+        // チェインを確定する
         chainViewModel_->UpdateChainData({ area1_, area2_, area3_, "" });
+
+        // プレイヤーにも通知する
+        gameController_->HandleConfirmChain();
+
+        isConfirm_ = false;
+        isDisplay_ = false;
     }
 }
 
@@ -45,7 +54,7 @@ void GUI_Chain::ImGui()
 void GUI_Chain::ShowChain()
 {
     auto center = NiGui_StandardPoint::Center;
-    auto confirm = NiGui_ButtonState::Confirm::Center;
+    auto confirm = NiGui_ButtonState::Confirm;
     if (NiGui::BeginDiv("Chain", TEXTUREPATH_, NiGui::WHITE, { 0, 0 }, { 800, 450 }, center, center))
     {
         area1_ = NiGui::DragItemArea("DragItemArea1", TEXTUREPATH_, NiGui::BLUE, { -240, 150 }, { 120, 120 }, center, center);
@@ -55,10 +64,10 @@ void GUI_Chain::ShowChain()
         NiGui::DragItem("Assault", TEXTUREPATH_, NiGui::CIAN, { 0, -150 }, { 100, 100 }, center, center);
         NiGui::DragItem("MachineGun", TEXTUREPATH_, NiGui::MAGENTA, { 240, -150 }, { 100, 100 }, center, center);
 
-        if (NiGui::Button("ConfirmChain", TEXTUREPATH_, NiGui::GREEN, { 0, 0 }, { 100, 100 }, center, center) == )
+        if (NiGui::Button("ConfirmChain", TEXTUREPATH_, NiGui::GREEN, { 0, 0 }, { 100, 100 }, center, center) == confirm)
         {
             isConfirm_ = true;
-        });
+        }
         NiGui::EndDiv();
     }
 }

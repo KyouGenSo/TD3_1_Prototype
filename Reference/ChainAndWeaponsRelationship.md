@@ -1,6 +1,0 @@
-```mermaid
-
-classDiagrams
-
-
-```

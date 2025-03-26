@@ -10,7 +10,7 @@
 class Player : public Object {
     std::unique_ptr<Collider> collider_;
 
-    Chain* chainManager_;
+    Chain* chain_;
     std::unique_ptr<WeaponBase> weapon_;
 
     std::list<IObserver*> observers_;
@@ -35,8 +35,8 @@ public:
     void OnCollision(const Collider* pCollider) override;
     void AddObserver(IObserver* _observer) { observers_.push_back(_observer); }
     void SetFloor(float _floor) { floor_ = _floor; }
-    void SetChain(Chain* _chainManager) { chainManager_ = _chainManager; }
-    void OnConfirmChain();
+    void SetChain(Chain* _chain) { chain_ = _chain; weapon_->SetChain(_chain); }
+    void OnChainConfirm();
 
 private:
     void UpdateInputCommands();

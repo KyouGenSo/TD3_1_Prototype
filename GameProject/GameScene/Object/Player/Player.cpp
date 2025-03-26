@@ -5,6 +5,7 @@
 
 #include <ModelManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
+#include <GameScene/Object/Weapon/WeaponFactory.h>
 
 // DEBUG
 #include <QuatFunc.h>
@@ -34,7 +35,6 @@ void Player::Initialize() {
 
     /// !!Debug!!
     weapon_ = std::make_unique<AssaultRifle>();
-    weapon_->SetChain(chainManager_);
     gravity_ = 1.8f;
 
 }
@@ -88,10 +88,11 @@ void Player::ImGui() {
 void Player::OnCollision(const Collider* pCollider) {
 }
 
-void Player::OnConfirmChain()
+void Player::OnChainConfirm()
 {
     weapon_.reset();
-    
+    weapon_ = WeaponFactory::CreateWeapon(chain_->Front());
+    weapon_->SetChain(chain_);
 }
 
 void Player::UpdateInputCommands()

@@ -8,6 +8,9 @@
 
 using ChainData = std::array<WeaponType, 4>;
 
+/// <summary>
+/// チェーンデータを保持するクラス
+/// </summary>
 class Chain
 {
 public:
@@ -19,10 +22,11 @@ public:
         {WeaponType::Lightning, 2.0f},
     };
 
-    const std::array<WeaponType, 4> CHAIN_ARRAY =
+    const std::array<WeaponType, 5> CHAIN_ARRAY =
     {
         WeaponType::None,
         WeaponType::RocketLauncher,
+        WeaponType::Assault,
         WeaponType::MachineGun,
         WeaponType::Lightning,
     };
@@ -41,6 +45,7 @@ public: /// Getter
     float NextCoolTime(WeaponType _weaponType) const { return coolTimes_.at(data_.at(static_cast<size_t>(_weaponType))); }
     WeaponType NextWeapon(WeaponType _weaponType) const { return data_.at(static_cast<size_t>(_weaponType)); }
     bool IsLastWeapon(WeaponType _weaponType) const;
+    WeaponType Front() const { return data_.front(); }
 
 
 public: /// Setter

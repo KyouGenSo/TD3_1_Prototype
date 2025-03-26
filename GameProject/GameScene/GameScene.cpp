@@ -90,6 +90,8 @@ void GameScene::Initialize() {
     gameController_ = std::make_unique<GameController>();
     gameController_->SetPlayerModel(player_.get());
     gameController_->SetGUIChainView(guiChain_.get());
+
+    guiChain_->SetGameController(gameController_.get());
 }
 
 void GameScene::Finalize() {
@@ -105,6 +107,7 @@ void GameScene::Update()
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
 
     timeKeeper_->Update();
+    chainViewModel_->Update();
 
     eventTimer_->Measure("Update Terrain", [&]() { terrain_->Update(); });
     eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });

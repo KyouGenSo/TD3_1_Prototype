@@ -3,6 +3,7 @@
 #include <GameScene/Object/Player/Player.h>
 #include <GameUI/Chain/GUI_Chain.h>
 
+// ビューからの入力を受け取り、モデルに反映する
 class GameController
 {
 public:
@@ -14,6 +15,7 @@ public:
     /// </summary>
     void HandleConfirmChain()
     {
+        playerModel_->OnChainConfirm();
     }
 
     void OnLevelUp()

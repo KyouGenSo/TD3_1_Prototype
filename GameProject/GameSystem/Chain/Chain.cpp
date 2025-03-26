@@ -48,6 +48,8 @@ void Chain::Initialize()
         coolTimeCounter_[WeaponType].Reset();
         coolTimeCounter_[WeaponType].Start();
     }
+
+    Data(WeaponType::Assault);
 }
 
 void Chain::Update()

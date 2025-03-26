@@ -205,7 +205,6 @@
     <ClCompile Include="GameScene\Object\Castle\Castle.cpp">
       <Filter>Object\Castle</Filter>
     </ClCompile>
-    <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp" />
     <ClCompile Include="Ease\Ease.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.cpp" />
     <ClCompile Include="GameSystem\Chain\Chain.cpp">
@@ -217,7 +216,12 @@
     <ClCompile Include="GameSystem\GameController\GameController.cpp">
       <Filter>GameSystem\GameController</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Weapon\WeaponFactory.cpp" />
+    <ClCompile Include="GameScene\Object\Weapon\WeaponFactory.cpp">
+      <Filter>Object\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp">
+      <Filter>GameSystem\TimeKeeper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">

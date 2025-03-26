@@ -6,6 +6,11 @@ void ChainViewModel::Initialize()
     chain_->Initialize();
 }
 
+void ChainViewModel::Update()
+{
+    chain_->Update();
+}
+
 void ChainViewModel::UpdateChainData(const std::array<std::string, 4>& _chainData)
 {
     WeaponType weaponType[4] = { WeaponType::None, WeaponType::None, WeaponType::None, WeaponType::None };
