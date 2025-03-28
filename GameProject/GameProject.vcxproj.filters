@@ -104,6 +104,9 @@
     <Filter Include="GameSystem\GameController">
       <UniqueIdentifier>{59779506-533d-4d2c-8ce9-49847b50bae6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utility\Threadpool">
+      <UniqueIdentifier>{11f26345-4c8a-4324-b7c8-15d45c1d0458}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -224,6 +227,7 @@
     </ClCompile>
     <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp" />
+    <ClCompile Include="Utility\Threadpool\Threadpool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -349,5 +353,8 @@
     </ClInclude>
     <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h" />
     <ClInclude Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.h" />
+    <ClInclude Include="Utility\Threadpool\Threadpool.h">
+      <Filter>Utility\Threadpool</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
