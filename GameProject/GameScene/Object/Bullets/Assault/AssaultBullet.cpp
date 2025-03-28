@@ -56,11 +56,6 @@ void AssaultBullet::Draw()
     }
 }
 
-void AssaultBullet::OnCollisionTrigger(const Collider* _other)
-{
-    Next();
-}
-
 void AssaultBullet::InitializeNormal()
 {
     bullet_ = std::make_unique<Bullet>();

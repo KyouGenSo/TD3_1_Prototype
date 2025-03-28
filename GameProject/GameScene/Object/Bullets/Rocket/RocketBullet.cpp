@@ -22,8 +22,8 @@ void RocketBullet::Initialize()
     pCollider_ = std::make_unique<Collider>(this);
     pCollider_->SetEvent([this](const Collider* pCol){this->OnCollisionTrigger(pCol); }, Collider::Event::TRIGGER);
     pCollider_->SetSize(0.4f);
-    pCollider_->SetType(Collider::Type::ALLY);
-    pCollider_->SetIgnore(Collider::Type::ALLY);
+    pCollider_->SetType(Collider::Type::PLAYER);
+    pCollider_->SetIgnore(Collider::Type::PLAYER);
 }
 
 void RocketBullet::Update()
@@ -69,7 +69,7 @@ void RocketBullet::OnCollisionTrigger(const Collider* _other)
     //爆発オブジェクトを生成
     explosion_ = std::make_unique<LimitedCollider>(this, 1);
     explosion_->SetSize(5.0f);
-    explosion_->SetType(Collider::Type::ALLY);
+    explosion_->SetType(Collider::Type::PLAYER);
     explosion_->SetIgnore(Collider::Type::STAGE);
 
     Next();

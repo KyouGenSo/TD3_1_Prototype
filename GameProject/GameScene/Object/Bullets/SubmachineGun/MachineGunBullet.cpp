@@ -19,8 +19,8 @@ void MachineGunBullet::Initialize() {
     pCollider_
         ->SetEvent([&](const Collider* pCol){ OnCollisionTrigger(pCol); })
         ->SetSize(0.2f)
-        ->SetType(Collider::Type::ALLY)
-        ->SetIgnore(Collider::Type::ALLY)
+        ->SetType(Collider::Type::PLAYER)
+        ->SetIgnore(Collider::Type::PLAYER)
         ->SetIgnore(Collider::Type::STAGE);
 }
 

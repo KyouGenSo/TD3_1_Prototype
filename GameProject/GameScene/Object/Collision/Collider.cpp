@@ -9,7 +9,7 @@
 
 namespace  {
     std::map<Collider::Type, uint32_t> filterTable = {
-        {Collider::Type::ALLY, 0b1},
+        {Collider::Type::PLAYER, 0b1},
         {Collider::Type::ENEMY, 0b1<<1},
         {Collider::Type::STAGE, 0b1<<2}
     };

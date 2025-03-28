@@ -49,7 +49,7 @@ void Enemy::OnCollision(const Collider* pCollider)
 {
     if (isDead_) return;
 
-    if (pCollider->GetType() == Collider::Type::ALLY){
+    if (pCollider->GetType() == Collider::Type::PLAYER || pCollider->GetType() == Collider::Type::P_BULLET){
         if (0 < hp_){
             hp_--;
         }else{

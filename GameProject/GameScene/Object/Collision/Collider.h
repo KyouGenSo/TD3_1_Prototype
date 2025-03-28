@@ -11,7 +11,8 @@ class CollisionManager;
 class Collider{
 public:
     enum class Type{
-        ALLY,
+        PLAYER,
+        P_BULLET,
         ENEMY,
         STAGE
     };
@@ -33,7 +34,7 @@ protected:
     std::function<void(const Collider*)> onCollision_;
     std::function<void(const Collider*)> onCollisionExit_;
 
-    Type type_ = Type::ALLY;
+    Type type_ = Type::PLAYER;
 
     uint32_t attribute_ = 0b0;
     uint32_t ignore_ = 0b0;
@@ -58,8 +59,9 @@ public:
 
     std::string GetUniqueId() const;
 
-    void SetOwner(Object* pOwner){
+    Collider* SetOwner(Object* pOwner){
         pOwner_ = pOwner;
+        return this;
     }
 
     Object* GetOwner() const{
