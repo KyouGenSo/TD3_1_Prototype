@@ -7,7 +7,6 @@
 #include "Collider.h"
 #include "imgui.h"
 
-#include <EventTimer/EventTimer.h>
 
 void CollisionManager::Add(Collider* pCollider) {
     pColliders_[pCollider->GetUniqueId()] = pCollider;
@@ -33,14 +32,14 @@ void CollisionManager::Update() {
 
     debug_.total += debug_.frame;
 
-#ifdef _DEBUG
-    ImGui::Begin("CollisionManager");
-    ImGui::Text("Total: %llu", debug_.total);
-    ImGui::Text("Frame: %llu", debug_.frame);
-    ImGui::Text("Filtered: %llu", debug_.filtered);
-    //ImGui::TableHeader();
-    ImGui::End();
-#endif
+//#ifdef _DEBUG
+//    ImGui::Begin("CollisionManager");
+//    ImGui::Text("Total: %llu", debug_.total);
+//    ImGui::Text("Frame: %llu", debug_.frame);
+//    ImGui::Text("Filtered: %llu", debug_.filtered);
+//    //ImGui::TableHeader();
+//    ImGui::End();
+//#endif
 }
 
 void CollisionManager::CheckAll() {

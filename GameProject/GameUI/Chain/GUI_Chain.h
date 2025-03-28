@@ -26,7 +26,8 @@ private:
     const std::string TEX_WHITE_ = "white.png";
     const std::filesystem::path ICONDIR_ = "ico";
     const std::filesystem::path FRAMEDIR_ = "frame";
-    const std::filesystem::path TEX_ROCKETLAUNCHER_ = "RocketLauncher_WhiteBase.png";
+    const std::filesystem::path TEX_ROCKETLAUNCHER_ = "RocketLauncher_Text.png";
+    const std::filesystem::path TEX_ASSAULT_ = "Assault_Text.png";
     const std::filesystem::path TEX_FRAME_ = "Simple.png";
     bool isDisplay_ = false;
     bool isConfirm_ = false;
@@ -37,6 +38,8 @@ private:
 private:
     // チェイン画面を表示する
     void ShowChain();
+    // チェインが正しいか確認する 正:true, 誤: false
+    bool CheckValidChain();
 
 private:
     ChainViewModel* chainViewModel_;

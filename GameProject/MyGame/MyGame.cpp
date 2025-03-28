@@ -80,6 +80,10 @@ void MyGame::Initialize()
 
     /// EventTimerの初期化
     eventTimer_ = EventTimer::GetInstance();
+
+    /// Threadpoolの初期化
+    threadpool_ = Threadpool::GetInstance();
+    threadpool_->Initialize(3);
 }
 
 void MyGame::Finalize()
