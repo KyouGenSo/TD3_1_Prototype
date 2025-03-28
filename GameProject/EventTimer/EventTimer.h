@@ -37,9 +37,6 @@ private:
 private:
     Timer globalTimer_;
     float deltaTime_ = 0.0f;
-    int durationMaxTimeDisplay_ = 3;
     std::unordered_map<std::string, float> events_;
     std::unordered_map<std::string, Timer> timers_;
-    std::unordered_map<std::string, float> maxTime_;
-    std::unordered_map<std::string, Timer> maxTimeResetTimers_;
 };

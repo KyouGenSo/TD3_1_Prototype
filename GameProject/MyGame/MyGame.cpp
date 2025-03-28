@@ -83,7 +83,10 @@ void MyGame::Initialize()
 
     /// Threadpoolの初期化
     threadpool_ = Threadpool::GetInstance();
-    threadpool_->Initialize(3);
+    threadpool_->Initialize();
+    threadpool_->AddThread("Thread1");
+    threadpool_->AddThread("Thread2");
+    threadpool_->AddThread("Thread3");
 }
 
 void MyGame::Finalize()
@@ -148,7 +151,6 @@ void MyGame::Draw()
     // UIの描画
     NiGui::DrawUI();
 
-
     ParticleManager::GetInstance()->Draw();
 
     /// ===================================================== ///
@@ -191,9 +193,6 @@ void MyGame::Draw()
     ///-------------------ImGui-------------------///
     /// ========================================= ///
 #ifdef _DEBUG
-
-    // Threadpoolデバッグ
-    threadpool_->ImGui();
 
     eventTimer_->ImGui();
 

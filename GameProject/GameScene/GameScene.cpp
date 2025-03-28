@@ -127,7 +127,6 @@ void GameScene::Update()
     eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
     //eventTimer_->Measure("Update CollisionManager", [&]() { pCollisionManager_->Update(); });
     threadpool_->AddTask([&]() { pCollisionManager_->Update(); });
-    eventTimer_->Measure("Call OnCollision", [&]() { pCollisionManager_->CallOnCollision(); });
 }
 
 void GameScene::Draw() {

@@ -6,7 +6,6 @@
 #include <functional>
 #include <mutex>
 #include <queue>
-#include <Timer/Timer.h>
 
 class Threadpool
 {
@@ -22,10 +21,9 @@ public:
         return &instance;
     }
 
-    void Initialize(uint32_t _numThreads);
+    void Initialize();
     void AddThread(const std::string& _name);
     void AddTask(const std::function<void()>& _task);
-    void ImGui();
 
 private:
     Threadpool() = default;
@@ -36,7 +34,6 @@ private:
 
     std::mutex mtx_;
     std::unordered_map<std::string, ThreadPtr> threads_;
-    std::unordered_map<std::thread::id, Timer> timers_;
     std::condition_variable cv_;
     std::queue<std::function<void()>> taskQueue_;
     bool stop_ = false;
