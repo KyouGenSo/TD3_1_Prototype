@@ -98,7 +98,7 @@ void Player::OnChainConfirm()
 void Player::UpdateInputCommands()
 {
     // Attack
-    if (pInput_->PushKey(DIK_RETURN) || pInput_->PushButton(JOY_BUTTON1)){
+    if (pInput_->PushKey(DIK_P) || pInput_->PushButton(JOY_BUTTON1)){
         weapon_->Fire();
     }
 

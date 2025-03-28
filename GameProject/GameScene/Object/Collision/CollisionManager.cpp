@@ -9,23 +9,43 @@
 
 
 void CollisionManager::Add(Collider* pCollider) {
+    if (!mtx_.try_lock_for(std::chrono::milliseconds(100)))
+    {
+        assert(false, "mutex lock failed");
+    }
     pColliders_[pCollider->GetUniqueId()] = pCollider;
+    mtx_.unlock();
 }
 
 void CollisionManager::Remove(const std::string& uuid) {
+    if (!mtx_.try_lock_for(std::chrono::milliseconds(100)))
+    {
+        assert(false, "mutex lock failed");
+    }
     pairs_.erase(std::ranges::remove_if(pairs_, [uuid](const Pair& pair){return pair.first == uuid || pair.second == uuid; }).begin(), pairs_.end());
     pColliders_.erase(uuid);
+    mtx_.unlock();
 }
 
 void CollisionManager::Update() {
+
     debug_.frame = 0;
-    for (auto itr = pColliders_.begin(); itr != pColliders_.end();){
-        if (!itr->second || itr->second->IsDisable()){
-            itr = pColliders_.erase(itr);
-            continue;
+    {
+        if (!mtx_.try_lock_for(std::chrono::milliseconds(100)))
+        {
+            assert(false, "mutex lock failed");
         }
-        itr->second->Update();
-        ++itr;
+        for (auto itr = pColliders_.begin(); itr != pColliders_.end();)
+        {
+            if (!itr->second || itr->second->IsDisable())
+            {
+                itr = pColliders_.erase(itr);
+                continue;
+            }
+            itr->second->Update();
+            ++itr;
+        }
+        mtx_.unlock();
     }
 
     CheckAll();
@@ -43,6 +63,10 @@ void CollisionManager::Update() {
 }
 
 void CollisionManager::CheckAll() {
+    if (!mtx_.try_lock_for(std::chrono::milliseconds(100)))
+    {
+        assert(false, "mutex lock failed");
+    }
 	for (auto& [key, pCollider] : pColliders_){
         if (pCollider->IsDisable()) continue;
         if (pCollider->GetOwner()){
@@ -71,6 +95,7 @@ void CollisionManager::CheckAll() {
 }
 
 void CollisionManager::Check(const std::string& col, const std::string& other) {
+    mtx_.try_lock();
     auto pCollider = pColliders_[col];
     auto pOther = pColliders_[other];
 
@@ -104,22 +129,44 @@ void CollisionManager::Check(const std::string& col, const std::string& other) {
             std::swap(p.first, p.second);
         }
 
+        //std::lock_guard<std::mutex> lock(pairsMtx_);
         if (std::ranges::find_if(pairs_, [&p](const Pair& pair){return pair == p;}) == pairs_.end()){
             pairs_.push_back(p);
 
-            pCollider->OnCollisionTrigger(pOther);
-            pOther->OnCollisionTrigger(pCollider);
+            pendingOnCollisionTrigger_.push_back({ pCollider, pOther });
         }
 
-        pCollider->OnCollision(pOther);
-        pOther->OnCollision(pCollider);
+        pendingOnCollision_.push_back({ pCollider, pOther });
+
         ++debug_.frame;
         return;
     }
 
     if (pairs_.end() != std::ranges::find(pairs_, Pair {col, other})){
         pairs_.erase(std::ranges::find(pairs_, Pair {col, other}));
+        pendingOnCollisionExit_.push_back({ pCollider, pOther });
+    }
+    mtx_.unlock();
+}
+
+void CollisionManager::CallOnCollision()
+{
+    for (auto& [pCollider, pOther] : pendingOnCollision_)
+    {
+        pCollider->OnCollision(pOther);
+        pOther->OnCollision(pCollider);
+    }
+    pendingOnCollision_.clear();
+    for (auto& [pCollider, pOther] : pendingOnCollisionTrigger_)
+    {
+        pCollider->OnCollisionTrigger(pOther);
+        pOther->OnCollisionTrigger(pCollider);
+    }
+    pendingOnCollisionTrigger_.clear();
+    for (auto& [pCollider, pOther] : pendingOnCollisionExit_)
+    {
         pCollider->OnCollisionExit(pOther);
         pOther->OnCollisionExit(pCollider);
     }
+    pendingOnCollisionExit_.clear();
 }
