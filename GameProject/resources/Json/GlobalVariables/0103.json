@@ -1,10 +1,9 @@
 {
-    "0101": {
+    "0103": {
         "amount": 5,
-        "cycle": 1.0,
         "hpMultiplier": 0.0,
         "interval": 0.0,
-        "turn": 0,
+        "turn": 1,
         "type": 0
     }
 }
