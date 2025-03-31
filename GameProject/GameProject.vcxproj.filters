@@ -107,6 +107,12 @@
     <Filter Include="Utility\Threadpool">
       <UniqueIdentifier>{11f26345-4c8a-4324-b7c8-15d45c1d0458}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utility\Ease">
+      <UniqueIdentifier>{eb9f2190-7ad2-48e2-8c38-373ccb84bc3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\EnemyManager">
+      <UniqueIdentifier>{6886778b-22b2-43b3-9bfa-bcbf50d4e02f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -173,7 +179,6 @@
     <ClCompile Include="GameScene\Object\Terrain\Terrain.cpp">
       <Filter>Object\Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\BulletBase.cpp">
       <Filter>Object\Bullets</Filter>
     </ClCompile>
@@ -183,7 +188,6 @@
     <ClCompile Include="GameSystem\StageManager\StageManager.cpp">
       <Filter>GameSystem\StageManager</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Collision\LimitedCollider.cpp" />
     <ClCompile Include="GameScene\Object\Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -208,8 +212,6 @@
     <ClCompile Include="GameScene\Object\Castle\Castle.cpp">
       <Filter>Object\Castle</Filter>
     </ClCompile>
-    <ClCompile Include="Ease\Ease.cpp" />
-    <ClCompile Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.cpp" />
     <ClCompile Include="GameSystem\Chain\Chain.cpp">
       <Filter>GameSystem\Chain</Filter>
     </ClCompile>
@@ -225,10 +227,30 @@
     <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp">
       <Filter>GameSystem\TimeKeeper</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp" />
-    <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp" />
-    <ClCompile Include="Utility\Threadpool\Threadpool.cpp" />
-    <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\ImplSubmachineGunBullet.cpp" />
+    <ClCompile Include="Utility\Threadpool\Threadpool.cpp">
+      <Filter>Utility\Threadpool</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Collision\LimitedCollider.cpp">
+      <Filter>GameSystem\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Ease\Ease.cpp">
+      <Filter>Utility\Ease</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.cpp">
+      <Filter>Object\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Enemy\EnemyManager.cpp">
+      <Filter>GameSystem\EnemyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\ImplSubmachineGunBullet.cpp">
+      <Filter>Object\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp">
+      <Filter>Object\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp">
+      <Filter>Object\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -306,7 +328,6 @@
     <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h">
       <Filter>GameUI\PauseMenu</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h" />
     <ClInclude Include="GameScene\Object\Bullets\BulletBase.h">
       <Filter>Object\Bullets</Filter>
     </ClInclude>
@@ -316,7 +337,6 @@
     <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h">
       <Filter>GameSystem\DeltaTimeManager</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
     <ClInclude Include="GameUI\Chain\GUI_Chain.h">
       <Filter>GameUI\Chain</Filter>
     </ClInclude>
@@ -338,8 +358,6 @@
     <ClInclude Include="GameSystem\TimeKeeper\TimeKeeper.h">
       <Filter>GameSystem\TimeKeeper</Filter>
     </ClInclude>
-    <ClInclude Include="Ease\Ease.h" />
-    <ClInclude Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.h" />
     <ClInclude Include="GameSystem\ChainViewModel\ChainViewModel.h">
       <Filter>GameSystem\ChainViewModel</Filter>
     </ClInclude>
@@ -352,10 +370,26 @@
     <ClInclude Include="GameScene\Object\Weapon\WeaponFactory.h">
       <Filter>Object\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h" />
-    <ClInclude Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.h" />
     <ClInclude Include="Utility\Threadpool\Threadpool.h">
       <Filter>Utility\Threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h">
+      <Filter>GameSystem\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Ease\Ease.h">
+      <Filter>Utility\Ease</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.h">
+      <Filter>Object\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\EnemyManager.h">
+      <Filter>GameSystem\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.h">
+      <Filter>Object\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h">
+      <Filter>Object\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
