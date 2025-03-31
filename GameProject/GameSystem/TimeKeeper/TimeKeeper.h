@@ -34,6 +34,6 @@ public:
 private:
     const std::string GROUPNAME = "TimeKeeper";
     std::unordered_map<std::string, TimeData> event_;
-    GlobalVariables* m_gv_;
+    GlobalVariables* m_gv_ = nullptr;
 
 };

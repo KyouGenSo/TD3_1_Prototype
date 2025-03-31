@@ -1,11 +1,6 @@
 #include "CollisionManager.h"
 
-#include <algorithm>
-#include <array>
-#include <set>
-
 #include "Collider.h"
-#include "imgui.h"
 
 
 void CollisionManager::Add(Collider* pCollider) {
@@ -13,7 +8,15 @@ void CollisionManager::Add(Collider* pCollider) {
 }
 
 void CollisionManager::Remove(const std::string& uuid) {
-    pairs_.erase(std::ranges::remove_if(pairs_, [uuid](const Pair& pair){return pair.first == uuid || pair.second == uuid; }).begin(), pairs_.end());
+
+    auto new_end = std::remove_if(
+        pairs_.begin(), pairs_.end(),
+        [uuid](const Pair& pair){
+            return pair.first == uuid || pair.second == uuid;
+        }
+    );
+    pairs_.erase(new_end, pairs_.end());
+
     pColliders_.erase(uuid);
 }
 
@@ -71,8 +74,8 @@ void CollisionManager::CheckAll() {
 }
 
 void CollisionManager::Check(const std::string& col, const std::string& other) {
-    auto pCollider = pColliders_[col];
-    auto pOther = pColliders_[other];
+    const auto* const pCollider = pColliders_[col];
+    const auto* pOther = pColliders_[other];
 
     bool isHit = false;
 

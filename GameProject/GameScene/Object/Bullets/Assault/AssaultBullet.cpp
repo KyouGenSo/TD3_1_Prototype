@@ -47,6 +47,7 @@ void AssaultBullet::Draw()
     if (isChainBullet_)
     {
         for (const auto& bullet : bullets_){
+            if (!bullet) break;
             bullet->Draw();
         }
     }
@@ -103,6 +104,7 @@ void AssaultBullet::UpdateNormal()
 void AssaultBullet::UpdateChain()
 {
     for (const auto& bullet : bullets_){
+        if (!bullet) break;
         bullet->Update();
     }
 }

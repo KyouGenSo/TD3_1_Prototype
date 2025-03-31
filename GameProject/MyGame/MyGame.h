@@ -45,7 +45,7 @@ public: // メンバ関数
 
 private: // メンバ変数
 
-    PostEffectParam postEffectParam;
+    PostEffectParam postEffectParam = {};
 
     bool FPSWindowVisible = true;
     bool PostEffectWindowVisible = false;

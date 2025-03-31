@@ -24,6 +24,7 @@ private:
         Transform transform_ = {};
         Vector3 forward_ = {};
         float speed_ = 0.0f;
+        std::unique_ptr<Object3d> model_;
     };
 
 public:

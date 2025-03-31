@@ -16,21 +16,22 @@
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 
 
-
 void MyGame::Initialize()
 {
     winApp_->SetWindowSize(1600, 900);
     
     TakoFramework::Initialize();
 
-#pragma region 汎用機能初期化-------------------------------------------------------------------------------------------------------------------
+    #pragma region General functions initialization
+
     // 入力クラスの初期化
     Input::GetInstance()->Initialize(winApp_);
 
     // オーディオの初期化
     Audio::GetInstance()->Initialize("resources/Sound/");
 
-#pragma endregion
+    #pragma endregion
+
 
     // シーンの初期化
     sceneFactory_ = new SceneFactory();
