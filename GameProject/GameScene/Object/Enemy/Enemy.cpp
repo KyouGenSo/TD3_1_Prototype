@@ -57,14 +57,14 @@ void Enemy::OnCollision(const Collider* pCollider)
             return;
         }
 
-        transform_.translate = prePos;
+        transform_.translate = prePos_;
         model_->SetTranslate(transform_.translate);
     }
 }
 
 void Enemy::Move()
 {
-    prePos = transform_.translate;
+    prePos_ = transform_.translate;
     if(isAppearing_) {
         AppearanceProduction();
     }else {
@@ -78,8 +78,8 @@ void Enemy::Move()
             direction.z /= length;
         }
 
-        transform_.translate.x += direction.x * speed;
-        transform_.translate.z += direction.z * speed;
+        transform_.translate.x += direction.x * speed_;
+        transform_.translate.z += direction.z * speed_;
         
     }
     model_->SetTranslate(transform_.translate);
@@ -87,21 +87,21 @@ void Enemy::Move()
 
 void Enemy::AppearanceProduction()
 {
-    float t = appearCounter_ / appearDuration;
+    float t = appearCounter_ / appearDuration_;
 
     transform_.scale = { t, t, t };
     model_->SetScale(transform_.scale);
 
     float easeOut = 1.0f - std::pow(1.0f - t, 2.0f);
-    transform_.rotate.y = 0 * (1.0f - easeOut) + targetRotate * easeOut * 6.28f;
+    transform_.rotate.y = 0 * (1.0f - easeOut) + targetRotate_ * easeOut * 6.28f;
 
     model_->SetRotate(transform_.rotate);
 
     appearCounter_++;
-    if (appearCounter_ >= appearDuration) {
-        transform_.scale = defaultScale;
+    if (appearCounter_ >= appearDuration_) {
+        transform_.scale = defaultScale_;
         model_->SetScale(transform_.scale);
-        transform_.rotate = defaultRotate;
+        transform_.rotate = defaultRotate_;
         model_->SetRotate(transform_.rotate);
         isAppearing_ = false;
     }

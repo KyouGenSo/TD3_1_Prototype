@@ -11,7 +11,7 @@ void FollowCamera::Initialize() {
 void FollowCamera::Update() {
     if (!pTarget_) return;
     
-    // direction
+    // direction_
     Vector3 rotate = { rotationX_, pTarget_->rotate.y, 0.0f };
     Vector3 direction = {};
 	Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(rotate);

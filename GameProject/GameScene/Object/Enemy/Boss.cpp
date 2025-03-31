@@ -8,8 +8,8 @@ void Boss::Initialize()
 {
 	model_ = std::make_unique<Object3d>();
 	model_->Initialize();
-	bCamera_ = Object3dBasic::GetInstance()->GetCamera();
-	model_->SetCamera(bCamera_);
+	pCamera_ = Object3dBasic::GetInstance()->GetCamera();
+	model_->SetCamera(pCamera_);
 	model_->SetModel("bigCube.gltf");
 
     // 初期化用 - 外部から設定するためこの値は適用されない
@@ -33,13 +33,13 @@ void Boss::Initialize()
 void Boss::Update()
 {
     if(isValid_){
-	    prePos = transform_.translate;
+	    prePos_ = transform_.translate;
 	    transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
     }else {
         
     }
-	    model_->SetTranslate(transform_.translate);
-	    model_->Update();
+    model_->SetTranslate(transform_.translate);
+    model_->Update();
 }
 
 void Boss::Draw()
@@ -60,5 +60,5 @@ void Boss::ImGui()
 
 void Boss::OnCollision(const Collider* pCollider)
 {
-	transform_.translate = prePos;
+	transform_.translate = prePos_;
 }

@@ -27,33 +27,33 @@ public:
 
     void SetAppearCounter(float appearCounter) { appearCounter_ = appearCounter; }
 
-    float GetAmoRotate() { return amoRotate; }
+    float GetAmoRotate() { return amoRotate_; }
 
-    Vector3 GetDirection() { return direction; }
+    Vector3 GetDirection() { return direction_; }
 
 
 private:
 
-    std::unique_ptr<Collider> collider_;
+    std::unique_ptr<Collider> collider_ = nullptr;
 
-    Vector3 prePosY;
+    Vector3 prePosY_ = {};
 
     bool isAppearing_ = false;
     float appearCounter_ = 0.0f;
 
-    float amoRotate = 0.1f;
-    float targetRotate = 2.0f;
-    float rotateSpeed = 0.1f;
-    float preRotateSpeed = 0.1f;
+    float amoRotate_ = 0.1f;
+    float targetRotate_ = 2.0f;
+    float rotateSpeed_ = 0.1f;
+    float preRotateSpeed_ = 0.1f;
 
-    Vector3 direction{ 0.0f,0.0f,0.0f };
+    Vector3 direction_{ 0.0f,0.0f,0.0f };
 
-    float speed = 0.2f;
+    float speed_ = 0.2f;
 
-    float appearDuration = 60.0f;
+    float appearDuration_ = 60.0f;
 
-    Vector3 defaultScale = { 1.0f,1.0f,1.0f };
-    Vector3 defaultRotate = { 0.0f,0.0f,0.0f };
+    Vector3 defaultScale_ = { 1.0f,1.0f,1.0f };
+    Vector3 defaultRotate_ = { 0.0f,0.0f,0.0f };
 
 
     //status

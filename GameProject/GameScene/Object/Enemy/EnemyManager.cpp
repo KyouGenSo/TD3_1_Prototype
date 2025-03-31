@@ -8,7 +8,7 @@
 #include "GlobalVariables.h"
 
 EnemyManager::EnemyManager()
-    : gen_(rd_())
+    : gen_(rd_()), wave_()
 {
 }
 
@@ -205,6 +205,7 @@ Vector3 EnemyManager::RandomSpawnPosition(Type type)
     return randomPos;
 }
 
+/*
 void EnemyManager::CreateWaveFile(std::string key)
 {
     GlobalVariables::GetInstance()->CreateGroup(key);
@@ -214,6 +215,7 @@ void EnemyManager::CreateWaveFile(std::string key)
     GlobalVariables::GetInstance()->AddItem(key, "hpMultiplier", wave_.hpMultiplier);
     GlobalVariables::GetInstance()->AddItem(key, "turn", wave_.turn);
 }
+*/
 
 void EnemyManager::ChangeWave(std::string key, bool resetSpawnCount)
 {
