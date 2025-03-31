@@ -16,6 +16,9 @@ public:
     void OnCollisionTrigger(const Collider* _collider) override = 0;
     bool IsDead();
 
+public: /// Getter
+    Status& getStatus() { return status_; }
+
 
 public: /// Setter
     void SetIsChainBullet(bool _flag) { isChainBullet_ = _flag; }

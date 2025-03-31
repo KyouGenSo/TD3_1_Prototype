@@ -75,11 +75,6 @@ public: /// Getter
         return isDead_;
     }
 
-    Status& getStatus() 
-    { 
-        return status_; 
-    }
-
 protected:
     void DebugObject();
     void ApplyForce(const Vector3& _force)
