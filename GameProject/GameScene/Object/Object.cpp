@@ -1,5 +1,7 @@
 #include "Object.h"
 
+#include <GameScene/Object/Collision/Collider.h>
+
 #ifdef _DEBUG
 #include <imgui.h>
 #endif // _DEBUG
@@ -20,4 +22,9 @@ void Object::DebugObject()
     ImGui::DragFloat("Mass", &mass_, 0.01f);
     ImGui::PopID();
 #endif
+}
+
+void Object::StatusUpdateOnCollision(const Collider* pObject)
+{
+    status_.OnCollision(pObject->GetOwner()->getStatus());
 }

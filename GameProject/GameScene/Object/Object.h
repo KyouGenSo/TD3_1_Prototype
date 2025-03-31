@@ -91,6 +91,7 @@ protected:
         Vector3 frictionForce = velocity_ * -_frictionCoef;
         velocity_ += frictionForce * deltaTime_;
     }
+    void StatusUpdateOnCollision(const Collider* pObject);
 };
 
 inline Object::Object() {
@@ -107,6 +108,7 @@ inline Object::Object() {
     uuid_ = reinterpret_cast<char*>(szUuid);
 
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
+    status_ = {};
 }
 
 inline void Object::Initialize()

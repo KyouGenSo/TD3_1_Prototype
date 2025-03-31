@@ -36,3 +36,20 @@ void Status::Update()
         maxExp_ = level_ * 100;
     }
 }
+
+void Status::OnCollision(const Status& _status)
+{
+    // ダメージ計算
+    int damage = _status.attack_ - defence_;
+    if (damage < 0)
+    {
+        damage = 0;
+    }
+
+    // ダメージ適用
+    hp_ -= damage;
+    if (hp_ < 0)
+    {
+        hp_ = 0;
+    }
+}

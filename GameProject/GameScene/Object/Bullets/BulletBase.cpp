@@ -26,11 +26,11 @@ void BulletBase::Fire()
     pNextBulletTimer_->Start();
 }
 
-bool BulletBase::IsDead()
+bool BulletBase::IsDeadAll()
 {
     if (!isDead_) return false;
     else if (pNext_ == nullptr) return true;
-    else return pNext_->IsDead();
+    else return pNext_->IsDeadAll();
 }
 
 void BulletBase::SetNextBullet(std::unique_ptr<BulletBase> _bullet)

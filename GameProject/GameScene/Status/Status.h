@@ -35,6 +35,9 @@ public:
     void AddExp(int exp)            { exp_ += exp; }
 
 
+public:
+    void OnCollision(const Status& _status);
+
 private:
     int hp_;
     int maxHp_;
