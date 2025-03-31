@@ -37,15 +37,12 @@ public:
 
 
 private:
-    std::unique_ptr<Object3d> model_;
-
-    Camera* pCamera_ = nullptr;
 
     std::unique_ptr<Collider> collider_;
 
     Vector3 prePosY;
 
-    bool isAppearing_;
+    bool isAppearing_ = false;
     float appearCounter_ = 0.0f;
 
     float amoRotate = 0.1f;
