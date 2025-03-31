@@ -252,6 +252,7 @@
       <Filter>Object\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp" />
+    <ClCompile Include="BounceEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -393,5 +394,6 @@
       <Filter>Object\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
+    <ClInclude Include="BounceEnemy.h" />
   </ItemGroup>
 </Project>
