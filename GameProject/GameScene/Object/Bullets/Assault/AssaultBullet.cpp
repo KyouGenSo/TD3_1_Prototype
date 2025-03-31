@@ -20,6 +20,8 @@ void AssaultBullet::Initialize()
 
 void AssaultBullet::Update()
 {
+    BulletBase::Update();
+
     if (isChainBullet_)
     {
         UpdateChain();
