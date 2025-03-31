@@ -251,6 +251,7 @@
     <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp">
       <Filter>Object\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -391,5 +392,6 @@
     <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h">
       <Filter>Object\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
   </ItemGroup>
 </Project>
