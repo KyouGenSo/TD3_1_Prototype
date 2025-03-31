@@ -229,7 +229,7 @@
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp" />
     <ClCompile Include="Utility\Threadpool\Threadpool.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\ImplSubmachineGunBullet.cpp" />
-    <ClCompile Include="FlyEnemy.cpp" />
+    <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -358,6 +358,6 @@
     <ClInclude Include="Utility\Threadpool\Threadpool.h">
       <Filter>Utility\Threadpool</Filter>
     </ClInclude>
-    <ClInclude Include="FlyEnemy.h" />
+    <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
   </ItemGroup>
 </Project>
