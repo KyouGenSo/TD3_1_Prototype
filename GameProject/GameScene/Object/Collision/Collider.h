@@ -42,7 +42,7 @@ protected:
 
 public:
     Collider();
-	Collider(Object* _owner);
+	explicit Collider(Object* _owner);
     virtual ~Collider();
 
     virtual void Update();
