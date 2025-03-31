@@ -73,9 +73,9 @@ void MachineGunBullet::InitializeChain() {
     Vector3 pos = transform_.translate;
     pos.y = min(0.5f, pos.y);
     bullets_.resize(32);
-    float angle = 0.0f;
+
     for (size_t i = 0; i < bullets_.size(); i++){
-        angle = std::numbers::pi_v<float> / static_cast<float>(bullets_.size()) * i * 2.0f;
+        float angle = std::numbers::pi_v<float> / static_cast<float>(bullets_.size()) * i * 2.0f;
         bullets_[i] = std::make_unique<Bullet>();
         bullets_[i]->Initialize()
             ->SetOriginalPosition(pos)
