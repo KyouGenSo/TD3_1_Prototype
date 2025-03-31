@@ -1,6 +1,7 @@
 #include "BulletBase.h"
 
 #include <assert.h>
+#include <mutex>
 #include <GameScene/Object/Bullets/BulletFactory.h>
 
 void BulletBase::Initialize()
@@ -53,15 +54,17 @@ void BulletBase::Next() {
         if (!BulletBase::CheckCoolTime()) return;
 
         // ���̒e�̐���
-        BulletBase::CreateNextBullet();
-
-        // ���̒e�̔���
-        pNext_->Fire();
+        std::thread([this](){
+            BulletBase::CreateNextBullet();
+            // ���̒e�̔���
+            pNext_->Fire();
+        }).detach();
     }
 }
 
 void BulletBase::CreateNextBullet()
 {
+    std::lock_guard<std::mutex> lock(mutex_);
     auto bullet = BulletFactory::CreateBullet(pChainManager_->GetNextWeapon(type_));
     assert(bullet);
     SetNextBullet(std::move(bullet));

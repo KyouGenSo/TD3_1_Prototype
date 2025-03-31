@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <mutex>
 
 #include "GameScene/Object/Object.h"
 #include "GameScene/Object/Collision/Collider.h"
@@ -21,8 +22,10 @@ public: /// Setter
     void SetChainManager(Chain* _chainManager) { pChainManager_ = _chainManager; }
     void SetForward(const Vector3& _forward) { forward_ = _forward; }
 
-
+private:
+    std::atomic<bool> rdy_;
 protected:
+    std::mutex mutex_;
     std::unique_ptr<Collider> pCollider_ = nullptr;
     std::unique_ptr<BulletBase> pNext_ = nullptr;
     std::unique_ptr<Timer> pLifeTimer_ = nullptr;
