@@ -9,6 +9,7 @@
 #include "Transform.h"
 #include <Input.h>
 #include <array>
+#include <GameScene/Status/Status.h>
 
 class Collider;
 
@@ -26,6 +27,7 @@ protected:
 
     float deltaTime_ = 0.0f;
     bool isDead_ = false;
+    Status status_;
 
 protected:
     Input* pInput_ = nullptr;

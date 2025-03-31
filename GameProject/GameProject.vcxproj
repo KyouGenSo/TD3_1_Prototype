@@ -203,6 +203,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\WeaponFactory.cpp" />
+    <ClCompile Include="GameScene\Status\Status.cpp" />
     <ClCompile Include="GameSystem\ChainViewModel\ChainViewModel.cpp" />
     <ClCompile Include="GameSystem\Chain\Chain.cpp" />
     <ClCompile Include="GameSystem\DeltaTimeManager\DeltaTimeManager.cpp" />
@@ -249,6 +250,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h" />
     <ClInclude Include="GameScene\Object\Weapon\Weapon.h" />
     <ClInclude Include="GameScene\Object\Weapon\WeaponFactory.h" />
+    <ClInclude Include="GameScene\Status\Status.h" />
     <ClInclude Include="GameSystem\ChainViewModel\ChainViewModel.h" />
     <ClInclude Include="GameSystem\Chain\Chain.h" />
     <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h" />
