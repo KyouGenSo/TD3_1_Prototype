@@ -8,9 +8,10 @@ MachineGunBullet::Bullet* MachineGunBullet::Bullet::Initialize() {
 
     collider_ = std::make_unique<Collider>();
     collider_->SetEvent([&](auto c){OnCollisionTrigger(c); })
-        ->SetSize(0.1f)
-        ->SetType(Collider::Type::ALLY)
+        ->SetSize(0.2f)
+        ->SetType(Collider::Type::P_BULLET)
         ->SetIgnore(Collider::Type::ALLY)
+        ->SetIgnore(Collider::Type::P_BULLET)
         ->SetIgnore(Collider::Type::STAGE);
     Update();
     return this;

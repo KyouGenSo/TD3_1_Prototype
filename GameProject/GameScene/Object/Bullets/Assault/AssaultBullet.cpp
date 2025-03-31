@@ -20,6 +20,8 @@ void AssaultBullet::Initialize()
 
 void AssaultBullet::Update()
 {
+    BulletBase::Update();
+
     if (isChainBullet_)
     {
         UpdateChain();
@@ -47,6 +49,7 @@ void AssaultBullet::Draw()
     if (isChainBullet_)
     {
         for (const auto& bullet : bullets_){
+            if (!bullet)continue;
             bullet->Draw();
         }
     }
@@ -54,11 +57,6 @@ void AssaultBullet::Draw()
     {
         bullet_->Draw();
     }
-}
-
-void AssaultBullet::OnCollisionTrigger(const Collider* _other)
-{
-    Next();
 }
 
 void AssaultBullet::InitializeNormal()
@@ -103,6 +101,7 @@ void AssaultBullet::UpdateNormal()
 void AssaultBullet::UpdateChain()
 {
     for (const auto& bullet : bullets_){
+        if (!bullet)continue;
         bullet->Update();
     }
 }

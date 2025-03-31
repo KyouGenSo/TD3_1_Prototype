@@ -258,6 +258,7 @@
     <ClCompile Include="GameScene\Status\Status.cpp">
       <Filter>Status</Filter>
     </ClCompile>
+    <ClCompile Include="BounceEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -402,5 +403,6 @@
     <ClInclude Include="GameScene\Status\Status.h">
       <Filter>Status</Filter>
     </ClInclude>
+    <ClInclude Include="BounceEnemy.h" />
   </ItemGroup>
 </Project>

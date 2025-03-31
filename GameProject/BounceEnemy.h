@@ -6,7 +6,7 @@
 #include "GameScene/Object/Object.h"
 #include "GameScene/Object/Collision/Collider.h"
 
-class FlyEnemy : public Object
+class BounceEnemy : public Object
 {
 public:
     void Initialize() override;
@@ -53,6 +53,11 @@ private:
     Vector3 defaultScale = { 1.0f,1.0f,1.0f };
     Vector3 defaultRotate = {};
 
+    float bounceTime_ = 0.0f;
+
+    float bounceHight_ = 5.0f;
+
+    float standardHeight_ = 1.0f;
 
     //status
     uint16_t hp_ = 5;
