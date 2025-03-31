@@ -35,6 +35,7 @@ void AssaultBullet::Bullet::Update()
 
 void AssaultBullet::Bullet::Draw()
 {
+    if (!model_)return;
     model_->Draw();
 }
 

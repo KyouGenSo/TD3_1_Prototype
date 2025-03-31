@@ -37,12 +37,14 @@ public:
     void Remove(const std::string& uuid);
 
 	void Update();
+    void ProcessEvents();
 
+    void ImText() const;
 private:
     static std::string CreatePair(const std::string& col, const std::string& other);
 
     void CheckAll();
 	void Check(const std::string& col, const std::string& other);
-    void ProcessEvents();
+    void CleanUp();
 };
 

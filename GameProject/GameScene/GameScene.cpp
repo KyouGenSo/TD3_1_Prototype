@@ -92,6 +92,8 @@ void GameScene::Initialize() {
     gameController_->SetGUIChainView(guiChain_.get());
 
     guiChain_->SetGameController(gameController_.get());
+
+    threadpool_ = Threadpool::GetInstance();
 }
 
 void GameScene::Finalize() {
@@ -123,7 +125,10 @@ void GameScene::Update()
 	boss_->Update();
     eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
     eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
-    eventTimer_->Measure("Update CollisionManager", [&]() { pCollisionManager_->Update(); });
+    //eventTimer_->Measure("Update CollisionManager", [&]() { pCollisionManager_->Update(); });
+    threadpool_->AddTask([&]{pCollisionManager_->Update(); });
+    eventTimer_->Measure("ProcessEvent", [&]{threadpool_->AddTask([&]{ pCollisionManager_->ProcessEvents(); }); });
+    pCollisionManager_->ImText();
 }
 
 void GameScene::Draw() {
