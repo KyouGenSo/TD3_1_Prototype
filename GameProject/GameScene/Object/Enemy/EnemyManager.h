@@ -3,6 +3,7 @@
 #include <memory>
 #include <random>
 
+#include "EnemyBase.h"
 #include "Enemy.h"
 #include "FlyEnemy.h"
 #include "GameScene/HUD/Minimap.h"
@@ -33,7 +34,7 @@ public:
     void Draw();
     void Finalize();
 	void AddEnemy(const Vector3& position, Type type);
-    void SelectTarget(Enemy* enemy);
+    void SelectTarget(EnemyBase* enemy);
     void ImGui();
     void ChangeWave(std::string key, bool resetSpawnCount = true);
     void SetMinimap(Minimap* pMinimap);

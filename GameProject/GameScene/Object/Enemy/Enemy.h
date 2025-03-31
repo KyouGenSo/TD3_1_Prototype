@@ -3,10 +3,10 @@
 
 #include "Object3d.h"
 #include "Camera.h"
-#include "GameScene/Object/Object.h"
 #include "GameScene/Object/Collision/Collider.h"
+#include "EnemyBase.h"
 
-class Enemy : public Object
+class Enemy : public EnemyBase
 {
 public:
 	void Initialize() override;
@@ -31,15 +31,10 @@ public:
 
 	float GetAmoRotate() { return amoRotate; }
 
-    void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
-
     Vector3 GetDirection() { return direction; }
 
 
 private:
-	std::unique_ptr<Object3d> model_;
-
-	Camera* pCamera_ = nullptr;
 
 	std::unique_ptr<Collider> collider_;
 
@@ -52,8 +47,6 @@ private:
 	float targetRotate = 2.0f;
 	float rotateSpeed = 0.1f;
 	float preRotateSpeed = 0.1f;
-
-    Object* pTarget_ = nullptr;
 
     Vector3 direction{ 0.0f,0.0f,0.0f };
 
