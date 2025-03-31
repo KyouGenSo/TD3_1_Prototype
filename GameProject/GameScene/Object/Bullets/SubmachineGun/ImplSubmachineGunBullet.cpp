@@ -10,7 +10,7 @@ MachineGunBullet::Bullet* MachineGunBullet::Bullet::Initialize() {
     collider_->SetEvent([&](auto c){OnCollisionTrigger(c); })
         ->SetSize(0.2f)
         ->SetType(Collider::Type::P_BULLET)
-        ->SetIgnore(Collider::Type::PLAYER)
+        ->SetIgnore(Collider::Type::ALLY)
         ->SetIgnore(Collider::Type::P_BULLET)
         ->SetIgnore(Collider::Type::STAGE);
     Update();

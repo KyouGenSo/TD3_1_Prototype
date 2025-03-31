@@ -11,7 +11,7 @@ class CollisionManager;
 class Collider{
 public:
     enum class Type{
-        PLAYER,
+        ALLY,
         P_BULLET,
         ENEMY,
         STAGE
@@ -34,7 +34,7 @@ protected:
     std::function<void(const Collider*)> onCollision_;
     std::function<void(const Collider*)> onCollisionExit_;
 
-    Type type_ = Type::PLAYER;
+    Type type_ = Type::ALLY;
 
     uint32_t attribute_ = 0b0;
     uint32_t ignore_ = 0b0;

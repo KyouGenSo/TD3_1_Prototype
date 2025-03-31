@@ -18,7 +18,7 @@ void AssaultBullet::Bullet::Initialize()
     collider_->SetEvent([this](const auto& c){this->OnCollisionTrigger(c); })
         ->SetSize(0.3f)
         ->SetType(Collider::Type::P_BULLET)
-        ->SetIgnore(Collider::Type::PLAYER)
+        ->SetIgnore(Collider::Type::ALLY)
         ->SetIgnore(Collider::Type::P_BULLET)
         ->SetIgnore(Collider::Type::STAGE);
     Update();

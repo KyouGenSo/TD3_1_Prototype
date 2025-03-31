@@ -24,9 +24,9 @@ void Castle::Initialize() {
     collider_->SetOwner(this)
         ->SetSize(Vector3{.x= 5.f, .y= 5.f, .z= 5.f})
         ->SetEvent([&](const auto& c){})
-        ->SetType(Collider::Type::PLAYER)
+        ->SetType(Collider::Type::ALLY)
         ->SetIgnore(Collider::Type::STAGE)
-        ->SetIgnore(Collider::Type::PLAYER);
+        ->SetIgnore(Collider::Type::ALLY);
 }
 
 void Castle::Update() {

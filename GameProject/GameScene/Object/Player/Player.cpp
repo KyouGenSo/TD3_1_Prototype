@@ -32,7 +32,7 @@ void Player::Initialize() {
 
     collider_ = std::make_unique<Collider>(this);
     collider_->SetEvent([this](const Collider* pCol){this->OnCollision(pCol); });
-    collider_->SetType(Collider::Type::PLAYER);
+    collider_->SetType(Collider::Type::ALLY);
 
     /// !!Debug!!
     weapon_ = std::make_unique<SMG>();
