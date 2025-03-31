@@ -33,7 +33,7 @@ public:
     void Draw();
     void Finalize();
 	void AddEnemy(const Vector3& position, Type type);
-    void SelectTarget(Object* enemy);
+    void SelectTarget(Enemy* enemy);
     void ImGui();
     void ChangeWave(std::string key, bool resetSpawnCount = true);
     void SetMinimap(Minimap* pMinimap);

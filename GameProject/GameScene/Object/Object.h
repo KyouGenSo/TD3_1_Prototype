@@ -58,7 +58,6 @@ public: /// Setter
     void SetScale(const Vector3& _scale) {
         transform_.scale = _scale;
     }
-    virtual void SetTarget(Object* pTarget) {}
 
 
 public: /// Getter

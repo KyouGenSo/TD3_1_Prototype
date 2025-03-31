@@ -102,7 +102,7 @@ void EnemyManager::AddEnemy(const Vector3& position, Type type)
     }
 }
 
-void EnemyManager::SelectTarget(Object* enemy)
+void EnemyManager::SelectTarget(Enemy* enemy)
 {
     Vector3 enemyPos = enemy->GetTransform().translate;
     Vector3 playerPos = pPlayer_->GetTransform().translate;
