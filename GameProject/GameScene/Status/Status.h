@@ -3,6 +3,9 @@
 class Status
 {
 public:
+    Status() = default;
+    ~Status() = default;
+
     void Initalize();
     void Update();
 
@@ -39,12 +42,12 @@ public:
     void OnCollision(const Status& _status);
 
 private:
-    int hp_;
-    int maxHp_;
-    int attack_;
-    int defence_;
-    int speed_;
-    int level_;
-    int exp_;
-    int maxExp_;
+    int hp_ = 0;
+    int maxHp_ = 0;
+    int attack_ = 0;
+    int defence_ = 0;
+    int speed_ = 0;
+    int level_ = 0;
+    int exp_ = 0;
+    int maxExp_ = 0;
 };
