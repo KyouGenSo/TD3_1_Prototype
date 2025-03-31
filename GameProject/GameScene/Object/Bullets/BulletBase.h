@@ -12,6 +12,7 @@ class BulletBase : public Object
 {
 public:
     void Initialize() override;
+    void Update() override;
     virtual void Fire();
     void OnCollisionTrigger(const Collider* _collider) override = 0;
     bool IsDead();

@@ -12,6 +12,15 @@ void BulletBase::Initialize()
     pNextBulletTimer_ = std::make_unique<Timer>();
 }
 
+void BulletBase::Update() {
+    std::lock_guard<std::mutex> lock(mutex_);
+    if (rdy_ && pNext_){
+        // ���̒e�̔���
+        pNext_->Fire();
+        rdy_ = false;
+    }
+}
+
 void BulletBase::Fire()
 {
     if (isChainBullet_)
@@ -56,8 +65,7 @@ void BulletBase::Next() {
         // ���̒e�̐���
         std::thread([this](){
             BulletBase::CreateNextBullet();
-            // ���̒e�̔���
-            pNext_->Fire();
+            rdy_ = true;
         }).detach();
     }
 }
