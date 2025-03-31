@@ -1,7 +1,6 @@
 #pragma once
 #include "GameScene/Object/Object.h"
 
-#include "Camera.h"
 #include <GameSystem/Chain/Chain.h>
 #include <GameScene/Object/Collision/Collider.h>
 #include <GameScene/Object/Weapon/Weapon.h>
@@ -10,12 +9,12 @@
 class Player : public Object {
     std::unique_ptr<Collider> collider_;
 
-    Chain* chain_;
-    std::unique_ptr<WeaponBase> weapon_;
+    Chain* chain_ = nullptr;
+    std::unique_ptr<WeaponBase> weapon_ = nullptr;
 
-    std::list<IObserver*> observers_;
+    std::list<IObserver*> observers_ = {};
 
-    Vector3 move_{};
+    Vector3 move_ = {};
 
     bool isGround_ = true;
 

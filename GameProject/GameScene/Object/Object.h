@@ -27,7 +27,7 @@ protected:
 
     float deltaTime_ = 0.0f;
     bool isDead_ = false;
-    Status status_;
+    Status status_ = {};
 
 protected:
     Input* pInput_ = nullptr;

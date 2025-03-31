@@ -7,7 +7,7 @@ class GUI_PauseMenu : public IObserver
 {
 public:
     GUI_PauseMenu() = default;
-    ~GUI_PauseMenu() = default;
+    ~GUI_PauseMenu() override = default;
 
     void Initialize();
     void Update();

@@ -65,7 +65,7 @@ void RocketBullet::OnCollisionTrigger(const Collider* _other)
     isDead_ = true;
     pCollider_->Disable();
 
-    color = {1, 0,0,1};
+    color_ = {1, 0,0,1};
     //爆発オブジェクトを生成
     explosion_ = std::make_unique<LimitedCollider>(this, 1);
     explosion_->SetSize(5.0f);
