@@ -126,7 +126,9 @@ void GameScene::Update()
     eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
     eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
     //eventTimer_->Measure("Update CollisionManager", [&]() { pCollisionManager_->Update(); });
-    threadpool_->AddTask([&]() { pCollisionManager_->Update(); });
+    threadpool_->AddTask([&]{pCollisionManager_->Update(); });
+    eventTimer_->Measure("ProcessEvent", [&]{threadpool_->AddTask([&]{ pCollisionManager_->ProcessEvents(); }); });
+    pCollisionManager_->ImText();
 }
 
 void GameScene::Draw() {

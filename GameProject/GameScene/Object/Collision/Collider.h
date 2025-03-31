@@ -12,6 +12,7 @@ class Collider{
 public:
     enum class Type{
         ALLY,
+        P_BULLET,
         ENEMY,
         STAGE
     };
@@ -58,8 +59,9 @@ public:
 
     std::string GetUniqueId() const;
 
-    void SetOwner(Object* pOwner){
+    Collider* SetOwner(Object* pOwner){
         pOwner_ = pOwner;
+        return this;
     }
 
     Object* GetOwner() const{

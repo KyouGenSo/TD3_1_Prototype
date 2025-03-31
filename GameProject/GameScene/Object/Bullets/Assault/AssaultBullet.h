@@ -6,7 +6,7 @@
 class AssaultBullet : public BulletBase
 {
 private:
-    struct Bullet
+    class Bullet
     {
     public:
         void Initialize();
@@ -18,6 +18,7 @@ private:
         void SetForward(const Vector3& _forward) { forward_ = _forward; }
         void SetSpeed(float _speed) { speed_ = _speed; }
 
+        bool IsHit();
     private:
         std::unique_ptr<Timer> pLifeTimer_ = nullptr;
         std::unique_ptr<Object3d> model_ = nullptr;
@@ -25,6 +26,8 @@ private:
         Transform transform_ = {};
         Vector3 forward_ = {};
         float speed_ = 0.0f;
+
+        bool hit = false;
     };
 
 public:
@@ -32,7 +35,7 @@ public:
     void Update() override;
     void Draw() override;
 
-    void OnCollisionTrigger(const Collider* _other) override;
+    void OnCollisionTrigger(const Collider* _other) override{};
 
 private:
     std::unique_ptr<Bullet> bullet_;
