@@ -18,6 +18,7 @@
 #include <GameSystem/TimeKeeper/TimeKeeper.h>
 #include <GameSystem/ChainViewModel/ChainViewModel.h>
 #include <GameSystem/GameController/GameController.h>
+#include <Utility/Threadpool/Threadpool.h>
 
 class GameScene : public BaseScene {
     std::unique_ptr<Player> player_;
@@ -37,6 +38,7 @@ class GameScene : public BaseScene {
 
     std::unique_ptr<Castle> castle_;
     EventTimer* eventTimer_ = nullptr;
+    Threadpool* threadpool_ = nullptr;
     std::unique_ptr<TimeKeeper> timeKeeper_;
 
 public:

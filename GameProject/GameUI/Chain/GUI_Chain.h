@@ -3,6 +3,7 @@
 #include <Interfaces/IObserver.h>
 #include <string>
 #include <GameSystem/ChainViewModel/ChainViewModel.h>
+#include <filesystem>
 
 class GameController;
 
@@ -22,7 +23,12 @@ public:
     void ImGui();
 
 private:
-    const std::string TEXTUREPATH_ = "white.png";
+    const std::string TEX_WHITE_ = "white.png";
+    const std::filesystem::path ICONDIR_ = "ico";
+    const std::filesystem::path FRAMEDIR_ = "frame";
+    const std::filesystem::path TEX_ROCKETLAUNCHER_ = "RocketLauncher_Text.png";
+    const std::filesystem::path TEX_ASSAULT_ = "Assault_Text.png";
+    const std::filesystem::path TEX_FRAME_ = "Simple.png";
     bool isDisplay_ = false;
     bool isConfirm_ = false;
     std::string area1_ = "";
@@ -32,6 +38,8 @@ private:
 private:
     // チェイン画面を表示する
     void ShowChain();
+    // チェインが正しいか確認する 正:true, 誤: false
+    bool CheckValidChain();
 
 private:
     ChainViewModel* chainViewModel_;

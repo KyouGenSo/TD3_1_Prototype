@@ -4,10 +4,19 @@
 #include <imgui.h>
 #endif // _DEBUG
 
+WeaponType Chain::GetNextWeapon(WeaponType _weaponType) const {
+    auto n = std::next(std::ranges::find(data_, _weaponType));
+    if(n != data_.end()) {
+        return *n;
+    }
+
+    return WeaponType::None;
+}
+
 bool Chain::IsLastWeapon(WeaponType _weaponType) const
 {
     if (data_.back() == _weaponType) return true;
-    if (NextWeapon(_weaponType) == WeaponType::None) return true;
+    if (GetNextWeapon(_weaponType) == WeaponType::None) return true;
     return false;
 }
 

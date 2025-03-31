@@ -15,18 +15,17 @@ void AssaultBullet::Bullet::Initialize()
     model_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 
     collider_ = std::make_unique<Collider>();
-    collider_->SetEvent([&](auto c){OnCollisionTrigger(c); });
-    collider_->SetSize(0.1f);
-    collider_->SetType(Collider::Type::ALLY);
-    collider_->SetIgnore(Collider::Type::ALLY);
-    collider_->SetIgnore(Collider::Type::STAGE);
+    collider_->SetEvent([&](auto c){OnCollisionTrigger(c); })
+        ->SetSize(0.1f)
+        ->SetType(Collider::Type::ALLY)
+        ->SetIgnore(Collider::Type::ALLY)
+        ->SetIgnore(Collider::Type::STAGE);
+    Update();
 }
 
 void AssaultBullet::Bullet::Update()
 {
     transform_.translate += forward_ * speed_;
-
-    collider_->SetPosition(transform_.translate);
 
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);

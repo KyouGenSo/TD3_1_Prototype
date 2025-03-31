@@ -5,6 +5,7 @@
 #include <NiGui/Derived/ProcHandler.h>
 #include <NiGui/Derived/NiGui_Debug.h>
 #include <EventTimer/EventTimer.h>
+#include <Utility/Threadpool/Threadpool.h>
 #include <memory>
 
 class MyGame : public TakoFramework
@@ -54,6 +55,7 @@ private: // メンバ変数
     std::unique_ptr<NiGuiDebug> niguiDebug_ = nullptr;
 
     EventTimer* eventTimer_ = nullptr;
+    Threadpool* threadpool_ = nullptr;
 
     enum PostEffectType
     {
