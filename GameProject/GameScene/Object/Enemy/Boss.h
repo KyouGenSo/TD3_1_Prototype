@@ -9,17 +9,17 @@
 class Boss : public Object
 {
 public:
-	void Initialize() override;
+    void Initialize() override;
 
-	void Update() override;
+    void Update() override;
 
-	void Draw() override;
+    void Draw() override;
 
-	void Finalize();
+    void Finalize();
 
     void ImGui();
 
-	void OnCollision(const Collider* pObject) override;
+    void OnCollision(const Collider* pObject) override;
 
     bool GetIsValid() const { return isValid_; }
 
@@ -27,9 +27,9 @@ public:
 
 private:
 
-	std::unique_ptr<Collider> collider_;
+    std::unique_ptr<Collider> collider_;
 
-	Vector3 prePos_;
+    Vector3 prePos_;
 
     bool isValid_ = false; // ボスの有効無効
 };

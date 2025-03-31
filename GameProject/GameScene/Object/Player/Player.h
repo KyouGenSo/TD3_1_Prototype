@@ -6,7 +6,8 @@
 #include <GameScene/Object/Weapon/Weapon.h>
 #include <Interfaces/IObserver.h>
 
-class Player : public Object {
+class Player : public Object
+{
     std::unique_ptr<Collider> collider_;
 
     Chain* chain_ = nullptr;

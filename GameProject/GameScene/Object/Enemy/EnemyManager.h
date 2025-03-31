@@ -10,14 +10,17 @@
 
 class Player;
 class Castle;
-class EnemyManager {
+class EnemyManager
+{
 private:
-    enum Type {
+    enum Type
+    {
         Normal,
         Fly,
         Bounce
     };
-    struct Wave {
+    struct Wave
+    {
         Type type;
         float interval;
         int amount;
@@ -33,7 +36,7 @@ public:
     void Update();
     void Draw();
     void Finalize();
-	void AddEnemy(const Vector3& position, Type type);
+    void AddEnemy(const Vector3& position, Type type);
     void SelectTarget(EnemyBase* enemy);
     void ImGui();
     void ChangeWave(std::string key, bool resetSpawnCount = true);

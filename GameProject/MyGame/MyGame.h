@@ -49,7 +49,7 @@ private: // メンバ変数
 
     bool FPSWindowVisible = true;
     bool PostEffectWindowVisible = false;
-    
+
     std::unique_ptr<NiGuiDrawer> drawer_ = nullptr;
     std::unique_ptr<ProcHandler> procHandler_ = nullptr;
     std::unique_ptr<NiGuiDebug> niguiDebug_ = nullptr;

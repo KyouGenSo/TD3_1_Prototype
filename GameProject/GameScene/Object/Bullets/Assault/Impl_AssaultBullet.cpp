@@ -15,7 +15,7 @@ void AssaultBullet::Bullet::Initialize()
     model_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 
     collider_ = std::make_unique<Collider>();
-    collider_->SetEvent([&](auto c){OnCollisionTrigger(c); })
+    collider_->SetEvent([&](auto c) { OnCollisionTrigger(c); })
         ->SetSize(0.1f)
         ->SetType(Collider::Type::ALLY)
         ->SetIgnore(Collider::Type::ALLY)
@@ -37,6 +37,7 @@ void AssaultBullet::Bullet::Draw()
     model_->Draw();
 }
 
-void AssaultBullet::Bullet::OnCollisionTrigger(const Collider* _other) {
+void AssaultBullet::Bullet::OnCollisionTrigger(const Collider* _other)
+{
     (void)_other;
 }

@@ -8,26 +8,29 @@
 class CollisionManager;
 
 //Component
-class Collider{
+class Collider
+{
 public:
-    enum class Type{
+    enum class Type
+    {
         ALLY,
         ENEMY,
         STAGE
     };
-    enum class Event{
+    enum class Event
+    {
         TRIGGER,
         STAY,
         EXIT
     };
 
 protected:
-	CollisionManager* pManager_;
+    CollisionManager* pManager_;
 
     Object* pOwner_ = nullptr;
 
     Vector3 position_{};
-	std::variant<float, Vector3> size_;
+    std::variant<float, Vector3> size_;
 
     std::function<void(const Collider*)> onCollisionTrigger_;
     std::function<void(const Collider*)> onCollision_;
@@ -42,27 +45,30 @@ protected:
 
 public:
     Collider();
-	explicit Collider(Object* _owner);
+    explicit Collider(Object* _owner);
     virtual ~Collider();
 
     virtual void Update();
 
     void OnCollisionTrigger(const Collider* pCollider) const;
-	void OnCollision(const Collider* pCollider) const;
+    void OnCollision(const Collider* pCollider) const;
     void OnCollisionExit(const Collider* pCollider) const;
 
 
-    bool IsDisable() const {
+    bool IsDisable() const
+    {
         return disable_;
     }
 
     std::string GetUniqueId() const;
 
-    void SetOwner(Object* pOwner){
+    void SetOwner(Object* pOwner)
+    {
         pOwner_ = pOwner;
     }
 
-    Object* GetOwner() const{
+    Object* GetOwner() const
+    {
         return pOwner_;
     }
 

@@ -3,23 +3,23 @@
 #include "imgui.h"
 #include "Object3dBasic.h"
 
-void FollowCamera::Initialize() {
+void FollowCamera::Initialize()
+{
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
     pCamera_->SetFarClip(1000.0f);
 }
 
-void FollowCamera::Update() {
+void FollowCamera::Update()
+{
     if (!pTarget_) return;
-    
+
     // direction_
     Vector3 rotate = { rotationX_, pTarget_->rotate.y, 0.0f };
-    Vector3 direction = {};
-	Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(rotate);
-    direction = Mat4x4::TransFormNormal(rotation, shiftDirection_);
+    Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(rotate);
+    Vector3 direction = Mat4x4::TransFormNormal(rotation, shiftDirection_);
 
     // interpolation
-    Vector3 targetPosition = {};
-    targetPosition = targetPositionPre_ * (1.0f - factorLerp_) + (pTarget_->translate + targetPositionOffset_) * factorLerp_;
+    Vector3 targetPosition = targetPositionPre_ * (1.0f - factorLerp_) + (pTarget_->translate + targetPositionOffset_) * factorLerp_;
 
     pCamera_->SetTranslate(direction.Normalize() * offset_ + targetPosition);
     pCamera_->SetRotate(rotate);
@@ -28,10 +28,12 @@ void FollowCamera::Update() {
     targetPositionPre_ = targetPosition;
 }
 
-void FollowCamera::Finalize() {
+void FollowCamera::Finalize()
+{
 }
 
-void FollowCamera::ImGui() {
+void FollowCamera::ImGui()
+{
     Vector3 translate = pCamera_->GetTranslate();
     Vector3 rotate = pCamera_->GetRotate();
 

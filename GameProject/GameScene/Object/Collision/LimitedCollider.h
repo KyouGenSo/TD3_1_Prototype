@@ -1,7 +1,8 @@
 #pragma once
 #include "Collider.h"
 
-class LimitedCollider : public Collider{
+class LimitedCollider : public Collider
+{
     uint32_t lifetime_ = 0;
 
 public:

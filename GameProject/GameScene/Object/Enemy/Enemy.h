@@ -9,44 +9,44 @@
 class Enemy : public EnemyBase
 {
 public:
-	void Initialize() override;
+    void Initialize() override;
 
-	void Update() override;
+    void Update() override;
 
-	void Draw() override;
+    void Draw() override;
 
-	void Finalize();
+    void Finalize();
 
-	void OnCollision(const Collider* pCollider) override;
+    void OnCollision(const Collider* pCollider) override;
 
     void Move();
 
     void AppearanceProduction();
 
-	void SetTranslate(Vector3 translate) { transform_.translate = translate; }
+    void SetTranslate(Vector3 translate) { transform_.translate = translate; }
 
-	void SetIsAppearing(bool isAppearing) { isAppearing_ = true; }
+    void SetIsAppearing(bool isAppearing) { isAppearing_ = true; }
 
-	void SetAppearCounter(float appearCounter) { appearCounter_ = appearCounter; }
+    void SetAppearCounter(float appearCounter) { appearCounter_ = appearCounter; }
 
-	float GetAmoRotate() { return amoRotate_; }
+    float GetAmoRotate() { return amoRotate_; }
 
     Vector3 GetDirection() { return direction_; }
 
 
 private:
 
-	std::unique_ptr<Collider> collider_ = nullptr;
+    std::unique_ptr<Collider> collider_ = nullptr;
 
     Vector3 prePos_ = {};
 
-	bool isAppearing_ = false;
-	float appearCounter_ = 0.0f;
+    bool isAppearing_ = false;
+    float appearCounter_ = 0.0f;
 
-	float amoRotate_ = 0.1f;
-	float targetRotate_ = 2.0f;
-	float rotateSpeed_ = 0.1f;
-	float preRotateSpeed_ = 0.1f;
+    float amoRotate_ = 0.1f;
+    float targetRotate_ = 2.0f;
+    float rotateSpeed_ = 0.1f;
+    float preRotateSpeed_ = 0.1f;
 
     Vector3 direction_{ 0.0f,0.0f,0.0f };
 

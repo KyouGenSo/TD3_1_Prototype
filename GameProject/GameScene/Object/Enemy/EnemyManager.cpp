@@ -35,11 +35,14 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
 void EnemyManager::Update()
 {
-    if (!keys_.empty()) {
+    if (!keys_.empty())
+    {
         SpawnEnemy();
     }
-    for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {
-        if ((*enemy)->IsDead()){
+    for (auto enemy = enemies_.begin(); enemy != enemies_.end(); )
+    {
+        if ((*enemy)->IsDead())
+        {
             //pMinimap_->Unregister(enemy.get());
             enemy = enemies_.erase(enemy);
             continue;
@@ -47,9 +50,11 @@ void EnemyManager::Update()
         SelectTarget(enemy->get());
         (*enemy)->Update();
         ++enemy;
-	}
-    for (auto enemy = flyEnemies_.begin(); enemy != flyEnemies_.end(); ) {
-        if ((*enemy)->IsDead()) {
+    }
+    for (auto enemy = flyEnemies_.begin(); enemy != flyEnemies_.end(); )
+    {
+        if ((*enemy)->IsDead())
+        {
             enemy = flyEnemies_.erase(enemy);
             continue;
         }
@@ -61,21 +66,25 @@ void EnemyManager::Update()
 
 void EnemyManager::Draw()
 {
-    for (auto& enemy : enemies_) {
+    for (auto& enemy : enemies_)
+    {
         enemy->Draw();
     }
-    for (auto& enemy : flyEnemies_) {
+    for (auto& enemy : flyEnemies_)
+    {
         enemy->Draw();
     }
 }
 
 void EnemyManager::Finalize()
 {
-    for (auto& enemy : enemies_) {
+    for (auto& enemy : enemies_)
+    {
         enemy->Finalize();
     }
     enemies_.clear();
-    for (auto& enemy : flyEnemies_) {
+    for (auto& enemy : flyEnemies_)
+    {
         enemy->Finalize();
     }
     flyEnemies_.clear();
@@ -83,7 +92,8 @@ void EnemyManager::Finalize()
 
 void EnemyManager::AddEnemy(const Vector3& position, Type type)
 {
-    if (type == Type::Normal) {
+    if (type == Type::Normal)
+    {
         auto enemy = std::make_unique<Enemy>();
         enemy->Initialize();
         enemy->SetTranslate(position);
@@ -92,7 +102,8 @@ void EnemyManager::AddEnemy(const Vector3& position, Type type)
         //pMinimap_->Register(enemy.get());
         enemies_.push_back(std::move(enemy));
     }
-    else if (type == Type::Fly) {
+    else if (type == Type::Fly)
+    {
         auto flyEnemy = std::make_unique<FlyEnemy>();
         flyEnemy->Initialize();
         flyEnemy->SetTranslate(position);
@@ -108,47 +119,55 @@ void EnemyManager::SelectTarget(EnemyBase* enemy)
     Vector3 playerPos = pPlayer_->GetTransform().translate;
     float distanceToPlayer = (enemyPos - playerPos).Length();
 
-    if (distanceToPlayer < leave) { 
+    if (distanceToPlayer < leave)
+    {
         enemy->SetTarget(pPlayer_);
     }
-    else {
+    else
+    {
         enemy->SetTarget(pCastle_);
     }
 }
 
 void EnemyManager::ImGui()
 {
-#ifdef _DEBUG
+    #ifdef _DEBUG
     ImGui::Begin("EnemyManager");
-    if(ImGui::Button("TurnControl")) {
+    if (ImGui::Button("TurnControl"))
+    {
         TurnControl();
         turnProgress++;
     }
     ImGui::DragInt("turnProgress", &turnProgress, 1);
     ImGui::End();
-#endif
+    #endif
 }
 
 void EnemyManager::SpawnEnemy()
 {
-    if (keys_.empty()) {
+    if (keys_.empty())
+    {
         return;
     }
-    for (const auto& key : keys_) {
-        if (spawnCount_[key] >= waves_[key].amount) {
+    for (const auto& key : keys_)
+    {
+        if (spawnCount_[key] >= waves_[key].amount)
+        {
             continue;
         }
 
         spawnTimer_[key] += deltaTime_;
-        if (spawnTimer_[key] > waves_[key].interval) {
-            AddEnemy(RandomSpawnPosition(waves_[key].type),waves_[key].type);
+        if (spawnTimer_[key] > waves_[key].interval)
+        {
+            AddEnemy(RandomSpawnPosition(waves_[key].type), waves_[key].type);
             spawnTimer_[key] = 0.0f;
             spawnCount_[key]++;
         }
     }
 }
 
-void EnemyManager::SetMinimap(Minimap* pMinimap) {
+void EnemyManager::SetMinimap(Minimap* pMinimap)
+{
     pMinimap_ = pMinimap;
 }
 
@@ -170,12 +189,15 @@ void EnemyManager::InitializeWaveFile(std::string key)
 void EnemyManager::TurnControl()
 {
     keys_.clear();
-    for (const auto& wave : waves_) {
-        if (turnProgress == wave.second.turn) {
+    for (const auto& wave : waves_)
+    {
+        if (turnProgress == wave.second.turn)
+        {
             keys_.push_back(wave.first);
         }
     }
-    for (const auto& key : keys_) {
+    for (const auto& key : keys_)
+    {
         ChangeWave(key, true);
     }
 }
@@ -184,8 +206,10 @@ Vector3 EnemyManager::RandomSpawnPosition(Type type)
 {
     Vector3 randomPos = {};
 
-    if (type == Type::Normal) {
-        while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z)) {
+    if (type == Type::Normal)
+    {
+        while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z))
+        {
 
             std::uniform_real_distribution<float> disX(minSpawnPoint_.x, maxSpawnPoint_.x);
             std::uniform_real_distribution<float> disY(minSpawnPoint_.y, maxSpawnPoint_.y);
@@ -193,8 +217,10 @@ Vector3 EnemyManager::RandomSpawnPosition(Type type)
             randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
         }
     }
-    else if (type == Type::Fly) {
-        while ((randomPos.x < flyMaxSpawnRange_.x && randomPos.x > flyMinSpawnRange_.x) && (randomPos.z < flyMaxSpawnRange_.z && randomPos.z > flyMinSpawnRange_.z)) {
+    else if (type == Type::Fly)
+    {
+        while ((randomPos.x < flyMaxSpawnRange_.x && randomPos.x > flyMinSpawnRange_.x) && (randomPos.z < flyMaxSpawnRange_.z && randomPos.z > flyMinSpawnRange_.z))
+        {
             std::uniform_real_distribution<float> disX(flyMinSpawnPoint_.x, flyMaxSpawnPoint_.x);
             std::uniform_real_distribution<float> disY(flyMinSpawnPoint_.y, flyMaxSpawnPoint_.y);
             std::uniform_real_distribution<float> disZ(flyMinSpawnPoint_.z, flyMaxSpawnPoint_.z);
@@ -224,7 +250,8 @@ void EnemyManager::ChangeWave(std::string key, bool resetSpawnCount)
     waves_[key].amount = GlobalVariables::GetInstance()->GetValueInt(key, "amount");
     waves_[key].hpMultiplier = GlobalVariables::GetInstance()->GetValueFloat(key, "hpMultiplier");
     waves_[key].turn = GlobalVariables::GetInstance()->GetValueInt(key, "turn");
-    if (resetSpawnCount) {
+    if (resetSpawnCount)
+    {
         spawnCount_[key] = 0;
     }
 }
