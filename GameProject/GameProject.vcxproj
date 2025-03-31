@@ -177,7 +177,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FryEnemy.cpp" />
+    <ClCompile Include="FlyEnemy.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.cpp" />
     <ClCompile Include="Ease\Ease.cpp" />
     <ClCompile Include="EventTimer\EventTimer.cpp" />
@@ -222,7 +222,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="TitleScene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FryEnemy.h" />
+    <ClInclude Include="FlyEnemy.h" />
     <ClInclude Include="GameScene\Object\Weapon\AssaultRifle\AssaultRifle.h" />
     <ClInclude Include="Ease\Ease.h" />
     <ClInclude Include="EventTimer\EventTimer.h" />

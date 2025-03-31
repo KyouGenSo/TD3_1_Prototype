@@ -1,9 +1,9 @@
-#include "FryEnemy.h"
+#include "FlyEnemy.h"
 
 #include "Object3dBasic.h"
 #include "cmath"
 
-void FryEnemy::Initialize()
+void FlyEnemy::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
@@ -28,7 +28,7 @@ void FryEnemy::Initialize()
     collider_->SetSize(1.f);
 }
 
-void FryEnemy::Update()
+void FlyEnemy::Update()
 {
     if (isDead_) return;
 
@@ -36,16 +36,16 @@ void FryEnemy::Update()
     Move();
 }
 
-void FryEnemy::Draw()
+void FlyEnemy::Draw()
 {
     model_->Draw();
 }
 
-void FryEnemy::Finalize()
+void FlyEnemy::Finalize()
 {
 }
 
-void FryEnemy::OnCollision(const Collider* pCollider)
+void FlyEnemy::OnCollision(const Collider* pCollider)
 {
     if (isDead_) return;
 
@@ -58,36 +58,33 @@ void FryEnemy::OnCollision(const Collider* pCollider)
             return;
         }
 
-        transform_.translate = prePos;
         model_->SetTranslate(transform_.translate);
     }
 }
 
-void FryEnemy::Move()
+void FlyEnemy::Move()
 {
-    prePos = transform_.translate;
     if (isAppearing_) {
         AppearanceProduction();
     }
     else {
         Vector3 direction;
-        direction.x = pTarget_->GetTransform().translate.x - transform_.translate.x;
-        direction.z = pTarget_->GetTransform().translate.z - transform_.translate.z;
+        direction = pTarget_->GetTransform().translate - transform_.translate;
 
-        float length = std::sqrt(direction.x * direction.x + direction.z * direction.z);
+        float length = std::sqrt((direction.x * direction.x) + (direction.y * direction.y) + (direction.z * direction.z));
         if (length != 0) {
-            direction.x /= length;
-            direction.z /= length;
+            direction /= length;
         }
 
-        transform_.translate.x += direction.x * speed;
-        transform_.translate.z += direction.z * speed;
-
+        transform_.translate += direction * speed;
+        if (transform_.translate.y < 1.0f) {
+            transform_.translate.y = 1.0f;
+        }
     }
     model_->SetTranslate(transform_.translate);
 }
 
-void FryEnemy::AppearanceProduction()
+void FlyEnemy::AppearanceProduction()
 {
     float t = appearCounter_ / appearDuration;
 

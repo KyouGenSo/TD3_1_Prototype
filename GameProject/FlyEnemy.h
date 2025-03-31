@@ -6,7 +6,7 @@
 #include "GameScene/Object/Object.h"
 #include "GameScene/Object/Collision/Collider.h"
 
-class FryEnemy : public Object
+class FlyEnemy : public Object
 {
 public:
     void Initialize() override;
@@ -43,7 +43,7 @@ private:
 
     std::unique_ptr<Collider> collider_;
 
-    Vector3 prePos;
+    Vector3 prePosY;
 
     bool isAppearing_;
     float appearCounter_ = 0.0f;

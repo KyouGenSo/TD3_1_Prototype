@@ -48,11 +48,23 @@ void EnemyManager::Update()
         (*enemy)->Update();
         ++enemy;
 	}
+    for (auto enemy = flyEnemies_.begin(); enemy != flyEnemies_.end(); ) {
+        if ((*enemy)->IsDead()) {
+            enemy = flyEnemies_.erase(enemy);
+            continue;
+        }
+        SelectTarget(enemy->get());
+        (*enemy)->Update();
+        ++enemy;
+    }
 }
 
 void EnemyManager::Draw()
 {
     for (auto& enemy : enemies_) {
+        enemy->Draw();
+    }
+    for (auto& enemy : flyEnemies_) {
         enemy->Draw();
     }
 }
@@ -63,20 +75,34 @@ void EnemyManager::Finalize()
         enemy->Finalize();
     }
     enemies_.clear();
+    for (auto& enemy : flyEnemies_) {
+        enemy->Finalize();
+    }
+    flyEnemies_.clear();
 }
 
-void EnemyManager::AddEnemy(const Vector3& position)
+void EnemyManager::AddEnemy(const Vector3& position, Type type)
 {
-    auto enemy = std::make_unique<Enemy>();
-    enemy->Initialize();
-    enemy->SetTranslate(position);
-    enemy->SetIsAppearing(true);
-    enemy->SetAppearCounter(0.0f);
-    //pMinimap_->Register(enemy.get());
-    enemies_.push_back(std::move(enemy));
+    if (type == Type::Normal) {
+        auto enemy = std::make_unique<Enemy>();
+        enemy->Initialize();
+        enemy->SetTranslate(position);
+        enemy->SetIsAppearing(true);
+        enemy->SetAppearCounter(0.0f);
+        //pMinimap_->Register(enemy.get());
+        enemies_.push_back(std::move(enemy));
+    }
+    else if (type == Type::Fly) {
+        auto flyEnemy = std::make_unique<FlyEnemy>();
+        flyEnemy->Initialize();
+        flyEnemy->SetTranslate(position);
+        flyEnemy->SetIsAppearing(true);
+        flyEnemy->SetAppearCounter(0.0f);
+        flyEnemies_.push_back(std::move(flyEnemy));
+    }
 }
 
-void EnemyManager::SelectTarget(Enemy* enemy)
+void EnemyManager::SelectTarget(Object* enemy)
 {
     Vector3 enemyPos = enemy->GetTransform().translate;
     Vector3 playerPos = pPlayer_->GetTransform().translate;
@@ -115,7 +141,7 @@ void EnemyManager::SpawnEnemy()
 
         spawnTimer_[key] += deltaTime_;
         if (spawnTimer_[key] > waves_[key].interval) {
-            AddEnemy(RandomSpawnPosition());
+            AddEnemy(RandomSpawnPosition(waves_[key].type),waves_[key].type);
             spawnTimer_[key] = 0.0f;
             spawnCount_[key]++;
         }
@@ -154,17 +180,26 @@ void EnemyManager::TurnControl()
     }
 }
 
-Vector3 EnemyManager::RandomSpawnPosition()
+Vector3 EnemyManager::RandomSpawnPosition(Type type)
 {
     Vector3 randomPos = {};
 
-    while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z)) {
+    if (type == Type::Normal) {
+        while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z)) {
 
-        std::uniform_real_distribution<float> disX(minSpawnPoint_.x, maxSpawnPoint_.x);
-        std::uniform_real_distribution<float> disY(minSpawnPoint_.y, maxSpawnPoint_.y);
-        std::uniform_real_distribution<float> disZ(minSpawnPoint_.z, maxSpawnPoint_.z);
-
-        randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+            std::uniform_real_distribution<float> disX(minSpawnPoint_.x, maxSpawnPoint_.x);
+            std::uniform_real_distribution<float> disY(minSpawnPoint_.y, maxSpawnPoint_.y);
+            std::uniform_real_distribution<float> disZ(minSpawnPoint_.z, maxSpawnPoint_.z);
+            randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+        }
+    }
+    else if (type == Type::Fly) {
+        while ((randomPos.x < flyMaxSpawnRange_.x && randomPos.x > flyMinSpawnRange_.x) && (randomPos.z < flyMaxSpawnRange_.z && randomPos.z > flyMinSpawnRange_.z)) {
+            std::uniform_real_distribution<float> disX(flyMinSpawnPoint_.x, flyMaxSpawnPoint_.x);
+            std::uniform_real_distribution<float> disY(flyMinSpawnPoint_.y, flyMaxSpawnPoint_.y);
+            std::uniform_real_distribution<float> disZ(flyMinSpawnPoint_.z, flyMaxSpawnPoint_.z);
+            randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+        }
     }
 
     return randomPos;
