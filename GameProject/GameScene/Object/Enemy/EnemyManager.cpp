@@ -145,6 +145,15 @@ void EnemyManager::ImGui()
 {
 #ifdef _DEBUG
     ImGui::Begin("EnemyManager");
+    if (ImGui::Button("Normal")) {
+        AddEnemy({ 0.0f,1.0f,0.0f }, Type::Normal);
+    }
+    if (ImGui::Button("Fly")) {
+        AddEnemy({ 0.0f,5.0f,0.0f }, Type::Fly);
+    }
+    if (ImGui::Button("Bounce")) {
+        AddEnemy({ 0.0f,1.0f,0.0f }, Type::Bounce);
+    }
     if(ImGui::Button("TurnControl")) {
         TurnControl();
         turnProgress++;
