@@ -1,22 +1,28 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <mutex>
 #include "Collider.h"
 
-class CollisionManager
-{
-    //uuid , uuid
-    using Pair = std::pair<std::string, std::string>;
+class CollisionManager{
+    using CollisionPair = std::pair<Collider*, Collider*>;
 
-    std::unordered_map<std::string, Collider*> pColliders_;
-    std::vector<Pair> pairs_;
+    std::mutex mutex_;
 
-    //#ifdef _DEBUG
-    struct Debug
-    {
+    // UUID, Collider
+	std::unordered_map<std::string, Collider*> pColliders_;
+
+    std::unordered_map<std::string, bool> state_;
+    std::unordered_map<std::string, bool> pairs_;
+
+//#ifdef _DEBUG
+    //per frame
+    struct Debug{
+        //frame total
         uint64_t total;
-        uint64_t frame;
+        //filtered count
         uint64_t filtered;
+        //detect hit count
+        uint64_t collision;
     };
 
     Debug debug_{};
@@ -24,13 +30,21 @@ class CollisionManager
 
 
 public:
-    void Add(Collider* pCollider);
+    CollisionManager() = default;
+    ~CollisionManager() = default;
+
+	void Add(Collider* pCollider);
     void Remove(const std::string& uuid);
 
-    void Update();
+	void Update();
+    void ProcessEvents();
 
+    void ImText() const;
 private:
+    static std::string CreatePair(const std::string& col, const std::string& other);
+
     void CheckAll();
-    void Check(const std::string& col, const std::string& other);
+	void Check(const std::string& col, const std::string& other);
+    void CleanUp();
 };
 

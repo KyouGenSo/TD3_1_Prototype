@@ -1,9 +1,9 @@
-#include "Enemy.h"
+#include "BounceEnemy.h"
 
 #include "Object3dBasic.h"
 #include "cmath"
 
-void Enemy::Initialize()
+void BounceEnemy::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
@@ -16,8 +16,8 @@ void Enemy::Initialize()
         {0.0f,0.0f,0.0f},
         {0.0f,0.0f,0.0f}
     };
-	model_->SetScale(transform_.scale);
-	model_->SetRotate(transform_.rotate);
+    model_->SetScale(transform_.scale);
+    model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
     collider_ = std::make_unique<Collider>(this);
@@ -28,7 +28,7 @@ void Enemy::Initialize()
     collider_->SetSize(1.f);
 }
 
-void Enemy::Update()
+void BounceEnemy::Update()
 {
     if (isDead_) return;
 
@@ -36,72 +36,77 @@ void Enemy::Update()
     Move();
 }
 
-void Enemy::Draw()
+void BounceEnemy::Draw()
 {
-	model_->Draw();
+    model_->Draw();
 }
 
-void Enemy::Finalize()
+void BounceEnemy::Finalize()
 {
 }
 
-void Enemy::OnCollision(const Collider* pCollider)
+void BounceEnemy::OnCollision(const Collider* pCollider)
 {
     if (isDead_) return;
 
-    if (pCollider->GetType() == Collider::Type::ALLY || pCollider->GetType() == Collider::Type::P_BULLET){
-        if (0 < hp_){
+    if (pCollider->GetType() == Collider::Type::ALLY) {
+        if (0 < hp_) {
             hp_--;
-        }else{
+        }
+        else {
             isDead_ = true;
             return;
         }
 
-        transform_.translate = prePos_;
         model_->SetTranslate(transform_.translate);
     }
 }
 
-void Enemy::Move()
+void BounceEnemy::Move()
 {
-    prePos_ = transform_.translate;
-    if(isAppearing_) {
+    if (isAppearing_) {
         AppearanceProduction();
-    }else {
+    }
+    else {
         Vector3 direction;
-        direction.x = pTarget_->GetTransform().translate.x - transform_.translate.x;
-        direction.z = pTarget_->GetTransform().translate.z - transform_.translate.z;
+        direction = pTarget_->GetTransform().translate - transform_.translate;
 
-        float length = std::sqrt(direction.x * direction.x + direction.z * direction.z);
+        float length = std::sqrt((direction.x * direction.x) + (direction.y * direction.y) + (direction.z * direction.z));
         if (length != 0) {
-            direction.x /= length;
-            direction.z /= length;
+            direction /= length;
         }
 
-        transform_.translate.x += direction.x * speed_;
-        transform_.translate.z += direction.z * speed_;
-        
+        transform_.translate.x += direction.x * speed;
+        transform_.translate.z += direction.z * speed;
+
+        bounceTime_ += 0.05f;
+        transform_.translate.y = std::sin(bounceTime_) * bounceHight_ + standardHeight_;
+
+    }
+    if (transform_.translate.y <= 1.0f) {
+        transform_.translate.y = 1.0f;
+        bounceTime_ = 0.0f;
     }
     model_->SetTranslate(transform_.translate);
 }
 
-void Enemy::AppearanceProduction()
+void BounceEnemy::AppearanceProduction()
 {
-    float t = appearCounter_ / appearDuration_;
+    float t = appearCounter_ / appearDuration;
 
     transform_.scale = { t, t, t };
     model_->SetScale(transform_.scale);
 
     float easeOut = 1.0f - std::pow(1.0f - t, 2.0f);
-    transform_.rotate.y = 0 * (1.0f - easeOut) + targetRotate_ * easeOut * 6.28f;
+    transform_.rotate.y = 0 * (1.0f - easeOut) + targetRotate * easeOut * 6.28f;
 
     model_->SetRotate(transform_.rotate);
 
     appearCounter_++;
-    if (appearCounter_ >= appearDuration_) {
-        transform_.scale = defaultScale_;
+    if (appearCounter_ >= appearDuration) {
+        transform_.scale = defaultScale;
         model_->SetScale(transform_.scale);
-        transform_.rotate = defaultRotate_;
+        transform_.rotate = defaultRotate;
         model_->SetRotate(transform_.rotate);
         isAppearing_ = false;
     }

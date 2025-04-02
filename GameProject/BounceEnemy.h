@@ -1,10 +1,12 @@
 #pragma once
 #include <memory>
 
+#include "Object3d.h"
+#include "Camera.h"
+#include "GameScene/Object/Object.h"
 #include "GameScene/Object/Collision/Collider.h"
-#include "EnemyBase.h"
 
-class FlyEnemy : public EnemyBase
+class BounceEnemy : public Object
 {
 public:
     void Initialize() override;
@@ -27,35 +29,35 @@ public:
 
     void SetAppearCounter(float appearCounter) { appearCounter_ = appearCounter; }
 
-    float GetAmoRotate() { return amoRotate_; }
-
-    Vector3 GetDirection() { return direction_; }
-
+    void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
 
 
 private:
+    std::unique_ptr<Object3d> model_;
 
-    std::unique_ptr<Collider> collider_ = nullptr;
+    Camera* pCamera_ = nullptr;
 
-    Vector3 prePosY_ = {};
+    std::unique_ptr<Collider> collider_;
 
-    bool isAppearing_ = false;
+    bool isAppearing_ = true;
     float appearCounter_ = 0.0f;
 
-    float amoRotate_ = 0.1f;
-    float targetRotate_ = 2.0f;
-    float rotateSpeed_ = 0.1f;
-    float preRotateSpeed_ = 0.1f;
+    float targetRotate = 2.0f;
 
-    Vector3 direction_{ 0.0f,0.0f,0.0f };
+    Object* pTarget_ = nullptr;
 
-    float speed_ = 0.2f;
+    float speed = 0.2f;
 
-    float appearDuration_ = 60.0f;
+    float appearDuration = 60.0f;
 
-    Vector3 defaultScale_ = { 1.0f,1.0f,1.0f };
-    Vector3 defaultRotate_ = { 0.0f,0.0f,0.0f };
+    Vector3 defaultScale = { 1.0f,1.0f,1.0f };
+    Vector3 defaultRotate = {};
 
+    float bounceTime_ = 0.0f;
+
+    float bounceHight_ = 5.0f;
+
+    float standardHeight_ = 1.0f;
 
     //status
     uint16_t hp_ = 5;

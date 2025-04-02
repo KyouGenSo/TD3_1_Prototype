@@ -28,6 +28,8 @@ void RocketBullet::Initialize()
 
 void RocketBullet::Update()
 {
+    BulletBase::Update();
+
     if (isChainBullet_)
     {
         UpdateChain();

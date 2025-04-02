@@ -6,6 +6,7 @@
 #include "EnemyBase.h"
 #include "Enemy.h"
 #include "FlyEnemy.h"
+#include "BounceEnemy.h"
 #include "GameScene/HUD/Minimap.h"
 
 class Player;
@@ -67,6 +68,7 @@ private:
 
     std::vector<std::unique_ptr<Enemy>> enemies_;
     std::vector<std::unique_ptr<FlyEnemy>> flyEnemies_;
+    std::vector<std::unique_ptr<BounceEnemy>> bounceEnemies_;
 
     const float leave = 10.0f;
 
@@ -97,6 +99,15 @@ private:
 
     Vector3 flyMinSpawnPoint_ = { -55.0f,5.0f,-55.0f };
     Vector3 flyMaxSpawnPoint_ = { 55.0f,5.0f,55.0f };
+
+
+    Vector3 bounceAppearancePos_ = { 3.0f,1.0f,0.0f };
+
+    Vector3 bounceMinSpawnRange_ = { -50.0f,0.0f,-50.0f };
+    Vector3 bounceMaxSpawnRange_ = { 50.0f,0.0f,50.0f };
+
+    Vector3 bounceMinSpawnPoint_ = { -55.0f,1.0f,-55.0f };
+    Vector3 bounceMaxSpawnPoint_ = { 55.0f,1.0f,55.0f };
 
 
     std::random_device rd_;

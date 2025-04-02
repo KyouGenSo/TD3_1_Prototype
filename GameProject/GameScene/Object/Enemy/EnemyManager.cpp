@@ -30,6 +30,7 @@ void EnemyManager::Initialize(Object* player, Object* castle)
     InitializeWaveFile("0101");
     InitializeWaveFile("0102");
     InitializeWaveFile("0103");
+    InitializeWaveFile("0104");
 
 }
 
@@ -62,6 +63,15 @@ void EnemyManager::Update()
         (*enemy)->Update();
         ++enemy;
     }
+    for (auto enemy = bounceEnemies_.begin(); enemy != bounceEnemies_.end(); ) {
+        if ((*enemy)->IsDead()) {
+            enemy = bounceEnemies_.erase(enemy);
+            continue;
+        }
+        SelectTarget(enemy->get());
+        (*enemy)->Update();
+        ++enemy;
+    }
 }
 
 void EnemyManager::Draw()
@@ -72,6 +82,9 @@ void EnemyManager::Draw()
     }
     for (auto& enemy : flyEnemies_)
     {
+        enemy->Draw();
+    }
+    for (auto& enemy : bounceEnemies_) {
         enemy->Draw();
     }
 }
@@ -88,6 +101,10 @@ void EnemyManager::Finalize()
         enemy->Finalize();
     }
     flyEnemies_.clear();
+    for (auto& enemy : bounceEnemies_) {
+        enemy->Finalize();
+    }
+    bounceEnemies_.clear();
 }
 
 void EnemyManager::AddEnemy(const Vector3& position, Type type)
@@ -110,6 +127,14 @@ void EnemyManager::AddEnemy(const Vector3& position, Type type)
         flyEnemy->SetIsAppearing(true);
         flyEnemy->SetAppearCounter(0.0f);
         flyEnemies_.push_back(std::move(flyEnemy));
+    }
+    else if (type == Type::Bounce) {
+        auto bounceEnemy = std::make_unique<BounceEnemy>();
+        bounceEnemy->Initialize();
+        bounceEnemy->SetTranslate(position);
+        bounceEnemy->SetIsAppearing(true);
+        bounceEnemy->SetAppearCounter(0.0f);
+        bounceEnemies_.push_back(std::move(bounceEnemy));
     }
 }
 
@@ -135,6 +160,16 @@ void EnemyManager::ImGui()
     ImGui::Begin("EnemyManager");
     if (ImGui::Button("TurnControl"))
     {
+    if (ImGui::Button("Normal")) {
+        AddEnemy({ 0.0f,1.0f,0.0f }, Type::Normal);
+    }
+    if (ImGui::Button("Fly")) {
+        AddEnemy({ 0.0f,5.0f,0.0f }, Type::Fly);
+    }
+    if (ImGui::Button("Bounce")) {
+        AddEnemy({ 0.0f,1.0f,0.0f }, Type::Bounce);
+    }
+    if(ImGui::Button("TurnControl")) {
         TurnControl();
         turnProgress++;
     }
@@ -224,6 +259,14 @@ Vector3 EnemyManager::RandomSpawnPosition(Type type)
             std::uniform_real_distribution<float> disX(flyMinSpawnPoint_.x, flyMaxSpawnPoint_.x);
             std::uniform_real_distribution<float> disY(flyMinSpawnPoint_.y, flyMaxSpawnPoint_.y);
             std::uniform_real_distribution<float> disZ(flyMinSpawnPoint_.z, flyMaxSpawnPoint_.z);
+            randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+        }
+    }
+    else if (type == Type::Bounce) {
+        while ((randomPos.x < bounceMaxSpawnRange_.x && randomPos.x > bounceMinSpawnRange_.x) && (randomPos.z < bounceMaxSpawnRange_.z && randomPos.z > bounceMinSpawnRange_.z)) {
+            std::uniform_real_distribution<float> disX(bounceMinSpawnPoint_.x, bounceMaxSpawnPoint_.x);
+            std::uniform_real_distribution<float> disY(bounceMinSpawnPoint_.y, bounceMaxSpawnPoint_.y);
+            std::uniform_real_distribution<float> disZ(bounceMinSpawnPoint_.z, bounceMaxSpawnPoint_.z);
             randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
         }
     }

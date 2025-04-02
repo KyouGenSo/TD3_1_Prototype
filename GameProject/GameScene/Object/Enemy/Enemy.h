@@ -55,7 +55,7 @@ private:
     float appearDuration_ = 60.0f;
 
     Vector3 defaultScale_ = { 1.0f,1.0f,1.0f };
-    Vector3 defaultRotate_ = { 0.0f,0.0f,0.0f };
+    Vector3 defaultRotate_ = {};
 
 
     //status

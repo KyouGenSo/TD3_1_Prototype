@@ -177,6 +177,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BounceEnemy.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\ImplSubmachineGunBullet.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp" />
@@ -227,6 +228,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Utility\Threadpool\Threadpool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BounceEnemy.h" />
     <ClInclude Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.h" />
     <ClInclude Include="GameScene\Object\Enemy\EnemyBase.h" />
     <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
