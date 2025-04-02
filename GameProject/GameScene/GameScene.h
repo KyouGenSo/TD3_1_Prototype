@@ -20,7 +20,8 @@
 #include <GameSystem/GameController/GameController.h>
 #include <Utility/Threadpool/Threadpool.h>
 
-class GameScene : public BaseScene {
+class GameScene : public BaseScene
+{
     std::unique_ptr<Player> player_;
     std::unique_ptr<FollowCamera> camera_;
     std::unique_ptr<GUI_LvUP> guiLvUP_;
@@ -30,11 +31,11 @@ class GameScene : public BaseScene {
 
     std::unique_ptr<ChainViewModel> chainViewModel_;
 
-    std::unique_ptr<Minimap> minimap_; 
+    std::unique_ptr<Minimap> minimap_;
     CollisionManager* pCollisionManager_ = nullptr;
-	std::unique_ptr<Boss>boss_;
+    std::unique_ptr<Boss>boss_;
     std::unique_ptr<Terrain> terrain_;
-	std::unique_ptr<EnemyManager> enemyManager_;
+    std::unique_ptr<EnemyManager> enemyManager_;
 
     std::unique_ptr<Castle> castle_;
     EventTimer* eventTimer_ = nullptr;
@@ -42,7 +43,8 @@ class GameScene : public BaseScene {
     std::unique_ptr<TimeKeeper> timeKeeper_;
 
 public:
-    struct DirectionalLightParam {
+    struct DirectionalLightParam
+    {
         Vector3 direction;
         Vector4 color;
         int32_t lightType;

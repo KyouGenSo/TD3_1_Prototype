@@ -6,24 +6,24 @@
 
 void Boss::Initialize()
 {
-	model_ = std::make_unique<Object3d>();
-	model_->Initialize();
-	bCamera_ = Object3dBasic::GetInstance()->GetCamera();
-	model_->SetCamera(bCamera_);
-	model_->SetModel("bigCube.gltf");
+    model_ = std::make_unique<Object3d>();
+    model_->Initialize();
+    pCamera_ = Object3dBasic::GetInstance()->GetCamera();
+    model_->SetCamera(pCamera_);
+    model_->SetModel("bigCube.gltf");
 
     // 初期化用 - 外部から設定するためこの値は適用されない
-	transform_ = {
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,10.0f}
-	};
-	model_->SetScale(transform_.scale);
-	model_->SetRotate(transform_.rotate);
-	model_->SetTranslate(transform_.translate);
+    transform_ = {
+        {1.0f,1.0f,1.0f},
+        {0.0f,0.0f,0.0f},
+        {0.0f,0.0f,10.0f}
+    };
+    model_->SetScale(transform_.scale);
+    model_->SetRotate(transform_.rotate);
+    model_->SetTranslate(transform_.translate);
 
-	collider_ = std::make_unique<Collider>(this);
-	collider_->SetEvent([this](const Collider* pCol) {this->OnCollision(pCol); });
+    collider_ = std::make_unique<Collider>(this);
+    collider_->SetEvent([this](const Collider* pCol) { this->OnCollision(pCol); });
     collider_->SetType(Collider::Type::ENEMY);
     collider_->SetIgnore(Collider::Type::ENEMY);
 
@@ -32,19 +32,22 @@ void Boss::Initialize()
 
 void Boss::Update()
 {
-    if(isValid_){
-	    prePos = transform_.translate;
-	    transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
-    }else {
-        
+    if (isValid_)
+    {
+        prePos_ = transform_.translate;
+        transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
     }
-	    model_->SetTranslate(transform_.translate);
-	    model_->Update();
+    else
+    {
+
+    }
+    model_->SetTranslate(transform_.translate);
+    model_->Update();
 }
 
 void Boss::Draw()
 {
-	model_->Draw();
+    model_->Draw();
 }
 
 void Boss::Finalize()
@@ -60,5 +63,5 @@ void Boss::ImGui()
 
 void Boss::OnCollision(const Collider* pCollider)
 {
-	transform_.translate = prePos;
+    transform_.translate = prePos_;
 }

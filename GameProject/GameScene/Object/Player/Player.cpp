@@ -13,12 +13,13 @@
 #include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
 #include "GameScene/Object/Weapon/SMG/SMG.h"
 
-void Player::Initialize() {
+void Player::Initialize()
+{
     Object::Initialize();
 
     ModelManager::GetInstance()->LoadModel("box.gltf");
 
-	model_ = std::make_unique<Object3d>();
+    model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetCamera(pCamera_);
     model_->SetModel("box.gltf");
@@ -31,7 +32,7 @@ void Player::Initialize() {
     };
 
     collider_ = std::make_unique<Collider>(this);
-    collider_->SetEvent([this](const Collider* pCol){this->OnCollision(pCol); });
+    collider_->SetEvent([this](const Collider* pCol) { this->OnCollision(pCol); });
     collider_->SetType(Collider::Type::ALLY);
 
     // Status Initialize
@@ -50,12 +51,13 @@ void Player::Initialize() {
     gravity_ = 1.8f;
 }
 
-void Player::Update() {
+void Player::Update()
+{
     deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(0);
 
     UpdateInputCommands();
     UpdateMovement();
-    
+
     weapon_->SetPosition(transform_.translate);
     weapon_->SetRotation(transform_.rotate);
     weapon_->Update();
@@ -66,16 +68,19 @@ void Player::Update() {
     model_->SetTranslate(transform_.translate);
 }
 
-void Player::Draw() {
+void Player::Draw()
+{
     weapon_->Draw();
     model_->Update();
     model_->Draw();
 }
 
-void Player::Finalize() {
+void Player::Finalize()
+{
 }
 
-void Player::ImGui() {
+void Player::ImGui()
+{
 
     if (ImGui::Begin("Player"))
     {
@@ -96,7 +101,8 @@ void Player::ImGui() {
     ImGui::End();
 }
 
-void Player::OnCollision(const Collider* pCollider) {
+void Player::OnCollision(const Collider* pCollider)
+{
 }
 
 void Player::OnChainConfirm()
@@ -109,7 +115,8 @@ void Player::OnChainConfirm()
 void Player::UpdateInputCommands()
 {
     // Attack
-    if (pInput_->PushKey(DIK_RETURN) || pInput_->PushButton(JOY_BUTTON1)){
+    if (pInput_->PushKey(DIK_RETURN) || pInput_->PushButton(JOY_BUTTON1))
+    {
         weapon_->Fire();
     }
 
@@ -149,7 +156,8 @@ void Player::UpdateMovement()
     }
 
     // Movement
-    if(Input::GetInstance()->IsConnect()){
+    if (Input::GetInstance()->IsConnect())
+    {
         // Joycon Movement
     }
     else
@@ -170,8 +178,10 @@ void Player::UpdateMovement()
 
 
     // Jump
-    if (isGround_){
-        if(Input::GetInstance()->TriggerKey(DIK_SPACE)){
+    if (isGround_)
+    {
+        if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+        {
             acceleration_.y += jumpPower_;
             isGround_ = false;
         }
@@ -185,7 +195,7 @@ void Player::UpdateMovement()
 
     // 速度を加算
     velocity_ += acceleration_;
-    
+
 
     transform_.translate += velocity_ * deltaTime_;
 

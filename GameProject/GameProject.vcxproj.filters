@@ -254,11 +254,15 @@
     <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp">
       <Filter>Object\Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp" />
     <ClCompile Include="GameScene\Status\Status.cpp">
       <Filter>Status</Filter>
     </ClCompile>
-    <ClCompile Include="BounceEnemy.cpp" />
+    <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Enemy\BounceEnemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -399,10 +403,17 @@
     <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h">
       <Filter>Object\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
     <ClInclude Include="GameScene\Status\Status.h">
       <Filter>Status</Filter>
     </ClInclude>
-    <ClInclude Include="BounceEnemy.h" />
+    <ClInclude Include="GameScene\Object\Enemy\EnemyBase.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\BounceEnemy.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

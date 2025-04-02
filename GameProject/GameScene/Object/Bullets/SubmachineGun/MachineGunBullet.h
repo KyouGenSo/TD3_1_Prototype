@@ -1,10 +1,12 @@
 #pragma once
 #include "GameScene/Object/Bullets/BulletBase.h"
 
-class MachineGunBullet : public BulletBase{
-    struct Bullet{
+class MachineGunBullet : public BulletBase
+{
+    struct Bullet
+    {
     private:
-        Vector3 origin {};
+        Vector3 origin{};
 
         std::unique_ptr<Object3d> model_;
         std::unique_ptr<Collider> collider_;
@@ -24,7 +26,7 @@ class MachineGunBullet : public BulletBase{
         Bullet* SetRotate(const Vector3& _rotate);
         Bullet* SetForward(const Vector3& _forward);
         Bullet* SetSpeed(float _speed);
-        bool IsDead() const {return dead;}
+        bool IsDead() const { return dead; }
         void OnCollisionTrigger(const Collider* _other);
     };
 

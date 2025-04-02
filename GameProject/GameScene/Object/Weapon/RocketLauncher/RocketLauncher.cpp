@@ -2,12 +2,13 @@
 
 #include <GameScene/Object/Bullets/BulletFactory.h>
 
-void RocketLauncher::Initialize() {
+void RocketLauncher::Initialize()
+{
 
 }
 
 
-void RocketLauncher::Update() 
+void RocketLauncher::Update()
 {
     for (auto& bullet : bullets_)
     {
@@ -17,7 +18,7 @@ void RocketLauncher::Update()
     WeaponBase::DeleteDeadBullet();
 }
 
-void RocketLauncher::Draw() 
+void RocketLauncher::Draw()
 {
     for (auto& bullet : bullets_)
     {

@@ -5,7 +5,7 @@
 #include <ranges>
 
 #include "Collider.h"
-#include "imgui.h"
+#include <imgui.h>
 
 
 void CollisionManager::Add(Collider* pCollider) {
@@ -58,7 +58,7 @@ void CollisionManager::Update() {
                 ++stateItr;
             }
 
-            itr = pColliders_.erase(itr);
+           itr = pColliders_.erase(itr);
             continue;
         }
         itr->second->Update();
@@ -66,6 +66,7 @@ void CollisionManager::Update() {
     }
 
     CheckAll();
+
 
 }
 
@@ -91,7 +92,8 @@ void CollisionManager::CheckAll() {
 
             //filter
             if ((pCollider->GetAttribute() & pOther->GetIgnore()) ||
-                (pOther->GetAttribute() & pCollider->GetIgnore())){
+                (pOther->GetAttribute() & pCollider->GetIgnore()))
+            {
                 ++debug_.filtered;
                 continue;
             }
@@ -110,28 +112,36 @@ void CollisionManager::CheckAll() {
     }
 }
 
-void CollisionManager::Check(const std::string& col, const std::string& other) {
-    auto pCollider = pColliders_[col];
-    auto pOther = pColliders_[other];
+void CollisionManager::Check(const std::string& col, const std::string& other)
+{
+    const auto* const pCollider = pColliders_[col];
+    const auto* pOther = pColliders_[other];
 
     std::string id = CreatePair(col, other);
 
     bool isHit = false;
 
-    if (std::holds_alternative<float>(pCollider->GetSize()) && std::holds_alternative<float>(pOther->GetSize())){
+    if (std::holds_alternative<float>(pCollider->GetSize()) && std::holds_alternative<float>(pOther->GetSize()))
+    {
         isHit = (pCollider->GetPosition() - pOther->GetPosition()).Length() < std::get<float>(pCollider->GetSize()) + std::get<float>(pOther->GetSize());
-    } else if (std::holds_alternative<Vector3>(pCollider->GetSize()) && std::holds_alternative<Vector3>(pOther->GetSize())){
+    }
+    else if (std::holds_alternative<Vector3>(pCollider->GetSize()) && std::holds_alternative<Vector3>(pOther->GetSize()))
+    {
         auto size1 = std::get<Vector3>(pCollider->GetSize());
         auto size2 = std::get<Vector3>(pOther->GetSize());
         isHit = (std::abs(pCollider->GetPosition().x - pOther->GetPosition().x) < size1.x + size2.x) &&
             (std::abs(pCollider->GetPosition().y - pOther->GetPosition().y) < size1.y + size2.y) &&
             (std::abs(pCollider->GetPosition().z - pOther->GetPosition().z) < size1.z + size2.z);
-    } else if (std::holds_alternative<float>(pCollider->GetSize()) && std::holds_alternative<Vector3>(pOther->GetSize())){
+    }
+    else if (std::holds_alternative<float>(pCollider->GetSize()) && std::holds_alternative<Vector3>(pOther->GetSize()))
+    {
         auto size = std::get<Vector3>(pOther->GetSize());
         isHit = (std::abs(pCollider->GetPosition().x - pOther->GetPosition().x) < std::get<float>(pCollider->GetSize()) + size.x) &&
             (std::abs(pCollider->GetPosition().y - pOther->GetPosition().y) < std::get<float>(pCollider->GetSize()) + size.y) &&
             (std::abs(pCollider->GetPosition().z - pOther->GetPosition().z) < std::get<float>(pCollider->GetSize()) + size.z);
-    } else if (std::holds_alternative<Vector3>(pCollider->GetSize()) && std::holds_alternative<float>(pOther->GetSize())){
+    }
+    else if (std::holds_alternative<Vector3>(pCollider->GetSize()) && std::holds_alternative<float>(pOther->GetSize()))
+    {
         auto size = std::get<Vector3>(pCollider->GetSize());
         isHit = (std::abs(pCollider->GetPosition().x - pOther->GetPosition().x) < size.x + std::get<float>(pOther->GetSize())) &&
             (std::abs(pCollider->GetPosition().y - pOther->GetPosition().y) < size.y + std::get<float>(pOther->GetSize())) &&

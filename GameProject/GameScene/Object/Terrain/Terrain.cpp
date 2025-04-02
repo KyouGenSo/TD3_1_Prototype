@@ -31,9 +31,9 @@ void Terrain::Initialize()
     boxObj_->SetEnableHighlight(false);
 
     collider_ = std::make_unique<Collider>();
-    collider_->SetEvent([&](const Collider* pCol){OnCollision(pCol); });
+    collider_->SetEvent([&](const Collider* pCol) { OnCollision(pCol); });
     collider_->SetPosition(transform_.translate);
-    collider_->SetSize(Vector3 {100, 0, 400});
+    collider_->SetSize(Vector3{ 100, 0, 400 });
     collider_->SetType(Collider::Type::STAGE);
 }
 
@@ -61,7 +61,7 @@ void Terrain::ImGui()
         {
             terrainObj_->SetScale(transform_.scale);
         }
-        
+
         if (ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f))
         {
             terrainObj_->SetRotate(transform_.rotate);
@@ -75,7 +75,8 @@ void Terrain::ImGui()
     ImGui::End();
 }
 
-void Terrain::OnCollision(const Collider* pCollider) const {
+void Terrain::OnCollision(const Collider* pCollider) const
+{
     (void)pCollider;
 }
 

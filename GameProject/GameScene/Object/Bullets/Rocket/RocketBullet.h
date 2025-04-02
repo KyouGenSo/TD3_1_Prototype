@@ -3,7 +3,8 @@
 
 #include <Timer/Timer.h>
 
-class RocketBullet : public BulletBase{
+class RocketBullet : public BulletBase
+{
 public:
     void Initialize() override;
     void Update() override;
@@ -17,12 +18,9 @@ private:
     void UpdateNormal() override;
     void UpdateChain() override;
 
-    Vector3 forward_ = {};
-
     std::unique_ptr<Collider> explosion_;
 
-    Vector4 color = {1,1,1,1};
+    Vector4 color_ = { 1,1,1,1 };
 
-    Timer timer;
+    Timer timer_;
 };
-

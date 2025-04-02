@@ -14,19 +14,18 @@ private:
         void Draw();
         void OnCollisionTrigger(const Collider* _other);
         void SetPosition(const Vector3& _pos) { transform_.translate = _pos; }
-        void SetRotate(const Vector3& _rotate) {transform_.rotate = _rotate;}
+        void SetRotate(const Vector3& _rotate) { transform_.rotate = _rotate; }
         void SetForward(const Vector3& _forward) { forward_ = _forward; }
         void SetSpeed(float _speed) { speed_ = _speed; }
 
         bool IsHit();
     private:
         std::unique_ptr<Timer> pLifeTimer_ = nullptr;
-        std::unique_ptr<Object3d> model_ = nullptr;
         std::unique_ptr<Collider> collider_;
         Transform transform_ = {};
         Vector3 forward_ = {};
         float speed_ = 0.0f;
-
+        std::unique_ptr<Object3d> model_;
         bool hit = false;
     };
 

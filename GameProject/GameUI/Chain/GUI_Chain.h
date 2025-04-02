@@ -11,7 +11,7 @@ class GUI_Chain : public IObserver
 {
 public:
     GUI_Chain() = default;
-    ~GUI_Chain() = default;
+    ~GUI_Chain() override = default;
 
     // 通知する
     void OnNotify(const std::string& _event) override;
@@ -42,6 +42,6 @@ private:
     bool CheckValidChain();
 
 private:
-    ChainViewModel* chainViewModel_;
-    GameController* gameController_;
+    ChainViewModel* chainViewModel_ = nullptr;
+    GameController* gameController_ = nullptr;
 };
