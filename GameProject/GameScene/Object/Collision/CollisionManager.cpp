@@ -5,6 +5,7 @@
 #include <ranges>
 
 #include "Collider.h"
+#include <imgui.h>
 
 
 void CollisionManager::Add(Collider* pCollider) {

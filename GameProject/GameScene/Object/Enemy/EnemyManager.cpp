@@ -160,46 +160,29 @@ void EnemyManager::ImGui()
     ImGui::Begin("EnemyManager");
     if (ImGui::Button("TurnControl"))
     {
-    if (ImGui::Button("Normal")) {
-        AddEnemy({ 0.0f,1.0f,0.0f }, Type::Normal);
+        if (ImGui::Button("Normal"))
+        {
+            AddEnemy({ 0.0f,1.0f,0.0f }, Type::Normal);
+        }
+        if (ImGui::Button("Fly"))
+        {
+            AddEnemy({ 0.0f,5.0f,0.0f }, Type::Fly);
+        }
+        if (ImGui::Button("Bounce"))
+        {
+            AddEnemy({ 0.0f,1.0f,0.0f }, Type::Bounce);
+        }
+        if (ImGui::Button("TurnControl"))
+        {
+            TurnControl();
+            turnProgress++;
+        }
+        ImGui::DragInt("turnProgress", &turnProgress, 1);
+        ImGui::End();
+        #endif
     }
-    if (ImGui::Button("Fly")) {
-        AddEnemy({ 0.0f,5.0f,0.0f }, Type::Fly);
-    }
-    if (ImGui::Button("Bounce")) {
-        AddEnemy({ 0.0f,1.0f,0.0f }, Type::Bounce);
-    }
-    if(ImGui::Button("TurnControl")) {
-        TurnControl();
-        turnProgress++;
-    }
-    ImGui::DragInt("turnProgress", &turnProgress, 1);
-    ImGui::End();
-    #endif
 }
 
-void EnemyManager::SpawnEnemy()
-{
-    if (keys_.empty())
-    {
-        return;
-    }
-    for (const auto& key : keys_)
-    {
-        if (spawnCount_[key] >= waves_[key].amount)
-        {
-            continue;
-        }
-
-        spawnTimer_[key] += deltaTime_;
-        if (spawnTimer_[key] > waves_[key].interval)
-        {
-            AddEnemy(RandomSpawnPosition(waves_[key].type), waves_[key].type);
-            spawnTimer_[key] = 0.0f;
-            spawnCount_[key]++;
-        }
-    }
-}
 
 void EnemyManager::SetMinimap(Minimap* pMinimap)
 {
@@ -234,6 +217,29 @@ void EnemyManager::TurnControl()
     for (const auto& key : keys_)
     {
         ChangeWave(key, true);
+    }
+}
+
+void EnemyManager::SpawnEnemy()
+{
+    if (keys_.empty())
+    {
+        return;
+    }
+    for (const auto& key : keys_)
+    {
+        if (spawnCount_[key] >= waves_[key].amount)
+        {
+            continue;
+        }
+
+        spawnTimer_[key] += deltaTime_;
+        if (spawnTimer_[key] > waves_[key].interval)
+        {
+            AddEnemy(RandomSpawnPosition(waves_[key].type), waves_[key].type);
+            spawnTimer_[key] = 0.0f;
+            spawnCount_[key]++;
+        }
     }
 }
 

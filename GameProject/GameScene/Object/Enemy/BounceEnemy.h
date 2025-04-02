@@ -3,10 +3,10 @@
 
 #include "Object3d.h"
 #include "Camera.h"
-#include "GameScene/Object/Object.h"
+#include "EnemyBase.h"
 #include "GameScene/Object/Collision/Collider.h"
 
-class BounceEnemy : public Object
+class BounceEnemy : public EnemyBase
 {
 public:
     void Initialize() override;
