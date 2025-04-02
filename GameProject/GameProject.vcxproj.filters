@@ -113,6 +113,9 @@
     <Filter Include="GameSystem\EnemyManager">
       <UniqueIdentifier>{6886778b-22b2-43b3-9bfa-bcbf50d4e02f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Status">
+      <UniqueIdentifier>{48ec105d-f01c-4482-888b-81ee240b3891}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -252,6 +255,9 @@
       <Filter>Object\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp" />
+    <ClCompile Include="GameScene\Status\Status.cpp">
+      <Filter>Status</Filter>
+    </ClCompile>
     <ClCompile Include="BounceEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -394,6 +400,9 @@
       <Filter>Object\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
+    <ClInclude Include="GameScene\Status\Status.h">
+      <Filter>Status</Filter>
+    </ClInclude>
     <ClInclude Include="BounceEnemy.h" />
   </ItemGroup>
 </Project>

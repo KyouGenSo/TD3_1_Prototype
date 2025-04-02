@@ -24,5 +24,5 @@ void WeaponBase::AddNewBullet(std::unique_ptr<BulletBase> _bullet)
 
 void WeaponBase::DeleteDeadBullet()
 {
-    bullets_.remove_if([](const std::unique_ptr<BulletBase>& _bullet) { return _bullet->IsDead(); });
+    bullets_.remove_if([](const std::unique_ptr<BulletBase>& _bullet) { return _bullet->IsDeadAll(); });
 }

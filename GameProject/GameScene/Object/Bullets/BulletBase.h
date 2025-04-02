@@ -6,6 +6,7 @@
 #include "GameScene/Object/Collision/Collider.h"
 #include <GameSystem/Chain/Chain.h>
 #include <Timer/Timer.h>
+#include <GameScene/Status/Status.h>
 
 
 class BulletBase : public Object
@@ -15,7 +16,7 @@ public:
     void Update() override;
     virtual void Fire();
     void OnCollisionTrigger(const Collider* _collider) override = 0;
-    bool IsDead();
+    bool IsDeadAll();
 
 
 public: /// Setter
@@ -36,6 +37,7 @@ protected:
     WeaponType type_ = WeaponType::None;
     float speed_ = 1.f;
     float lifeTime_ = 150.0f / speed_ * 0.0166f;
+
 
 protected:
     virtual void InitializeNormal() = 0;

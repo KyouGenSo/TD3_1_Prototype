@@ -34,6 +34,17 @@ void Player::Initialize() {
     collider_->SetEvent([this](const Collider* pCol){this->OnCollision(pCol); });
     collider_->SetType(Collider::Type::ALLY);
 
+    // Status Initialize
+    status_
+        .setAttack(0)
+        .setHp(100)
+        .setLevel(1)
+        .setExp(0)
+        .setMaxExp(100)
+        .setSpeed(1)
+        .setDefence(0)
+        .setMaxHp(100);
+
     /// !!Debug!!
     weapon_ = std::make_unique<SMG>();
     gravity_ = 1.8f;

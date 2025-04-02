@@ -9,6 +9,7 @@
 #include "Transform.h"
 #include <Input.h>
 #include <array>
+#include <GameScene/Status/Status.h>
 
 class Collider;
 
@@ -26,6 +27,7 @@ protected:
 
     float deltaTime_ = 0.0f;
     bool isDead_ = false;
+    Status status_;
 
 protected:
     Input* pInput_ = nullptr;
@@ -73,6 +75,11 @@ public: /// Getter
         return isDead_;
     }
 
+    Status& getStatus() 
+    { 
+        return status_; 
+    }
+
 protected:
     void DebugObject();
     void ApplyForce(const Vector3& _force)
@@ -84,6 +91,7 @@ protected:
         Vector3 frictionForce = velocity_ * -_frictionCoef;
         velocity_ += frictionForce * deltaTime_;
     }
+    void StatusUpdateOnCollision(const Collider* pObject);
 };
 
 inline Object::Object() {
@@ -100,6 +108,7 @@ inline Object::Object() {
     uuid_ = reinterpret_cast<char*>(szUuid);
 
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
+    status_ = {};
 }
 
 inline void Object::Initialize()
