@@ -6,6 +6,7 @@
 #include <GameSystem/Chain/Chain.h>
 #include <Timer/Timer.h>
 
+#include "Collision/Collider.h"
 
 class BulletBase : public Object
 {

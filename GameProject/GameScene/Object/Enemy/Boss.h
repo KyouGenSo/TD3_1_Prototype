@@ -4,7 +4,7 @@
 #include "Object3d.h"
 #include "Camera.h"
 #include "GameScene/Object/Object.h"
-#include "GameScene/Object/Collision/Collider.h"
+#include "Collision/Collider.h"
 
 class Boss : public Object
 {
@@ -19,7 +19,7 @@ public:
 
     void ImGui();
 
-	void OnCollision(const Collider* pObject) override;
+	void OnCollision(const Collision::Collider* pObject) override;
 
     bool GetIsValid() const { return isValid_; }
 
@@ -29,8 +29,6 @@ private:
 	std::unique_ptr<Object3d> model_;
 
 	Camera* bCamera_ = nullptr;
-
-	std::unique_ptr<Collider> collider_;
 
 	Vector3 prePos;
 

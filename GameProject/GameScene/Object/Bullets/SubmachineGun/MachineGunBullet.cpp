@@ -1,6 +1,7 @@
 #include "MachineGunBullet.h"
 
 #include <numbers>
+#include <Collision/Collider.h>
 
 void MachineGunBullet::Initialize() {
     BulletBase::Initialize();
@@ -61,7 +62,7 @@ void MachineGunBullet::OnCollisionTrigger(const Collision::Collider* _collider) 
     if(isDead_ || pCollider_->IsDisabled())return;
 
     isDead_ = true;
-    pCollider_->Disable();
+    pCollider_Disable();
 
     Next();
 }

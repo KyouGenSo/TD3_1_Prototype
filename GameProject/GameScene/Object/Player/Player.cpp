@@ -30,9 +30,12 @@ void Player::Initialize() {
         .translate = { 0.0f, 0.0f, 0.0f },
     };
 
-    collider_ = std::make_unique<Collider>(this);
-    collider_->SetEvent([this](const Collider* pCol){this->OnCollision(pCol); });
-    collider_->SetType(Collider::Type::ALLY);
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol){this->OnCollision(pCol); })
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->SetSize(1.f)
+        ->Enable();
 
     /// !!Debug!!
     weapon_ = std::make_unique<SMG>();
@@ -85,7 +88,7 @@ void Player::ImGui() {
     ImGui::End();
 }
 
-void Player::OnCollision(const Collider* pCollider) {
+void Player::OnCollision(const Collision::Collider* pCollider) {
 }
 
 void Player::OnChainConfirm()

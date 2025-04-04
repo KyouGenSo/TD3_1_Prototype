@@ -25,7 +25,7 @@ class MachineGunBullet : public BulletBase{
         Bullet* SetForward(const Vector3& _forward);
         Bullet* SetSpeed(float _speed);
         bool IsDead() const {return dead;}
-        void OnCollisionTrigger(const Collider* _other);
+        void OnCollisionTrigger(const Collision::Collider* _other);
     };
 
     Vector3 origin{};
@@ -34,7 +34,7 @@ public:
     void Initialize() override;
     void Update() override;
     void Draw() override;
-    void OnCollisionTrigger(const Collider* _collider) override;
+    void OnCollisionTrigger(const Collision::Collider* _collider) override;
 
 protected:
     void InitializeNormal() override;

@@ -4,7 +4,7 @@
 #include "Object3d.h"
 #include "Camera.h"
 #include "GameScene/Object/Object.h"
-#include "GameScene/Object/Collision/Collider.h"
+#include "Collision/Collider.h"
 
 class FlyEnemy : public Object
 {
@@ -17,7 +17,7 @@ public:
 
     void Finalize();
 
-    void OnCollision(const Collider* pCollider) override;
+    void OnCollision(const Collision::Collider* pCollider) override;
 
     void Move();
 
@@ -40,8 +40,6 @@ private:
     std::unique_ptr<Object3d> model_;
 
     Camera* pCamera_ = nullptr;
-
-    std::unique_ptr<Collider> collider_;
 
     Vector3 prePosY;
 

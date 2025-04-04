@@ -9,7 +9,7 @@
 #include "HUD/Minimap.h"
 #include "Object/Camera/FollowCamera.h"
 #include "Object/Castle/Castle.h"
-#include "Object/Collision/CollisionManager.h"
+#include "Collision/CollisionManager.h"
 #include "Object/Enemy/Boss.h"
 #include "Object/Player/Player.h"
 #include "Object/Terrain/Terrain.h"
@@ -31,7 +31,7 @@ class GameScene : public BaseScene {
     std::unique_ptr<ChainViewModel> chainViewModel_;
 
     std::unique_ptr<Minimap> minimap_; 
-    CollisionManager* pCollisionManager_ = nullptr;
+    Collision::Manager* pCollisionManager_ = nullptr;
 	std::unique_ptr<Boss>boss_;
     std::unique_ptr<Terrain> terrain_;
 	std::unique_ptr<EnemyManager> enemyManager_;

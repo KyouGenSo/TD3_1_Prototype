@@ -3,6 +3,8 @@
 #include <GameScene/Object/Bullets/BulletBase.h>
 #include <array>
 
+#include "Collision/Collider.h"
+
 class AssaultBullet : public BulletBase
 {
 private:
@@ -35,7 +37,7 @@ public:
     void Update() override;
     void Draw() override;
 
-    void OnCollisionTrigger(const Collider* _other) override{};
+    void OnCollisionTrigger(const Collision::Collider* _other) override{}
 
 private:
     std::unique_ptr<Bullet> bullet_;

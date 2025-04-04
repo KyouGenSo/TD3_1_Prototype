@@ -2,14 +2,12 @@
 #include "GameScene/Object/Object.h"
 
 #include "Camera.h"
+#include <Collision/Collider.h>
 #include <GameSystem/Chain/Chain.h>
-#include <GameScene/Object/Collision/Collider.h>
 #include <GameScene/Object/Weapon/Weapon.h>
 #include <Interfaces/IObserver.h>
 
 class Player : public Object {
-    std::unique_ptr<Collider> collider_;
-
     Chain* chain_;
     std::unique_ptr<WeaponBase> weapon_;
 
@@ -32,7 +30,7 @@ public:
     void Draw() override;
     void Finalize();
     void ImGui();
-    void OnCollision(const Collider* pCollider) override;
+    void OnCollision(const Collision::Collider* pCollider) override;
     void AddObserver(IObserver* _observer) { observers_.push_back(_observer); }
     void SetFloor(float _floor) { floor_ = _floor; }
     void SetChain(Chain* _chain) { chain_ = _chain; weapon_->SetChain(_chain); }

@@ -375,5 +375,6 @@
       <Filter>Object\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
+    <ClInclude Include="Type\ColliderType.h" />
   </ItemGroup>
 </Project>

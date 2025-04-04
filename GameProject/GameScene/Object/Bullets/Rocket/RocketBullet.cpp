@@ -3,7 +3,7 @@
 #include <Quaternion.h>
 #include <QuatFunc.h>
 
-#include "GameScene/Object/Collision/LimitedCollider.h"
+#include "Collision/Collider.h"
 
 void RocketBullet::Initialize()
 {
@@ -19,11 +19,13 @@ void RocketBullet::Initialize()
 
     CalcLifeTime();
 
-    pCollider_ = std::make_unique<Collider>(this);
-    pCollider_->SetEvent([this](const Collider* pCol){this->OnCollisionTrigger(pCol); }, Collider::Event::TRIGGER);
-    pCollider_->SetSize(0.4f);
-    pCollider_->SetType(Collider::Type::ALLY);
-    pCollider_->SetIgnore(Collider::Type::ALLY);
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol){this->OnCollisionTrigger(pCol); })
+        ->SetSize(0.4f)
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->Enable();
 }
 
 void RocketBullet::Update()
