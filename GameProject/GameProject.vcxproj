@@ -212,6 +212,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameSystem\StageManager\StageManager.cpp" />
     <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp" />
     <ClCompile Include="GameUI\Chain\GUI_Chain.cpp" />
+    <ClCompile Include="GameUI\CountDown\CountDown.cpp" />
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="Internal\SingletonFinalizer.cpp" />
@@ -261,6 +262,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameSystem\StageManager\StageManager.h" />
     <ClInclude Include="GameSystem\TimeKeeper\TimeKeeper.h" />
     <ClInclude Include="GameUI\Chain\GUI_Chain.h" />
+    <ClInclude Include="GameUI\CountDown\CountDown.h" />
     <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h" />
     <ClInclude Include="Internal\SingletonFinalizer.h" />
     <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />

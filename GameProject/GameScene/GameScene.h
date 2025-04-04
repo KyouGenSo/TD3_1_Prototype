@@ -19,6 +19,7 @@
 #include <GameSystem/ChainViewModel/ChainViewModel.h>
 #include <GameSystem/GameController/GameController.h>
 #include <Utility/Threadpool/Threadpool.h>
+#include <GameUI/CountDown/CountDown.h>
 
 class GameScene : public BaseScene
 {
@@ -41,6 +42,7 @@ class GameScene : public BaseScene
     EventTimer* eventTimer_ = nullptr;
     Threadpool* threadpool_ = nullptr;
     std::unique_ptr<TimeKeeper> timeKeeper_;
+    std::unique_ptr<CountDown> countDown_;
 
 public:
     struct DirectionalLightParam
