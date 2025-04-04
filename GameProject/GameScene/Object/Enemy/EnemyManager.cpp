@@ -82,10 +82,8 @@ void EnemyManager::Update()
         (*enemy)->Update();
         ++enemy;
     }
-    for (auto enemy = flyEnemies_.begin(); enemy != flyEnemies_.end(); )
-    {
-        if ((*enemy)->IsDead())
-        {
+    for (auto enemy = flyEnemies_.begin(); enemy != flyEnemies_.end(); ){
+        if ((*enemy)->IsDead()){
             enemy = flyEnemies_.erase(enemy);
             continue;
         }
