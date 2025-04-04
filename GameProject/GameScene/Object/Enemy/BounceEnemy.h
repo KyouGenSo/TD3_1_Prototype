@@ -33,9 +33,6 @@ public:
 
 
 private:
-    std::unique_ptr<Object3d> model_;
-
-    Camera* pCamera_ = nullptr;
 
     std::unique_ptr<Collider> collider_;
 
