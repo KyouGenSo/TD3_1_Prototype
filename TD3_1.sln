@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "Externals\Engine\p
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NiGui", "Externals\NiGui\NiGui.vcxproj", "{E3E0F431-57AB-47BD-9CAD-DB622644B99C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CollisioniLib", "Externals\CollisionLib\CollisioniLib.vcxproj", "{3B4663F4-D09B-4503-AEB0-B2477444918F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,8 +63,19 @@ Global
 		{E3E0F431-57AB-47BD-9CAD-DB622644B99C}.Release|x64.Build.0 = Release|x64
 		{E3E0F431-57AB-47BD-9CAD-DB622644B99C}.Release|x86.ActiveCfg = Release|x64
 		{E3E0F431-57AB-47BD-9CAD-DB622644B99C}.Release|x86.Build.0 = Release|x64
+		{3B4663F4-D09B-4503-AEB0-B2477444918F}.Debug|x64.ActiveCfg = Debug|x64
+		{3B4663F4-D09B-4503-AEB0-B2477444918F}.Debug|x64.Build.0 = Debug|x64
+		{3B4663F4-D09B-4503-AEB0-B2477444918F}.Debug|x86.ActiveCfg = Debug|Win32
+		{3B4663F4-D09B-4503-AEB0-B2477444918F}.Debug|x86.Build.0 = Debug|Win32
+		{3B4663F4-D09B-4503-AEB0-B2477444918F}.Release|x64.ActiveCfg = Release|x64
+		{3B4663F4-D09B-4503-AEB0-B2477444918F}.Release|x64.Build.0 = Release|x64
+		{3B4663F4-D09B-4503-AEB0-B2477444918F}.Release|x86.ActiveCfg = Release|Win32
+		{3B4663F4-D09B-4503-AEB0-B2477444918F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2AC35B59-F32B-42E1-A543-9F0130346B5B}
 	EndGlobalSection
 EndGlobal

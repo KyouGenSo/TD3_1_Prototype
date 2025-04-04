@@ -58,19 +58,21 @@ void RocketBullet::Draw()
     if (pNext_) pNext_->Draw();
 }
 
-void RocketBullet::OnCollisionTrigger(const Collider* _other)
+void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
 {
-    if (isDead_ || pCollider_->IsDisable()) return;
+    if (isDead_ || pCollider_->IsDisabled()) return;
 
     isDead_ = true;
     pCollider_->Disable();
 
     color = {1, 0,0,1};
     //爆発オブジェクトを生成
-    explosion_ = std::make_unique<LimitedCollider>(this, 1);
-    explosion_->SetSize(5.0f);
-    explosion_->SetType(Collider::Type::ALLY);
-    explosion_->SetIgnore(Collider::Type::STAGE);
+    explosion_ = std::make_unique<Collision::Collider>();
+    explosion_->SetSize(5.0f)
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->Enable();
 
     Next();
 }

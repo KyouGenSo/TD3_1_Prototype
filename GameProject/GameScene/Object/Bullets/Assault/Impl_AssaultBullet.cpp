@@ -14,13 +14,14 @@ void AssaultBullet::Bullet::Initialize()
     model_->SetModel("box.gltf");
     model_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 
-    collider_ = std::make_unique<Collider>();
-    collider_->SetEvent([this](const auto& c){this->OnCollisionTrigger(c); })
+    collider_ = std::make_unique<Collision::Collider>();
+    collider_->SetEvent(Collision::EventType::Trigger, [this](const auto& c){this->OnCollisionTrigger(c); })
         ->SetSize(0.3f)
-        ->SetType(Collider::Type::P_BULLET)
-        ->SetIgnore(Collider::Type::ALLY)
-        ->SetIgnore(Collider::Type::P_BULLET)
-        ->SetIgnore(Collider::Type::STAGE);
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE));
     Update();
 }
 
@@ -39,8 +40,8 @@ void AssaultBullet::Bullet::Draw()
     model_->Draw();
 }
 
-void AssaultBullet::Bullet::OnCollisionTrigger(const Collider* _other) {
-    if (_other->GetType() == Collider::Type::ENEMY){
+void AssaultBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _other) {
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY)){
         hit = true;
     }
 }

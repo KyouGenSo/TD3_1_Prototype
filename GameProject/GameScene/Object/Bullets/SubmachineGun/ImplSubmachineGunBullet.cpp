@@ -6,13 +6,15 @@ MachineGunBullet::Bullet* MachineGunBullet::Bullet::Initialize() {
     model_->SetModel("box.gltf");
     model_->SetScale({.2f, .2f, .2f});
 
-    collider_ = std::make_unique<Collider>();
-    collider_->SetEvent([&](auto c){OnCollisionTrigger(c); })
+    collider_ = std::make_unique<Collision::Collider>();
+    collider_->SetEvent(Collision::EventType::Trigger, [&](auto c){OnCollisionTrigger(c); })
         ->SetSize(0.2f)
-        ->SetType(Collider::Type::P_BULLET)
-        ->SetIgnore(Collider::Type::ALLY)
-        ->SetIgnore(Collider::Type::P_BULLET)
-        ->SetIgnore(Collider::Type::STAGE);
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->Enable();
     Update();
     return this;
 }
@@ -56,6 +58,6 @@ MachineGunBullet::Bullet* MachineGunBullet::Bullet::SetSpeed(float _speed) {
     return this;
 }
 
-void MachineGunBullet::Bullet::OnCollisionTrigger(const Collider* _other) {
+void MachineGunBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _other) {
     dead = true;
 }

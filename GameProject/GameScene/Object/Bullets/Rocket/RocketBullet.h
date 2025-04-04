@@ -9,7 +9,7 @@ public:
     void Update() override;
     void Draw() override;
 
-    void OnCollisionTrigger(const Collider* _other) override;
+    void OnCollisionTrigger(const Collision::Collider* _other) override;
 
 private:
     void InitializeNormal() override;
@@ -19,7 +19,7 @@ private:
 
     Vector3 forward_ = {};
 
-    std::unique_ptr<Collider> explosion_;
+    std::unique_ptr<Collision::Collider> explosion_;
 
     Vector4 color = {1,1,1,1};
 

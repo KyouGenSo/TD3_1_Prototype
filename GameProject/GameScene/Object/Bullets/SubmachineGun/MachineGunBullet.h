@@ -7,7 +7,7 @@ class MachineGunBullet : public BulletBase{
         Vector3 origin {};
 
         std::unique_ptr<Object3d> model_;
-        std::unique_ptr<Collider> collider_;
+        std::unique_ptr<Collision::Collider> collider_;
 
         Transform transform_ = {};
         Vector3 forward_ = {};

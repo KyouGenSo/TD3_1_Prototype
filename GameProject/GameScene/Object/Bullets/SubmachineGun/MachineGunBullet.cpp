@@ -15,13 +15,14 @@ void MachineGunBullet::Initialize() {
 
     CalcLifeTime();
 
-    pCollider_ = std::make_unique<Collider>(this);
+    pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
-        ->SetEvent([&](const Collider* pCol){ OnCollisionTrigger(pCol); })
+        ->SetEvent(Collision::EventType::Trigger, [&](const Collision::Collider* pCol){ OnCollisionTrigger(pCol); })
         ->SetSize(0.2f)
-        ->SetType(Collider::Type::ALLY)
-        ->SetIgnore(Collider::Type::ALLY)
-        ->SetIgnore(Collider::Type::STAGE);
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE));
 }
 
 void MachineGunBullet::Update() {
@@ -56,8 +57,8 @@ void MachineGunBullet::Draw() {
     }
 }
 
-void MachineGunBullet::OnCollisionTrigger(const Collider* _collider) {
-    if(isDead_ || pCollider_->IsDisable())return;
+void MachineGunBullet::OnCollisionTrigger(const Collision::Collider* _collider) {
+    if(isDead_ || pCollider_->IsDisabled())return;
 
     isDead_ = true;
     pCollider_->Disable();

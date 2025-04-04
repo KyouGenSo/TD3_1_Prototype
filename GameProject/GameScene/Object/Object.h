@@ -8,15 +8,25 @@
 #include "Object3dBasic.h"
 #include "Transform.h"
 #include <Input.h>
-#include <array>
+#include <Collision/Collider.h>
 
-class Collider;
+namespace Collider {
+    enum class Type{
+        NONE = 0,
+        ALLY = 0b1,
+        P_BULLET = 0b1 << 1,
+        ENEMY = 0b1 << 2,
+        STAGE = 0b1 << 3,
+    };
+}
 
 class Object{
 	std::string uuid_;
 protected:
     Camera* pCamera_ = nullptr;
     std::unique_ptr<Object3d> model_;
+
+    std::unique_ptr<Collision::Collider> pCollider_;
 
 	Transform transform_ = {};
     Vector3 velocity_ = {};
@@ -38,9 +48,9 @@ public:
     virtual void Update() = 0;
     virtual void Draw() = 0;
 
-    virtual void OnCollisionTrigger(const Collider* pObject){}
-    virtual void OnCollision(const Collider* pObject){}
-    virtual void OnCollisionExit(const Collider* pObject){}
+    virtual void OnCollisionTrigger(const Collision::Collider* pObject){}
+    virtual void OnCollision(const Collision::Collider* pObject){}
+    virtual void OnCollisionExit(const Collision::Collider* pObject){}
 
 
 public: /// Setter

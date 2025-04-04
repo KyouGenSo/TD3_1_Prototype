@@ -3,7 +3,7 @@
 #include <Object3d.h>
 #include <memory>
 
-#include "GameScene/Object/Collision/Collider.h"
+#include <Collision/Collider.h>
 
 class Terrain
 {
@@ -17,7 +17,7 @@ public:
 
     void ImGui();
 
-    void OnCollision(const Collider* pCollider) const;
+    void OnCollision(const Collision::Collider* pCollider) const;
 
 public:
     float GetFloorHeight() const;
@@ -27,5 +27,5 @@ private:
     std::unique_ptr<Object3d> boxObj_;
     Transform transform_;
 
-    std::unique_ptr<Collider> collider_;
+    std::unique_ptr<Collision::Collider> collider_;
 };

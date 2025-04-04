@@ -134,14 +134,8 @@
     <ClCompile Include="GameScene\Object\Enemy\Boss.cpp">
       <Filter>Object\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Collision\Collider.cpp">
-      <Filter>GameSystem\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\Object\Enemy\Enemy.cpp">
       <Filter>Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScene\Object\Collision\CollisionManager.cpp">
-      <Filter>GameSystem\Collision</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\HUD\Minimap.cpp">
       <Filter>GameUI\HUD</Filter>
@@ -230,9 +224,6 @@
     <ClCompile Include="Utility\Threadpool\Threadpool.cpp">
       <Filter>Utility\Threadpool</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Collision\LimitedCollider.cpp">
-      <Filter>GameSystem\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Ease\Ease.cpp">
       <Filter>Utility\Ease</Filter>
     </ClCompile>
@@ -275,14 +266,8 @@
     <ClInclude Include="GameScene\Object\Enemy\Boss.h">
       <Filter>Object\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Collision\Collider.h">
-      <Filter>GameSystem\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\Enemy.h">
       <Filter>Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Collision\CollisionManager.h">
-      <Filter>GameSystem\Collision</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Object.h">
       <Filter>Object</Filter>
@@ -373,9 +358,6 @@
     </ClInclude>
     <ClInclude Include="Utility\Threadpool\Threadpool.h">
       <Filter>Utility\Threadpool</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h">
-      <Filter>GameSystem\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Ease\Ease.h">
       <Filter>Utility\Ease</Filter>

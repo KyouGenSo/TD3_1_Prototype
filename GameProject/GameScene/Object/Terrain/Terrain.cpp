@@ -75,7 +75,7 @@ void Terrain::ImGui()
     ImGui::End();
 }
 
-void Terrain::OnCollision(const Collider* pCollider) const {
+void Terrain::OnCollision(const Collision::Collider* pCollider) const {
     (void)pCollider;
 }
 

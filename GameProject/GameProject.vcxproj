@@ -163,6 +163,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Externals\CollisionLib\CollisioniLib.vcxproj">
+      <Project>{3b4663f4-d09b-4503-aeb0-b2477444918f}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Externals\Engine\project\externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
@@ -192,8 +195,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\Object\Bullets\BulletFactory.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\Rocket\RocketBullet.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\Boss.cpp" />
-    <ClCompile Include="GameScene\Object\Collision\Collider.cpp" />
-    <ClCompile Include="GameScene\Object\Collision\CollisionManager.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="GameScene\Object\Camera\FollowCamera.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
@@ -213,7 +214,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="Internal\SingletonFinalizer.cpp" />
-    <ClCompile Include="GameScene\Object\Collision\LimitedCollider.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameScene\HUD\Minimap.cpp" />
     <ClCompile Include="MyGame\MyGame.cpp" />
@@ -240,8 +240,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene\Object\Bullets\Rocket\RocketBullet.h" />
     <ClInclude Include="GameScene\Object\Enemy\Boss.h" />
     <ClInclude Include="GameScene\Object\Enemy\Enemy.h" />
-    <ClInclude Include="GameScene\Object\Collision\Collider.h" />
-    <ClInclude Include="GameScene\Object\Collision\CollisionManager.h" />
     <ClInclude Include="GameScene\Object\Camera\FollowCamera.h" />
     <ClInclude Include="GameScene\HUD\Minimap.h" />
     <ClInclude Include="GameScene\Object\Terrain\Terrain.h" />
@@ -258,7 +256,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameUI\Chain\GUI_Chain.h" />
     <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h" />
     <ClInclude Include="Internal\SingletonFinalizer.h" />
-    <ClInclude Include="GameScene\Object\Collision\LimitedCollider.h" />
     <ClInclude Include="MyGame\MyGame.h" />
     <ClInclude Include="GameScene\Object\Object.h" />
     <ClInclude Include="GameScene\GameScene.h" />

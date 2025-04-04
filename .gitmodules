@@ -4,9 +4,6 @@
 [submodule "Externals/NiGui"]
 	path = Externals/NiGui
 	url = https://github.com/Souto-Naitou/NiGui.git
-[submodule "GameProject/CollisioniLib"]
-	path = GameProject/CollisioniLib
-	url = https://github.com/MaekawaTomonori/CollisioniLib.git
 [submodule "Externals/CollisionLib"]
 	path = Externals/CollisionLib
 	url = https://github.com/MaekawaTomonori/CollisioniLib.git
