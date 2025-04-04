@@ -3,6 +3,7 @@
 #include <memory>
 #include <random>
 
+#include "EnemyBase.h"
 #include "Enemy.h"
 #include "FlyEnemy.h"
 #include "BounceEnemy.h"
@@ -10,14 +11,17 @@
 
 class Player;
 class Castle;
-class EnemyManager {
+class EnemyManager
+{
 private:
-    enum Type {
+    enum Type
+    {
         Normal,
         Fly,
         Bounce
     };
-    struct Wave {
+    struct Wave
+    {
         Type type;
         float interval;
         int amount;
@@ -34,8 +38,8 @@ public:
     void Update();
     void Draw();
     void Finalize();
-	void AddEnemy(const Vector3& position, Type type);
-    void SelectTarget(Object* enemy);
+    void AddEnemy(const Vector3& position, Type type);
+    void SelectTarget(EnemyBase* enemy);
     void ImGui();
     void ChangeWave(std::string key, bool resetSpawnCount = true);
     void SetMinimap(Minimap* pMinimap);
@@ -47,7 +51,7 @@ public:
 private:
     void SpawnEnemy();
     Vector3 RandomSpawnPosition(Type type);
-    void CreateWaveFile(std::string key);
+    //void CreateWaveFile(std::string key);
     void InitializeWaveFile(std::string key);
     void TurnControl();
 

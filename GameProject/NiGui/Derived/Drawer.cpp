@@ -30,7 +30,7 @@ void NiGuiDrawer::Draw()
         sprite->SetPos({ data->leftTop.x, data->leftTop.y });
         sprite->SetSize({ data->size.x, data->size.y });
         sprite->SetColor({ data->color.x, data->color.y, data->color.z, data->color.w });
-        
+
         sprite->Update();
         sprite->Draw();
 

@@ -57,12 +57,14 @@ void Enemy::OnCollision(const Collider* pCollider)
             return;
         }
 
+        transform_.translate = prePos_;
         model_->SetTranslate(transform_.translate);
     }
 }
 
 void Enemy::Move()
 {
+    prePos_ = transform_.translate;
     if(isAppearing_) {
         AppearanceProduction();
     }else {
