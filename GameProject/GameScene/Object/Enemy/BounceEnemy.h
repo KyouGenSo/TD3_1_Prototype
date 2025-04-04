@@ -41,8 +41,6 @@ private:
 
     float targetRotate = 2.0f;
 
-    Object* pTarget_ = nullptr;
-
     float speed = 0.2f;
 
     float appearDuration = 60.0f;
