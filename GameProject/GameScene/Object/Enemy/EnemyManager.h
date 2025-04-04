@@ -8,6 +8,7 @@
 #include "FlyEnemy.h"
 #include "BounceEnemy.h"
 #include "GameScene/HUD/Minimap.h"
+#include "Timer/Timer.h"
 
 class Player;
 class Castle;
