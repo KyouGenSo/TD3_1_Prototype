@@ -85,6 +85,8 @@ void GameScene::Initialize()
     timeKeeper_->Initialize();
     timeKeeper_->AddEvent("CountDown", 3.0f);
     timeKeeper_->AddEvent("JunbiPhase", 12.0f);
+    timeKeeper_->Load();
+    timeKeeper_->Run("JunbiPhase");
 
     player_->SetChain(chainViewModel_->GetChain());
 
@@ -95,6 +97,10 @@ void GameScene::Initialize()
     guiChain_->SetGameController(gameController_.get());
 
     threadpool_ = Threadpool::GetInstance();
+
+    // CountDownの初期化
+    countDown_ = std::make_unique<CountDown>();
+    countDown_->Initialize();
 }
 
 void GameScene::Finalize()
@@ -132,6 +138,15 @@ void GameScene::Update()
     threadpool_->AddTask([&]{pCollisionManager_->Update(); });
     eventTimer_->Measure("ProcessEvent", [&]{threadpool_->AddTask([&]{ pCollisionManager_->ProcessEvents(); }); });
     pCollisionManager_->ImText();
+
+    /// タイマーの更新
+    if (timeKeeper_->GetRemainTime("JunbiPhase") < 3.0f && !countDown_->IsStart())
+    {
+        countDown_->Start();
+        timeKeeper_->Reset("JunbiPhase");
+    }
+
+    countDown_->Update();
 }
 
 void GameScene::Draw()
@@ -156,6 +171,7 @@ void GameScene::Draw()
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
+    countDown_->Draw2D();
 
     minimap_->Draw();
 }

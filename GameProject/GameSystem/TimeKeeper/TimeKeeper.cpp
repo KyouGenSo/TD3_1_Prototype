@@ -13,9 +13,9 @@ void TimeKeeper::Update()
 {
     for (auto& [key, value] : event_)
     {
-        if (value.timer.GetNow<float>() >= value.duration)
+        if (value.timer.GetNow<float>() <= 0.0)
         {
-            value.timer.Reset();
+            value.timer.Stop();
         }
     }
 }
@@ -24,6 +24,11 @@ void TimeKeeper::Run(const std::string& _name)
 {
     event_[_name].timer.Reset();
     event_[_name].timer.Start();
+}
+
+void TimeKeeper::Reset(const std::string& _name)
+{
+    event_[_name].timer.Reset();
 }
 
 void TimeKeeper::AddEvent(const std::string& _name, float _duration)
@@ -51,7 +56,8 @@ void TimeKeeper::ImGui()
         {
             if (ImGui::TreeNode(key.c_str()))
             {
-                ImGui::Text("%.1f", value.duration - value.timer.GetNow<float>());
+                float now = value.duration - value.timer.GetNow<float>();
+                ImGui::Text("%.1f", now > 0.0f ? now : 0.0f);
                 ImGui::ProgressBar(value.timer.GetNow<float>() / value.duration, ImVec2(0.0f, 0.0f), "");
                 ImGui::Text("Duration : %f", value.duration);
                 if (ImGui::Button("Run"))
