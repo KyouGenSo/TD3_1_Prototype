@@ -1,0 +1,9 @@
+{
+    "0101n": {
+        "amount": 5,
+        "hpMultiplier": 1.0,
+        "interval": 1.0,
+        "turn": 0,
+        "type": 0
+    }
+}
