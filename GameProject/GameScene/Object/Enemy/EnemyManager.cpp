@@ -27,11 +27,18 @@ void EnemyManager::Initialize(Object* player, Object* castle)
     keys_.clear();
 
 
-    InitializeWaveFile("0101");
-    InitializeWaveFile("0102");
-    InitializeWaveFile("0103");
-    InitializeWaveFile("0104");
 
+    InitializeWaveFile("0101n");
+    InitializeWaveFile("0102n");
+    InitializeWaveFile("0103n");
+    InitializeWaveFile("0103f");
+
+    //InitializeWaveFile("0201n");
+    //InitializeWaveFile("0202n");
+    //InitializeWaveFile("0202b");
+    //InitializeWaveFile("0203n");
+    //InitializeWaveFile("0203f");
+    //InitializeWaveFile("0203b");
 }
 
 void EnemyManager::Update()
@@ -40,10 +47,19 @@ void EnemyManager::Update()
     {
         SpawnEnemy();
     }
-    for (auto enemy = enemies_.begin(); enemy != enemies_.end(); )
-    {
-        if ((*enemy)->IsDead())
-        {
+
+    for (const auto& key : keys_) {
+        if (waves_[key].time > 0.0f) {
+            waves_[key].time -= deltaTime_;
+        }
+        else {
+            TurnControl();
+            turnProgress++;
+        }
+    }
+
+    for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {
+        if ((*enemy)->IsDead()){
             //pMinimap_->Unregister(enemy.get());
             enemy = enemies_.erase(enemy);
             continue;
@@ -286,6 +302,7 @@ void EnemyManager::CreateWaveFile(std::string key)
     GlobalVariables::GetInstance()->AddItem(key, "amount", wave_.amount);
     GlobalVariables::GetInstance()->AddItem(key, "hpMultiplier", wave_.hpMultiplier);
     GlobalVariables::GetInstance()->AddItem(key, "turn", wave_.turn);
+    GlobalVariables::GetInstance()->AddItem(key, "time", wave_.time);
 }
 */
 
@@ -296,8 +313,8 @@ void EnemyManager::ChangeWave(std::string key, bool resetSpawnCount)
     waves_[key].amount = GlobalVariables::GetInstance()->GetValueInt(key, "amount");
     waves_[key].hpMultiplier = GlobalVariables::GetInstance()->GetValueFloat(key, "hpMultiplier");
     waves_[key].turn = GlobalVariables::GetInstance()->GetValueInt(key, "turn");
-    if (resetSpawnCount)
-    {
+    waves_[key].time = GlobalVariables::GetInstance()->GetValueFloat(key, "time");
+    if (resetSpawnCount) {
         spawnCount_[key] = 0;
     }
 }

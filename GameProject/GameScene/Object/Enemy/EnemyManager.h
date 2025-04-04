@@ -27,6 +27,7 @@ private:
         int amount;
         float hpMultiplier;
         int turn;
+        float time;
     };
 
 public:
