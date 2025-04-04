@@ -33,12 +33,12 @@ void EnemyManager::Initialize(Object* player, Object* castle)
     InitializeWaveFile("0103n");
     InitializeWaveFile("0103f");
 
-    InitializeWaveFile("0201n");
-    InitializeWaveFile("0202n");
-    InitializeWaveFile("0202b");
-    InitializeWaveFile("0203n");
-    InitializeWaveFile("0203f");
-    InitializeWaveFile("0203b");
+    //InitializeWaveFile("0201n");
+    //InitializeWaveFile("0202n");
+    //InitializeWaveFile("0202b");
+    //InitializeWaveFile("0203n");
+    //InitializeWaveFile("0203f");
+    //InitializeWaveFile("0203b");
 }
 
 void EnemyManager::Update()
@@ -46,6 +46,17 @@ void EnemyManager::Update()
     if (!keys_.empty()) {
         SpawnEnemy();
     }
+
+    for (const auto& key : keys_) {
+        if (waves_[key].time > 0.0f) {
+            waves_[key].time -= deltaTime_;
+        }
+        else {
+            TurnControl();
+            turnProgress++;
+        }
+    }
+
     for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {
         if ((*enemy)->IsDead()){
             //pMinimap_->Unregister(enemy.get());
@@ -262,6 +273,7 @@ void EnemyManager::CreateWaveFile(std::string key)
     GlobalVariables::GetInstance()->AddItem(key, "amount", wave_.amount);
     GlobalVariables::GetInstance()->AddItem(key, "hpMultiplier", wave_.hpMultiplier);
     GlobalVariables::GetInstance()->AddItem(key, "turn", wave_.turn);
+    GlobalVariables::GetInstance()->AddItem(key, "time", wave_.time);
 }
 
 void EnemyManager::ChangeWave(std::string key, bool resetSpawnCount)
@@ -271,6 +283,7 @@ void EnemyManager::ChangeWave(std::string key, bool resetSpawnCount)
     waves_[key].amount = GlobalVariables::GetInstance()->GetValueInt(key, "amount");
     waves_[key].hpMultiplier = GlobalVariables::GetInstance()->GetValueFloat(key, "hpMultiplier");
     waves_[key].turn = GlobalVariables::GetInstance()->GetValueInt(key, "turn");
+    waves_[key].time = GlobalVariables::GetInstance()->GetValueFloat(key, "time");
     if (resetSpawnCount) {
         spawnCount_[key] = 0;
     }
