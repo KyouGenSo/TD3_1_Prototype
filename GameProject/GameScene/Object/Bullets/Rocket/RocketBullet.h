@@ -19,10 +19,13 @@ private:
 
     Vector3 forward_ = {};
 
-    std::unique_ptr<Collision::Collider> explosion_;
 
     Vector4 color = {1,1,1,1};
 
     Timer timer;
+
+    std::unique_ptr<Collision::Collider> explosion_;
+    bool createExpl_ = false;
+    Vector3 explosionPos_ = {};
 };
 

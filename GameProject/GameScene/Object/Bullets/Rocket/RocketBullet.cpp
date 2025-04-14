@@ -70,11 +70,12 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
     pCollider_->Disable();
 
     color = {1, 0,0,1};
-    //爆発オブジェクトを生成
+
+    //爆発オブジェクトを生成   
     explosion_ = std::make_unique<Collision::Collider>();
     explosion_
         ->SetType(Collision::Type::Sphere)
-        ->SetTranslate(Adaptor(transform_.translate))
+        ->SetTranslate(Adaptor(explosionPos_))
         ->SetSize(5.0f)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
@@ -100,6 +101,7 @@ void RocketBullet::InitializeChain()
 void RocketBullet::UpdateNormal()
 {
     transform_.translate += forward_ * speed_;
+
     pCollider_->SetTranslate(Adaptor(transform_.translate));
 }
 
