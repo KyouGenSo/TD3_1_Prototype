@@ -1,6 +1,7 @@
 #include "Castle.h"
 
 #include "Collision/Collider.h"
+#include "Type/ColliderType.h"
 
 void Castle::Initialize() {
     Object::Initialize();

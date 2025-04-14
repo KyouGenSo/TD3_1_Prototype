@@ -2,6 +2,7 @@
 
 #include "Object3dBasic.h"
 #include "cmath"
+#include "Type/ColliderType.h"
 
 void Enemy::Initialize()
 {
@@ -23,6 +24,7 @@ void Enemy::Initialize()
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) {this->OnCollision(pObj); })
         ->SetType(Collision::Type::Sphere)
+        ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(1.f)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
@@ -34,8 +36,11 @@ void Enemy::Update()
 {
     if (isDead_) return;
 
-    model_->Update();
     Move();
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
+
+    model_->Update();
 }
 
 void Enemy::Draw()

@@ -3,6 +3,7 @@
 #include <ModelManager.h>
 
 #include "QuatFunc.h"
+#include "Type/ColliderType.h"
 
 void AssaultBullet::Bullet::Initialize()
 {
@@ -16,6 +17,7 @@ void AssaultBullet::Bullet::Initialize()
 
     collider_ = std::make_unique<Collision::Collider>();
     collider_->SetEvent(Collision::EventType::Trigger, [this](const auto& c){this->OnCollisionTrigger(c); })
+        ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.3f)
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
@@ -28,6 +30,8 @@ void AssaultBullet::Bullet::Initialize()
 void AssaultBullet::Bullet::Update()
 {
     transform_.translate += forward_ * speed_;
+
+    collider_->SetTranslate(Adaptor(transform_.translate));
 
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);

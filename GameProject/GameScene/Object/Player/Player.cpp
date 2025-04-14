@@ -12,6 +12,7 @@
 
 #include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
 #include "GameScene/Object/Weapon/SMG/SMG.h"
+#include "Type/ColliderType.h"
 
 void Player::Initialize() {
     Object::Initialize();
@@ -32,6 +33,7 @@ void Player::Initialize() {
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol){this->OnCollision(pCol); })
+        ->SetTranslate(Adaptor(transform_.translate))
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
         ->SetSize(1.f)
@@ -51,6 +53,8 @@ void Player::Update() {
     weapon_->SetPosition(transform_.translate);
     weapon_->SetRotation(transform_.rotate);
     weapon_->Update();
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
 
     /// Model Update
     model_->SetScale(transform_.scale);

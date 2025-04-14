@@ -3,6 +3,8 @@
 #include <numbers>
 #include <Collision/Collider.h>
 
+#include "Type/ColliderType.h"
+
 void MachineGunBullet::Initialize() {
     BulletBase::Initialize();
 
@@ -19,6 +21,7 @@ void MachineGunBullet::Initialize() {
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
         ->SetEvent(Collision::EventType::Trigger, [&](const Collision::Collider* pCol){ OnCollisionTrigger(pCol); })
+        ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.2f)
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
@@ -62,7 +65,7 @@ void MachineGunBullet::OnCollisionTrigger(const Collision::Collider* _collider) 
     if(isDead_ || pCollider_->IsDisabled())return;
 
     isDead_ = true;
-    pCollider_Disable();
+    pCollider_->Disable();
 
     Next();
 }
@@ -89,6 +92,8 @@ void MachineGunBullet::InitializeChain() {
 
 void MachineGunBullet::UpdateNormal() {
     transform_.translate += forward_ * speed_;
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
 
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);

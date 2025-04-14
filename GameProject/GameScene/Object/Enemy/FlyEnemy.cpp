@@ -2,6 +2,7 @@
 
 #include "Object3dBasic.h"
 #include "cmath"
+#include "Type/ColliderType.h"
 
 void FlyEnemy::Initialize()
 {
@@ -26,6 +27,7 @@ void FlyEnemy::Initialize()
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(1.f)
         ->Enable();
 }
@@ -34,8 +36,11 @@ void FlyEnemy::Update()
 {
     if (isDead_) return;
 
-    model_->Update();
     Move();
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
+
+    model_->Update();
 }
 
 void FlyEnemy::Draw()

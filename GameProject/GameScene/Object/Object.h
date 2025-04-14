@@ -84,6 +84,11 @@ protected:
         Vector3 frictionForce = velocity_ * -_frictionCoef;
         velocity_ += frictionForce * deltaTime_;
     }
+
+    static Collision::Vec3 Adaptor(Vector3 _vec)
+    {
+        return Collision::Vec3(_vec.x, _vec.y, _vec.z);
+    }
 };
 
 inline Object::Object() {

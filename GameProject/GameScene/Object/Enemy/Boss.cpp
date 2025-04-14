@@ -28,6 +28,9 @@ void Boss::Initialize()
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetTranslate(Adaptor(transform_.translate))
+        ->SetSize(3.f)
         ->Enable();
 
     isValid_ = false;
@@ -41,8 +44,11 @@ void Boss::Update()
     }else {
         
     }
-	    model_->SetTranslate(transform_.translate);
-	    model_->Update();
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
+
+	model_->SetTranslate(transform_.translate);
+	model_->Update();
 }
 
 void Boss::Draw()

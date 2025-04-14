@@ -4,6 +4,7 @@
 #include <QuatFunc.h>
 
 #include "Collision/Collider.h"
+#include "Type/ColliderType.h"
 
 void RocketBullet::Initialize()
 {
@@ -21,6 +22,7 @@ void RocketBullet::Initialize()
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol){this->OnCollisionTrigger(pCol); })
+        ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.4f)
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
@@ -38,7 +40,7 @@ void RocketBullet::Update()
     {
         UpdateNormal();
     }
-    
+
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
     model_->Update();
@@ -70,8 +72,10 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
     color = {1, 0,0,1};
     //爆発オブジェクトを生成
     explosion_ = std::make_unique<Collision::Collider>();
-    explosion_->SetSize(5.0f)
+    explosion_
         ->SetType(Collision::Type::Sphere)
+        ->SetTranslate(Adaptor(transform_.translate))
+        ->SetSize(5.0f)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
         ->Enable();
@@ -96,6 +100,7 @@ void RocketBullet::InitializeChain()
 void RocketBullet::UpdateNormal()
 {
     transform_.translate += forward_ * speed_;
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
 }
 
 void RocketBullet::UpdateChain()

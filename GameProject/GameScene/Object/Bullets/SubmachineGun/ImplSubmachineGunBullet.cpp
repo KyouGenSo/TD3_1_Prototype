@@ -1,4 +1,5 @@
 #include "MachineGunBullet.h"
+#include "Type/ColliderType.h"
 
 MachineGunBullet::Bullet* MachineGunBullet::Bullet::Initialize() {
     model_ = std::make_unique<Object3d>();
@@ -9,6 +10,7 @@ MachineGunBullet::Bullet* MachineGunBullet::Bullet::Initialize() {
     collider_ = std::make_unique<Collision::Collider>();
     collider_->SetEvent(Collision::EventType::Trigger, [&](auto c){OnCollisionTrigger(c); })
         ->SetSize(0.2f)
+        ->SetTranslate(Adaptor(transform_.translate))
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
@@ -26,6 +28,8 @@ void MachineGunBullet::Bullet::Update() {
     if (50.f <= (transform_.translate - origin).Length()){
         dead = true;
     }
+
+    collider_->SetTranslate(Adaptor(transform_.translate));
 
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
