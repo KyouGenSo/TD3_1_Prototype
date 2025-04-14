@@ -34,6 +34,8 @@ class GameController{
 
 ```
 
+## チェーンのデータ遷移
+
 ```mermaid
 sequenceDiagram
     participant Chain GUI
@@ -49,4 +51,12 @@ sequenceDiagram
     GameController->>Player: 通知
     Player->>Weapon: 解放と生成
     Weapon->>Chain: 参照
+```
+
+## ゲームフロー (alpha)
+
+``` mermaid
+graph TD;
+    タイトル --> ゲームシーン --> リザルトシーン
+    ゲームシーンに遷移 --> カウントダウン --> Wave開始 --> 全Wave終了 --> リザルトシーンに遷移
 ```

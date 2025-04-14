@@ -14,7 +14,7 @@ void MachineGunBullet::Initialize() {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("AnimatedCube.gltf");
-    model_->SetScale({0.2f, 0.2f, 0.2f});
+    model_->SetScale({ 0.2f, 0.2f, 0.2f });
 
     CalcLifeTime();
 
@@ -29,34 +29,45 @@ void MachineGunBullet::Initialize() {
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE));
 }
 
-void MachineGunBullet::Update() {
-    if (isChainBullet_){
+void MachineGunBullet::Update()
+{
+    if (isChainBullet_)
+    {
         UpdateChain();
-    } else{
+    }
+    else
+    {
         UpdateNormal();
     }
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
     model_->Update();
-    if (pNext_){
+    if (pNext_)
+    {
         pNext_->Update();
     }
     isDead_ = CheckLifeTime();
     isDead_ = isDead_ ? true : 20.f <= (transform_.translate - origin).Length();
 }
 
-void MachineGunBullet::Draw() {
+void MachineGunBullet::Draw()
+{
     if (isDead_ && !pNext_)return;
 
-    if(isChainBullet_){
-        for(const auto& bullet : bullets_){
+    if (isChainBullet_)
+    {
+        for (const auto& bullet : bullets_)
+        {
             bullet->Draw();
         }
-    } else{
+    }
+    else
+    {
         model_->Draw();
     }
-    
-    if (pNext_){
+
+    if (pNext_)
+    {
         pNext_->Draw();
     }
 }
@@ -70,27 +81,31 @@ void MachineGunBullet::OnCollisionTrigger(const Collision::Collider* _collider) 
     Next();
 }
 
-void MachineGunBullet::InitializeNormal() {
+void MachineGunBullet::InitializeNormal()
+{
     origin = transform_.translate;
 }
 
-void MachineGunBullet::InitializeChain() {
+void MachineGunBullet::InitializeChain()
+{
     Vector3 pos = transform_.translate;
     pos.y = min(0.5f, pos.y);
     bullets_.resize(32);
-    float angle = 0.0f;
-    for (size_t i = 0; i < bullets_.size(); i++){
-        angle = std::numbers::pi_v<float> / static_cast<float>(bullets_.size()) * i * 2.0f;
+
+    for (size_t i = 0; i < bullets_.size(); i++)
+    {
+        float angle = std::numbers::pi_v<float> / static_cast<float>(bullets_.size()) * i * 2.0f;
         bullets_[i] = std::make_unique<Bullet>();
         bullets_[i]->Initialize()
             ->SetOriginalPosition(pos)
-            ->SetRotate({0.0f, angle, 0.0f})
-            ->SetForward({sin(angle), 0.0f, cos(angle)})
+            ->SetRotate({ 0.0f, angle, 0.0f })
+            ->SetForward({ sin(angle), 0.0f, cos(angle) })
             ->SetSpeed(speed_);
     }
 }
 
-void MachineGunBullet::UpdateNormal() {
+void MachineGunBullet::UpdateNormal()
+{
     transform_.translate += forward_ * speed_;
 
     pCollider_->SetTranslate(Adaptor(transform_.translate));
@@ -100,9 +115,11 @@ void MachineGunBullet::UpdateNormal() {
     model_->Update();
 }
 
-void MachineGunBullet::UpdateChain() {
-    std::erase_if(bullets_, [&](const auto& b) {return b->IsDead();});
-    for (const auto& bullet : bullets_){
+void MachineGunBullet::UpdateChain()
+{
+    std::erase_if(bullets_, [&](const auto& b) { return b->IsDead(); });
+    for (const auto& bullet : bullets_)
+    {
         bullet->Update();
     }
 }

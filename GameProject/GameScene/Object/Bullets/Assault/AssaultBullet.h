@@ -16,7 +16,7 @@ private:
         void Draw();
         void OnCollisionTrigger(const Collision::Collider* _other);
         void SetPosition(const Vector3& _pos) { transform_.translate = _pos; }
-        void SetRotate(const Vector3& _rotate) {transform_.rotate = _rotate;}
+        void SetRotate(const Vector3& _rotate) { transform_.rotate = _rotate; }
         void SetForward(const Vector3& _forward) { forward_ = _forward; }
         void SetSpeed(float _speed) { speed_ = _speed; }
 

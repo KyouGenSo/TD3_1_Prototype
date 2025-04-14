@@ -57,11 +57,11 @@ void GUI_Chain::ShowChain()
     auto confirm = NiGui_ButtonState::Confirm;
     if (NiGui::BeginDiv("Chain", TEX_WHITE_, NiGui::WHITE, { 0, 0 }, { 800, 450 }, center, center))
     {
-        area1_ = NiGui::DragItemArea("DragItemArea1", (FRAMEDIR_/TEX_FRAME_).string(), NiGui::WHITE, { -240, 0 }, { 120, 120 }, center, center);
-        area2_ = NiGui::DragItemArea("DragItemArea2", (FRAMEDIR_/TEX_FRAME_).string(), NiGui::WHITE, { 0, 0 }, { 120, 120 }, center, center);
-        area3_ = NiGui::DragItemArea("DragItemArea3", (FRAMEDIR_/TEX_FRAME_).string(), NiGui::WHITE, { 240, 0 }, { 120, 120 }, center, center);
-        NiGui::DragItem("RocketLauncher", (ICONDIR_/TEX_ROCKETLAUNCHER_).string(), NiGui::WHITE, {-240, -150}, {100, 100}, center, center);
-        NiGui::DragItem("Assault", (ICONDIR_/TEX_ASSAULT_).string(), NiGui::WHITE, { 0, -150 }, { 100, 100 }, center, center);
+        area1_ = NiGui::DragItemArea("DragItemArea1", (FRAMEDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { -240, 0 }, { 120, 120 }, center, center);
+        area2_ = NiGui::DragItemArea("DragItemArea2", (FRAMEDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 0, 0 }, { 120, 120 }, center, center);
+        area3_ = NiGui::DragItemArea("DragItemArea3", (FRAMEDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 240, 0 }, { 120, 120 }, center, center);
+        NiGui::DragItem("RocketLauncher", (ICONDIR_ / TEX_ROCKETLAUNCHER_).string(), NiGui::WHITE, { -240, -150 }, { 100, 100 }, center, center);
+        NiGui::DragItem("Assault", (ICONDIR_ / TEX_ASSAULT_).string(), NiGui::WHITE, { 0, -150 }, { 100, 100 }, center, center);
         NiGui::DragItem("MachineGun", TEX_WHITE_, NiGui::MAGENTA, { 240, -150 }, { 100, 100 }, center, center);
 
         if (NiGui::Button("ConfirmChain", TEX_WHITE_, NiGui::GREEN, { 0, 150 }, { 100, 100 }, center, center) == confirm)
@@ -70,7 +70,7 @@ void GUI_Chain::ShowChain()
             {
                 isConfirm_ = true;
             }
-            
+
         }
         NiGui::EndDiv();
     }
@@ -81,7 +81,7 @@ bool GUI_Chain::CheckValidChain()
     std::array<std::string, 3> chain = { area1_, area2_, area3_ };
     bool isChainValid = true;
     bool isChainEmpty = false;
-    for (auto& area : chain)
+    for (const auto& area : chain)
     {
         if (!area.empty() && isChainEmpty)
         {

@@ -20,6 +20,8 @@ void AssaultBullet::Initialize()
 
 void AssaultBullet::Update()
 {
+    BulletBase::Update();
+
     if (isChainBullet_)
     {
         UpdateChain();
@@ -46,8 +48,9 @@ void AssaultBullet::Draw()
     if (isDead_) return;
     if (isChainBullet_)
     {
-        for (const auto& bullet : bullets_){
-            if (!bullet)continue;
+        for (const auto& bullet : bullets_)
+        {
+            if (!bullet) break;
             bullet->Draw();
         }
     }
@@ -71,10 +74,10 @@ void AssaultBullet::InitializeChain()
 {
     Vector3 position = transform_.translate;
     position.y = min(0.5f, position.y);
-    float angle = 0;
+
     for (int i = 0; i < bullets_.size(); i++)
     {
-        angle = std::numbers::pi_v<float> / static_cast<float>(bullets_.size()) * i * 2.0f;
+        float angle = std::numbers::pi_v<float> / static_cast<float>(bullets_.size()) * i * 2.0f;
 
         Quaternion yaw = Quat::MakeRotateAxisAngle({ 0.0f, 1.0f, 0.0f }, angle);
         Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);
@@ -98,8 +101,9 @@ void AssaultBullet::UpdateNormal()
 
 void AssaultBullet::UpdateChain()
 {
-    for (const auto& bullet : bullets_){
-        if (!bullet)continue;
+    for (const auto& bullet : bullets_)
+    {
+        if (!bullet) break;
         bullet->Update();
     }
 }

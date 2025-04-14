@@ -7,13 +7,16 @@
 #include <GameScene/Object/Weapon/Weapon.h>
 #include <Interfaces/IObserver.h>
 
-class Player : public Object {
-    Chain* chain_;
-    std::unique_ptr<WeaponBase> weapon_;
+class Player : public Object
+{
+    std::unique_ptr<Collision::Collider> collider_;
 
-    std::list<IObserver*> observers_;
+    Chain* chain_ = nullptr;
+    std::unique_ptr<WeaponBase> weapon_ = nullptr;
 
-    Vector3 move_{};
+    std::list<IObserver*> observers_ = {};
+
+    Vector3 move_ = {};
 
     bool isGround_ = true;
 

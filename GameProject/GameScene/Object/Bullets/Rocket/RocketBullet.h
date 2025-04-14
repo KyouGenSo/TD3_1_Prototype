@@ -3,7 +3,8 @@
 
 #include <Timer/Timer.h>
 
-class RocketBullet : public BulletBase{
+class RocketBullet : public BulletBase
+{
 public:
     void Initialize() override;
     void Update() override;
@@ -20,7 +21,7 @@ private:
     Vector3 forward_ = {};
 
 
-    Vector4 color = {1,1,1,1};
+    Vector4 color_ = { 1,1,1,1 };
 
     Timer timer;
 

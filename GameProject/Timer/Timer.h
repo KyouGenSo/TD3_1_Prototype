@@ -10,6 +10,7 @@ public:
     ~Timer() {};
 
     void Start();
+    void Stop();
     void Reset();
     template <typename T>
     T GetNow();
@@ -20,12 +21,16 @@ private:
     LARGE_INTEGER mFreq_    = {};
     LARGE_INTEGER mStart_   = {};
     double now_             = 0.0;
+    double nowBeforeStop_   = 0.0;
     bool isStart_           = false;
+    bool isRunning_         = false;
 };
 
 template <typename T>
 inline T Timer::GetNow()
 {
+    // 停止しているとき
+    if (isStart_ && !isRunning_) return static_cast<T>(now_ + nowBeforeStop_);
     if (!isStart_) return T();
 
     LARGE_INTEGER mNow = {};
@@ -33,5 +38,5 @@ inline T Timer::GetNow()
 
     now_ = static_cast<double>(mNow.QuadPart - mStart_.QuadPart) / static_cast<double>(mFreq_.QuadPart);
 
-    return static_cast<T>(now_);
+    return static_cast<T>(now_ + nowBeforeStop_);
 }

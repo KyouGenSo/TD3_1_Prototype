@@ -19,8 +19,10 @@
 #include <GameSystem/ChainViewModel/ChainViewModel.h>
 #include <GameSystem/GameController/GameController.h>
 #include <Utility/Threadpool/Threadpool.h>
+#include <GameUI/CountDown/CountDown.h>
 
-class GameScene : public BaseScene {
+class GameScene : public BaseScene
+{
     std::unique_ptr<Player> player_;
     std::unique_ptr<FollowCamera> camera_;
     std::unique_ptr<GUI_LvUP> guiLvUP_;
@@ -34,15 +36,17 @@ class GameScene : public BaseScene {
     Collision::Manager* pCollisionManager_ = nullptr;
 	std::unique_ptr<Boss>boss_;
     std::unique_ptr<Terrain> terrain_;
-	std::unique_ptr<EnemyManager> enemyManager_;
+    std::unique_ptr<EnemyManager> enemyManager_;
 
     std::unique_ptr<Castle> castle_;
     EventTimer* eventTimer_ = nullptr;
     Threadpool* threadpool_ = nullptr;
     std::unique_ptr<TimeKeeper> timeKeeper_;
+    std::unique_ptr<CountDown> countDown_;
 
 public:
-    struct DirectionalLightParam {
+    struct DirectionalLightParam
+    {
         Vector3 direction;
         Vector4 color;
         int32_t lightType;

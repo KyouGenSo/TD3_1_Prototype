@@ -9,13 +9,13 @@
 class Boss : public Object
 {
 public:
-	void Initialize() override;
+    void Initialize() override;
 
-	void Update() override;
+    void Update() override;
 
-	void Draw() override;
+    void Draw() override;
 
-	void Finalize();
+    void Finalize();
 
     void ImGui();
 
@@ -26,12 +26,11 @@ public:
     void SetIsValid(bool isValid) { isValid_ = isValid; }
 
 private:
-	std::unique_ptr<Object3d> model_;
 
-	Camera* bCamera_ = nullptr;
+    std::unique_ptr<Collision::Collider> collider_;
 
-	Vector3 prePos;
+    Vector3 prePos_;
 
-    bool isValid_; // ボスの有効無効
+    bool isValid_ = false; // ボスの有効無効
 };
 

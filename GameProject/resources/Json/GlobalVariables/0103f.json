@@ -1,0 +1,10 @@
+{
+    "0103f": {
+        "amount": 5,
+        "hpMultiplier": 1.0,
+        "interval": 5.0,
+        "time": 15.0,
+        "turn": 2,
+        "type": 1
+    }
+}

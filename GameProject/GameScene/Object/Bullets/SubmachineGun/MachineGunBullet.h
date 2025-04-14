@@ -1,10 +1,12 @@
 #pragma once
 #include "GameScene/Object/Bullets/BulletBase.h"
 
-class MachineGunBullet : public BulletBase{
-    struct Bullet{
+class MachineGunBullet : public BulletBase
+{
+    struct Bullet
+    {
     private:
-        Vector3 origin {};
+        Vector3 origin{};
 
         std::unique_ptr<Object3d> model_;
         std::unique_ptr<Collision::Collider> collider_;

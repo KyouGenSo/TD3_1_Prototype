@@ -9,14 +9,14 @@
 void RocketBullet::Initialize()
 {
     BulletBase::Initialize();
-    
+
     type_ = WeaponType::RocketLauncher;
     speed_ = 0.4f;
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("AnimatedCube.gltf");
-    model_->SetScale({0.4f, 0.4f, 0.4f});
+    model_->SetScale({ 0.4f, 0.4f, 0.4f });
 
     CalcLifeTime();
 
@@ -32,6 +32,8 @@ void RocketBullet::Initialize()
 
 void RocketBullet::Update()
 {
+    BulletBase::Update();
+
     if (isChainBullet_)
     {
         UpdateChain();
@@ -54,7 +56,8 @@ void RocketBullet::Update()
 
 void RocketBullet::Draw()
 {
-    if (!isDead_){
+    if (!isDead_)
+    {
         // 描画処理
         model_->Draw();
     }
@@ -68,8 +71,6 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
 
     isDead_ = true;
     pCollider_->Disable();
-
-    color = {1, 0,0,1};
 
     //爆発オブジェクトを生成   
     explosion_ = std::make_unique<Collision::Collider>();
@@ -86,7 +87,7 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
 
 void RocketBullet::InitializeNormal()
 {
-    Quaternion yaw = Quat::MakeRotateAxisAngle({0.0f, 1.0f, 0.0f}, transform_.rotate.y);
+    Quaternion yaw = Quat::MakeRotateAxisAngle({ 0.0f, 1.0f, 0.0f }, transform_.rotate.y);
     Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);
 
     Quaternion rotate = yaw * pitch;

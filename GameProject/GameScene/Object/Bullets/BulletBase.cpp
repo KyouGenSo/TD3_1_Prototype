@@ -36,11 +36,11 @@ void BulletBase::Fire()
     pNextBulletTimer_->Start();
 }
 
-bool BulletBase::IsDead()
+bool BulletBase::IsDeadAll()
 {
     if (!isDead_) return false;
     else if (pNext_ == nullptr) return true;
-    else return pNext_->IsDead();
+    else return pNext_->IsDeadAll();
 }
 
 void BulletBase::SetNextBullet(std::unique_ptr<BulletBase> _bullet)
@@ -53,8 +53,10 @@ void BulletBase::SetNextBullet(std::unique_ptr<BulletBase> _bullet)
     pNext_ = std::move(_bullet);
 }
 
-void BulletBase::Next() {
-    if (pNextBulletTimer_->GetIsStart()){
+void BulletBase::Next()
+{
+    if (pNextBulletTimer_->GetIsStart())
+    {
         pNextBulletTimer_->Reset();
 
         if (pChainManager_->IsLastWeapon(type_)) return;
@@ -84,7 +86,8 @@ bool BulletBase::CheckCoolTime()
     return coolTime <= 0;
 }
 
-bool BulletBase::CheckLifeTime() const {
+bool BulletBase::CheckLifeTime() const
+{
     if (isDead_)return true;
 
     return pLifeTimer_->GetNow<float>() >= lifeTime_;

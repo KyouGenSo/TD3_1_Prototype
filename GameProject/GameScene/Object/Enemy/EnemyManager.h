@@ -3,25 +3,32 @@
 #include <memory>
 #include <random>
 
+#include "EnemyBase.h"
 #include "Enemy.h"
 #include "FlyEnemy.h"
+#include "BounceEnemy.h"
 #include "GameScene/HUD/Minimap.h"
+#include "Timer/Timer.h"
 
 class Player;
 class Castle;
-class EnemyManager {
+class EnemyManager
+{
 private:
-    enum Type {
+    enum Type
+    {
         Normal,
         Fly,
         Bounce
     };
-    struct Wave {
+    struct Wave
+    {
         Type type;
         float interval;
         int amount;
         float hpMultiplier;
         int turn;
+        float time;
     };
 
 public:
@@ -32,8 +39,8 @@ public:
     void Update();
     void Draw();
     void Finalize();
-	void AddEnemy(const Vector3& position, Type type);
-    void SelectTarget(Object* enemy);
+    void AddEnemy(const Vector3& position, Type type);
+    void SelectTarget(EnemyBase* enemy);
     void ImGui();
     void ChangeWave(std::string key, bool resetSpawnCount = true);
     void SetMinimap(Minimap* pMinimap);
@@ -45,7 +52,7 @@ public:
 private:
     void SpawnEnemy();
     Vector3 RandomSpawnPosition(Type type);
-    void CreateWaveFile(std::string key);
+    //void CreateWaveFile(std::string key);
     void InitializeWaveFile(std::string key);
     void TurnControl();
 
@@ -63,6 +70,7 @@ private:
 
     std::vector<std::unique_ptr<Enemy>> enemies_;
     std::vector<std::unique_ptr<FlyEnemy>> flyEnemies_;
+    std::vector<std::unique_ptr<BounceEnemy>> bounceEnemies_;
 
     const float leave = 10.0f;
 
@@ -93,6 +101,15 @@ private:
 
     Vector3 flyMinSpawnPoint_ = { -55.0f,5.0f,-55.0f };
     Vector3 flyMaxSpawnPoint_ = { 55.0f,5.0f,55.0f };
+
+
+    Vector3 bounceAppearancePos_ = { 3.0f,1.0f,0.0f };
+
+    Vector3 bounceMinSpawnRange_ = { -50.0f,0.0f,-50.0f };
+    Vector3 bounceMaxSpawnRange_ = { 50.0f,0.0f,50.0f };
+
+    Vector3 bounceMinSpawnPoint_ = { -55.0f,1.0f,-55.0f };
+    Vector3 bounceMaxSpawnPoint_ = { 55.0f,1.0f,55.0f };
 
 
     std::random_device rd_;

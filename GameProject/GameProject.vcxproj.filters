@@ -113,6 +113,12 @@
     <Filter Include="GameSystem\EnemyManager">
       <UniqueIdentifier>{6886778b-22b2-43b3-9bfa-bcbf50d4e02f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Status">
+      <UniqueIdentifier>{48ec105d-f01c-4482-888b-81ee240b3891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameUI\CountDown">
+      <UniqueIdentifier>{f89ef6e2-9c41-4c61-a0b2-d74778b2b0eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -242,7 +248,18 @@
     <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp">
       <Filter>Object\Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp" />
+    <ClCompile Include="GameScene\Status\Status.cpp">
+      <Filter>Status</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Enemy\BounceEnemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\CountDown\CountDown.cpp">
+      <Filter>GameUI\CountDown</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -373,6 +390,21 @@
     </ClInclude>
     <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h">
       <Filter>Object\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Status\Status.h">
+      <Filter>Status</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\EnemyBase.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\BounceEnemy.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\CountDown\CountDown.h">
+      <Filter>GameUI\CountDown</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
     <ClInclude Include="Type\ColliderType.h" />

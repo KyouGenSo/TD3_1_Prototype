@@ -1,12 +1,14 @@
 #include "Object.h"
 
+#include <GameScene/Object/Collision/Collider.h>
+
 #ifdef _DEBUG
 #include <imgui.h>
 #endif // _DEBUG
 
 void Object::DebugObject()
 {
-#ifdef _DEBUG
+    #ifdef _DEBUG
     ImGui::PushID("DebugObject");
     ImGui::SeparatorText("Transform");
     ImGui::DragFloat3("Scale", &transform_.scale.x, 0.01f);
@@ -19,5 +21,11 @@ void Object::DebugObject()
     ImGui::DragFloat("Gravity", &gravity_, 0.01f);
     ImGui::DragFloat("Mass", &mass_, 0.01f);
     ImGui::PopID();
-#endif
+    #endif
+}
+
+void Object::StatusUpdateOnCollision(const Collision::Collider* pObject)
+{
+    (void)pObject;
+    //status_.OnCollision();
 }

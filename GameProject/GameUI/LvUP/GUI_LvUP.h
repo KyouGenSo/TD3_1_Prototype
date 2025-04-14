@@ -8,7 +8,7 @@ class GUI_LvUP : public IObserver
 {
 public:
     GUI_LvUP() = default;
-    ~GUI_LvUP() = default;
+    ~GUI_LvUP() override = default;
 
     // 通知する
     void OnNotify(const std::string& _event) override;

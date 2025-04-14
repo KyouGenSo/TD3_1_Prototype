@@ -9,6 +9,8 @@
 #include "Transform.h"
 #include <Input.h>
 #include <Collision/Collider.h>
+#include <array>
+#include <GameScene/Status/Status.h>
 
 class Object{
 	std::string uuid_;
@@ -26,13 +28,14 @@ protected:
 
     float deltaTime_ = 0.0f;
     bool isDead_ = false;
+    Status status_ = {};
 
 protected:
     Input* pInput_ = nullptr;
 
 public:
-	Object();
-	virtual ~Object() = default;
+    Object();
+    virtual ~Object() = default;
 
     virtual void Initialize();
     virtual void Update() = 0;
@@ -44,33 +47,43 @@ public:
 
 
 public: /// Setter
-    void SetTransform(const Transform& _transform) {
+    void SetTransform(const Transform& _transform)
+    {
         transform_ = _transform;
     }
-    void SetPosition(const Vector3& _position) {
+    void SetPosition(const Vector3& _position)
+    {
         transform_.translate = _position;
     }
-    void SetRotation(const Vector3& _rotation) {
+    void SetRotation(const Vector3& _rotation)
+    {
         transform_.rotate = _rotation;
     }
-    void SetScale(const Vector3& _scale) {
+    void SetScale(const Vector3& _scale)
+    {
         transform_.scale = _scale;
     }
-    virtual void SetTarget(Object* pTarget) {}
 
 
 public: /// Getter
-	const Transform& GetTransform() const {
-	    return transform_;
+    const Transform& GetTransform() const
+    {
+        return transform_;
     }
 
-    const std::string& GetUniqueId() {
+    const std::string& GetUniqueId()
+    {
         return uuid_;
     }
 
     bool IsDead() const
     {
         return isDead_;
+    }
+
+    Status& getStatus()
+    {
+        return status_;
     }
 
 protected:
@@ -89,22 +102,28 @@ protected:
     {
         return Collision::Vec3(_vec.x, _vec.y, _vec.z);
     }
+
+    void StatusUpdateOnCollision(const Collision::Collider* pObject);
 };
 
-inline Object::Object() {
+inline Object::Object()
+{
     UUID uuid;
     UuidCreate(&uuid);
     RPC_CSTR szUuid = nullptr;
     UuidToStringA(&uuid, &szUuid);
-    struct UUIDCleaner{
+    struct UUIDCleaner
+    {
         RPC_CSTR& ptr;
-        ~UUIDCleaner() {
+        ~UUIDCleaner()
+        {
             if (ptr)RpcStringFreeA(&ptr);
         }
-    } cleaner {szUuid};
+    } cleaner{ szUuid };
     uuid_ = reinterpret_cast<char*>(szUuid);
 
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
+    status_ = {};
 }
 
 inline void Object::Initialize()

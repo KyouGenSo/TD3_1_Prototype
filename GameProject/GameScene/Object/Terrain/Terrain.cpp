@@ -65,7 +65,7 @@ void Terrain::ImGui()
         {
             terrainObj_->SetScale(transform_.scale);
         }
-        
+
         if (ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f))
         {
             terrainObj_->SetRotate(transform_.rotate);

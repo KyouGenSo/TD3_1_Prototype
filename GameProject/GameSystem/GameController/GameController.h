@@ -7,6 +7,8 @@
 class GameController
 {
 public:
+    GameController() = default;
+
     void SetPlayerModel(Player* _playerModel) { playerModel_ = _playerModel; }
     void SetGUIChainView(GUI_Chain* _guiChainView) { guiChainView_ = _guiChainView; }
 
@@ -24,7 +26,7 @@ public:
     }
 
 private:
-    Player* playerModel_;
-    GUI_Chain* guiChainView_;
+    Player* playerModel_ = nullptr;
+    GUI_Chain* guiChainView_ = nullptr;
 
 };

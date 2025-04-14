@@ -7,7 +7,7 @@ void NiGuiDebug::DrawDebugUI()
     ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
 
     bool isOpen = ImGui::Begin("NiUI_DebugInfo");
-    
+
 
     if (!isOpen)
     {

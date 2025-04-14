@@ -10,7 +10,8 @@
 
 
 
-void GameScene::Initialize() {
+void GameScene::Initialize()
+{
 
     // ステージデータの取得
     const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
@@ -59,7 +60,7 @@ void GameScene::Initialize() {
     // Minimap
     minimap_ = make_unique<Minimap>();
     minimap_->Initialize();
-    minimap_->SetSize({-30, 0, -30}, {30, 0, 30});
+    minimap_->SetSize({ -30, 0, -30 }, { 30, 0, 30 });
     minimap_->Register(player_.get());
 
     // Castle
@@ -68,15 +69,15 @@ void GameScene::Initialize() {
     castle_->SetTransform(currentStageData.castleTransform);
 
     // 敵の初期化
-	ModelManager::GetInstance()->LoadModel("cube.gltf");
+    ModelManager::GetInstance()->LoadModel("cube.gltf");
     enemyManager_ = std::make_unique<EnemyManager>();
     //enemyManager_->SetMinimap(minimap_.get());
     enemyManager_->Initialize(player_.get(), castle_.get());
 
     // ボスの初期化
-	ModelManager::GetInstance()->LoadModel("bigCube.gltf");
-	boss_ = std::make_unique<Boss>();
-	boss_->Initialize();
+    ModelManager::GetInstance()->LoadModel("bigCube.gltf");
+    boss_ = std::make_unique<Boss>();
+    boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
 
     // TimeKeeper
@@ -84,6 +85,8 @@ void GameScene::Initialize() {
     timeKeeper_->Initialize();
     timeKeeper_->AddEvent("CountDown", 3.0f);
     timeKeeper_->AddEvent("JunbiPhase", 12.0f);
+    timeKeeper_->Load();
+    timeKeeper_->Run("JunbiPhase");
 
     player_->SetChain(chainViewModel_->GetChain());
 
@@ -94,13 +97,18 @@ void GameScene::Initialize() {
     guiChain_->SetGameController(gameController_.get());
 
     threadpool_ = Threadpool::GetInstance();
+
+    // CountDownの初期化
+    countDown_ = std::make_unique<CountDown>();
+    countDown_->Initialize();
 }
 
-void GameScene::Finalize() {
+void GameScene::Finalize()
+{
     terrain_->Finalize();
     player_->Finalize();
-	boss_->Finalize();
-	enemyManager_->Finalize();
+    boss_->Finalize();
+    enemyManager_->Finalize();
     camera_->Finalize();
 }
 
@@ -114,30 +122,41 @@ void GameScene::Update()
     eventTimer_->Measure("Update Terrain", [&]() { terrain_->Update(); });
     eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });
     eventTimer_->Measure("Update Player", [&]() { player_->Update(); });
-    eventTimer_->Measure("Update Camera", [&]() {camera_->Update(); });
+    eventTimer_->Measure("Update Camera", [&]() { camera_->Update(); });
 
-    eventTimer_->Measure("Update GUI", [&]() { 
+    eventTimer_->Measure("Update GUI", [&]()
+    {
         guiLvUP_->Update();
         guiPauseMenu_->Update();
         guiChain_->Update();
     });
 
-	boss_->Update();
+    boss_->Update();
     eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
     eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
     //eventTimer_->Measure("Update CollisionManager", [&]() { pCollisionManager_->Update(); });
+
+    /// タイマーの更新
+    if (timeKeeper_->GetRemainTime("JunbiPhase") < 3.0f && !countDown_->IsStart())
+    {
+        countDown_->Start();
+        timeKeeper_->Reset("JunbiPhase");
+    }
+
+    countDown_->Update();
     //threadpool_->AddTask([&]{pCollisionManager_->Detect(); });
     //eventTimer_->Measure("ProcessEvent", [&]{threadpool_->AddTask([&]{ pCollisionManager_->ProcessEvents(); }); });
     pCollisionManager_->Detect();
     pCollisionManager_->ProcessEvent();
 }
 
-void GameScene::Draw() {
+void GameScene::Draw()
+{
     //Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
     //Draw2D::GetInstance()->Draw();
     //Draw2D::GetInstance()->Reset();
 
-	//------------------背景Spriteの描画------------------//
+    //------------------背景Spriteの描画------------------//
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
@@ -147,17 +166,19 @@ void GameScene::Draw() {
     terrain_->Draw();
     castle_->Draw();
     player_->Draw();
-	boss_->Draw();
-	enemyManager_->Draw();
+    boss_->Draw();
+    enemyManager_->Draw();
 
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
+    countDown_->Draw2D();
 
     minimap_->Draw();
 }
 
-void GameScene::DrawImGui() {
+void GameScene::DrawImGui()
+{
     terrain_->ImGui();
     player_->ImGui();
     enemyManager_->ImGui();
