@@ -39,6 +39,9 @@ void EnemyManager::Initialize(Object* player, Object* castle)
     //InitializeWaveFile("0203n");
     //InitializeWaveFile("0203f");
     //InitializeWaveFile("0203b");
+
+    TurnControl();
+    turnProgress++;
 }
 
 void EnemyManager::Update()
@@ -48,14 +51,25 @@ void EnemyManager::Update()
         SpawnEnemy();
     }
 
-    for (const auto& key : keys_) {
-        if (waves_[key].time > 0.0f) {
-            waves_[key].time -= deltaTime_;
+    std::vector<std::string> keysToRemove;
+    for (auto key = keys_.begin(); key != keys_.end(); )
+    {
+        if (waves_[*key].time > 0.0f)
+        {
+            waves_[*key].time -= deltaTime_;
+            key++;
         }
-        else {
-            TurnControl();
-            turnProgress++;
+        else
+        {
+            keysToRemove.push_back(*key);
+            key = keys_.erase(key);
         }
+    }
+
+    if (!keysToRemove.empty())
+    {
+        TurnControl();
+        turnProgress++;
     }
 
     for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {
@@ -217,16 +231,18 @@ void EnemyManager::InitializeWaveFile(std::string key)
 
 void EnemyManager::TurnControl()
 {
-    keys_.clear();
+    std::vector<std::string> newKeys;
     for (const auto& wave : waves_)
     {
         if (turnProgress == wave.second.turn)
         {
-            keys_.push_back(wave.first);
+            newKeys.push_back(wave.first);
         }
     }
-    for (const auto& key : keys_)
+    keys_.clear();
+    for (const auto& key : newKeys)
     {
+        keys_.push_back(key);
         ChangeWave(key, true);
     }
 }
@@ -239,17 +255,14 @@ void EnemyManager::SpawnEnemy()
     }
     for (const auto& key : keys_)
     {
-        if (spawnCount_[key] >= waves_[key].amount)
-        {
-            continue;
-        }
-
         spawnTimer_[key] += deltaTime_;
         if (spawnTimer_[key] > waves_[key].interval)
         {
-            AddEnemy(RandomSpawnPosition(waves_[key].type), waves_[key].type);
+            for (int i = 0; i < waves_[key].amount; ++i)
+            {
+                AddEnemy(RandomSpawnPosition(waves_[key].type), waves_[key].type);
+            }
             spawnTimer_[key] = 0.0f;
-            spawnCount_[key]++;
         }
     }
 }

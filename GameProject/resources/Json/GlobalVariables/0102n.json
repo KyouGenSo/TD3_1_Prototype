@@ -2,8 +2,8 @@
     "0102n": {
         "amount": 10,
         "hpMultiplier": 1.0,
-        "interval": 1.0,
-        "time": 10.0,
+        "interval": 5.0,
+        "time": 15.0,
         "turn": 1,
         "type": 0
     }
