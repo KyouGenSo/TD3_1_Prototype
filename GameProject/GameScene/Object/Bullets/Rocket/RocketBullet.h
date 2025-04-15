@@ -10,7 +10,7 @@ public:
     void Update() override;
     void Draw() override;
 
-    void OnCollisionTrigger(const Collider* _other) override;
+    void OnCollisionTrigger(const Collision::Collider* _other) override;
 
 private:
     void InitializeNormal() override;
@@ -18,9 +18,15 @@ private:
     void UpdateNormal() override;
     void UpdateChain() override;
 
-    std::unique_ptr<Collider> explosion_;
+    Vector3 forward_ = {};
+
 
     Vector4 color_ = { 1,1,1,1 };
 
-    Timer timer_;
+    Timer timer;
+
+    std::unique_ptr<Collision::Collider> explosion_;
+    bool createExpl_ = false;
+    Vector3 explosionPos_ = {};
 };
+

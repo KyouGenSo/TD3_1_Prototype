@@ -1,6 +1,7 @@
 #include "Castle.h"
 
-#include "GameScene/Object/Collision/Collider.h"
+#include "Collision/Collider.h"
+#include "Type/ColliderType.h"
 
 void Castle::Initialize() {
     Object::Initialize();
@@ -20,13 +21,15 @@ void Castle::Initialize() {
     model_->SetScale(transform_.scale);
     model_->SetTranslate(transform_.translate);
 
-    collider_ = std::make_unique<Collider>();
-    collider_->SetOwner(this)
-        ->SetSize(Vector3{.x= 5.f, .y= 5.f, .z= 5.f})
-        ->SetEvent([&](const auto& c){})
-        ->SetType(Collider::Type::ALLY)
-        ->SetIgnore(Collider::Type::STAGE)
-        ->SetIgnore(Collider::Type::ALLY);
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_
+        ->SetEvent(Collision::EventType::Trigger, [&](const auto& c){})
+        ->SetSize(Collision::Vec3{5.f, 5.f, 5.f})
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->Enable();
 }
 
 void Castle::Update() {

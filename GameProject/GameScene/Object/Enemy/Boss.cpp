@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "imgui.h"
 #include "Object3dBasic.h"
+#include "Type/ColliderType.h"
 
 void Boss::Initialize()
 {
@@ -22,10 +23,15 @@ void Boss::Initialize()
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
-    collider_ = std::make_unique<Collider>(this);
-    collider_->SetEvent([this](const Collider* pCol) { this->OnCollision(pCol); });
-    collider_->SetType(Collider::Type::ENEMY);
-    collider_->SetIgnore(Collider::Type::ENEMY);
+	pCollider_ = std::make_unique<Collision::Collider>();
+	pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol) {this->OnCollision(pCol); })
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetTranslate(Adaptor(transform_.translate))
+        ->SetSize(3.f)
+        ->Enable();
 
     isValid_ = false;
 }
@@ -41,8 +47,11 @@ void Boss::Update()
     {
 
     }
-    model_->SetTranslate(transform_.translate);
-    model_->Update();
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
+
+	model_->SetTranslate(transform_.translate);
+	model_->Update();
 }
 
 void Boss::Draw()
@@ -61,7 +70,7 @@ void Boss::ImGui()
     ImGui::End();
 }
 
-void Boss::OnCollision(const Collider* pCollider)
+void Boss::OnCollision(const Collision::Collider* pCollider)
 {
     transform_.translate = prePos_;
 }

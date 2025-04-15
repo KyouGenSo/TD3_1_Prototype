@@ -1,10 +1,9 @@
 #pragma once
 #include <memory>
 
-#include "Object3d.h"
-#include "Camera.h"
-#include "GameScene/Object/Collision/Collider.h"
 #include "EnemyBase.h"
+#include "GameScene/Object/Object.h"
+#include "Collision/Collider.h"
 
 class Enemy : public EnemyBase
 {
@@ -17,7 +16,7 @@ public:
 
     void Finalize();
 
-    void OnCollision(const Collider* pCollider) override;
+	void OnCollision(const Collision::Collider* pCollider) override;
 
     void Move();
 
@@ -36,7 +35,7 @@ public:
 
 private:
 
-    std::unique_ptr<Collider> collider_ = nullptr;
+    std::unique_ptr<Collision::Collider> collider_ = nullptr;
 
     Vector3 prePos_ = {};
 

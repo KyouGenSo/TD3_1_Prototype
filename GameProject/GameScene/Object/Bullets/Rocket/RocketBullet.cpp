@@ -3,7 +3,8 @@
 #include <Quaternion.h>
 #include <QuatFunc.h>
 
-#include "GameScene/Object/Collision/LimitedCollider.h"
+#include "Collision/Collider.h"
+#include "Type/ColliderType.h"
 
 void RocketBullet::Initialize()
 {
@@ -19,11 +20,14 @@ void RocketBullet::Initialize()
 
     CalcLifeTime();
 
-    pCollider_ = std::make_unique<Collider>(this);
-    pCollider_->SetEvent([this](const Collider* pCol) { this->OnCollisionTrigger(pCol); }, Collider::Event::TRIGGER);
-    pCollider_->SetSize(0.4f);
-    pCollider_->SetType(Collider::Type::ALLY);
-    pCollider_->SetIgnore(Collider::Type::ALLY);
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol){this->OnCollisionTrigger(pCol); })
+        ->SetTranslate(Adaptor(transform_.translate))
+        ->SetSize(0.4f)
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->Enable();
 }
 
 void RocketBullet::Update()
@@ -61,19 +65,22 @@ void RocketBullet::Draw()
     if (pNext_) pNext_->Draw();
 }
 
-void RocketBullet::OnCollisionTrigger(const Collider* _other)
+void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
 {
-    if (isDead_ || pCollider_->IsDisable()) return;
+    if (isDead_ || pCollider_->IsDisabled()) return;
 
     isDead_ = true;
     pCollider_->Disable();
 
-    color_ = { 1, 0,0,1 };
-    //爆発オブジェクトを生成
-    explosion_ = std::make_unique<LimitedCollider>(this, 1);
-    explosion_->SetSize(5.0f);
-    explosion_->SetType(Collider::Type::ALLY);
-    explosion_->SetIgnore(Collider::Type::STAGE);
+    //爆発オブジェクトを生成   
+    explosion_ = std::make_unique<Collision::Collider>();
+    explosion_
+        ->SetType(Collision::Type::Sphere)
+        ->SetTranslate(Adaptor(explosionPos_))
+        ->SetSize(5.0f)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->Enable();
 
     Next();
 }
@@ -95,6 +102,8 @@ void RocketBullet::InitializeChain()
 void RocketBullet::UpdateNormal()
 {
     transform_.translate += forward_ * speed_;
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
 }
 
 void RocketBullet::UpdateChain()

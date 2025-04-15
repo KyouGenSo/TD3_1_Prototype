@@ -25,7 +25,7 @@ void GameScene::Initialize()
     };
 
     ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
-    pCollisionManager_ = Singleton<CollisionManager>::GetInstance();
+    pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
 
     // Terrain
     terrain_ = std::make_unique<Terrain>();
@@ -135,9 +135,6 @@ void GameScene::Update()
     eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
     eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
     //eventTimer_->Measure("Update CollisionManager", [&]() { pCollisionManager_->Update(); });
-    threadpool_->AddTask([&]{pCollisionManager_->Update(); });
-    eventTimer_->Measure("ProcessEvent", [&]{threadpool_->AddTask([&]{ pCollisionManager_->ProcessEvents(); }); });
-    pCollisionManager_->ImText();
 
     /// タイマーの更新
     if (timeKeeper_->GetRemainTime("JunbiPhase") < 3.0f && !countDown_->IsStart())
@@ -147,6 +144,10 @@ void GameScene::Update()
     }
 
     countDown_->Update();
+    //threadpool_->AddTask([&]{pCollisionManager_->Detect(); });
+    //eventTimer_->Measure("ProcessEvent", [&]{threadpool_->AddTask([&]{ pCollisionManager_->ProcessEvents(); }); });
+    pCollisionManager_->Detect();
+    pCollisionManager_->ProcessEvent();
 }
 
 void GameScene::Draw()

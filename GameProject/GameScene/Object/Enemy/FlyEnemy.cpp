@@ -2,6 +2,7 @@
 
 #include "Object3dBasic.h"
 #include "cmath"
+#include "Type/ColliderType.h"
 
 void FlyEnemy::Initialize()
 {
@@ -20,20 +21,26 @@ void FlyEnemy::Initialize()
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
-    collider_ = std::make_unique<Collider>(this);
-    collider_->SetEvent([this](const Collider* pObj) {this->OnCollision(pObj); });
-    collider_->SetType(Collider::Type::ENEMY);
-    collider_->SetIgnore(Collider::Type::ENEMY);
-    collider_->SetIgnore(Collider::Type::STAGE);
-    collider_->SetSize(1.f);
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) {this->OnCollision(pObj); })
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetTranslate(Adaptor(transform_.translate))
+        ->SetSize(1.f)
+        ->Enable();
 }
 
 void FlyEnemy::Update()
 {
     if (isDead_) return;
 
-    model_->Update();
     Move();
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
+
+    model_->Update();
 }
 
 void FlyEnemy::Draw()
@@ -45,11 +52,11 @@ void FlyEnemy::Finalize()
 {
 }
 
-void FlyEnemy::OnCollision(const Collider* pCollider)
+void FlyEnemy::OnCollision(const Collision::Collider* pCollider)
 {
     if (isDead_) return;
 
-    if (pCollider->GetType() == Collider::Type::ALLY) {
+    if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY)) {
         if (0 < hp_) {
             hp_--;
         }

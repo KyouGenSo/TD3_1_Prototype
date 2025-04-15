@@ -1,8 +1,6 @@
 #pragma once
 #include <memory>
 
-#include "Object3d.h"
-#include "Camera.h"
 #include "EnemyBase.h"
 #include "GameScene/Object/Collision/Collider.h"
 
@@ -17,7 +15,7 @@ public:
 
     void Finalize();
 
-    void OnCollision(const Collider* pCollider) override;
+    void OnCollision(const Collision::Collider* pCollider);
 
     void Move();
 
@@ -34,7 +32,7 @@ public:
 
 private:
 
-    std::unique_ptr<Collider> collider_;
+    std::unique_ptr<Collision::Collider> collider_;
 
     bool isAppearing_ = true;
     float appearCounter_ = 0.0f;

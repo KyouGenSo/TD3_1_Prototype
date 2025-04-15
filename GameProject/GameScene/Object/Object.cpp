@@ -24,7 +24,8 @@ void Object::DebugObject()
     #endif
 }
 
-void Object::StatusUpdateOnCollision(const Collider* pObject)
+void Object::StatusUpdateOnCollision(const Collision::Collider* pObject)
 {
-    status_.OnCollision(pObject->GetOwner()->getStatus());
+    (void)pObject;
+    //status_.OnCollision();
 }

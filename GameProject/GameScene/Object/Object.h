@@ -8,19 +8,19 @@
 #include "Object3dBasic.h"
 #include "Transform.h"
 #include <Input.h>
+#include <Collision/Collider.h>
 #include <array>
 #include <GameScene/Status/Status.h>
 
-class Collider;
-
-class Object
-{
-    std::string uuid_;
+class Object{
+	std::string uuid_;
 protected:
     Camera* pCamera_ = nullptr;
     std::unique_ptr<Object3d> model_;
 
-    Transform transform_ = {};
+    std::unique_ptr<Collision::Collider> pCollider_;
+
+	Transform transform_ = {};
     Vector3 velocity_ = {};
     Vector3 acceleration_ = {};
     float gravity_ = 9.8f;
@@ -41,9 +41,9 @@ public:
     virtual void Update() = 0;
     virtual void Draw() = 0;
 
-    virtual void OnCollisionTrigger(const Collider* pObject) {}
-    virtual void OnCollision(const Collider* pObject) {}
-    virtual void OnCollisionExit(const Collider* pObject) {}
+    virtual void OnCollisionTrigger(const Collision::Collider* pObject){}
+    virtual void OnCollision(const Collision::Collider* pObject){}
+    virtual void OnCollisionExit(const Collision::Collider* pObject){}
 
 
 public: /// Setter
@@ -97,7 +97,13 @@ protected:
         Vector3 frictionForce = velocity_ * -_frictionCoef;
         velocity_ += frictionForce * deltaTime_;
     }
-    void StatusUpdateOnCollision(const Collider* pObject);
+
+    static Collision::Vec3 Adaptor(Vector3 _vec)
+    {
+        return Collision::Vec3(_vec.x, _vec.y, _vec.z);
+    }
+
+    void StatusUpdateOnCollision(const Collision::Collider* pObject);
 };
 
 inline Object::Object()
