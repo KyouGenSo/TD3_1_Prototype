@@ -9,7 +9,7 @@ class MachineGunBullet : public BulletBase
         Vector3 origin{};
 
         std::unique_ptr<Object3d> model_;
-        std::unique_ptr<Collider> collider_;
+        std::unique_ptr<Collision::Collider> collider_;
 
         Transform transform_ = {};
         Vector3 forward_ = {};
@@ -26,8 +26,8 @@ class MachineGunBullet : public BulletBase
         Bullet* SetRotate(const Vector3& _rotate);
         Bullet* SetForward(const Vector3& _forward);
         Bullet* SetSpeed(float _speed);
-        bool IsDead() const { return dead; }
-        void OnCollisionTrigger(const Collider* _other);
+        bool IsDead() const {return dead;}
+        void OnCollisionTrigger(const Collision::Collider* _other);
     };
 
     Vector3 origin{};
@@ -36,7 +36,7 @@ public:
     void Initialize() override;
     void Update() override;
     void Draw() override;
-    void OnCollisionTrigger(const Collider* _collider) override;
+    void OnCollisionTrigger(const Collision::Collider* _collider) override;
 
 protected:
     void InitializeNormal() override;

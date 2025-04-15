@@ -20,11 +20,11 @@ void BounceEnemy::Initialize()
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
-    collider_ = std::make_unique<Collider>(this);
-    collider_->SetEvent([this](const Collider* pObj) {this->OnCollision(pObj); });
-    collider_->SetType(Collider::Type::ENEMY);
-    collider_->SetIgnore(Collider::Type::ENEMY);
-    collider_->SetIgnore(Collider::Type::STAGE);
+    collider_ = std::make_unique<Collision::Collider>();
+    collider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) {this->OnCollision(pObj); });
+    collider_->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY));
+    collider_->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY));
+    collider_->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE));
     collider_->SetSize(1.f);
 }
 
@@ -45,11 +45,11 @@ void BounceEnemy::Finalize()
 {
 }
 
-void BounceEnemy::OnCollision(const Collider* pCollider)
+void BounceEnemy::OnCollision(const Collision::Collider* pCollider)
 {
     if (isDead_) return;
 
-    if (pCollider->GetType() == Collider::Type::ALLY) {
+    if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY)) {
         if (0 < hp_) {
             hp_--;
         }

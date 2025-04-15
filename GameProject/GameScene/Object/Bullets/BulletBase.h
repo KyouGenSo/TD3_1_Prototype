@@ -3,11 +3,10 @@
 #include <mutex>
 
 #include "GameScene/Object/Object.h"
-#include "GameScene/Object/Collision/Collider.h"
 #include <GameSystem/Chain/Chain.h>
 #include <Timer/Timer.h>
-#include <GameScene/Status/Status.h>
 
+#include "Collision/Collider.h"
 
 class BulletBase : public Object
 {
@@ -15,7 +14,7 @@ public:
     void Initialize() override;
     void Update() override;
     virtual void Fire();
-    void OnCollisionTrigger(const Collider* _collider) override = 0;
+    void OnCollisionTrigger(const Collision::Collider* _collider) override = 0;
     bool IsDeadAll();
 
 
@@ -28,7 +27,6 @@ private:
     std::atomic<bool> rdy_;
 protected:
     std::mutex mutex_;
-    std::unique_ptr<Collider> pCollider_ = nullptr;
     std::unique_ptr<BulletBase> pNext_ = nullptr;
     std::unique_ptr<Timer> pLifeTimer_ = nullptr;
     std::unique_ptr<Timer> pNextBulletTimer_ = nullptr;

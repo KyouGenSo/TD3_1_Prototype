@@ -1,9 +1,11 @@
 #include "MachineGunBullet.h"
 
 #include <numbers>
+#include <Collision/Collider.h>
 
-void MachineGunBullet::Initialize()
-{
+#include "Type/ColliderType.h"
+
+void MachineGunBullet::Initialize() {
     BulletBase::Initialize();
 
     type_ = WeaponType::MachineGun;
@@ -16,13 +18,15 @@ void MachineGunBullet::Initialize()
 
     CalcLifeTime();
 
-    pCollider_ = std::make_unique<Collider>(this);
+    pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
-        ->SetEvent([&](const Collider* pCol) { OnCollisionTrigger(pCol); })
+        ->SetEvent(Collision::EventType::Trigger, [&](const Collision::Collider* pCol){ OnCollisionTrigger(pCol); })
+        ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.2f)
-        ->SetType(Collider::Type::ALLY)
-        ->SetIgnore(Collider::Type::ALLY)
-        ->SetIgnore(Collider::Type::STAGE);
+        ->SetType(Collision::Type::Sphere)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE));
 }
 
 void MachineGunBullet::Update()
@@ -68,9 +72,8 @@ void MachineGunBullet::Draw()
     }
 }
 
-void MachineGunBullet::OnCollisionTrigger(const Collider* _collider)
-{
-    if (isDead_ || pCollider_->IsDisable())return;
+void MachineGunBullet::OnCollisionTrigger(const Collision::Collider* _collider) {
+    if(isDead_ || pCollider_->IsDisabled())return;
 
     isDead_ = true;
     pCollider_->Disable();
@@ -104,6 +107,8 @@ void MachineGunBullet::InitializeChain()
 void MachineGunBullet::UpdateNormal()
 {
     transform_.translate += forward_ * speed_;
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
 
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
