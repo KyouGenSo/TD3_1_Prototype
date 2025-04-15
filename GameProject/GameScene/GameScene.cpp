@@ -101,6 +101,10 @@ void GameScene::Initialize()
     // CountDownの初期化
     countDown_ = std::make_unique<CountDown>();
     countDown_->Initialize();
+
+    // StatusHUDの初期化
+    statusHUD_ = std::make_unique<StatusHUD>();
+    statusHUD_->Initialize();
 }
 
 void GameScene::Finalize()
@@ -147,6 +151,8 @@ void GameScene::Update()
     }
 
     countDown_->Update();
+
+    statusHUD_->Update();
 }
 
 void GameScene::Draw()
@@ -172,8 +178,8 @@ void GameScene::Draw()
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
     countDown_->Draw2D();
-
     minimap_->Draw();
+    statusHUD_->Draw2D();
 }
 
 void GameScene::DrawImGui()
@@ -185,6 +191,7 @@ void GameScene::DrawImGui()
     camera_->ImGui();
     guiChain_->ImGui();
     timeKeeper_->ImGui();
+    statusHUD_->ImGui();
 
     ImGui::Begin("Directional Light");
     ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);
