@@ -20,6 +20,7 @@
 #include <GameSystem/GameController/GameController.h>
 #include <Utility/Threadpool/Threadpool.h>
 #include <GameUI/CountDown/CountDown.h>
+#include "HUD/StatusHUD.h"
 
 class GameScene : public BaseScene
 {
@@ -43,6 +44,7 @@ class GameScene : public BaseScene
     Threadpool* threadpool_ = nullptr;
     std::unique_ptr<TimeKeeper> timeKeeper_;
     std::unique_ptr<CountDown> countDown_;
+    std::unique_ptr<StatusHUD> statusHUD_ = nullptr;
 
 public:
     struct DirectionalLightParam

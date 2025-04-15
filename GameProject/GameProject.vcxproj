@@ -130,7 +130,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
 </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>$(SolutionDir)cl\pull.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -180,6 +181,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameScene\HUD\StatusBar.cpp" />
+    <ClCompile Include="GameScene\HUD\StatusHUD.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\ImplSubmachineGunBullet.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\BounceEnemy.cpp" />
@@ -224,11 +227,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="NiGui\Derived\Drawer.cpp" />
     <ClCompile Include="NiGui\Derived\NiGui_Debug.cpp" />
     <ClCompile Include="NiGui\Derived\ProcHandler.cpp" />
+    <ClCompile Include="NiGui\NiVec4.cpp" />
     <ClCompile Include="Timer\Timer.cpp" />
     <ClCompile Include="TitleScene\TitleScene.cpp" />
     <ClCompile Include="Utility\Threadpool\Threadpool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameScene\HUD\StatusBar.h" />
+    <ClInclude Include="GameScene\HUD\StatusHUD.h" />
     <ClInclude Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.h" />
     <ClInclude Include="GameScene\Object\Enemy\BounceEnemy.h" />
     <ClInclude Include="GameScene\Object\Enemy\EnemyBase.h" />
@@ -272,6 +278,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="NiGui\Derived\Drawer.h" />
     <ClInclude Include="NiGui\Derived\NiGui_Debug.h" />
     <ClInclude Include="NiGui\Derived\ProcHandler.h" />
+    <ClInclude Include="NiGui\NiVec4.h" />
     <ClInclude Include="Timer\Timer.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
     <ClInclude Include="Type\ColliderType.h" />
