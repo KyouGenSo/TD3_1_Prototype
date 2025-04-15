@@ -263,9 +263,11 @@
     <ClCompile Include="GameScene\HUD\StatusHUD.cpp">
       <Filter>GameUI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\HUD\StatusBar.cpp" />
     <ClCompile Include="NiGui\NiVec4.cpp">
       <Filter>NiGui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\HUD\StatusBar.cpp">
+      <Filter>GameUI\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
