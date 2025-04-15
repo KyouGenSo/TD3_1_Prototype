@@ -29,6 +29,8 @@ public:
     void Draw2D();
     void ImGui();
 
+    StatusBar* GetHpBar() { return hpBar_.get(); }
+
 private:
     GlobalVariables* globalVariables_ = nullptr;
     TextureManager* textureManager_ = nullptr;

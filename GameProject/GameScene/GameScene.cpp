@@ -105,6 +105,7 @@ void GameScene::Initialize()
     // StatusHUDの初期化
     statusHUD_ = std::make_unique<StatusHUD>();
     statusHUD_->Initialize();
+    statusHUD_->GetHpBar()->SetMaxValue(player_->getStatus().getMaxHp());
 }
 
 void GameScene::Finalize()
@@ -138,7 +139,6 @@ void GameScene::Update()
     boss_->Update();
     eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
     eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
-    //eventTimer_->Measure("Update CollisionManager", [&]() { pCollisionManager_->Update(); });
 
     /// タイマーの更新
     if (timeKeeper_->GetRemainTime("JunbiPhase") < 3.0f && !countDown_->IsStart())
@@ -150,18 +150,14 @@ void GameScene::Update()
     countDown_->Update();
 
     statusHUD_->Update();
-    //threadpool_->AddTask([&]{pCollisionManager_->Detect(); });
-    //eventTimer_->Measure("ProcessEvent", [&]{threadpool_->AddTask([&]{ pCollisionManager_->ProcessEvents(); }); });
     pCollisionManager_->Detect();
     pCollisionManager_->ProcessEvent();
+
+    *(statusHUD_->GetHpBar()) = player_->getStatus().getHp();
 }
 
 void GameScene::Draw()
 {
-    //Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-    //Draw2D::GetInstance()->Draw();
-    //Draw2D::GetInstance()->Reset();
-
     //------------------背景Spriteの描画------------------//
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();

@@ -55,7 +55,6 @@ private: // メンバ変数
     std::unique_ptr<NiGuiDebug> niguiDebug_ = nullptr;
 
     EventTimer* eventTimer_ = nullptr;
-    Threadpool* threadpool_ = nullptr;
 
     enum PostEffectType
     {
