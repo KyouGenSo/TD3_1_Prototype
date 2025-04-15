@@ -6,4 +6,4 @@
 	url = https://github.com/Souto-Naitou/NiGui.git
 [submodule "Externals/CollisionLib"]
 	path = Externals/CollisionLib
-	url = https://github.com/MaekawaTomonori/CollisioniLib.git
+	url = https://github.com/MaekawaTomonori/CollisionLib.git
