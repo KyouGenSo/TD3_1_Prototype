@@ -21,6 +21,15 @@ void Enemy::Initialize()
 	model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
+    status_.setAttack(20)
+        .setDefence(0)
+        .setHp(20)
+        .setMaxHp(20)
+        .setExp(0)
+        .setMaxExp(1)
+        .setLevel(0)
+        .setSpeed(1);
+
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) {this->OnCollision(pObj); })
         ->SetType(Collision::Type::Sphere)
@@ -29,6 +38,7 @@ void Enemy::Initialize()
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
         ->Enable();
 }
 
@@ -41,6 +51,8 @@ void Enemy::Update()
     pCollider_->SetTranslate(Adaptor(transform_.translate));
 
     model_->Update();
+
+    status_.Update();
 }
 
 void Enemy::Draw()

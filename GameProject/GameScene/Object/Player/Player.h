@@ -34,6 +34,7 @@ public:
     void Finalize();
     void ImGui();
     void OnCollision(const Collision::Collider* pCollider) override;
+    void OnCollisionTrigger(const Collision::Collider* pCollider) override;
     void AddObserver(IObserver* _observer) { observers_.push_back(_observer); }
     void SetFloor(float _floor) { floor_ = _floor; }
     void SetChain(Chain* _chain) { chain_ = _chain; weapon_->SetChain(_chain); }
