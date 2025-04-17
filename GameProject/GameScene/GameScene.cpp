@@ -8,6 +8,7 @@
 #include "ImGuiManager.h"
 #include <GameSystem/StageManager/StageManager.h>
 
+#include "GPUParticle.h"
 
 
 void GameScene::Initialize()
@@ -17,12 +18,15 @@ void GameScene::Initialize()
     const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
     eventTimer_ = EventTimer::GetInstance();
 
+
     directLightParam_ = {
         .direction = { 0.0f, -1.0f, 0.0f },
         .color = { 1.0f, 1.0f, 1.0f, 1.0f },
         .lightType = 1,
         .intensity = 2.0f
     };
+
+    emitterManager_ = make_unique<EmitterManager>(GPUParticle::GetInstance());
 
     ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
@@ -36,6 +40,7 @@ void GameScene::Initialize()
     player_->Initialize();
     player_->SetFloor(terrain_->GetFloorHeight());
     player_->SetTransform(currentStageData.playerTransform);
+    player_->SetEmitter(emitterManager_.get());
 
     // Camera
     camera_ = std::make_unique<FollowCamera>();
@@ -106,6 +111,11 @@ void GameScene::Initialize()
     statusHUD_ = std::make_unique<StatusHUD>();
     statusHUD_->Initialize();
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatus().getMaxHp());
+
+    emitterManager_->CreateSphereEmitter("explosion", {0,0, 0}, 10, 100, 0);
+    emitterManager_->SetEmitterActive("explosion", false);
+    emitterManager_->SetEmitterStartColor("explosion", {1, 0, 0, 1});
+    emitterManager_->SetEmitterEndColor("explosion", {0, 1, 1, 0});
 }
 
 void GameScene::Finalize()
@@ -154,6 +164,8 @@ void GameScene::Update()
     pCollisionManager_->ProcessEvent();
 
     *(statusHUD_->GetHpBar()) = player_->getStatus().getHp();
+
+    emitterManager_->Update();
 }
 
 void GameScene::Draw()
@@ -170,6 +182,8 @@ void GameScene::Draw()
     player_->Draw();
     boss_->Draw();
     enemyManager_->Draw();
+
+    GPUParticle::GetInstance()->Draw();
 
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定

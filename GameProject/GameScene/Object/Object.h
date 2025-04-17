@@ -12,6 +12,8 @@
 #include <array>
 #include <GameScene/Status/Status.h>
 
+#include "EmitterManager.h"
+
 class Object{
 	std::string uuid_;
 protected:
@@ -29,6 +31,8 @@ protected:
     float deltaTime_ = 0.0f;
     bool isDead_ = false;
     Status status_ = {};
+
+    EmitterManager* emitter_ = nullptr;
 
 protected:
     Input* pInput_ = nullptr;
@@ -64,6 +68,10 @@ public: /// Setter
         transform_.scale = _scale;
     }
 
+    void SetEmitter(EmitterManager* _emitter)
+    {
+        emitter_ = _emitter;
+    }
 
 public: /// Getter
     const Transform& GetTransform() const

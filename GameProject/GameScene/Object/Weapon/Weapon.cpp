@@ -13,6 +13,7 @@ void WeaponBase::Fire()
 
 void WeaponBase::AddNewBullet(std::unique_ptr<BulletBase> _bullet)
 {
+    _bullet->SetEmitter(emitter_);
     _bullet->Initialize();
     _bullet->SetPosition(transform_.translate);
     _bullet->SetRotation(transform_.rotate);

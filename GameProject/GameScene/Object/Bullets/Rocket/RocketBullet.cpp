@@ -3,6 +3,7 @@
 #include <Quaternion.h>
 #include <QuatFunc.h>
 
+#include "EmitterManager.h"
 #include "Collision/Collider.h"
 #include "Type/ColliderType.h"
 
@@ -15,7 +16,7 @@ void RocketBullet::Initialize()
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("AnimatedCube.gltf");
+    ;    model_->SetModel("AnimatedCube.gltf");
     model_->SetScale({ 0.4f, 0.4f, 0.4f });
 
     CalcLifeTime();
@@ -72,7 +73,14 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
     isDead_ = true;
     pCollider_->Disable();
 
-    //爆発オブジェクトを生成   
+    if (emitter_){
+        emitter_->SetEmitterPosition("explosion", transform_.translate);
+        emitter_->CreateTemporaryEmitterFrom("explosion", "tmp", 1.f);
+        explode_ = true;
+    }
+
+
+    //爆発オブジェクトを生成
     explosion_ = std::make_unique<Collision::Collider>();
     explosion_
         ->SetType(Collision::Type::Sphere)
