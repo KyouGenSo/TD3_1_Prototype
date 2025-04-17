@@ -7,6 +7,7 @@
 #include "SpriteBasic.h"
 #include "ImGuiManager.h"
 #include <GameSystem/StageManager/StageManager.h>
+#include <SceneManager.h>
 
 
 
@@ -154,6 +155,9 @@ void GameScene::Update()
     pCollisionManager_->ProcessEvent();
 
     *(statusHUD_->GetHpBar()) = player_->getStatus().getHp();
+
+    // ステータスの監視
+    this->MonitorStatus();
 }
 
 void GameScene::Draw()
@@ -195,4 +199,12 @@ void GameScene::DrawImGui()
     ImGui::ColorEdit4("Color", &directLightParam_.color.x);
     ImGui::DragFloat("Intensity", &directLightParam_.intensity, 0.01f);
     ImGui::End();
+}
+
+void GameScene::MonitorStatus()
+{
+    if (player_->getStatus().getHp() <= 0)
+    {
+        SceneManager::GetInstance()->ChangeScene("result");
+    }
 }
