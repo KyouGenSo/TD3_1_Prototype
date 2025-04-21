@@ -10,11 +10,11 @@ const NiVec4 StatusBar::COLOR_BAR_BG = rgba(139, 139, 139, 255);
 const NiVec4 StatusBar::COLOR_BAR_LOW = rgba(135, 48, 49, 255);
 
 const NiVec2 StatusBar::SPACING_HEAD_TO_DECO = { 0.0f, 10.0f };
-const NiVec2 StatusBar::BAR_SIZE = { 512.0f, 16.0f };
 
-void StatusBar::Initialize(const std::string& _nameTexturePath)
+void StatusBar::Initialize(const std::string& _nameTexturePath, const NiVec2& _barSize)
 {
     nameTexturePath_ = _nameTexturePath;
+    barSize_ = _barSize;
 
     // テクスチャの読み込み
     auto* tm = TextureManager::GetInstance();
@@ -27,8 +27,15 @@ void StatusBar::Initialize(const std::string& _nameTexturePath)
     bar_->Initialize(PATH_BAR);
     bar_->SetColor(TO_VECTOR4(COLOR_BAR_NORMAL));
 
-    decoration_ = std::make_unique<Sprite>();
-    decoration_->Initialize(PATH_DECORATION);
+    for (auto& deco : decorations_)
+    {
+        deco = std::make_unique<Sprite>();
+        deco->Initialize(PATH_DECORATION);
+        deco->SetColor(TO_VECTOR4(COLOR_BAR_NORMAL));
+        Vector2 size = { barSize_.x, barSize_.y };
+        float y = size.y + size.y / 5.0f;
+        deco->SetSize({ y / 5.0f , y });
+    }
 
     name_ = std::make_unique<Sprite>();
     name_->Initialize(nameTexturePath_);
@@ -59,7 +66,10 @@ void StatusBar::Update()
     color.Lerp(COLOR_BAR_LOW, COLOR_BAR_NORMAL, currentValue_ / maxValue_);
     bar_->SetColor(TO_VECTOR4(color));
 
-    if (decoration_) decoration_->Update();
+    for (auto& deco : decorations_)
+    {
+        if (deco) deco->Update();
+    }
     if (bar_) bar_->Update();
     if (background_) background_->Update();
     if (name_) name_->Update();
@@ -67,7 +77,10 @@ void StatusBar::Update()
 
 void StatusBar::Draw2D()
 {
-    if (decoration_) decoration_->Draw();
+    for (const auto& deco : decorations_)
+    {
+        if (deco) deco->Draw();
+    }
     if (background_) background_->Draw();
     if (bar_) bar_->Draw();
     if (name_) name_->Draw();
@@ -100,15 +113,22 @@ void StatusBar::UpdateTransform()
 
     cPos.y += name_->GetSize().y;
     cPos += SPACING_HEAD_TO_DECO;
-    decoration_->SetPos(TO_VECTOR2(cPos));
+    decorations_[0]->SetPos(TO_VECTOR2(cPos));
 
-    NiVec2 decoSize = { decoration_->GetSize().x, decoration_->GetSize().y };
-
-    cPos += (decoSize - BAR_SIZE) * 0.5f;
+    NiVec2 decoSize = { decorations_[0]->GetSize().x, decorations_[1]->GetSize().y };
+    cPos.x += decoSize.x * 3.0f;
+    cPos.y += decoSize.y / 2.0f - bar_->GetSize().y / 2.0f;
     bar_->SetPos(TO_VECTOR2(cPos));
+
     float ratio = currentValue_ / maxValue_;
-    bar_->SetSize({ BAR_SIZE.x * ratio, bar_->GetSize().y });
+    bar_->SetSize({ barSize_.x * ratio, barSize_.y });
 
     background_->SetPos(TO_VECTOR2(cPos));
-    background_->SetSize(TO_VECTOR2(BAR_SIZE));
+    background_->SetSize(TO_VECTOR2(barSize_));
+
+    cPos.x += barSize_.x;
+    cPos.x += decoSize.x * 2.0f;
+    cPos.y -= decoSize.y / 2.0f - bar_->GetSize().y / 2.0f;
+
+    decorations_[1]->SetPos(TO_VECTOR2(cPos));
 }

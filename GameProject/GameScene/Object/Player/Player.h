@@ -25,7 +25,7 @@ class Player : public Object
     float floor_ = 0.5f;
     float jumpPower_ = 20.0f; // ジャンプ力
     float moveSpeed_ = 20.0f; // 移動速度
-    float frictionCoefficient_ = 6.5f; // 摩擦係数
+    float frictionCoefficient_ = 6.5f; // 摩擦係数k
 
 public:
     void Initialize() override;
