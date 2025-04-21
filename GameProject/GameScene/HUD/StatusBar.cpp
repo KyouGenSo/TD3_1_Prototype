@@ -114,8 +114,7 @@ void StatusBar::UpdateTransform()
     cPos.y += name_->GetSize().y;
     cPos += SPACING_HEAD_TO_DECO;
     decorations_[0]->SetPos(TO_VECTOR2(cPos));
-
-    NiVec2 decoSize = { decorations_[0]->GetSize().x, decorations_[1]->GetSize().y };
+    NiVec2 decoSize = { decorations_[0]->GetSize().x, decorations_[0]->GetSize().y };
     cPos.x += decoSize.x * 3.0f;
     cPos.y += decoSize.y / 2.0f - bar_->GetSize().y / 2.0f;
     bar_->SetPos(TO_VECTOR2(cPos));
