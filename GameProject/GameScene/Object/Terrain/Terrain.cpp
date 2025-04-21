@@ -17,7 +17,7 @@ void Terrain::Initialize()
     terrainObj_->SetModel("box.gltf");
     terrainObj_->SetScale(transform_.scale);
     terrainObj_->SetTranslate(transform_.translate);
-    terrainObj_->SetMaterialColor(Vector4(0.5f, 0.5f, 0.5f, 1.0f));
+    terrainObj_->SetMaterialColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
     terrainObj_->SetEnableLighting(true);
     terrainObj_->SetEnableHighlight(false);
 

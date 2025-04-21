@@ -112,10 +112,13 @@ void GameScene::Initialize()
     statusHUD_->Initialize();
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatus().getMaxHp());
 
-    emitterManager_->CreateSphereEmitter("explosion", {0,0, 0}, 10, 100, 0);
+    emitterManager_->CreateSphereEmitter("explosion", {0,0, 0},  5, 250, 0);
     emitterManager_->SetEmitterActive("explosion", false);
+    //emitterManager_->SetEmitterVelocityRange("explosion", {-0.1f, 0.1f}, {-0.1f,  0.1f}, {-0.1f, 0.1f});
+    emitterManager_->SetEmitterColor("explosion", {1.f, 0.f, 0.f, 1});
     emitterManager_->SetEmitterStartColor("explosion", {1, 0, 0, 1});
-    emitterManager_->SetEmitterEndColor("explosion", {0, 1, 1, 0});
+    emitterManager_->SetEmitterEndColor("explosion", {1.f, 1.f, 0.f, 1});
+    emitterManager_->SetEmitterScaleRange("explosion", {0.4f, 0.4f}, {0.4f, 0.4f});
 }
 
 void GameScene::Finalize()
