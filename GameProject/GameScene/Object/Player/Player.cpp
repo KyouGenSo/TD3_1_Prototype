@@ -34,6 +34,7 @@ void Player::Initialize()
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol){this->OnCollision(pCol); })
+        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol) { this->OnCollisionTrigger(pCol); })
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
@@ -109,6 +110,11 @@ void Player::ImGui()
 }
 
 void Player::OnCollision(const Collision::Collider* pCollider) {
+}
+
+void Player::OnCollisionTrigger(const Collision::Collider* pCollider)
+{
+    Object::StatusUpdateOnCollision(pCollider);
 }
 
 void Player::OnChainConfirm()

@@ -37,7 +37,9 @@ private:
     Input* input_ = nullptr;
 
     std::unique_ptr<StatusBar> hpBar_ = nullptr;
+    std::unique_ptr<StatusBar> bulletBar_ = nullptr;
     NiVec2 hpBarPos_ = { 0.0f, 0.0f };
+    NiVec2 bulletBarPos_ = { 0.0f, 0.0f };
 
     bool isReloaded_ = false;
 
