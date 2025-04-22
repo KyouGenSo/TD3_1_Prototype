@@ -119,6 +119,9 @@
     <Filter Include="GameUI\CountDown">
       <UniqueIdentifier>{f89ef6e2-9c41-4c61-a0b2-d74778b2b0eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSystem\Reinforcement">
+      <UniqueIdentifier>{6dfca897-eafa-4bfb-90dc-18d37fd63b24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -270,6 +273,12 @@
       <Filter>GameUI\HUD</Filter>
     </ClCompile>
     <ClCompile Include="ResultScene\ResultScene.cpp" />
+    <ClCompile Include="GameSystem\Reinforcement\StatusReinforcement.cpp">
+      <Filter>GameSystem\Reinforcement</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\Reinforcement\Manager\ReinforcementManager.cpp">
+      <Filter>GameSystem\Reinforcement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -429,6 +438,15 @@
     <ClInclude Include="Type\ColliderType.h" />
     <ClInclude Include="ResultScene\ResultScene.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\Reinforcement\IReinforcement.h">
+      <Filter>GameSystem\Reinforcement</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\Reinforcement\StatusReinforcement.h">
+      <Filter>GameSystem\Reinforcement</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\Reinforcement\Manager\ReinforcementManager.h">
+      <Filter>GameSystem\Reinforcement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -42,7 +42,7 @@ void Player::Initialize()
         ->Enable();
 
     // Status Initialize
-    status_
+    statusInit_
         .setAttack(0)
         .setHp(100)
         .setLevel(1)
@@ -51,6 +51,7 @@ void Player::Initialize()
         .setSpeed(1)
         .setDefence(0)
         .setMaxHp(100);
+    statusCurrent_ = statusInit_;
 
     /// !!Debug!!
     weapon_ = std::make_unique<SMG>();
@@ -74,6 +75,8 @@ void Player::Update()
     model_->SetScale(transform_.scale);
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
+
+    statusCurrent_.Update();
 }
 
 void Player::Draw()
@@ -89,6 +92,8 @@ void Player::Finalize()
 
 void Player::ImGui()
 {
+    statusInit_.ImGui("PlayerInit");
+    statusCurrent_.ImGui("PlayerCurrent");
 
     if (ImGui::Begin("Player"))
     {
