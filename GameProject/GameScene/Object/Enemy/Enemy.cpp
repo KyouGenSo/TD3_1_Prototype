@@ -21,7 +21,7 @@ void Enemy::Initialize()
 	model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
-    status_.setAttack(20)
+    statusInit_.setAttack(20)
         .setDefence(0)
         .setHp(20)
         .setMaxHp(20)
@@ -52,7 +52,8 @@ void Enemy::Update()
 
     model_->Update();
 
-    status_.Update();
+    statusInit_.Update();
+    statusCurrent_.Update();
 }
 
 void Enemy::Draw()

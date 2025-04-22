@@ -27,5 +27,5 @@ void Object::DebugObject()
 void Object::StatusUpdateOnCollision(const Collision::Collider* pObject)
 {
     Object* object = static_cast<Object*>(pObject->GetOwner());
-    status_.OnCollision(object->getStatus());
+    statusCurrent_.OnCollision(object->getStatusCurrent());
 }

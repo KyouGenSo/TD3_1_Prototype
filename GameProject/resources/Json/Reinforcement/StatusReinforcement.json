@@ -1,0 +1,47 @@
+[
+    {
+        "name" : "Faster",
+        "description" : "移動速度がすこし増加します。",
+        "status-type" : "speed",
+        "operatorType" : "add",
+        "value" : 1.0,
+        "rarity": 1,
+        "event" : "onGet"
+    },
+    {
+        "name" : "Healthy",
+        "description" : "体力がすこし増加します。",
+        "status-type" : "health",
+        "operatorType" : "add",
+        "value" : 1.0,
+        "rarity": 1,
+        "event" : "onGet"
+    },
+    {
+        "name" : "Strong",
+        "description" : "攻撃力がすこし増加します。",
+        "status-type" : "attack",
+        "operatorType" : "add",
+        "value" : 1.0,
+        "rarity": 1,
+        "event" : "onGet"
+    },
+    {
+        "name" : "Tough",
+        "description" : "防御力がすこし増加します。",
+        "status-type" : "defense",
+        "operatorType" : "add",
+        "value" : 1.0,
+        "rarity": 1,
+        "event" : "onGet"
+    },
+    {
+        "name" : "Critical",
+        "description" : "クリティカル率がすこし増加します。",
+        "status-type" : "critical",
+        "operatorType" : "add",
+        "value" : 1.0,
+        "rarity": 1,
+        "event" : "onGet"
+    }
+]

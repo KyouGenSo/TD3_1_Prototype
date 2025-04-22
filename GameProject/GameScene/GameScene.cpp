@@ -9,6 +9,8 @@
 #include <GameSystem/StageManager/StageManager.h>
 #include <SceneManager.h>
 
+#include <GameSystem/Reinforcement/StatusReinforcement.h>
+
 
 
 void GameScene::Initialize()
@@ -106,7 +108,17 @@ void GameScene::Initialize()
     // StatusHUDの初期化
     statusHUD_ = std::make_unique<StatusHUD>();
     statusHUD_->Initialize();
-    statusHUD_->GetHpBar()->SetMaxValue(player_->getStatus().getMaxHp());
+    statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
+
+    // ReinforcementManagerの初期化
+    reinforcementManager_ = ReinforcementManager::GetInstance();
+    reinforcementManager_->Initialize("StatusReinforcement.json");
+
+    // Reinforcementの初期化
+    auto statusReinforcement = std::make_unique<StatusReinforcement>();
+    statusReinforcement->Initialize("Faster");
+    statusReinforcement->SetStatus(&player_->getStatusCurrent());
+    statusReinforcement->Apply();
 }
 
 void GameScene::Finalize()
@@ -154,9 +166,9 @@ void GameScene::Update()
     pCollisionManager_->Detect();
     pCollisionManager_->ProcessEvent();
 
-    *(statusHUD_->GetHpBar()) = player_->getStatus().getHp();
+    *(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
 
-    // ステータスの監視
+    // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
     this->MonitorStatus();
 }
 
@@ -203,7 +215,7 @@ void GameScene::DrawImGui()
 
 void GameScene::MonitorStatus()
 {
-    if (player_->getStatus().getHp() <= 0)
+    if (player_->getStatusCurrent().getHp() <= 0)
     {
         SceneManager::GetInstance()->ChangeScene("result");
     }
