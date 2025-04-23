@@ -3,6 +3,8 @@
 
 #include <Timer/Timer.h>
 
+#include "EmitterManager.h"
+
 class RocketBullet : public BulletBase
 {
 public:
@@ -28,5 +30,6 @@ private:
     std::unique_ptr<Collision::Collider> explosion_;
     bool createExpl_ = false;
     Vector3 explosionPos_ = {};
+    bool explode_ = false;
 };
 

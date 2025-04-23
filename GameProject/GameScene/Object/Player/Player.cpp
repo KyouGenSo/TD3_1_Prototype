@@ -10,7 +10,6 @@
 // DEBUG
 #include <QuatFunc.h>
 
-#include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
 #include "GameScene/Object/Weapon/SMG/SMG.h"
 #include "Type/ColliderType.h"
 
@@ -127,6 +126,7 @@ void Player::OnChainConfirm()
     weapon_.reset();
     weapon_ = WeaponFactory::CreateWeapon(chain_->Front());
     weapon_->SetChain(chain_);
+    weapon_->SetEmitter(emitter_);
 }
 
 void Player::UpdateInputCommands()

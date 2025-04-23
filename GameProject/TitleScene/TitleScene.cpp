@@ -4,12 +4,12 @@
 #include "Object3dBasic.h"
 #include "SpriteBasic.h"
 #include "ModelManager.h"
-#include "ParticleManager.h"
 #include "Input.h"
 #include "Draw2D.h"
 #include "Camera.h"
 #include "Audio.h"
 #include "GlobalVariables.h"
+#include "GPUParticle.h"
 #include "Ease/Ease.h"
 
 #ifdef _DEBUG
@@ -35,7 +35,7 @@ void TitleScene::Initialize()
 	DebugCamera::GetInstance()->Initialize();
   Object3dBasic::GetInstance()->SetDebug(false);
   Draw2D::GetInstance()->SetDebug(false);
-  ParticleManager::GetInstance()->SetIsDebug(false);
+  GPUParticle::GetInstance()->SetIsDebug(false);
 #endif
 
 	/// ================================== ///
@@ -57,7 +57,7 @@ void TitleScene::Update()
 	if (Input::GetInstance()->TriggerKey(DIK_F1)) {
 		Object3dBasic::GetInstance()->SetDebug(!Object3dBasic::GetInstance()->GetDebug());
 		Draw2D::GetInstance()->SetDebug(!Draw2D::GetInstance()->GetDebug());
-		ParticleManager::GetInstance()->SetIsDebug(!ParticleManager::GetInstance()->GetIsDebug());
+		GPUParticle::GetInstance()->SetIsDebug(!GPUParticle::GetInstance()->GetIsDebug());
 		isDebug_ = !isDebug_;
 	}
 
