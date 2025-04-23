@@ -27,8 +27,11 @@ void NiGuiDrawer::Draw()
             sprite = sprites_[data->textureName][currentIndex].get();
         }
 
-        sprite->SetPos({ data->leftTop.x, data->leftTop.y });
-        sprite->SetSize({ data->size.x, data->size.y });
+        sprite->SetPos({ data->texLeftTop.x, data->texLeftTop.y });
+        if (data->texSize.Length() > 0)
+        {
+            sprite->SetSize({ data->texSize.x, data->texSize.y });
+        }
         sprite->SetColor({ data->color.x, data->color.y, data->color.z, data->color.w });
 
         sprite->Update();

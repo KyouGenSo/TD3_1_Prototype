@@ -2,6 +2,7 @@
 
 #include <Quaternion.h>
 #include <QuatFunc.h>
+#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
 #include "Collision/Collider.h"
 #include "Type/ColliderType.h"
@@ -71,6 +72,14 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
 
     isDead_ = true;
     pCollider_->Disable();
+
+    Object* pObj = static_cast<Object*>(_other->GetOwner());
+
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
+    {
+        //敵に当たった場合
+        ReinforcementManager::GetInstance()->Notify("onHit");
+    }
 
     //爆発オブジェクトを生成   
     explosion_ = std::make_unique<Collision::Collider>();

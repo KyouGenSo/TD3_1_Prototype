@@ -9,7 +9,6 @@
 #include <GameSystem/StageManager/StageManager.h>
 #include <SceneManager.h>
 
-#include <GameSystem/Reinforcement/StatusReinforcement.h>
 
 
 
@@ -98,6 +97,7 @@ void GameScene::Initialize()
     gameController_->SetGUIChainView(guiChain_.get());
 
     guiChain_->SetGameController(gameController_.get());
+    guiLvUP_->SetGameController(gameController_.get());
 
     threadpool_ = Threadpool::GetInstance();
 
@@ -111,15 +111,8 @@ void GameScene::Initialize()
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
 
     // ReinforcementManagerの初期化
-    reinforcementManager_ = ReinforcementManager::GetInstance();
-    reinforcementManager_->Initialize("StatusReinforcement.json");
-
-    // Reinforcementの初期化
-    auto statusReinforcement = std::make_unique<StatusReinforcement>();
-    statusReinforcement->Initialize("Faster");
-    statusReinforcement->SetStatus(&player_->getStatusCurrent());
-    statusReinforcement->Apply();
-}
+    auto* reinforcementManager_ = ReinforcementManager::GetInstance();
+    reinforcementManager_->Initialize("StatusReinforcement.json");}
 
 void GameScene::Finalize()
 {

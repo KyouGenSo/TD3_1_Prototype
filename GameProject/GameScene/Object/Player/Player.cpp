@@ -13,6 +13,8 @@
 #include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
 #include "GameScene/Object/Weapon/SMG/SMG.h"
 #include "Type/ColliderType.h"
+#include <GameSystem/Reinforcement/StatusReinforcement.h>
+#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
 void Player::Initialize()
 {
@@ -44,7 +46,7 @@ void Player::Initialize()
     // Status Initialize
     statusInit_
         .setAttack(0)
-        .setHp(100)
+        .setHp(30)
         .setLevel(1)
         .setExp(0)
         .setMaxExp(100)
@@ -88,6 +90,11 @@ void Player::Draw()
 
 void Player::Finalize()
 {
+    auto* rfmManager = ReinforcementManager::GetInstance();
+    for (auto& reinforcement : reinforcementList_)
+    {
+        rfmManager->UnregisterReinforcement(reinforcement.get());
+    }
 }
 
 void Player::ImGui()
@@ -120,6 +127,18 @@ void Player::OnCollision(const Collision::Collider* pCollider) {
 void Player::OnCollisionTrigger(const Collision::Collider* pCollider)
 {
     Object::StatusUpdateOnCollision(pCollider);
+}
+
+void Player::AddReinforcement(const std::string& _cardName)
+{
+    auto reinforcement = std::make_unique<StatusReinforcement>();
+    reinforcement->Initialize(_cardName);
+    reinforcement->SetStatus(&statusCurrent_);
+    reinforcement->Apply();
+
+    reinforcementList_.emplace_back(std::move(reinforcement));
+
+    ReinforcementManager::GetInstance()->RegisterReinforcement(reinforcementList_.back().get());
 }
 
 void Player::OnChainConfirm()

@@ -11,11 +11,15 @@ public:
     virtual void Remove() = 0;
     virtual void IncrementLevel() = 0;
     virtual void DecrementLevel() = 0;
+    virtual void OnHit() = 0;
 
 public:
     void Disable() { isDisabled_ = true; }
     void Enable() { isDisabled_ = false; }
     void ToggleDisable() { isDisabled_ = !isDisabled_; }
+
+public:
+    std::string GetEvent() const { return event_; }
 
 protected:
     bool isDisabled_ = false;

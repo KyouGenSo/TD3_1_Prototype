@@ -106,3 +106,17 @@ void StatusReinforcement::ApplicationByMultiplication()
         status_->setSpeed(status_->getSpeed() * static_cast<int>(value_));
     }
 }
+
+void StatusReinforcement::OnHit()
+{
+    if (event_ != "onHit") return;
+
+    if (operatorType_ == "add")
+    {
+        ApplicationByAddition();
+    }
+    else if (operatorType_ == "mul")
+    {
+        ApplicationByMultiplication();
+    }
+}
