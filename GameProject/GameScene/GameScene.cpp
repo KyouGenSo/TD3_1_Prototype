@@ -7,6 +7,9 @@
 #include "SpriteBasic.h"
 #include "ImGuiManager.h"
 #include <GameSystem/StageManager/StageManager.h>
+#include <SceneManager.h>
+
+#include <GameSystem/Reinforcement/StatusReinforcement.h>
 
 #include "GPUParticle.h"
 
@@ -110,7 +113,6 @@ void GameScene::Initialize()
     // StatusHUDの初期化
     statusHUD_ = std::make_unique<StatusHUD>();
     statusHUD_->Initialize();
-    statusHUD_->GetHpBar()->SetMaxValue(player_->getStatus().getMaxHp());
 
     emitterManager_->CreateSphereEmitter("explosion", {0,0, 0},  5, 250, 0);
     emitterManager_->SetEmitterActive("explosion", false);
@@ -119,6 +121,18 @@ void GameScene::Initialize()
     emitterManager_->SetEmitterStartColor("explosion", {1, 0, 0, 1});
     emitterManager_->SetEmitterEndColor("explosion", {1.f, 1.f, 0.f, 1});
     emitterManager_->SetEmitterScaleRange("explosion", {0.4f, 0.4f}, {0.4f, 0.4f});
+  
+    statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
+
+    // ReinforcementManagerの初期化
+    reinforcementManager_ = ReinforcementManager::GetInstance();
+    reinforcementManager_->Initialize("StatusReinforcement.json");
+
+    // Reinforcementの初期化
+    auto statusReinforcement = std::make_unique<StatusReinforcement>();
+    statusReinforcement->Initialize("Faster");
+    statusReinforcement->SetStatus(&player_->getStatusCurrent());
+    statusReinforcement->Apply();
 }
 
 void GameScene::Finalize()
@@ -166,9 +180,11 @@ void GameScene::Update()
     eventTimer_->Measure("detect", [&]{pCollisionManager_->Detect(); });
     eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
 
-    *(statusHUD_->GetHpBar()) = player_->getStatus().getHp();
-
     emitterManager_->Update();
+    *(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
+
+    // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
+    this->MonitorStatus();
 }
 
 void GameScene::Draw()
@@ -212,4 +228,12 @@ void GameScene::DrawImGui()
     ImGui::ColorEdit4("Color", &directLightParam_.color.x);
     ImGui::DragFloat("Intensity", &directLightParam_.intensity, 0.01f);
     ImGui::End();
+}
+
+void GameScene::MonitorStatus()
+{
+    if (player_->getStatusCurrent().getHp() <= 0)
+    {
+        SceneManager::GetInstance()->ChangeScene("result");
+    }
 }

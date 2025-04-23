@@ -23,6 +23,7 @@
 
 #include "EmitterManager.h"
 #include "HUD/StatusHUD.h"
+#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
 class GameScene : public BaseScene
 {
@@ -44,6 +45,7 @@ class GameScene : public BaseScene
     std::unique_ptr<Castle> castle_;
     EventTimer* eventTimer_ = nullptr;
     Threadpool* threadpool_ = nullptr;
+    ReinforcementManager* reinforcementManager_ = nullptr;
     std::unique_ptr<TimeKeeper> timeKeeper_;
     std::unique_ptr<CountDown> countDown_;
     std::unique_ptr<StatusHUD> statusHUD_ = nullptr;
@@ -67,5 +69,8 @@ public:
     void Update() override;
     void Draw() override;
     void DrawImGui() override;
+
+private:
+    void MonitorStatus();
 };
 

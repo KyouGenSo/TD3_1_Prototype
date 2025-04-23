@@ -3,6 +3,10 @@
         "HPBar_Position": [
             536.0,
             780.0
+        ],
+        "BulletBar_Position": [
+            150.0,
+            780.0
         ]
     }
 }

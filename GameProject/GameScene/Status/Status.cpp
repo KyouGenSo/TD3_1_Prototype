@@ -1,5 +1,7 @@
 #include "Status.h"
 
+#include <imgui.h>
+
 void Status::Initalize()
 {
     hp_ = 0;
@@ -35,6 +37,21 @@ void Status::Update()
         exp_ -= maxExp_;
         maxExp_ = level_ * 100;
     }
+}
+
+void Status::ImGui(const std::string& _name)
+{
+    if (ImGui::Begin(("[Status] " + _name).c_str()))
+    {
+        ImGui::Text("HP: %d / %d", hp_, maxHp_);
+        ImGui::Text("Attack: %d", attack_);
+        ImGui::Text("Defence: %d", defence_);
+        ImGui::Text("Speed: %d", speed_);
+        ImGui::Text("Level: %d", level_);
+        ImGui::Text("Exp: %d / %d", exp_, maxExp_);
+    }
+
+    ImGui::End();
 }
 
 void Status::OnCollision(const Status& _status)

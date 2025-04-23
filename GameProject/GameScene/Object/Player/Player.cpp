@@ -33,6 +33,7 @@ void Player::Initialize()
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol){this->OnCollision(pCol); })
+        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol) { this->OnCollisionTrigger(pCol); })
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
@@ -40,7 +41,7 @@ void Player::Initialize()
         ->Enable();
 
     // Status Initialize
-    status_
+    statusInit_
         .setAttack(0)
         .setHp(100)
         .setLevel(1)
@@ -49,6 +50,7 @@ void Player::Initialize()
         .setSpeed(1)
         .setDefence(0)
         .setMaxHp(100);
+    statusCurrent_ = statusInit_;
 
     /// !!Debug!!
     weapon_ = std::make_unique<SMG>();
@@ -72,6 +74,8 @@ void Player::Update()
     model_->SetScale(transform_.scale);
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
+
+    statusCurrent_.Update();
 }
 
 void Player::Draw()
@@ -87,6 +91,8 @@ void Player::Finalize()
 
 void Player::ImGui()
 {
+    statusInit_.ImGui("PlayerInit");
+    statusCurrent_.ImGui("PlayerCurrent");
 
     if (ImGui::Begin("Player"))
     {
@@ -108,6 +114,11 @@ void Player::ImGui()
 }
 
 void Player::OnCollision(const Collision::Collider* pCollider) {
+}
+
+void Player::OnCollisionTrigger(const Collision::Collider* pCollider)
+{
+    Object::StatusUpdateOnCollision(pCollider);
 }
 
 void Player::OnChainConfirm()

@@ -1,0 +1,43 @@
+{
+    "type": "array",
+    "items": {
+        "type": "object",
+        "required": ["name", "description", "status-type", "operatorType", "value", "rarity", "event"],
+        "additionalProperties": false,
+        "properties": {
+            "name": {
+                "type": "string",
+                "description": "アイテム名"
+            },
+            "description": {
+                "type": "string",
+                "description": "説明文"
+            },
+            "status-type": {
+                "type": "string",
+                "description": "ステータス名",
+                "enum": ["health", "speed", "attack", "defense", "critical"]
+            },
+            "operatorType": {
+                "type": "string",
+                "description": "効果を適用するときに使用する演算子",
+                "enum": ["add", "sub", "mul", "div"]
+            },
+            "value": {
+                "type": "number",
+                "description": "効果の値"
+            },
+            "rarity": {
+                "type": "integer",
+                "description": "レアリティ",
+                "minimum": 1,
+                "maximum": 5
+            },
+            "event": {
+                "type": "string",
+                "description": "発動イベント。 onGetは取得時, onHitは攻撃時, onKillは敵を倒したときに発動",
+                "enum": ["onGet", "onHit", "onKill"]
+            }
+        }
+    }
+}
