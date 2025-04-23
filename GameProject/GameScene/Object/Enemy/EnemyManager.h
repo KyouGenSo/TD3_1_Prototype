@@ -46,8 +46,7 @@ public:
     void SetMinimap(Minimap* pMinimap);
 
     void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
-
-
+    void SetEmitter(EmitterManager* pEmitter);
 
 private:
     void SpawnEnemy();
@@ -84,6 +83,7 @@ private:
     Object* pPlayer_ = nullptr;
     Object* pCastle_ = nullptr;
 
+    EmitterManager* pEmitter_ = nullptr;
 
     Vector3 appearancePos_ = { 3.0f,1.0f,0.0f };
 

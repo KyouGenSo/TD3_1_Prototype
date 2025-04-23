@@ -59,6 +59,7 @@ void Enemy::OnCollision(const Collision::Collider* pCollider)
     if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY) || pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::P_BULLET)){
         if (0 < hp_){
             hp_--;
+            HitEffect();
         }else{
             isDead_ = true;
             return;
