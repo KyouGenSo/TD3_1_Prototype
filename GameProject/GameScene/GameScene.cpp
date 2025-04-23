@@ -163,8 +163,8 @@ void GameScene::Update()
     countDown_->Update();
 
     statusHUD_->Update();
-    pCollisionManager_->Detect();
-    pCollisionManager_->ProcessEvent();
+    eventTimer_->Measure("detect", [&]{pCollisionManager_->Detect(); });
+    eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
 
     *(statusHUD_->GetHpBar()) = player_->getStatus().getHp();
 
