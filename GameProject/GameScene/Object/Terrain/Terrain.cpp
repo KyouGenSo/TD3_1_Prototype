@@ -9,7 +9,7 @@ void Terrain::Initialize()
     //transform_.scale = Vector3(100.0f, 2.0f, 400.0f);
     //transform_.translate = Vector3(0.0f, -transform_.scale.y * 0.5f, 0.0f);
     transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
-    transform_.translate = Vector3(0.0f, -3.0f, 0.0f);
+    transform_.translate = Vector3(0.0f, -2.0f, 0.0f);
 
     ModelManager::GetInstance()->LoadModel("box.gltf");
     ModelManager::GetInstance()->LoadModel("boxInv.gltf");
@@ -20,9 +20,15 @@ void Terrain::Initialize()
     terrainObj_->SetModel("Terrain.gltf");
     terrainObj_->SetScale(transform_.scale);
     terrainObj_->SetTranslate(transform_.translate);
-    terrainObj_->SetMaterialColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
+    terrainObj_->SetMaterialColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
     terrainObj_->SetEnableLighting(true);
     terrainObj_->SetEnableHighlight(false);
+    terrainObj_->SetRotate(Vector3(0.0f, 0.0f, 0.0f));
+    Transform uvTranform;
+    uvTranform.scale = Vector3(400.0f, 100.0f, 1.0f);
+    uvTranform.translate = Vector3(0.0f, 0.0f, 0.0f);
+    uvTranform.rotate = Vector3(0.0f, 0.0f, 0.0f);
+    terrainObj_->SetUvTransform(uvTranform);
 
     Vector3 boxScale = Vector3(transform_.scale.x, 300.0f, transform_.scale.z);
     Vector3 boxTranslate = Vector3(0.0f, boxScale.y * 0.5f - transform_.scale.y * 0.5f, 0.0f);
@@ -88,5 +94,6 @@ void Terrain::OnCollision(const Collision::Collider* pCollider) const {
 
 float Terrain::GetFloorHeight() const
 {
-    return transform_.translate.y + transform_.scale.y * 0.5f;
+    return 0.0f;
+    //return 0.0f;
 }
