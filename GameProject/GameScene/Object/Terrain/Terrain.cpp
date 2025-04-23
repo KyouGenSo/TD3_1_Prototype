@@ -6,15 +6,18 @@
 
 void Terrain::Initialize()
 {
-    transform_.scale = Vector3(100.0f, 2.0f, 400.0f);
-    transform_.translate = Vector3(0.0f, -transform_.scale.y * 0.5f, 0.0f);
+    //transform_.scale = Vector3(100.0f, 2.0f, 400.0f);
+    //transform_.translate = Vector3(0.0f, -transform_.scale.y * 0.5f, 0.0f);
+    transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
+    transform_.translate = Vector3(0.0f, -3.0f, 0.0f);
 
     ModelManager::GetInstance()->LoadModel("box.gltf");
     ModelManager::GetInstance()->LoadModel("boxInv.gltf");
+    ModelManager::GetInstance()->LoadModel("Terrain.gltf");
 
     terrainObj_ = std::make_unique<Object3d>();
     terrainObj_->Initialize();
-    terrainObj_->SetModel("box.gltf");
+    terrainObj_->SetModel("Terrain.gltf");
     terrainObj_->SetScale(transform_.scale);
     terrainObj_->SetTranslate(transform_.translate);
     terrainObj_->SetMaterialColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
