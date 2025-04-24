@@ -20,13 +20,15 @@ void MachineGunBullet::Initialize() {
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
-        ->SetEvent(Collision::EventType::Trigger, [&](const Collision::Collider* pCol){ OnCollisionTrigger(pCol); })
+        ->SetEvent(Collision::EventType::Trigger, [&](const Collision::Collider* pCol) { OnCollisionTrigger(pCol); })
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.2f)
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE));
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
+        ->Enable();
 }
 
 void MachineGunBullet::Update()

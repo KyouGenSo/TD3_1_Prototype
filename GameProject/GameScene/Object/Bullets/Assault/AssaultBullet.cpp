@@ -9,7 +9,7 @@ void AssaultBullet::Initialize()
     BulletBase::Initialize();
 
     type_ = WeaponType::Assault;
-    speed_ = 0.3f;
+    speed_ = 1.0f;
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
@@ -65,7 +65,7 @@ void AssaultBullet::InitializeNormal()
     bullet_ = std::make_unique<Bullet>();
     bullet_->Initialize();
     bullet_->SetPosition(transform_.translate);
-    bullet_->SetRotate(transform_.rotate);
+    bullet_->SetRotation(transform_.rotate);
     bullet_->SetForward(forward_);
     bullet_->SetSpeed(speed_);
 }
@@ -97,6 +97,11 @@ void AssaultBullet::InitializeChain()
 void AssaultBullet::UpdateNormal()
 {
     bullet_->Update();
+
+    if (bullet_->IsDead() && !isDead_)
+    {
+        isDead_ = true;
+    }
 }
 
 void AssaultBullet::UpdateChain()

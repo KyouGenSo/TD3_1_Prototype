@@ -47,6 +47,7 @@ void Terrain::Initialize()
         ->SetSize(Collision::Vec3{100, 0, 400})
         ->SetType(Collision::Type::AABB)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
         ->Enable();
 }
 

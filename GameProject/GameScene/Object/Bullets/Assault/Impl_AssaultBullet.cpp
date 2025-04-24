@@ -4,34 +4,53 @@
 
 #include "QuatFunc.h"
 #include "Type/ColliderType.h"
+#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
 void AssaultBullet::Bullet::Initialize()
 {
+    BulletBase::Initialize();
+
     ModelManager::GetInstance()->LoadModel("box.gltf");
 
-    pLifeTimer_ = std::make_unique<Timer>();
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("box.gltf");
     model_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 
-    collider_ = std::make_unique<Collision::Collider>();
-    collider_->SetEvent(Collision::EventType::Trigger, [this](const auto& c){this->OnCollisionTrigger(c); })
+    statusInit_
+        .setAttack(7)
+        .setHp(1)
+        .setLevel(1)
+        .setExp(0)
+        .setMaxExp(1)
+        .setSpeed(1)
+        .setDefence(0)
+        .setMaxHp(1);
+    statusCurrent_ = statusInit_;
+
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_
+        ->SetEvent(Collision::EventType::Trigger, [this](const auto* c) { this->OnCollisionTrigger(c); })
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.3f)
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE));
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
+        ->Enable();
+
     Update();
 }
 
 void AssaultBullet::Bullet::Update()
 {
+    BulletBase::Update();
+
     transform_.translate += forward_ * speed_;
 
-    collider_->SetTranslate(Adaptor(transform_.translate));
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
 
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
@@ -40,16 +59,45 @@ void AssaultBullet::Bullet::Update()
 
 void AssaultBullet::Bullet::Draw()
 {
-    if (!model_)return;
-    model_->Draw();
-}
+    if (model_ && !isDead_)
+    {
+        model_->Draw();
+    }
 
-void AssaultBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _other) {
-    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY)){
-        hit = true;
+    if (pNext_)
+    {
+        pNext_->Draw();
     }
 }
 
-bool AssaultBullet::Bullet::IsHit() {
-    return hit;
+void AssaultBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _other)
+{
+    if (_other->IsDisabled()) return;
+
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
+    {
+        pCollider_->Disable();
+        isDead_ = true;
+
+        //敵に当たった場合
+        ReinforcementManager::GetInstance()->Notify("onHit");
+
+        Next();
+    }
+}
+
+void AssaultBullet::Bullet::InitializeNormal()
+{
+}
+
+void AssaultBullet::Bullet::InitializeChain()
+{
+}
+
+void AssaultBullet::Bullet::UpdateNormal()
+{
+}
+
+void AssaultBullet::Bullet::UpdateChain()
+{
 }

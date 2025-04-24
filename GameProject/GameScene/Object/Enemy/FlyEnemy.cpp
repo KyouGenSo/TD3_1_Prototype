@@ -21,8 +21,18 @@ void FlyEnemy::Initialize()
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
+    statusInit_.setAttack(20)
+        .setDefence(0)
+        .setHp(20)
+        .setMaxHp(20)
+        .setExp(0)
+        .setMaxExp(1)
+        .setLevel(0)
+        .setSpeed(1);
+    statusCurrent_ = statusInit_;
+
     pCollider_ = std::make_unique<Collision::Collider>();
-    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) {this->OnCollision(pObj); })
+    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) { this->OnCollision(pObj); })
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
@@ -35,6 +45,8 @@ void FlyEnemy::Initialize()
 
 void FlyEnemy::Update()
 {
+    Object::Update();
+
     if (isDead_) return;
 
     Move();
@@ -57,35 +69,32 @@ void FlyEnemy::OnCollision(const Collision::Collider* pCollider)
 {
     if (isDead_) return;
 
-    if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY)) {
-        if (0 < hp_) {
-            hp_--;
-        }
-        else {
-            isDead_ = true;
-            return;
-        }
-
-        model_->SetTranslate(transform_.translate);
+    if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
+    {
+        Object::StatusUpdateOnCollision(pCollider);
     }
 }
 
 void FlyEnemy::Move()
 {
-    if (isAppearing_) {
+    if (isAppearing_)
+    {
         AppearanceProduction();
     }
-    else {
+    else
+    {
         Vector3 direction;
         direction = pTarget_->GetTransform().translate - transform_.translate;
 
         float length = std::sqrt((direction.x * direction.x) + (direction.y * direction.y) + (direction.z * direction.z));
-        if (length != 0) {
+        if (length != 0)
+        {
             direction /= length;
         }
 
         transform_.translate += direction * speed_;
-        if (transform_.translate.y < 1.0f) {
+        if (transform_.translate.y < 1.0f)
+        {
             transform_.translate.y = 1.0f;
         }
     }
@@ -105,7 +114,8 @@ void FlyEnemy::AppearanceProduction()
     model_->SetRotate(transform_.rotate);
 
     appearCounter_++;
-    if (appearCounter_ >= appearDuration_) {
+    if (appearCounter_ >= appearDuration_)
+    {
         transform_.scale = defaultScale_;
         model_->SetScale(transform_.scale);
         transform_.rotate = defaultRotate_;

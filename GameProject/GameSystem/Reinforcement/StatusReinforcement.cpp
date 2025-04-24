@@ -71,19 +71,19 @@ void StatusReinforcement::ApplicationByAddition()
 {
     if (statusType == "health")
     {
-        status_->AddHp(static_cast<int>(value_));
+        status_->AddHp(value_);
     }
     else if (statusType == "attack")
     {
-        status_->AddAttack(static_cast<int>(value_));
+        status_->AddAttack(value_);
     }
     else if (statusType == "defence")
     {
-        status_->AddDefence(static_cast<int>(value_));
+        status_->AddDefence(value_);
     }
     else if (statusType == "speed")
     {
-        status_->AddSpeed(static_cast<int>(value_));
+        status_->AddSpeed(value_);
     }
 }
 
@@ -91,19 +91,19 @@ void StatusReinforcement::ApplicationByMultiplication()
 {
     if (statusType == "health")
     {
-        status_->setMaxHp(status_->getMaxHp() * static_cast<int>(value_));
+        status_->setMaxHp(status_->getMaxHp() * value_);
     }
     else if (statusType == "attack")
     {
-        status_->setAttack(status_->getAttack() * static_cast<int>(value_));
+        status_->setAttack(status_->getAttack() * value_);
     }
     else if (statusType == "defence")
     {
-        status_->setDefence(status_->getDefence() * static_cast<int>(value_));
+        status_->setDefence(status_->getDefence() * value_);
     }
     else if (statusType == "speed")
     {
-        status_->setSpeed(status_->getSpeed() * static_cast<int>(value_));
+        status_->setSpeed(status_->getSpeed() * value_);
     }
 }
 

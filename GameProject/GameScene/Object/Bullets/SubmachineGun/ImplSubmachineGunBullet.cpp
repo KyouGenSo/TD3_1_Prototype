@@ -16,6 +16,7 @@ MachineGunBullet::Bullet* MachineGunBullet::Bullet::Initialize() {
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
         ->Enable();
     Update();
     return this;

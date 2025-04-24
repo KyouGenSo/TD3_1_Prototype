@@ -21,6 +21,18 @@ void Castle::Initialize() {
     model_->SetScale(transform_.scale);
     model_->SetTranslate(transform_.translate);
 
+    statusInit_
+        .setAttack(5000)
+        .setHp(100)
+        .setLevel(1)
+        .setExp(0)
+        .setMaxExp(100)
+        .setSpeed(1)
+        .setDefence(0)
+        .setMaxHp(5000);
+    statusCurrent_ = statusInit_;
+
+
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
         ->SetEvent(Collision::EventType::Trigger, [&](const auto& c){})
@@ -29,6 +41,7 @@ void Castle::Initialize() {
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->SetOwner(this)
         ->Enable();
 }
 
@@ -37,6 +50,7 @@ void Castle::Update() {
     model_->SetScale(transform_.scale);
     model_->SetTranslate(transform_.translate);
     model_->Update();
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
 }
 
 void Castle::Draw() {

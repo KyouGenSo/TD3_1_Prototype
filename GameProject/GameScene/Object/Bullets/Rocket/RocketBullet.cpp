@@ -2,7 +2,6 @@
 
 #include <Quaternion.h>
 #include <QuatFunc.h>
-#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
 #include "EmitterManager.h"
 #include "Collision/Collider.h"
@@ -22,13 +21,26 @@ void RocketBullet::Initialize()
 
     CalcLifeTime();
 
+    statusInit_
+        .setAttack(5)
+        .setHp(1)
+        .setLevel(1)
+        .setExp(0)
+        .setMaxExp(1)
+        .setSpeed(1)
+        .setDefence(0)
+        .setMaxHp(1);
+    statusCurrent_ = statusInit_;
+
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol){this->OnCollisionTrigger(pCol); })
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.4f)
         ->SetType(Collision::Type::Sphere)
-        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->SetOwner(this)
         ->Enable();
 }
 
@@ -53,6 +65,7 @@ void RocketBullet::Update()
     {
         pNext_->Update();
     }
+
     isDead_ = CheckLifeTime();
 }
 
@@ -74,8 +87,6 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
     isDead_ = true;
     pCollider_->Disable();
 
-    Object* pObj = static_cast<Object*>(_other->GetOwner());
-
     // 強化カードの効果を適用するための通知
     NotifyReinforcementManager(_other);
 
@@ -94,6 +105,7 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
         ->SetSize(5.0f)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
         ->Enable();
 
     Next();

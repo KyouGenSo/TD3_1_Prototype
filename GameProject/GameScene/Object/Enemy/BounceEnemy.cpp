@@ -21,12 +21,14 @@ void BounceEnemy::Initialize()
     model_->SetTranslate(transform_.translate);
 
     collider_ = std::make_unique<Collision::Collider>();
-    collider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) {this->OnCollision(pObj); });
-    collider_->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY));
-    collider_->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY));
-    collider_->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE));
-    collider_->SetSize(1.f);
-    collider_->SetOwner(this);
+    collider_
+        ->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) { this->OnCollision(pObj); })
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetSize(1.f)
+        ->SetOwner(this)
+        ->Enable();
 }
 
 void BounceEnemy::Update()

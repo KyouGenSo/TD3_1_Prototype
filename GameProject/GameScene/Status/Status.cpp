@@ -25,9 +25,9 @@ void Status::Update()
     {
         exp_ = maxExp_;
     }
-    if (level_ < 1)
+    if (level_ < 1.0f)
     {
-        level_ = 1;
+        level_ = 1.0f;
     }
 
     // レベルアップ
@@ -35,7 +35,7 @@ void Status::Update()
     {
         level_++;
         exp_ -= maxExp_;
-        maxExp_ = level_ * 100;
+        maxExp_ = level_ * 100.0f;
     }
 }
 
@@ -43,30 +43,35 @@ void Status::ImGui(const std::string& _name)
 {
     if (ImGui::Begin(("[Status] " + _name).c_str()))
     {
-        ImGui::Text("HP: %d / %d", hp_, maxHp_);
-        ImGui::Text("Attack: %d", attack_);
-        ImGui::Text("Defence: %d", defence_);
-        ImGui::Text("Speed: %d", speed_);
-        ImGui::Text("Level: %d", level_);
-        ImGui::Text("Exp: %d / %d", exp_, maxExp_);
+        ImGui::Text("HP: %.1f / %.1f", hp_, maxHp_);
+        ImGui::Text("Attack: %.1f", attack_);
+        ImGui::Text("Defence: %.1f", defence_);
+        ImGui::Text("Speed: %.1f", speed_);
+        ImGui::Text("Level: %.1f", level_);
+        ImGui::Text("Exp: %.1f / %.1f", exp_, maxExp_);
     }
 
     ImGui::End();
 }
 
+void Status::LoadFromFile(const std::string& _filename)
+{
+
+}
+
 void Status::OnCollision(const Status& _status)
 {
     // ダメージ計算
-    int damage = _status.attack_ - defence_;
-    if (damage < 0)
+    float damage = _status.attack_ - defence_;
+    if (damage < 0.0f)
     {
-        damage = 0;
+        damage = 0.0f;
     }
 
     // ダメージ適用
     hp_ -= damage;
-    if (hp_ < 0)
+    if (hp_ < 0.0f)
     {
-        hp_ = 0;
+        hp_ = 0.0f;
     }
 }
