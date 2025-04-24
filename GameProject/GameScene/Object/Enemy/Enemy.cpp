@@ -69,6 +69,13 @@ void Enemy::OnCollision(const Collision::Collider* pCollider)
 {
     if (isDead_) return;
 
+    if (!(pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE))){
+        if (emitter_){
+            emitter_->SetEmitterPosition("hit", transform_.translate);
+            emitter_->CreateTemporaryEmitterFrom("hit", "hit_tmp", 1.f);
+        }
+    }
+
     if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY) || pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::P_BULLET)){
         if (0 < hp_){
             hp_--;

@@ -8,5 +8,8 @@ public:
     void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
 
 protected:
+    void HitEffect();
+
+protected:
     Object* pTarget_ = nullptr;
 };
