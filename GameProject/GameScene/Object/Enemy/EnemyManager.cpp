@@ -144,6 +144,7 @@ void EnemyManager::AddEnemy(const Vector3& position, Type type)
         enemy->SetTranslate(position);
         enemy->SetIsAppearing(true);
         enemy->SetAppearCounter(0.0f);
+        enemy->SetEmitter(pEmitter_);
         //pMinimap_->Register(enemy.get());
         enemies_.push_back(std::move(enemy));
     }
@@ -154,6 +155,7 @@ void EnemyManager::AddEnemy(const Vector3& position, Type type)
         flyEnemy->SetTranslate(position);
         flyEnemy->SetIsAppearing(true);
         flyEnemy->SetAppearCounter(0.0f);
+        flyEnemy->SetEmitter(pEmitter_);
         flyEnemies_.push_back(std::move(flyEnemy));
     }
     else if (type == Type::Bounce) {
@@ -162,6 +164,7 @@ void EnemyManager::AddEnemy(const Vector3& position, Type type)
         bounceEnemy->SetTranslate(position);
         bounceEnemy->SetIsAppearing(true);
         bounceEnemy->SetAppearCounter(0.0f);
+        bounceEnemy->SetEmitter(pEmitter_);
         bounceEnemies_.push_back(std::move(bounceEnemy));
     }
 }
@@ -245,6 +248,10 @@ void EnemyManager::TurnControl()
         keys_.push_back(key);
         ChangeWave(key, true);
     }
+}
+
+void EnemyManager::SetEmitter(EmitterManager* pEmitter) {
+    pEmitter_ = pEmitter;
 }
 
 void EnemyManager::SpawnEnemy()

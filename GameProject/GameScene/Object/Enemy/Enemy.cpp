@@ -79,6 +79,13 @@ void Enemy::OnCollision(const Collision::Collider* _other)
         Object::StatusUpdateOnCollision(_other);
 
         isDead_ = true;
+      
+    if (!(pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE))){
+        if (emitter_){
+            emitter_->SetEmitterPosition("hit", transform_.translate);
+            emitter_->CreateTemporaryEmitterFrom("hit", "hit_tmp", 1.f);
+        }
+    }
 
         transform_.translate = prePos_;
         model_->SetTranslate(transform_.translate);
