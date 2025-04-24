@@ -30,7 +30,8 @@ protected:
 
     float deltaTime_ = 0.0f;
     bool isDead_ = false;
-    Status status_ = {};
+    Status statusInit_ = {};
+    Status statusCurrent_ = {};
 
     EmitterManager* emitter_ = nullptr;
 
@@ -89,9 +90,14 @@ public: /// Getter
         return isDead_;
     }
 
-    Status& getStatus()
+    Status& getStatusCurrent()
     {
-        return status_;
+        return statusCurrent_;
+    }
+
+    Status& getStatusInit()
+    {
+        return statusInit_;
     }
 
 protected:
@@ -131,11 +137,11 @@ inline Object::Object()
     uuid_ = reinterpret_cast<char*>(szUuid);
 
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
-    status_ = {};
 }
 
 inline void Object::Initialize()
 {
     pInput_ = Input::GetInstance();
+    statusCurrent_ = statusInit_;
 }
 

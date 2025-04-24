@@ -29,6 +29,7 @@ void FlyEnemy::Initialize()
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(1.f)
+        ->SetOwner(this)
         ->Enable();
 }
 

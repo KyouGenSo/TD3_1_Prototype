@@ -52,14 +52,26 @@ void EventTimer::ImGui()
 {
     ImGui::Begin("EventTimer");
 
+    ImGui::Checkbox("Display Progress Bar", &isDisplayProgressBar_);
     ImGui::InputInt("Display duration MaxTime ", &durationMaxTimeDisplay_);
 
-    for (const auto& event : events_)
+    if (isDisplayProgressBar_)
     {
-        ImGui::Text("%s : %.0fms", event.first.c_str(), event.second * 1000.0f);
-        ImGui::ProgressBar(event.second / deltaTime_, ImVec2(0.0f, 0.0f), ""); ImGui::SameLine();
-        ImGui::Text("%.0fms", maxTime_[event.first] * 1000.0f);
+        for (const auto& event : events_)
+        {
+            ImGui::Text("%s : %.0fms", event.first.c_str(), event.second * 1000.0f);
+            ImGui::ProgressBar(event.second / deltaTime_, ImVec2(0.0f, 0.0f), ""); ImGui::SameLine();
+            ImGui::Text("%.0fms", maxTime_[event.first] * 1000.0f);
+        }
     }
+    else
+    {
+        for (const auto& event : events_)
+        {
+            ImGui::Text("%s : %.0fms (max : %.0fms)", event.first.c_str(), event.second * 1000.0f, maxTime_[event.first] * 1000.0f);
+        }
+    }
+
     ImGui::End();
 
 }

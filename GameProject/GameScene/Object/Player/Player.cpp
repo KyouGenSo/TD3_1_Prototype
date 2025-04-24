@@ -12,6 +12,8 @@
 
 #include "GameScene/Object/Weapon/SMG/SMG.h"
 #include "Type/ColliderType.h"
+#include <GameSystem/Reinforcement/StatusReinforcement.h>
+#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
 void Player::Initialize()
 {
@@ -33,6 +35,7 @@ void Player::Initialize()
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol){this->OnCollision(pCol); })
+        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol) { this->OnCollisionTrigger(pCol); })
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
@@ -40,15 +43,16 @@ void Player::Initialize()
         ->Enable();
 
     // Status Initialize
-    status_
+    statusInit_
         .setAttack(0)
-        .setHp(100)
+        .setHp(30)
         .setLevel(1)
         .setExp(0)
         .setMaxExp(100)
         .setSpeed(1)
         .setDefence(0)
         .setMaxHp(100);
+    statusCurrent_ = statusInit_;
 
     /// !!Debug!!
     weapon_ = std::make_unique<SMG>();
@@ -72,6 +76,8 @@ void Player::Update()
     model_->SetScale(transform_.scale);
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
+
+    statusCurrent_.Update();
 }
 
 void Player::Draw()
@@ -83,10 +89,17 @@ void Player::Draw()
 
 void Player::Finalize()
 {
+    auto* rfmManager = ReinforcementManager::GetInstance();
+    for (auto& reinforcement : reinforcementList_)
+    {
+        rfmManager->UnregisterReinforcement(reinforcement.get());
+    }
 }
 
 void Player::ImGui()
 {
+    statusInit_.ImGui("PlayerInit");
+    statusCurrent_.ImGui("PlayerCurrent");
 
     if (ImGui::Begin("Player"))
     {
@@ -108,6 +121,23 @@ void Player::ImGui()
 }
 
 void Player::OnCollision(const Collision::Collider* pCollider) {
+}
+
+void Player::OnCollisionTrigger(const Collision::Collider* pCollider)
+{
+    Object::StatusUpdateOnCollision(pCollider);
+}
+
+void Player::AddReinforcement(const std::string& _cardName)
+{
+    auto reinforcement = std::make_unique<StatusReinforcement>();
+    reinforcement->Initialize(_cardName);
+    reinforcement->SetStatus(&statusCurrent_);
+    reinforcement->Apply();
+
+    reinforcementList_.emplace_back(std::move(reinforcement));
+
+    ReinforcementManager::GetInstance()->RegisterReinforcement(reinforcementList_.back().get());
 }
 
 void Player::OnChainConfirm()

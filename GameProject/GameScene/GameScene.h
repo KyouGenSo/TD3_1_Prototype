@@ -23,6 +23,8 @@
 
 #include "EmitterManager.h"
 #include "HUD/StatusHUD.h"
+#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
+#include <GameSystem/Reinforcement/StatusReinforcement.h>
 
 class GameScene : public BaseScene
 {
@@ -67,5 +69,8 @@ public:
     void Update() override;
     void Draw() override;
     void DrawImGui() override;
+
+private:
+    void MonitorStatus();
 };
 

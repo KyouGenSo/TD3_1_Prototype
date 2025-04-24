@@ -7,6 +7,8 @@
 #include "SpriteBasic.h"
 #include "ImGuiManager.h"
 #include <GameSystem/StageManager/StageManager.h>
+#include <SceneManager.h>
+
 
 #include "GPUParticle.h"
 
@@ -28,7 +30,6 @@ void GameScene::Initialize()
 
     emitterManager_ = make_unique<EmitterManager>(GPUParticle::GetInstance());
 
-    ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
 
     // Terrain
@@ -101,6 +102,7 @@ void GameScene::Initialize()
     gameController_->SetGUIChainView(guiChain_.get());
 
     guiChain_->SetGameController(gameController_.get());
+    guiLvUP_->SetGameController(gameController_.get());
 
     threadpool_ = Threadpool::GetInstance();
 
@@ -111,7 +113,6 @@ void GameScene::Initialize()
     // StatusHUDの初期化
     statusHUD_ = std::make_unique<StatusHUD>();
     statusHUD_->Initialize();
-    statusHUD_->GetHpBar()->SetMaxValue(player_->getStatus().getMaxHp());
 
     emitterManager_->CreateSphereEmitter("explosion", {0,0, 0},  5, 250, 0);
     emitterManager_->SetEmitterActive("explosion", false);
@@ -126,6 +127,12 @@ void GameScene::Initialize()
     emitterManager_->SetEmitterColor("hit", {1.f, 0.f, 0.f, 1});
     emitterManager_->SetEmitterScaleRange("hit", {0.1f, 0.1f}, {0.1f, 0.1f});
 }
+  
+    statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
+
+    // ReinforcementManagerの初期化
+    auto* reinforcementManager_ = ReinforcementManager::GetInstance();
+    reinforcementManager_->Initialize("StatusReinforcement.json");}
 
 void GameScene::Finalize()
 {
@@ -172,9 +179,11 @@ void GameScene::Update()
     eventTimer_->Measure("detect", [&]{pCollisionManager_->Detect(); });
     eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
 
-    *(statusHUD_->GetHpBar()) = player_->getStatus().getHp();
-
     emitterManager_->Update();
+    *(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
+
+    // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
+    this->MonitorStatus();
 }
 
 void GameScene::Draw()
@@ -218,4 +227,12 @@ void GameScene::DrawImGui()
     ImGui::ColorEdit4("Color", &directLightParam_.color.x);
     ImGui::DragFloat("Intensity", &directLightParam_.intensity, 0.01f);
     ImGui::End();
+}
+
+void GameScene::MonitorStatus()
+{
+    if (player_->getStatusCurrent().getHp() <= 0)
+    {
+        SceneManager::GetInstance()->ChangeScene("result");
+    }
 }

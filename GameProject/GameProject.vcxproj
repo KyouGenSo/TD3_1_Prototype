@@ -119,6 +119,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,6 +148,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <Optimization>MinSpace</Optimization>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -214,6 +216,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameSystem\Chain\Chain.cpp" />
     <ClCompile Include="GameSystem\DeltaTimeManager\DeltaTimeManager.cpp" />
     <ClCompile Include="GameSystem\GameController\GameController.cpp" />
+    <ClCompile Include="GameSystem\Reinforcement\Manager\ReinforcementManager.cpp" />
+    <ClCompile Include="GameSystem\Reinforcement\StatusReinforcement.cpp" />
     <ClCompile Include="GameSystem\StageManager\StageManager.cpp" />
     <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp" />
     <ClCompile Include="GameUI\Chain\GUI_Chain.cpp" />
@@ -229,6 +233,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="NiGui\Derived\NiGui_Debug.cpp" />
     <ClCompile Include="NiGui\Derived\ProcHandler.cpp" />
     <ClCompile Include="NiGui\NiVec4.cpp" />
+    <ClCompile Include="ResultScene\ResultScene.cpp" />
     <ClCompile Include="Timer\Timer.cpp" />
     <ClCompile Include="TitleScene\TitleScene.cpp" />
     <ClCompile Include="Utility\Threadpool\Threadpool.cpp" />
@@ -264,6 +269,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameSystem\Chain\Chain.h" />
     <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h" />
     <ClInclude Include="GameSystem\GameController\GameController.h" />
+    <ClInclude Include="GameSystem\Reinforcement\IReinforcement.h" />
+    <ClInclude Include="GameSystem\Reinforcement\Manager\ReinforcementManager.h" />
+    <ClInclude Include="GameSystem\Reinforcement\StatusReinforcement.h" />
     <ClInclude Include="GameSystem\StageManager\StageManager.h" />
     <ClInclude Include="GameSystem\TimeKeeper\TimeKeeper.h" />
     <ClInclude Include="GameUI\Chain\GUI_Chain.h" />
@@ -280,6 +288,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="NiGui\Derived\NiGui_Debug.h" />
     <ClInclude Include="NiGui\Derived\ProcHandler.h" />
     <ClInclude Include="NiGui\NiVec4.h" />
+    <ClInclude Include="ResultScene\ResultScene.h" />
     <ClInclude Include="Timer\Timer.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />
     <ClInclude Include="Type\ColliderType.h" />

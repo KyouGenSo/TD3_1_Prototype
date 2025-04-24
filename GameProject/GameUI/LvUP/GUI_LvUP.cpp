@@ -27,6 +27,12 @@ void GUI_LvUP::Update()
     {
         ShowLvUP();
     }
+
+    if (isSelected_)
+    {
+        gameController_->HandleConfirmCard(selectedCard_);
+        isSelected_ = false;
+    }
 }
 
 void GUI_LvUP::ImGui()
@@ -43,18 +49,21 @@ void GUI_LvUP::ShowLvUP()
     /// レベルアップ画面を表示する処理
     bool isClose = false;
 
-    if (NiGui::BeginDiv("LvUP", TEXTUREPATH_, NiGui::BLACK, { 0, 0 }, { 800, 450 }, center, center))
+    if (NiGui::BeginDiv("LvUP", TEXTUREPATH_, NiGui::WHITE, { 0, 0 }, { 1100, 600 }, center, center))
     {
-        if (NiGui::Button("Close1", TEXTUREPATH_, NiGui::WHITE, { -250, 0 }, { 200, 350 }, center, center) == confirm)
+        if (NiGui::Button("Attack", TEX_CARD_ATTACK_, NiGui::WHITE, { -330, 50 }, { 200, 350 }, { 273, 423 }, center, center) == confirm)
         {
+            selectedCard_ = "Strong";
             isClose = true;
         }
-        if (NiGui::Button("Close2", TEXTUREPATH_, NiGui::WHITE, { 0, 0 }, { 200, 350 }, center, center) == confirm)
+        if (NiGui::Button("Defence", TEX_CARD_DEFENCE_, NiGui::WHITE, { 0, 50 }, { 200, 350 }, { 273, 423 }, center, center) == confirm)
         {
+            selectedCard_ = "Tough";
             isClose = true;
         }
-        if (NiGui::Button("Close3", TEXTUREPATH_, NiGui::WHITE, { 250, 0 }, { 200, 350 }, center, center) == confirm)
+        if (NiGui::Button("Steel", TEX_CARD_STEEL_, NiGui::WHITE, { 330, 50 }, { 200, 350 }, { 273, 423 }, center, center) == confirm)
         {
+            selectedCard_ = "Steel";
             isClose = true;
         }
         NiGui::EndDiv();
@@ -64,6 +73,7 @@ void GUI_LvUP::ShowLvUP()
     if (isClose)
     {
         isDisplay_ = false;
+        isSelected_ = true;
     }
 
     return;

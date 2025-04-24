@@ -41,4 +41,5 @@ private:
     std::unordered_map<std::string, Timer> timers_;
     std::unordered_map<std::string, float> maxTime_;
     std::unordered_map<std::string, Timer> maxTimeResetTimers_;
+    bool isDisplayProgressBar_ = true;
 };

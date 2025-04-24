@@ -64,7 +64,7 @@ void GUI_Chain::ShowChain()
         NiGui::DragItem("Assault", (ICONDIR_ / TEX_ASSAULT_).string(), NiGui::WHITE, { 0, -150 }, { 100, 100 }, center, center);
         NiGui::DragItem("MachineGun", TEX_WHITE_, NiGui::MAGENTA, { 240, -150 }, { 100, 100 }, center, center);
 
-        if (NiGui::Button("ConfirmChain", TEX_WHITE_, NiGui::GREEN, { 0, 150 }, { 100, 100 }, center, center) == confirm)
+        if (NiGui::Button("ConfirmChain", TEX_WHITE_, NiGui::GREEN, { 0, 150 }, { 100, 100 }, {}, center, center) == confirm)
         {
             if (CheckValidChain())
             {

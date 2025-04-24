@@ -2,6 +2,7 @@
 
 #include <Quaternion.h>
 #include <QuatFunc.h>
+#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
 #include "EmitterManager.h"
 #include "Collision/Collider.h"
@@ -72,6 +73,11 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
 
     isDead_ = true;
     pCollider_->Disable();
+
+    Object* pObj = static_cast<Object*>(_other->GetOwner());
+
+    // 強化カードの効果を適用するための通知
+    NotifyReinforcementManager(_other);
 
     if (emitter_){
         emitter_->SetEmitterPosition("explosion", transform_.translate);
