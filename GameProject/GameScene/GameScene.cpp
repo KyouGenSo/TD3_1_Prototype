@@ -126,13 +126,13 @@ void GameScene::Initialize()
     emitterManager_->SetEmitterActive("hit", false);
     emitterManager_->SetEmitterColor("hit", {1.f, 0.f, 0.f, 1});
     emitterManager_->SetEmitterScaleRange("hit", {0.1f, 0.1f}, {0.1f, 0.1f});
-}
   
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
 
     // ReinforcementManagerの初期化
     auto* reinforcementManager_ = ReinforcementManager::GetInstance();
-    reinforcementManager_->Initialize("StatusReinforcement.json");}
+    reinforcementManager_->Initialize("StatusReinforcement.json");
+}
 
 void GameScene::Finalize()
 {
