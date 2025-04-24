@@ -80,7 +80,7 @@ void Enemy::OnCollision(const Collision::Collider* _other)
 
         isDead_ = true;
       
-    if (!(pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE))){
+    if (!(_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE))){
         if (emitter_){
             emitter_->SetEmitterPosition("hit", transform_.translate);
             emitter_->CreateTemporaryEmitterFrom("hit", "hit_tmp", 1.f);
