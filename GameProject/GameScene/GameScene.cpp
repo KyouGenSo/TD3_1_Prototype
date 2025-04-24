@@ -136,6 +136,7 @@ void GameScene::Initialize()
 
 void GameScene::Finalize()
 {
+    emitterManager_->RemoveAllEmitters();
     terrain_->Finalize();
     player_->Finalize();
     boss_->Finalize();
