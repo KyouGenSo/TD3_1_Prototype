@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <mutex>
 #include <GameScene/Object/Bullets/BulletFactory.h>
+#include <Type/ColliderType.h>
+#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
 void BulletBase::Initialize()
 {
@@ -91,4 +93,13 @@ bool BulletBase::CheckLifeTime() const
     if (isDead_)return true;
 
     return pLifeTimer_->GetNow<float>() >= lifeTime_;
+}
+
+void BulletBase::NotifyReinforcementManager(const Collision::Collider* _other)
+{
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
+    {
+        //敵に当たった場合
+        ReinforcementManager::GetInstance()->Notify("onHit");
+    }
 }

@@ -76,11 +76,8 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
 
     Object* pObj = static_cast<Object*>(_other->GetOwner());
 
-    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
-    {
-        //敵に当たった場合
-        ReinforcementManager::GetInstance()->Notify("onHit");
-    }
+    // 強化カードの効果を適用するための通知
+    NotifyReinforcementManager(_other);
 
     if (emitter_){
         emitter_->SetEmitterPosition("explosion", transform_.translate);
