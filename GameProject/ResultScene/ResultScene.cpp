@@ -2,6 +2,7 @@
 
 #include <Input.h>
 #include <SceneManager.h>
+#include <SpriteBasic.h>
 
 void ResultScene::Initialize()
 {
@@ -25,6 +26,7 @@ void ResultScene::Update()
 
 void ResultScene::Draw()
 {
+    SpriteBasic::GetInstance()->SetCommonRenderSetting();
     press_->Draw();
 }
 
