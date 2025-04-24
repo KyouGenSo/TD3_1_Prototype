@@ -6,6 +6,7 @@
 #include <GameSystem/Chain/Chain.h>
 #include <GameScene/Object/Weapon/Weapon.h>
 #include <Interfaces/IObserver.h>
+#include <GameSystem/Reinforcement/IReinforcement.h>
 
 class Player : public Object
 {
@@ -15,6 +16,7 @@ class Player : public Object
     std::unique_ptr<WeaponBase> weapon_ = nullptr;
 
     std::list<IObserver*> observers_ = {};
+    std::list<std::unique_ptr<IReinforcement>> reinforcementList_ = {};
 
     Vector3 move_ = {};
 
@@ -38,6 +40,7 @@ public:
     void AddObserver(IObserver* _observer) { observers_.push_back(_observer); }
     void SetFloor(float _floor) { floor_ = _floor; }
     void SetChain(Chain* _chain) { chain_ = _chain; weapon_->SetChain(_chain); }
+    void AddReinforcement(const std::string& _cardName);
     void OnChainConfirm();
 
 private:

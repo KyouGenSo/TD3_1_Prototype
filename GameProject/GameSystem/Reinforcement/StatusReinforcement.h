@@ -16,6 +16,7 @@ public:
     void Remove() override;
     void IncrementLevel() override;
     void DecrementLevel() override;
+    void OnHit() override;
 
     void SetStatus(Status* _status) { status_ = _status; }
 
@@ -25,5 +26,6 @@ private:
     void ApplicationByMultiplication();
 
 private:
-    Status* status_;
+    Status* status_ = nullptr;
+
 };

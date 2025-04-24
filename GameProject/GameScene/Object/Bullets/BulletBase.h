@@ -50,6 +50,9 @@ protected:
     // ライフタイムをチェック
     bool CheckLifeTime() const;
 
+    // ReinforcementManagerに通知
+    void NotifyReinforcementManager(const Collision::Collider* _other);
+
 protected:
     Chain* pChainManager_ = nullptr;
 

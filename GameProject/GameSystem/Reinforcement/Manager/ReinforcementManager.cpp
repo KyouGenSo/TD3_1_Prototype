@@ -10,7 +10,30 @@ void ReinforcementManager::Initialize(const std::string& _filename)
 
 void ReinforcementManager::Notify(const std::string& _event)
 {
+    if (_event == "onHit")
+    {
+        for (auto& reinforcement : reinforcementList_)
+        {
+            if (reinforcement->GetEvent() == _event)
+            {
+                reinforcement->OnHit();
+            }
+        }
+    }
+}
 
+void ReinforcementManager::RegisterReinforcement(IReinforcement* _reinforcement)
+{
+    reinforcementList_.push_back(_reinforcement);
+}
+
+void ReinforcementManager::UnregisterReinforcement(IReinforcement* _reinforcement)
+{
+    auto it = std::remove(reinforcementList_.begin(), reinforcementList_.end(), _reinforcement);
+    if (it != reinforcementList_.end())
+    {
+        reinforcementList_.erase(it, reinforcementList_.end());
+    }
 }
 
 void ReinforcementManager::LoadFromFile(const std::string& _filename)

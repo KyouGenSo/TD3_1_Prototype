@@ -1,7 +1,8 @@
 #pragma once 
 
 #include <GameScene/Object/Player/Player.h>
-#include <GameUI/Chain/GUI_Chain.h>
+#include <Interfaces/IObserver.h>
+#include <string>
 
 // ビューからの入力を受け取り、モデルに反映する
 class GameController
@@ -10,7 +11,9 @@ public:
     GameController() = default;
 
     void SetPlayerModel(Player* _playerModel) { playerModel_ = _playerModel; }
-    void SetGUIChainView(GUI_Chain* _guiChainView) { guiChainView_ = _guiChainView; }
+    void SetGUIChainView(IObserver* _guiChainView) { guiChainView_ = _guiChainView; }
+
+    void OnNotify(const std::string& _event);
 
     /// <summary>
     /// (呼び出し元:UI) チェインが確定されたときの処理
@@ -20,6 +23,11 @@ public:
         playerModel_->OnChainConfirm();
     }
 
+    void HandleConfirmCard(const std::string& _cardName)
+    {
+        playerModel_->AddReinforcement(_cardName);
+    }
+
     void OnLevelUp()
     {
         guiChainView_->OnNotify("open_chain");
@@ -27,6 +35,6 @@ public:
 
 private:
     Player* playerModel_ = nullptr;
-    GUI_Chain* guiChainView_ = nullptr;
-
+    IObserver* guiChainView_ = nullptr;
+    IObserver* guiLvUP_ = nullptr;
 };

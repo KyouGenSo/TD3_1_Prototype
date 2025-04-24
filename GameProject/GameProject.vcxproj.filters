@@ -272,12 +272,14 @@
     <ClCompile Include="GameScene\HUD\StatusBar.cpp">
       <Filter>GameUI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="ResultScene\ResultScene.cpp" />
     <ClCompile Include="GameSystem\Reinforcement\StatusReinforcement.cpp">
       <Filter>GameSystem\Reinforcement</Filter>
     </ClCompile>
     <ClCompile Include="GameSystem\Reinforcement\Manager\ReinforcementManager.cpp">
       <Filter>GameSystem\Reinforcement</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScene\ResultScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

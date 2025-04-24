@@ -25,6 +25,8 @@ public:
 
     void Initialize(const std::string& _filename);
     void Notify(const std::string& _event);
+    void RegisterReinforcement(IReinforcement* _reinforcement);
+    void UnregisterReinforcement(IReinforcement* _reinforcement);
 
 public: // Getter
 

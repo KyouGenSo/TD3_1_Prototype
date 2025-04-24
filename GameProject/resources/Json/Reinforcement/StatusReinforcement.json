@@ -29,7 +29,7 @@
     {
         "name" : "Tough",
         "description" : "防御力がすこし増加します。",
-        "status-type" : "defense",
+        "status-type" : "defence",
         "operatorType" : "add",
         "value" : 1.0,
         "rarity": 1,
@@ -43,5 +43,14 @@
         "value" : 1.0,
         "rarity": 1,
         "event" : "onGet"
+    },
+    {
+        "name" : "Steel",
+        "description" : "ダメージを与えるたびにわずかにHPが上昇します。",
+        "status-type" : "health",
+        "operatorType" : "add",
+        "value" : 1.0,
+        "rarity": 2,
+        "event" : "onHit"
     }
 ]
