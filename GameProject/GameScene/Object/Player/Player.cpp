@@ -62,6 +62,13 @@ void Player::Initialize()
 
 void Player::Update()
 {
+    if (deltaTime_ == 0.0f)
+    {
+        for (auto observer : observers_)
+        {
+            observer->OnNotify("toggle_lvup");
+        }
+    }
     deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(0);
 
     UpdateInputCommands();
