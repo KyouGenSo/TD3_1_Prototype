@@ -31,7 +31,6 @@ void GameScene::Initialize()
 
     emitterManager_ = make_unique<EmitterManager>(GPUParticle::GetInstance());
 
-    ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
 
     // Terrain

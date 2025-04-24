@@ -15,6 +15,7 @@
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 
 #include "GPUParticle.h"
+#include "ModelManager.h"
 
 
 void MyGame::Initialize()
@@ -47,6 +48,8 @@ void MyGame::Initialize()
     postEffectParam.bloomSigma = 2.0f;
     postEffectParam.fogColor = { 1.0f, 1.0f, 1.0f, 1.0f };
     postEffectParam.fogDensity = 0.01f;
+
+    ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
 
     // テーマ編集
     OverrideImGuiStyle();
