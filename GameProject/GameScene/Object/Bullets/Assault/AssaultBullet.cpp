@@ -9,7 +9,7 @@ void AssaultBullet::Initialize()
     BulletBase::Initialize();
 
     type_ = WeaponType::Assault;
-    speed_ = 0.3f;
+    speed_ = 1.0f;
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();

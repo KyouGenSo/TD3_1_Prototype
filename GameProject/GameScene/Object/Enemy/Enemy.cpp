@@ -78,6 +78,8 @@ void Enemy::OnCollision(const Collision::Collider* _other)
 
         Object::StatusUpdateOnCollision(_other);
 
+        isDead_ = true;
+
         transform_.translate = prePos_;
         model_->SetTranslate(transform_.translate);
     }

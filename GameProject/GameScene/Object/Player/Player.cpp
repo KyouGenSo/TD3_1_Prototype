@@ -46,7 +46,7 @@ void Player::Initialize()
     // Status Initialize
     statusInit_
         .setAttack(0)
-        .setHp(30)
+        .setHp(100)
         .setLevel(1)
         .setExp(0)
         .setMaxExp(100)
@@ -127,6 +127,22 @@ void Player::OnCollision(const Collision::Collider* pCollider) {
 void Player::OnCollisionTrigger(const Collision::Collider* pCollider)
 {
     Object::StatusUpdateOnCollision(pCollider);
+
+    if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
+    {
+        //Collision::Vec3 pos = pCollider->GetTranslate();
+        //Vector3 diff = transform_.translate - Vector3(pos.x, pos.y, pos.z);
+        //diff.Normalize();
+        //if (isGround_)
+        //{
+        //    ApplyForce(diff * 3000.0f);
+        //}
+        //else
+        //{
+        //    ApplyForce(diff);
+        //}
+        
+    }
 }
 
 void Player::AddReinforcement(const std::string& _cardName)

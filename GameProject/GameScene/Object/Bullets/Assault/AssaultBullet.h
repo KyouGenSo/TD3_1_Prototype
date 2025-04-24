@@ -29,6 +29,7 @@ public:
     void Initialize() override;
     void Update() override;
     void Draw() override;
+    void OnCollisionTrigger(const Collision::Collider* _other) override {};
 
 private:
     std::unique_ptr<Bullet> bullet_;
