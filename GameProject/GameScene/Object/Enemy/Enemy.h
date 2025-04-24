@@ -18,6 +18,8 @@ public:
 
 	void OnCollision(const Collision::Collider* pCollider) override;
 
+    void OnCollisionTrigger(const Collision::Collider* pCollider) override;
+
     void Move();
 
     void AppearanceProduction();
@@ -34,9 +36,6 @@ public:
 
 
 private:
-
-    std::unique_ptr<Collision::Collider> collider_ = nullptr;
-
     Vector3 prePos_ = {};
 
     bool isAppearing_ = false;
@@ -55,9 +54,5 @@ private:
 
     Vector3 defaultScale_ = { 1.0f,1.0f,1.0f };
     Vector3 defaultRotate_ = {};
-
-
-    //status
-    uint16_t hp_ = 5;
 };
 

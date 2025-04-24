@@ -17,7 +17,6 @@ void BulletBase::Initialize()
 void BulletBase::Update() {
     std::lock_guard<std::mutex> lock(mutex_);
     if (rdy_ && pNext_){
-        // ���̒e�̔���
         pNext_->Fire();
         rdy_ = false;
     }
@@ -34,7 +33,7 @@ void BulletBase::Fire()
         InitializeNormal();
     }
 
-    pChainManager_->OnAttacked(type_); // �`�F�C���}�l�[�W���[�ɍU�����ꂽ���Ƃ�ʒm
+    pChainManager_->OnAttacked(type_);
     pNextBulletTimer_->Start();
 }
 
@@ -63,10 +62,8 @@ void BulletBase::Next()
 
         if (pChainManager_->IsLastWeapon(type_)) return;
 
-        // �N�[���^�C���̊m�F
         if (!BulletBase::CheckCoolTime()) return;
 
-        // ���̒e�̐���
         std::thread([this](){
             BulletBase::CreateNextBullet();
             rdy_ = true;

@@ -31,6 +31,7 @@ void Boss::Initialize()
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(3.f)
+        ->SetOwner(this)
         ->Enable();
 
     isValid_ = false;

@@ -40,6 +40,7 @@ void Player::Initialize()
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
         ->SetSize(1.f)
+        ->SetOwner(this)
         ->Enable();
 
     // Status Initialize

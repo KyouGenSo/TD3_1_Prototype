@@ -56,9 +56,5 @@ private:
 
     Vector3 defaultScale_ = { 1.0f,1.0f,1.0f };
     Vector3 defaultRotate_ = { 0.0f,0.0f,0.0f };
-
-
-    //status
-    uint16_t hp_ = 5;
 };
 

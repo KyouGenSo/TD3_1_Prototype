@@ -29,9 +29,12 @@ void Enemy::Initialize()
         .setMaxExp(1)
         .setLevel(0)
         .setSpeed(1);
+    statusCurrent_ = statusInit_;
 
     pCollider_ = std::make_unique<Collision::Collider>();
-    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) {this->OnCollision(pObj); })
+    pCollider_
+        ->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) {this->OnCollision(pObj); })
+        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
         ->SetType(Collision::Type::Sphere)
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(1.f)
@@ -44,6 +47,8 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
+    Object::Update();
+
     if (isDead_) return;
 
     Move();
@@ -65,20 +70,28 @@ void Enemy::Finalize()
 {
 }
 
-void Enemy::OnCollision(const Collision::Collider* pCollider)
+void Enemy::OnCollision(const Collision::Collider* _other)
 {
     if (isDead_) return;
 
-    if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY) || pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::P_BULLET)){
-        if (0 < hp_){
-            hp_--;
-        }else{
-            isDead_ = true;
-            return;
-        }
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY)){
+
+        Object::StatusUpdateOnCollision(_other);
 
         transform_.translate = prePos_;
         model_->SetTranslate(transform_.translate);
+    }
+}
+
+void Enemy::OnCollisionTrigger(const Collision::Collider* _other)
+{
+    if (isDead_) return;
+
+    Object* object = static_cast<Object*>(_other->GetOwner());
+
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::P_BULLET))
+    {
+        Object::StatusUpdateOnCollision(_other);
     }
 }
 

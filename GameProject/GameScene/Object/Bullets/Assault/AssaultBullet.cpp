@@ -60,28 +60,12 @@ void AssaultBullet::Draw()
     }
 }
 
-void AssaultBullet::OnCollisionTrigger(const Collision::Collider* _other)
-{
-    if (isDead_ || pCollider_->IsDisabled()) return;
-
-    isDead_ = true;
-
-    pCollider_->Disable();
-
-    Object* pObj = static_cast<Object*>(_other->GetOwner());
-
-    // 強化カードの効果を適用するための通知
-    NotifyReinforcementManager(_other);
-
-    Next();
-}
-
 void AssaultBullet::InitializeNormal()
 {
     bullet_ = std::make_unique<Bullet>();
     bullet_->Initialize();
     bullet_->SetPosition(transform_.translate);
-    bullet_->SetRotate(transform_.rotate);
+    bullet_->SetRotation(transform_.rotate);
     bullet_->SetForward(forward_);
     bullet_->SetSpeed(speed_);
 }
@@ -113,6 +97,11 @@ void AssaultBullet::InitializeChain()
 void AssaultBullet::UpdateNormal()
 {
     bullet_->Update();
+
+    if (bullet_->IsDead() && !isDead_)
+    {
+        isDead_ = true;
+    }
 }
 
 void AssaultBullet::UpdateChain()

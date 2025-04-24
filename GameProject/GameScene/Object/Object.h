@@ -43,7 +43,7 @@ public:
     virtual ~Object() = default;
 
     virtual void Initialize();
-    virtual void Update() = 0;
+    virtual void Update();
     virtual void Draw() = 0;
 
     virtual void OnCollisionTrigger(const Collision::Collider* pObject){}
@@ -143,5 +143,15 @@ inline void Object::Initialize()
 {
     pInput_ = Input::GetInstance();
     statusCurrent_ = statusInit_;
+}
+
+inline void Object::Update()
+{
+    if (isDead_) return;
+
+    if (statusCurrent_.getHp() <= 0.0f)
+    {
+        isDead_ = true;
+    }
 }
 
