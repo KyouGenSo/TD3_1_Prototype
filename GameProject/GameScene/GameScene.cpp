@@ -10,6 +10,7 @@
 #include <SceneManager.h>
 
 
+#include "GPUParticle.h"
 
 
 void GameScene::Initialize()
@@ -19,12 +20,15 @@ void GameScene::Initialize()
     const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
     eventTimer_ = EventTimer::GetInstance();
 
+
     directLightParam_ = {
         .direction = { 0.0f, -1.0f, 0.0f },
         .color = { 1.0f, 1.0f, 1.0f, 1.0f },
         .lightType = 1,
         .intensity = 2.0f
     };
+
+    emitterManager_ = make_unique<EmitterManager>(GPUParticle::GetInstance());
 
     ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
@@ -38,6 +42,7 @@ void GameScene::Initialize()
     player_->Initialize();
     player_->SetFloor(terrain_->GetFloorHeight());
     player_->SetTransform(currentStageData.playerTransform);
+    player_->SetEmitter(emitterManager_.get());
 
     // Camera
     camera_ = std::make_unique<FollowCamera>();
@@ -108,6 +113,15 @@ void GameScene::Initialize()
     // StatusHUDの初期化
     statusHUD_ = std::make_unique<StatusHUD>();
     statusHUD_->Initialize();
+
+    emitterManager_->CreateSphereEmitter("explosion", {0,0, 0},  5, 250, 0);
+    emitterManager_->SetEmitterActive("explosion", false);
+    //emitterManager_->SetEmitterVelocityRange("explosion", {-0.1f, 0.1f}, {-0.1f,  0.1f}, {-0.1f, 0.1f});
+    emitterManager_->SetEmitterColor("explosion", {1.f, 0.f, 0.f, 1});
+    emitterManager_->SetEmitterStartColor("explosion", {1, 0, 0, 1});
+    emitterManager_->SetEmitterEndColor("explosion", {1.f, 1.f, 0.f, 1});
+    emitterManager_->SetEmitterScaleRange("explosion", {0.4f, 0.4f}, {0.4f, 0.4f});
+  
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
 
     // ReinforcementManagerの初期化
@@ -156,9 +170,10 @@ void GameScene::Update()
     countDown_->Update();
 
     statusHUD_->Update();
-    pCollisionManager_->Detect();
-    pCollisionManager_->ProcessEvent();
+    eventTimer_->Measure("detect", [&]{pCollisionManager_->Detect(); });
+    eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
 
+    emitterManager_->Update();
     *(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
 
     // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
@@ -179,6 +194,8 @@ void GameScene::Draw()
     player_->Draw();
     boss_->Draw();
     enemyManager_->Draw();
+
+    GPUParticle::GetInstance()->Draw();
 
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定

@@ -4,6 +4,7 @@
 #include <QuatFunc.h>
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
+#include "EmitterManager.h"
 #include "Collision/Collider.h"
 #include "Type/ColliderType.h"
 
@@ -81,7 +82,14 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
         ReinforcementManager::GetInstance()->Notify("onHit");
     }
 
-    //爆発オブジェクトを生成   
+    if (emitter_){
+        emitter_->SetEmitterPosition("explosion", transform_.translate);
+        emitter_->CreateTemporaryEmitterFrom("explosion", "tmp", 2.f);
+        explode_ = true;
+    }
+
+
+    //爆発オブジェクトを生成
     explosion_ = std::make_unique<Collision::Collider>();
     explosion_
         ->SetType(Collision::Type::Sphere)

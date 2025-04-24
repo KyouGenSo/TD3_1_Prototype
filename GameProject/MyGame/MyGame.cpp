@@ -4,7 +4,6 @@
 #include "Factory/SceneFactory.h"
 #include "SceneManager.h"
 #include "TextureManager.h"
-#include "ParticleManager.h"
 #include "Draw2D.h"
 #include "Object3dBasic.h"
 #include "PostEffect.h"
@@ -14,6 +13,8 @@
 #include <NiGui.h>
 #include <GameSystem/StageManager/StageManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
+
+#include "GPUParticle.h"
 
 
 void MyGame::Initialize()
@@ -81,11 +82,17 @@ void MyGame::Initialize()
 
     /// EventTimerの初期化
     eventTimer_ = EventTimer::GetInstance();
+
+    TextureManager::GetInstance()->LoadTexture("circle.png");
+
+    GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 }
 
 void MyGame::Finalize()
 {
     TakoFramework::Finalize();
+
+    GPUParticle::GetInstance()->Finalize();
 
     // Audioの解放
     Audio::GetInstance()->Finalize();
@@ -118,6 +125,8 @@ void MyGame::Update()
     // ゲームパッドの状態をリフレッシュ
     Input::GetInstance()->RefreshGamePadState();
 
+    GPUParticle::GetInstance()->Update();
+
     eventTimer_->EndEvent("Update");
 }
 
@@ -135,8 +144,10 @@ void MyGame::Draw()
     // テクスチャ用のsrvヒープの設定
     SrvManager::GetInstance()->BeginDraw();
 
+    GPUParticle::GetInstance()->Draw();
     // シーンの描画
     SceneManager::GetInstance()->Draw();
+
 
     #ifdef _DEBUG
     NiGui::DrawDebug();
@@ -144,8 +155,6 @@ void MyGame::Draw()
 
     // UIの描画
     NiGui::DrawUI();
-
-    ParticleManager::GetInstance()->Draw();
 
     /// ===================================================== ///
     /// ------------------ポストエフェクト描画-------------------///

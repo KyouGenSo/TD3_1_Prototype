@@ -26,6 +26,7 @@ void BounceEnemy::Initialize()
     collider_->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY));
     collider_->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE));
     collider_->SetSize(1.f);
+    collider_->SetOwner(this);
 }
 
 void BounceEnemy::Update()
