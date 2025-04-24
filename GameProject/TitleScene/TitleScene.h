@@ -54,4 +54,7 @@ private: // メンバ変数
     Vector2 end {300, 300};
 
     std::unique_ptr<Sprite> button_;
+
+    std::unique_ptr<Sprite> press_;
+    std::unique_ptr<Sprite> guide_;
 };
