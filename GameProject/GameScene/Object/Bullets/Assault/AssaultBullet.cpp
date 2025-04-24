@@ -60,6 +60,22 @@ void AssaultBullet::Draw()
     }
 }
 
+void AssaultBullet::OnCollisionTrigger(const Collision::Collider* _other)
+{
+    if (isDead_ || pCollider_->IsDisabled()) return;
+
+    isDead_ = true;
+
+    pCollider_->Disable();
+
+    Object* pObj = static_cast<Object*>(_other->GetOwner());
+
+    // 強化カードの効果を適用するための通知
+    NotifyReinforcementManager(_other);
+
+    Next();
+}
+
 void AssaultBullet::InitializeNormal()
 {
     bullet_ = std::make_unique<Bullet>();
