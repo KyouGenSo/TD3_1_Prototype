@@ -41,12 +41,23 @@ void TitleScene::Initialize()
 	/// ================================== ///
 	///              初期化処理              ///
 	/// ================================== ///
-  TextureManager::GetInstance()->LoadTexture("prot-title.png");
+    TextureManager::GetInstance()->LoadTexture("prot-title.png");
+    TextureManager::GetInstance()->LoadTexture("press_space_text.png");
+    TextureManager::GetInstance()->LoadTexture("guide.png");
 
     frameCount_ = 0;
 
     button_ = std::make_unique<Sprite>();
     button_->Initialize("prot-title.png");
+
+    press_ = make_unique<Sprite>();
+    press_->Initialize("press_space_text.png");
+    press_->SetPos(Vector2(300, 600));
+
+    guide_ = make_unique<Sprite>();
+    guide_->Initialize("guide.png");
+    guide_->SetPos(Vector2(300, 50));
+    guide_->SetSize({800, 450});
 
     button_->SetPos(start);
 }
@@ -80,7 +91,10 @@ void TitleScene::Update()
     button_->SetPos(pos);
     button_->Update();
 
-	if (Input::GetInstance()->TriggerKey(DIK_RETURN))
+    press_->Update();
+    guide_->Update();
+
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
 	{
 		SceneManager::GetInstance()->ChangeScene("play");
 	}
@@ -112,7 +126,9 @@ void TitleScene::Draw()
 	// スプライト共通描画設定
 	SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
+    press_->Draw();
     button_->Draw();
+    guide_->Draw();
 
 	//--------------------------------------------------//
 
