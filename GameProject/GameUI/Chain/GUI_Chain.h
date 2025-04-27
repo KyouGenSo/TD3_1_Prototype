@@ -13,6 +13,8 @@ public:
     GUI_Chain() = default;
     ~GUI_Chain() override = default;
 
+    void Initialize();
+
     // 通知する
     void OnNotify(const std::string& _event) override;
     void SetViewModel(ChainViewModel* _viewModel) { chainViewModel_ = _viewModel; }

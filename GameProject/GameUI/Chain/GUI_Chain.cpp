@@ -5,6 +5,11 @@
 
 #include <GameSystem/GameController/GameController.h>
 
+void GUI_Chain::Initialize()
+{
+    NiGui::SetItemToArea("Assault", "DragItemArea1");
+}
+
 void GUI_Chain::OnNotify(const std::string& _event)
 {
     if (_event == "open_chain")
@@ -81,6 +86,12 @@ bool GUI_Chain::CheckValidChain()
     std::array<std::string, 3> chain = { area1_, area2_, area3_ };
     bool isChainValid = true;
     bool isChainEmpty = false;
+
+    if (chain.front().empty())
+    {
+        isChainValid = false;
+    }
+
     for (const auto& area : chain)
     {
         if (!area.empty() && isChainEmpty)

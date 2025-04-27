@@ -6,13 +6,21 @@ void NiGuiDebug::DrawDebugUI()
 {
     ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
 
-    bool isOpen = ImGui::Begin("NiUI_DebugInfo");
+    ImGuiWindowFlags wndflag = ImGuiWindowFlags_MenuBar;
 
+    bool isOpen = ImGui::Begin("NiUI_DebugInfo", nullptr, wndflag);
 
     if (!isOpen)
     {
         ImGui::End();
         return;
+    }
+
+    this->DisplayMenuBar();
+
+    if (isDisplayComponentDataWindow_)
+    {
+        this->DisplayComponentDataWindow();
     }
 
     if (ImGui::TreeNodeEx("Setting", parentFlags))
@@ -78,4 +86,77 @@ void NiGuiDebug::DrawDebugUI()
     }
 
     ImGui::End();
+}
+
+void NiGuiDebug::DisplayComponentDataWindow()
+{
+    bool isOpen = ImGui::Begin("Component data");
+
+    if (!isOpen)
+    {
+        ImGui::End();
+        return;
+    }
+
+    ImGui::SeparatorText("Search");
+
+    std::string inputText = "";
+    ImGuiInputFlags inputFlag = ImGuiInputTextFlags_EnterReturnsTrue;
+    inputText.resize(64);
+
+    bool isConfirm = ImGui::InputText("Component ID", inputText.data(), 64, inputFlag);
+    if (isConfirm)
+    {
+        isFoundComponentData_ = INiGuiDebug::GetComponentData(inputText, foundComponentData_);
+        isSearchComponentData_ = true;
+    }
+
+    ImGui::SeparatorText("Result");
+    if (isFoundComponentData_)
+    {
+        ImGui::Text("Component Data");
+        ImGui::Text("ID : %s", foundComponentData_.id.c_str());
+        ImGui::Text("TextureName : %s", foundComponentData_.textureName.c_str());
+        ImGui::Text("Color : (%.2f, %.2f, %.2f, %.2f)", foundComponentData_.color.x, foundComponentData_.color.y, foundComponentData_.color.z, foundComponentData_.color.w);
+        ImGui::Text("LeftTop : (%.2f, %.2f)", foundComponentData_.leftTop.x, foundComponentData_.leftTop.y);
+        ImGui::Text("Size : (%.2f, %.2f)", foundComponentData_.size.x, foundComponentData_.size.y);
+    }
+    else if (isSearchComponentData_)
+    {
+        ImGui::TextColored({1.0f, .0f,.0f, 1.0f}, "Component not found");
+    }
+    else
+    {
+        ImGui::TextDisabled("Press Enter to search component data");
+    }
+
+    /// 検索してからのフレームを計測
+    if (isSearchComponentData_)
+    {
+        ++frameCountPressReturn_;
+        if (frameCountPressReturn_ > 300)
+        {
+            isSearchComponentData_ = false;
+            frameCountPressReturn_ = 0;
+        }
+    }
+
+    ImGui::End();
+}
+
+void NiGuiDebug::DisplayMenuBar()
+{
+    bool isOpen = ImGui::BeginMenuBar();
+    if (!isOpen)
+    {
+        return;
+    }
+
+    if (ImGui::BeginMenu("Window"))
+    {
+        ImGui::MenuItem("Component data", nullptr, &isDisplayComponentDataWindow_);
+        ImGui::EndMenu();
+    }
+
+    ImGui::EndMenuBar();
 }
