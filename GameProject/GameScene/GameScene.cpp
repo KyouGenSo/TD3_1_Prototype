@@ -56,6 +56,7 @@ void GameScene::Initialize()
     guiLvUP_ = std::make_unique<GUI_LvUP>();
     guiPauseMenu_ = std::make_unique<GUI_PauseMenu>();
     guiChain_ = std::make_unique<GUI_Chain>();
+    guiChain_->Initialize();
     guiChain_->SetViewModel(chainViewModel_.get());
 
     // Observer登録
