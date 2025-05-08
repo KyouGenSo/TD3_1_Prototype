@@ -2,9 +2,8 @@
 #include "BaseScene.h"
 #include"Sprite.h"
 #include"Object3d.h"
-#include <vector>
+
 #include <memory>
-#include "AABB.h"
 
 class TitleScene : public BaseScene
 {
@@ -34,13 +33,6 @@ public: // メンバ関数
 	/// ImGuiの描画
 	/// </summary>
 	void DrawImGui() override;
-
-  void ApplyGlobalVariables();
-
-  void InitParticle();
-
-  void InitVariables();
-
 
 private: // メンバ変数
 

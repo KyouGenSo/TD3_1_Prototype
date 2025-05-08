@@ -6,9 +6,7 @@
 #include "ModelManager.h"
 #include "Input.h"
 #include "Draw2D.h"
-#include "Camera.h"
 #include "Audio.h"
-#include "GlobalVariables.h"
 #include "GPUParticle.h"
 #include "Ease/Ease.h"
 
@@ -16,14 +14,6 @@
 #include"ImGui.h"
 #include "DebugCamera.h"
 #endif
-
-void TitleScene::InitParticle()
-{
-}
-
-void TitleScene::InitVariables()
-{
-}
 
 void TitleScene::Finalize()
 {
@@ -145,8 +135,4 @@ void TitleScene::DrawImGui()
 
 
 #endif // _DEBUG
-}
-
-void TitleScene::ApplyGlobalVariables()
-{
 }
