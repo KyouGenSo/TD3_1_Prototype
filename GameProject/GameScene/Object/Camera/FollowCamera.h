@@ -1,10 +1,15 @@
 #pragma once
 #include "Camera.h"
 
+#include <Collision/Collider.h>
+#include <Collision/CollisionManager.h>
+
 class FollowCamera
 {
     Camera* pCamera_ = nullptr;
     const Transform* pTarget_ = nullptr;
+
+    std::unique_ptr<Collision::Ray> pRay_ = nullptr;
 
     // Parameters
     Vector3 targetPositionPre_ = {};
@@ -13,6 +18,7 @@ class FollowCamera
     float offset_ = 20.0f;
     float factorLerp_ = 0.2f;
     float rotationX_ = 0.1f;
+    Collision::Manager* pCollisionManager_ = nullptr;
 
 public:
     void Initialize();
