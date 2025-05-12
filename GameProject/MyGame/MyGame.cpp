@@ -119,12 +119,19 @@ void MyGame::Update()
 
     eventTimer_->BeginEvent("Update");
 
+    // 入力情報の更新
+    Input::GetInstance()->Update();
+
+    if (Input::GetInstance()->TriggerKey(DIK_F11))
+    {
+        // フルスクリーンの切り替え
+        ToggleFullScreen();
+        NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, { 0, 0 });
+    }
+
     #ifdef _DEBUG
     imguiManager_->Begin();
     #endif // _DEBUG
-
-    // 入力情報の更新
-    Input::GetInstance()->Update();
 
     // UIの更新
     NiGui::BeginFrame();
