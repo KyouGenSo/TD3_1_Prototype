@@ -1,7 +1,10 @@
 #include "AssaultRifle.h"
+#include <GameSystem/SoundManager/SoundManager.h>
 
 void AssaultRifle::Initialize()
 {
+    sound_fire_ = SoundManager::GetInstance()->SearchSoundData("Fire_Assault").handle;
+    EnableSound();
 }
 
 void AssaultRifle::Update()
