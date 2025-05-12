@@ -114,7 +114,11 @@ protected:
 
     static Collision::Vec3 Adaptor(Vector3 _vec)
     {
-        return Collision::Vec3(_vec.x, _vec.y, _vec.z);
+        return {_vec.x, _vec.y, _vec.z};
+    }
+    static Vector3 Adaptor(Collision::Vec3 _vec)
+    {
+        return {_vec.x, _vec.y, _vec.z};
     }
 
     void StatusUpdateOnCollision(const Collision::Collider* pObject);
