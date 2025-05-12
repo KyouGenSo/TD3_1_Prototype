@@ -1,0 +1,44 @@
+{
+    "BGM_Title" : {
+        "Path" : "BGM/Title.mp3",
+        "Volume" : 0.5,
+        "Pitch" : 1.0,
+        "Loop" : true
+    },
+    "BGM_Game_0" : {
+        "Path" : "BGM/Game_0.mp3",
+        "Volume" : 0.35, 
+        "Pitch" : 1.0,
+        "Loop" : true
+    },
+    "BGM_Game_1" : {
+        "Path" : "BGM/Game_1.mp3",
+        "Volume" : 0.35, 
+        "Pitch" : 1.0,
+        "Loop" : true
+    },
+    "BGM_Game_2" : {
+        "Path" : "BGM/Game_2.mp3",
+        "Volume" : 0.35, 
+        "Pitch" : 1.0,
+        "Loop" : true
+    },
+    "BGM_Game_3" : {
+        "Path" : "BGM/Game_3.mp3",
+        "Volume" : 0.35, 
+        "Pitch" : 1.0,
+        "Loop" : true
+    },
+    "BGM_Game_4" : {
+        "Path" : "BGM/Game_4.mp3",
+        "Volume" : 0.35, 
+        "Pitch" : 1.0,
+        "Loop" : true
+    },
+    "Fire_Assault" : {
+        "Path" : "shot_assault.wav",
+        "Volume" : 0.5,
+        "Pitch" : 1.0,
+        "Loop" : false
+    }
+}
