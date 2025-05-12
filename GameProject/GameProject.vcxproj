@@ -296,6 +296,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Type\ColliderType.h" />
     <ClInclude Include="Type\Singleton.h" />
     <ClInclude Include="Type\WeaponType.h" />
+    <ClInclude Include="Utility\Adaptor.h" />
     <ClInclude Include="Utility\RandomGenerator\RandomGenerator.h" />
     <ClInclude Include="Utility\Threadpool\Threadpool.h" />
   </ItemGroup>

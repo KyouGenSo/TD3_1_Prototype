@@ -212,6 +212,7 @@ void MyGame::Draw()
     // UIの描画
     NiGui::DrawUI();
 
+    Draw2D::GetInstance()->Draw();
     Draw2D::GetInstance()->Reset();
 
     /// ============================================= ///

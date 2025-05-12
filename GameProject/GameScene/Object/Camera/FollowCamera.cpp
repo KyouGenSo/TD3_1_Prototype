@@ -3,24 +3,24 @@
 #include "imgui.h"
 #include "Object3dBasic.h"
 #include <Type/Singleton.h>
+#include <Utility/Adaptor.h>
+#include <Type/ColliderType.h>
+#include <Draw2D.h>
 
 void FollowCamera::Initialize()
 {
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
     pCamera_->SetFarClip(1000.0f);
 
-    //pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
+    pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
+    pRay_ = std::make_unique<Collision::Ray>();
+    pRay_->SetLength(100.0f);
+    // プレイヤーとだけ当たらないようにしたい。
 }
 
 void FollowCamera::Update()
 {
     if (!pTarget_) return;
-
-    //auto cbData = pCollisionManager_->RayCast(&pRay_);
-    //if (!cbData.pair.first.empty())
-    //{ 
-    //    pCamera_->SetTranslate({ cbData.hitPoint.x, cbData.hitPoint.y, cbData.hitPoint.z });
-    //}
 
     // direction_
     Vector3 rotate = { rotationX_, pTarget_->rotate.y, 0.0f };
@@ -30,8 +30,8 @@ void FollowCamera::Update()
     // interpolation
     Vector3 targetPosition = targetPositionPre_ * (1.0f - factorLerp_) + (pTarget_->translate + targetPositionOffset_) * factorLerp_;
 
-    pCamera_->SetTranslate(direction.Normalize() * offset_ + targetPosition);
     pCamera_->SetRotate(rotate);
+    pCamera_->SetTranslate(direction.Normalize() * offset_ + targetPosition);
     pCamera_->Update();
 
     targetPositionPre_ = targetPosition;
@@ -39,6 +39,15 @@ void FollowCamera::Update()
 
 void FollowCamera::Finalize()
 {
+}
+
+void FollowCamera::Draw2D()
+{
+    //Draw2D::GetInstance()->DrawLine(
+    //    Adaptor(pRay_->GetOrigin()),
+    //    Adaptor(pRay_->GetOrigin() + pRay_->GetDirection() * pRay_->GetLength()), 
+    //    { 1.0f, 0.0f, 0.0f, 1.0f }
+    //);
 }
 
 void FollowCamera::ImGui()

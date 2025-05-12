@@ -3,6 +3,7 @@
 #include "Object3dBasic.h"
 #include "cmath"
 #include "Type/ColliderType.h"
+#include <Utility/Adaptor.h>
 
 void Enemy::Initialize()
 {

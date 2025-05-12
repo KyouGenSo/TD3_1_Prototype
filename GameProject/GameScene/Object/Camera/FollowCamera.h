@@ -24,6 +24,7 @@ public:
     void Initialize();
     void Update();
     void Finalize();
+    void Draw2D();
 
     void SetTarget(const Transform* pTarget) { pTarget_ = pTarget; }
 

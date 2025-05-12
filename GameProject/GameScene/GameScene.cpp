@@ -229,6 +229,8 @@ void GameScene::Draw()
     countDown_->Draw2D();
     minimap_->Draw();
     statusHUD_->Draw2D();
+
+    camera_->Draw2D();
 }
 
 void GameScene::DrawWithoutEffect()

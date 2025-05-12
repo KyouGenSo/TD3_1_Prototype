@@ -15,6 +15,8 @@
 #include <GameSystem/Reinforcement/StatusReinforcement.h>
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
+#include <Utility/Adaptor.h>
+
 void Player::Initialize()
 {
     Object::Initialize();

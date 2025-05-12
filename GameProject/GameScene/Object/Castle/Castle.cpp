@@ -2,6 +2,7 @@
 
 #include "Collision/Collider.h"
 #include "Type/ColliderType.h"
+#include <Utility/Adaptor.h>
 
 void Castle::Initialize() {
     Object::Initialize();

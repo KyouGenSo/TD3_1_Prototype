@@ -4,6 +4,7 @@
 #include "imgui.h"
 #include "Object3dBasic.h"
 #include "Type/ColliderType.h"
+#include <Utility/Adaptor.h>
 
 void Boss::Initialize()
 {

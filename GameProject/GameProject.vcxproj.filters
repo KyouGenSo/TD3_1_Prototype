@@ -291,7 +291,9 @@
     <ClCompile Include="GameSystem\SoundManager\SoundManager.cpp">
       <Filter>GameSystem\SoundManager</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\RandomGenerator\RandomGenerator.cpp" />
+    <ClCompile Include="Utility\RandomGenerator\RandomGenerator.cpp">
+      <Filter>Utility\RandomGenerator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -466,6 +468,9 @@
     </ClInclude>
     <ClInclude Include="Utility\RandomGenerator\RandomGenerator.h">
       <Filter>Utility\RandomGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Adaptor.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
