@@ -57,6 +57,7 @@ void Player::Initialize()
 
     /// !!Debug!!
     weapon_ = std::make_unique<SMG>();
+    weapon_->Initialize();
     gravity_ = 1.8f;
 }
 
@@ -168,6 +169,7 @@ void Player::OnChainConfirm()
 {
     weapon_.reset();
     weapon_ = WeaponFactory::CreateWeapon(chain_->Front());
+    weapon_->Initialize();
     weapon_->SetChain(chain_);
     weapon_->SetEmitter(emitter_);
 }
