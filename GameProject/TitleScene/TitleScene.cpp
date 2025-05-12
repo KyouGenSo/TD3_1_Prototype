@@ -101,15 +101,12 @@ void TitleScene::Draw()
 
 
 
-	//--------------------------------------------------//
-
 
 	//-------------------Modelの描画-------------------//
 	// 3Dモデル共通描画設定
 	Object3dBasic::GetInstance()->SetCommonRenderSetting();
 
 
-	//------------------------------------------------//
 
 
 	//------------------前景Spriteの描画------------------//
@@ -120,9 +117,32 @@ void TitleScene::Draw()
     button_->Draw();
     guide_->Draw();
 
-	//--------------------------------------------------//
+}
 
-	Draw2D::GetInstance()->DrawGrid(100.0f, 20.0f, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+void TitleScene::DrawWithoutEffect()
+{
+    /// ================================== ///
+    ///              描画処理               ///
+    /// ================================== ///
+    //------------------背景Spriteの描画------------------//
+    // スプライト共通描画設定
+    SpriteBasic::GetInstance()->SetCommonRenderSetting();
+
+
+
+
+    //-------------------Modelの描画-------------------//
+    // 3Dモデル共通描画設定
+    Object3dBasic::GetInstance()->SetCommonRenderSetting();
+
+
+
+
+    //------------------前景Spriteの描画------------------//
+    // スプライト共通描画設定
+    SpriteBasic::GetInstance()->SetCommonRenderSetting();
+
+
 }
 
 void TitleScene::DrawImGui()

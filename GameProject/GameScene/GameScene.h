@@ -68,6 +68,7 @@ public:
     void Finalize() override;
     void Update() override;
     void Draw() override;
+    void DrawWithoutEffect() override;
     void DrawImGui() override;
 
 private:
