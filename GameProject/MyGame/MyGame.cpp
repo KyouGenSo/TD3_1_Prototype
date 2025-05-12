@@ -144,14 +144,14 @@ void MyGame::Update()
 
 void MyGame::Draw()
 {
+    eventTimer_->BeginEvent("Draw");
+
     /// ============================================= ///
     /// ------------------シーン描画-------------------///
     /// ============================================= ///
 
-    eventTimer_->BeginEvent("Draw");
-
-    // 描画前の処理(レンダーテクスチャを描画対象に設定)
-    dx12_->SetRenderTexture();
+    //ポストエフェクト適用対象のレンダーテクスチャを描画先に設定
+    dx12_->SetEffectRenderTexture();
 
     // テクスチャ用のsrvヒープの設定
     SrvManager::GetInstance()->BeginDraw();
@@ -160,45 +160,57 @@ void MyGame::Draw()
     // シーンの描画
     SceneManager::GetInstance()->Draw();
 
-
     #ifdef _DEBUG
     NiGui::DrawDebug();
     #endif // _DEBUG
 
-    // UIの描画
-    NiGui::DrawUI();
-
     /// ===================================================== ///
     /// ------------------ポストエフェクト描画-------------------///
     /// ===================================================== ///
-    // SwapChainを描画対象に設定
-    dx12_->SetSwapChain();
 
-    // PostEffectの描画
     switch (postEffectType)
     {
     case::MyGame::NoEffect:
-        PostEffect::GetInstance()->Draw("NoEffect");
+        PostEffect::GetInstance()->DrawPostEffect("NoEffect");
         break;
     case::MyGame::VignetteRed:
-        PostEffect::GetInstance()->Draw("VignetteRed");
+        PostEffect::GetInstance()->DrawPostEffect("VignetteRed");
         break;
     case::MyGame::VignetteRedBloom:
-        PostEffect::GetInstance()->Draw("VignetteRedBloom");
+        PostEffect::GetInstance()->DrawPostEffect("VignetteRedBloom");
         break;
     case::MyGame::GrayScale:
-        PostEffect::GetInstance()->Draw("GrayScale");
+        PostEffect::GetInstance()->DrawPostEffect("GrayScale");
         break;
     case::MyGame::VigRedGrayScale:
-        PostEffect::GetInstance()->Draw("VigRedGrayScale");
+        PostEffect::GetInstance()->DrawPostEffect("VigRedGrayScale");
         break;
     case::MyGame::Bloom:
-        PostEffect::GetInstance()->Draw("Bloom");
+        PostEffect::GetInstance()->DrawPostEffect("Bloom");
         break;
     case::MyGame::BloomFog:
-        PostEffect::GetInstance()->Draw("BloomFog");
+        PostEffect::GetInstance()->DrawPostEffect("BloomFog");
         break;
     }
+
+    /// ===================================================== ///
+    /// ------------ポストエフェクト非適用対象の描画---------------///
+    /// ===================================================== ///
+    // ポストエフェクト非適用対象のレンダーテクスチャを描画先に設定
+    dx12_->SetNonEffectRenderTexture();
+
+    // シーンの描画
+    SceneManager::GetInstance()->DrawWithoutEffect();
+
+    // UIの描画
+    NiGui::DrawUI();
+
+    Draw2D::GetInstance()->Reset();
+
+    /// ============================================= ///
+    /// ---------最終結果をスワップチェーンに描画---------///
+    /// ============================================= ///
+    PostEffect::GetInstance()->DrawFinalResult();
 
     eventTimer_->EndEvent("Draw");
 

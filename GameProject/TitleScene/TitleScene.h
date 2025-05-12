@@ -25,22 +25,16 @@ public: // メンバ関数
     /// </summary>
     void Update() override;
 
-    /// <summary>
-    /// 描画
-    /// </summary>
-    void Draw() override;
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void Draw() override;
+    void DrawWithoutEffect() override;
 
     /// <summary>
     /// ImGuiの描画
     /// </summary>
     void DrawImGui() override;
-
-  void ApplyGlobalVariables();
-
-  void InitParticle();
-
-  void InitVariables();
-
 
 private: // メンバ変数
 
