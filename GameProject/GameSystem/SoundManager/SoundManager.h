@@ -38,6 +38,7 @@ public:
     void ImGui();
 
     SoundData SearchSoundData(const std::string& _name) const;
+    SoundData SearchSoundData(const uint32_t _handle) const;
     uint32_t Play(const std::string& _name) const;
     uint32_t Play(const uint32_t _handle) const;
     uint32_t PlayNoLoop(const uint32_t _handle) const;
@@ -72,6 +73,7 @@ public:
     void Initialize();
     void Finalize() const;
     void Update();
+    void ImGui();
     void AddSound(const uint32_t _handle);
     void Play() { enabled_ = true; }
     void Stop() { enabled_ = false; }
@@ -79,14 +81,20 @@ public:
 
 public:
     void SetInterval(float _interval) { interval_ = _interval; }
+    void SetSoundGroupName(const std::string& _name) { soundGroupName_ = _name; }
 
 
 private:
     bool enabled_ = false;
     std::vector<uint32_t> soundGroup_;
     uint32_t currentPlayHandle_ = 0u;
+    uint32_t currentSoundGroupIndex_ = 0u;
     std::unique_ptr<Timer> pTimer_ = nullptr;
     float interval_ = 1.0f;
+
+    // デバッグ用
+    std::string soundGroupName_ = "unnamed";
+
 
 private:
     RandomGenerator* pRandomGenerator_ = nullptr;

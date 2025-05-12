@@ -93,6 +93,20 @@ SoundManager::SoundData SoundManager::SearchSoundData(const std::string& _name) 
     return {};
 }
 
+SoundManager::SoundData SoundManager::SearchSoundData(const uint32_t _handle) const
+{
+    // サウンドデータを検索
+    for (auto& data : soundDataMap_)
+    {
+        if (data.second.handle == _handle)
+        {
+            return data.second;
+        }
+    }
+    // 見つからなかった場合は空を返す
+    return {};
+}
+
 uint32_t SoundManager::Play(const std::string& _name) const
 {
     auto data = SearchSoundData(_name);
@@ -215,14 +229,54 @@ void SoundGroup::Update()
 
     if (isPlaying) return;
 
+    if (soundGroup_.empty()) return;
+
     if (!pTimer_->GetIsStart()) pTimer_->Start();
 
     if (pTimer_->GetNow<float>() > interval_)
     {
-        size_t randomIndex = pRandomGenerator_->Generate<size_t>(0, soundGroup_.size() - 1);
+        int randomIndex = 0;
+        do
+        {
+            if (soundGroup_.size() == 1u) break;
+            randomIndex = pRandomGenerator_->Generate<int>(0, static_cast<int>(soundGroup_.size() - 1));
+        }
+        while (currentSoundGroupIndex_ == randomIndex);
+        currentSoundGroupIndex_ = randomIndex;
+
         currentPlayHandle_ = SoundManager::GetInstance()->PlayNoLoop(soundGroup_[randomIndex]);
         pTimer_->Reset();
     }
+}
+
+void SoundGroup::ImGui()
+{
+    #ifdef _DEBUG
+
+    bool isOpen = ImGui::Begin((soundGroupName_ + " SoundGroup").c_str());
+
+    if (isOpen)
+    {
+        ImGui::Text("Enabled: %s", enabled_ ? "true" : "false");
+        ImGui::Text("SoundCount: %zu", soundGroup_.size());
+        ImGui::DragFloat("Interval", &interval_, 0.01f, 0.1f, FLT_MAX, "%.2f");
+        if (ImGui::Button("Play"))
+        {
+            this->Play();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Stop"))
+        {
+            this->Stop();
+        }
+        ImGui::SeparatorText("Current Playing");
+        ImGui::Text("PlayHandle: %u", currentPlayHandle_);
+        ImGui::Text("SoundHandle: %u", soundGroup_[currentSoundGroupIndex_]);
+    }
+    
+    ImGui::End();
+
+    #endif // _DEBUG
 }
 
 void SoundGroup::AddSound(const uint32_t _handle)
