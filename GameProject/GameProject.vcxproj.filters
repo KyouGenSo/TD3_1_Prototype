@@ -282,7 +282,6 @@
     <ClCompile Include="ResultScene\ResultScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Crosshair\Crosshair.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -452,6 +451,5 @@
     <ClInclude Include="GameSystem\Reinforcement\Manager\ReinforcementManager.h">
       <Filter>GameSystem\Reinforcement</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Crosshair\Crosshair.h" />
   </ItemGroup>
 </Project>
