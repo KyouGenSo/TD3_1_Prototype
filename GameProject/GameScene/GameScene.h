@@ -23,8 +23,6 @@
 
 #include "EmitterManager.h"
 #include "HUD/StatusHUD.h"
-#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
-#include <GameSystem/Reinforcement/StatusReinforcement.h>
 
 class GameScene : public BaseScene
 {
@@ -52,6 +50,8 @@ class GameScene : public BaseScene
 
     std::unique_ptr<EmitterManager> emitterManager_ = nullptr;
 
+    std::unique_ptr<Sprite> reticle_ = nullptr;
+
 public:
     struct DirectionalLightParam
     {
@@ -68,6 +68,7 @@ public:
     void Finalize() override;
     void Update() override;
     void Draw() override;
+    void DrawWithoutEffect() override;
     void DrawImGui() override;
 
 private:
