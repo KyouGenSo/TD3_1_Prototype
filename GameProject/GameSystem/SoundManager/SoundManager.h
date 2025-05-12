@@ -70,12 +70,14 @@ class SoundGroup
 public:
     SoundGroup() = default;
     ~SoundGroup() = default;
-    void Initialize();
+
+    void Initialize(bool _enableRandom = true);
+
     void Finalize() const;
     void Update();
     void ImGui();
     void AddSound(const uint32_t _handle);
-    void Play() { enabled_ = true; }
+    void Start() { enabled_ = true; }
     void Stop() { enabled_ = false; }
 
 
@@ -86,6 +88,7 @@ public:
 
 private:
     bool enabled_ = false;
+    bool enableRandom_ = false;
     std::vector<uint32_t> soundGroup_;
     uint32_t currentPlayHandle_ = 0u;
     uint32_t currentSoundGroupIndex_ = 0u;
@@ -98,4 +101,8 @@ private:
 
 private:
     RandomGenerator* pRandomGenerator_ = nullptr;
+
+private:
+    void RandomPick();
+    void SequentialPick();
 };
