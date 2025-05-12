@@ -25,6 +25,7 @@
 #include "HUD/StatusHUD.h"
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 #include <GameSystem/Reinforcement/StatusReinforcement.h>
+#include <GameSystem/SoundManager/SoundManager.h>
 
 class GameScene : public BaseScene
 {
@@ -51,6 +52,8 @@ class GameScene : public BaseScene
     std::unique_ptr<StatusHUD> statusHUD_ = nullptr;
 
     std::unique_ptr<EmitterManager> emitterManager_ = nullptr;
+
+    std::unique_ptr<SoundGroup> soundGroup_ = nullptr;
 
 public:
     struct DirectionalLightParam

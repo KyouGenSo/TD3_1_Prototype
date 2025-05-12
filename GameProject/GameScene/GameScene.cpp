@@ -11,11 +11,11 @@
 
 
 #include "GPUParticle.h"
+#include <Audio.h>
 
 
 void GameScene::Initialize()
 {
-
     // ステージデータの取得
     const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
     eventTimer_ = EventTimer::GetInstance();
@@ -133,6 +133,17 @@ void GameScene::Initialize()
     // ReinforcementManagerの初期化
     auto* reinforcementManager_ = ReinforcementManager::GetInstance();
     reinforcementManager_->Initialize("StatusReinforcement.json");
+
+    // BGM管理の初期化
+    soundGroup_ = std::make_unique<SoundGroup>();
+    soundGroup_->Initialize();
+    soundGroup_->SetInterval(2.0f);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_0").handle);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_1").handle);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_2").handle);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_3").handle);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_4").handle);
+    soundGroup_->Play();
 }
 
 void GameScene::Finalize()
@@ -142,11 +153,15 @@ void GameScene::Finalize()
     boss_->Finalize();
     enemyManager_->Finalize();
     camera_->Finalize();
+
+    soundGroup_->Finalize();
 }
 
 void GameScene::Update()
 {
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
+
+    soundGroup_->Update();
 
     timeKeeper_->Update();
     chainViewModel_->Update();
@@ -251,6 +266,7 @@ void GameScene::DrawImGui()
     guiChain_->ImGui();
     timeKeeper_->ImGui();
     statusHUD_->ImGui();
+    soundGroup_->ImGui();
 
     ImGui::Begin("Directional Light");
     ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);

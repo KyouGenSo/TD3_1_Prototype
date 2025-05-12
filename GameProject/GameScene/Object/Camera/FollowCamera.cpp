@@ -2,16 +2,25 @@
 
 #include "imgui.h"
 #include "Object3dBasic.h"
+#include <Type/Singleton.h>
 
 void FollowCamera::Initialize()
 {
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
     pCamera_->SetFarClip(1000.0f);
+
+    //pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
 }
 
 void FollowCamera::Update()
 {
     if (!pTarget_) return;
+
+    //auto cbData = pCollisionManager_->RayCast(&pRay_);
+    //if (!cbData.pair.first.empty())
+    //{ 
+    //    pCamera_->SetTranslate({ cbData.hitPoint.x, cbData.hitPoint.y, cbData.hitPoint.z });
+    //}
 
     // direction_
     Vector3 rotate = { rotationX_, pTarget_->rotate.y, 0.0f };

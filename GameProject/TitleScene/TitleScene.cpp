@@ -3,12 +3,13 @@
 #include "TextureManager.h"
 #include "Object3dBasic.h"
 #include "SpriteBasic.h"
-#include "ModelManager.h"
 #include "Input.h"
 #include "Draw2D.h"
 #include "Audio.h"
 #include "GPUParticle.h"
 #include "Ease/Ease.h"
+
+#include <GameSystem/SoundManager/SoundManager.h>
 
 #ifdef _DEBUG
 #include"ImGui.h"
@@ -17,6 +18,7 @@
 
 void TitleScene::Finalize()
 {
+    Audio::GetInstance()->StopWave(bgmPlayHandle_);
 }
 
 void TitleScene::Initialize()
@@ -34,6 +36,8 @@ void TitleScene::Initialize()
     TextureManager::GetInstance()->LoadTexture("prot-title.png");
     TextureManager::GetInstance()->LoadTexture("press_space_text.png");
     TextureManager::GetInstance()->LoadTexture("guide.png");
+
+    bgmPlayHandle_ = SoundManager::GetInstance()->Play("BGM_Title");
 
     frameCount_ = 0;
 

@@ -13,6 +13,9 @@
 #include <NiGui.h>
 #include <GameSystem/StageManager/StageManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
+#include <GameSystem/SoundManager/SoundManager.h>
+
+#include <Utility/RandomGenerator/RandomGenerator.h>
 
 #include "GPUParticle.h"
 #include "ModelManager.h"
@@ -34,6 +37,8 @@ void MyGame::Initialize()
 
     #pragma endregion
 
+    // 乱数生成クラスの初期化
+    RandomGenerator::GetInstance()->Initialize();
 
     // シーンの初期化
     sceneFactory_ = new SceneFactory();
@@ -89,6 +94,8 @@ void MyGame::Initialize()
     TextureManager::GetInstance()->LoadTexture("circle.png");
 
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
+
+    SoundManager::GetInstance()->Initialize("Sounds.json");
 }
 
 void MyGame::Finalize()
@@ -96,6 +103,8 @@ void MyGame::Finalize()
     TakoFramework::Finalize();
 
     GPUParticle::GetInstance()->Finalize();
+
+    SoundManager::GetInstance()->Finalize();
 
     // Audioの解放
     Audio::GetInstance()->Finalize();
@@ -217,6 +226,8 @@ void MyGame::Draw()
     SceneManager::GetInstance()->DrawImGui();
 
     Draw2D::GetInstance()->ImGui();
+
+    SoundManager::GetInstance()->ImGui();
 
     // GlobalVariablesの更新
     GlobalVariables::GetInstance()->Update();

@@ -122,6 +122,12 @@
     <Filter Include="GameSystem\Reinforcement">
       <UniqueIdentifier>{6dfca897-eafa-4bfb-90dc-18d37fd63b24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSystem\SoundManager">
+      <UniqueIdentifier>{f90d25f8-746b-48b2-93ff-4b88a62ed76e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\RandomGenerator">
+      <UniqueIdentifier>{0a22e77e-b974-4aef-b846-bb93ace65c2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -282,6 +288,10 @@
     <ClCompile Include="ResultScene\ResultScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="GameSystem\SoundManager\SoundManager.cpp">
+      <Filter>GameSystem\SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\RandomGenerator\RandomGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -450,6 +460,12 @@
     </ClInclude>
     <ClInclude Include="GameSystem\Reinforcement\Manager\ReinforcementManager.h">
       <Filter>GameSystem\Reinforcement</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\SoundManager\SoundManager.h">
+      <Filter>GameSystem\SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\RandomGenerator\RandomGenerator.h">
+      <Filter>Utility\RandomGenerator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
