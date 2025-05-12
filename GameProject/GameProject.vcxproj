@@ -218,6 +218,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameSystem\GameController\GameController.cpp" />
     <ClCompile Include="GameSystem\Reinforcement\Manager\ReinforcementManager.cpp" />
     <ClCompile Include="GameSystem\Reinforcement\StatusReinforcement.cpp" />
+    <ClCompile Include="GameSystem\SoundManager\SoundManager.cpp" />
     <ClCompile Include="GameSystem\StageManager\StageManager.cpp" />
     <ClCompile Include="GameSystem\TimeKeeper\TimeKeeper.cpp" />
     <ClCompile Include="GameUI\Chain\GUI_Chain.cpp" />
@@ -236,6 +237,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="ResultScene\ResultScene.cpp" />
     <ClCompile Include="Timer\Timer.cpp" />
     <ClCompile Include="TitleScene\TitleScene.cpp" />
+    <ClCompile Include="Utility\RandomGenerator\RandomGenerator.cpp" />
     <ClCompile Include="Utility\Threadpool\Threadpool.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +274,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameSystem\Reinforcement\IReinforcement.h" />
     <ClInclude Include="GameSystem\Reinforcement\Manager\ReinforcementManager.h" />
     <ClInclude Include="GameSystem\Reinforcement\StatusReinforcement.h" />
+    <ClInclude Include="GameSystem\SoundManager\SoundManager.h" />
     <ClInclude Include="GameSystem\StageManager\StageManager.h" />
     <ClInclude Include="GameSystem\TimeKeeper\TimeKeeper.h" />
     <ClInclude Include="GameUI\Chain\GUI_Chain.h" />
@@ -294,6 +297,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Type\ColliderType.h" />
     <ClInclude Include="Type\Singleton.h" />
     <ClInclude Include="Type\WeaponType.h" />
+    <ClInclude Include="Utility\RandomGenerator\RandomGenerator.h" />
     <ClInclude Include="Utility\Threadpool\Threadpool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
