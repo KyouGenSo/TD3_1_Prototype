@@ -3,13 +3,12 @@
 #include "Object3dBasic.h"
 #include "cmath"
 #include "Type/ColliderType.h"
+#include <Utility/Adaptor.h>
 
 void FlyEnemy::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    pCamera_ = Object3dBasic::GetInstance()->GetCamera();
-    model_->SetCamera(pCamera_);
     model_->SetModel("cube.gltf");
 
     transform_ = {

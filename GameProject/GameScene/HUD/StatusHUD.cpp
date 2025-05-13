@@ -1,7 +1,6 @@
 #include "StatusHUD.h"
 
 
-
 void StatusHUD::Initialize()
 {
     input_ = Input::GetInstance();
@@ -19,6 +18,7 @@ void StatusHUD::Initialize()
     globalVariables_ = GlobalVariables::GetInstance();
     globalVariables_->CreateGroup("StatusHUD");
 
+    globalVariables_->AddItem("StatusHUD", "Standard_DisplaySize", Vector2());
     globalVariables_->AddItem("StatusHUD", "HPBar_Position", Vector2());
     globalVariables_->AddItem("StatusHUD", "BulletBar_Position", Vector2());
     
@@ -28,8 +28,10 @@ void StatusHUD::Initialize()
 void StatusHUD::Reload()
 {
     globalVariables_->LoadFile("StatusHUD");
+    Vector2 std_disp_size = globalVariables_->GetValueVec2("StatusHUD", "Standard_DisplaySize");
     Vector2 hpBarPos = globalVariables_->GetValueVec2("StatusHUD", "HPBar_Position");
     Vector2 bulletBarPos = globalVariables_->GetValueVec2("StatusHUD", "BulletBar_Position");
+    standardDisplaySize_ = { std_disp_size.x, std_disp_size.y };
     hpBarPos_ = {hpBarPos.x, hpBarPos.y};
     bulletBarPos_ = { bulletBarPos.x, bulletBarPos.y };
 
@@ -64,6 +66,13 @@ void StatusHUD::ImGui()
 {
     hpBar_->ImGui();
     bulletBar_->ImGui();
+}
+
+void StatusHUD::OnResized(const NiVec2& _size)
+{
+    NiVec2 retio = { _size.x / standardDisplaySize_.x, _size.y / standardDisplaySize_.y };
+    hpBar_->SetPosition(hpBarPos_ * retio);
+    bulletBar_->SetPosition(bulletBarPos_ * retio);
 }
 
 void StatusHUD::UpdateHotReload()
