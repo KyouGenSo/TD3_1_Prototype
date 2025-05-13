@@ -197,10 +197,11 @@ void SoundManager::DecodeToSoundData()
     }
 }
 
-void SoundGroup::Initialize()
+void SoundGroup::Initialize(bool _enableRandom)
 {
     pRandomGenerator_ = RandomGenerator::GetInstance();
     pTimer_ = std::make_unique<Timer>();
+    enableRandom_ = _enableRandom;
 }
 
 void SoundGroup::Finalize() const
@@ -223,6 +224,7 @@ void SoundGroup::Update()
         if (isPlaying)
         {
             Audio::GetInstance()->StopWave(currentPlayHandle_);
+            currentPlayHandle_ = 0;
         }
         return;
     }
@@ -235,16 +237,16 @@ void SoundGroup::Update()
 
     if (pTimer_->GetNow<float>() > interval_)
     {
-        int randomIndex = 0;
-        do
+        if (enableRandom_)
         {
-            if (soundGroup_.size() == 1u) break;
-            randomIndex = pRandomGenerator_->Generate<int>(0, static_cast<int>(soundGroup_.size() - 1));
+            this->RandomPick();
         }
-        while (currentSoundGroupIndex_ == randomIndex);
-        currentSoundGroupIndex_ = randomIndex;
+        else
+        {
+            this->SequentialPick();
+        }
 
-        currentPlayHandle_ = SoundManager::GetInstance()->PlayNoLoop(soundGroup_[randomIndex]);
+        currentPlayHandle_ = SoundManager::GetInstance()->PlayNoLoop(soundGroup_[currentSoundGroupIndex_]);
         pTimer_->Reset();
     }
 }
@@ -262,7 +264,7 @@ void SoundGroup::ImGui()
         ImGui::DragFloat("Interval", &interval_, 0.01f, 0.1f, FLT_MAX, "%.2f");
         if (ImGui::Button("Play"))
         {
-            this->Play();
+            this->Start();
         }
         ImGui::SameLine();
         if (ImGui::Button("Stop"))
@@ -282,4 +284,27 @@ void SoundGroup::ImGui()
 void SoundGroup::AddSound(const uint32_t _handle)
 {
     soundGroup_.push_back(_handle);
+}
+
+void SoundGroup::RandomPick()
+{
+    // currentSoundGroupIndex_をランダムに選択
+    int randomIndex = 0;
+    do
+    {
+        if (soundGroup_.size() == 1u) break;
+        randomIndex = pRandomGenerator_->Generate<int>(0, static_cast<int>(soundGroup_.size() - 1));
+    }
+    while (currentSoundGroupIndex_ == randomIndex);
+    currentSoundGroupIndex_ = randomIndex;
+}
+
+void SoundGroup::SequentialPick()
+{
+    // currentSoundGroupIndex_を順番に選択
+    currentSoundGroupIndex_++;
+    if (currentSoundGroupIndex_ >= soundGroup_.size())
+    {
+        currentSoundGroupIndex_ = 0;
+    }
 }
