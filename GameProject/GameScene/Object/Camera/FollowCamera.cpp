@@ -21,10 +21,15 @@ void FollowCamera::Initialize()
         ->SetType(Collision::Type::Ray);
 
     // Debug
-    pDebugObject_ = std::make_unique<Object3d>();
-    pDebugObject_->Initialize();
-    pDebugObject_->SetModel("box.gltf");
-    pDebugObject_->SetScale({ 0.1f, 0.1f, 0.1f });
+    pDebugObjectCamera_ = std::make_unique<Object3d>();
+    pDebugObjectCamera_->Initialize();
+    pDebugObjectCamera_->SetModel("box.gltf");
+    pDebugObjectCamera_->SetScale({ 0.5f, 0.5f, 0.5f });
+
+    pDebugObjectHitPoint_ = std::make_unique<Object3d>();
+    pDebugObjectHitPoint_->Initialize();
+    pDebugObjectHitPoint_->SetModel("box.gltf");
+    pDebugObjectHitPoint_->SetScale({ 0.1f, 0.1f, 0.1f });
 }
 
 void FollowCamera::Update()
@@ -53,10 +58,12 @@ void FollowCamera::Update()
     if (otherCollider)
     {
         pCamera_->SetTranslate(Adaptor(hitData.hitPoint));
+        pDebugObjectHitPoint_->SetTranslate(Adaptor(hitData.hitPoint));
     }
     else
     {
         pCamera_->SetTranslate(nextCameraPosition);
+        pDebugObjectHitPoint_->SetTranslate(nextCameraPosition);
     }
 
     pCamera_->SetRotate(rotate);
@@ -64,9 +71,13 @@ void FollowCamera::Update()
 
     targetPositionPre_ = nextTargetPosition;
 
-    pDebugObject_->SetRotate(rotate);
-    pDebugObject_->SetTranslate(nextCameraPosition);
-    pDebugObject_->Update();
+    pDebugObjectCamera_->SetRotate(rotate);
+    pDebugObjectCamera_->SetTranslate(nextCameraPosition);
+    pDebugObjectCamera_->Update();
+
+    pDebugObjectHitPoint_->SetRotate(rotate);
+    pDebugObjectHitPoint_->Update();
+
 }
 
 void FollowCamera::Finalize()
@@ -75,7 +86,8 @@ void FollowCamera::Finalize()
 
 void FollowCamera::Draw3D()
 {
-    pDebugObject_->Draw();
+    //pDebugObjectCamera_->Draw();
+    //pDebugObjectHitPoint_->Draw();
 }
 
 void FollowCamera::Draw2D()

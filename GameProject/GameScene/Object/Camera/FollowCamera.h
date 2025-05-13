@@ -25,7 +25,8 @@ class FollowCamera
     Collision::Manager* pCollisionManager_ = nullptr;
 
     // for debug
-    std::unique_ptr<Object3d> pDebugObject_ = nullptr;
+    std::unique_ptr<Object3d> pDebugObjectCamera_ = nullptr;
+    std::unique_ptr<Object3d> pDebugObjectHitPoint_ = nullptr;
 
 public:
     void Initialize();
