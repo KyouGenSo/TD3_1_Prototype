@@ -27,7 +27,7 @@ void MyGame::Initialize()
 
     TakoFramework::Initialize();
 
-    #pragma region General functions initialization
+#pragma region General functions initialization
 
     // 入力クラスの初期化
     Input::GetInstance()->Initialize(winApp_);
@@ -35,7 +35,7 @@ void MyGame::Initialize()
     // オーディオの初期化
     Audio::GetInstance()->Initialize("resources/Sound/");
 
-    #pragma endregion
+#pragma endregion
 
     // 乱数生成クラスの初期化
     RandomGenerator::GetInstance()->Initialize();
@@ -129,9 +129,9 @@ void MyGame::Update()
         NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, { 0, 0 });
     }
 
-    #ifdef _DEBUG
+#ifdef _DEBUG
     imguiManager_->Begin();
-    #endif // _DEBUG
+#endif // _DEBUG
 
     // UIの更新
     NiGui::BeginFrame();
@@ -145,6 +145,33 @@ void MyGame::Update()
     Input::GetInstance()->RefreshGamePadState();
 
     GPUParticle::GetInstance()->Update();
+
+#ifdef _DEBUG
+    switch (postEffectType)
+    {
+    case NoEffect:
+        PostEffect::GetInstance()->SetEffectType("NoEffect");
+        break;
+    case VignetteRed:
+        PostEffect::GetInstance()->SetEffectType("VignetteRed");
+        break;
+    case VignetteRedBloom:
+        PostEffect::GetInstance()->SetEffectType("VignetteRedBloom");
+        break;
+    case GrayScale:
+        PostEffect::GetInstance()->SetEffectType("GrayScale");
+        break;
+    case VigRedGrayScale:
+        PostEffect::GetInstance()->SetEffectType("VigRedGrayScale");
+        break;
+    case Bloom:
+        PostEffect::GetInstance()->SetEffectType("Bloom");
+        break;
+    case BloomFog:
+        PostEffect::GetInstance()->SetEffectType("BloomFog");
+        break;
+    }
+#endif // _DEBUG
 
     eventTimer_->EndEvent("Update");
 }
@@ -167,38 +194,16 @@ void MyGame::Draw()
     // シーンの描画
     SceneManager::GetInstance()->Draw();
 
-    #ifdef _DEBUG
+#ifdef _DEBUG
     NiGui::DrawDebug();
-    #endif // _DEBUG
+#endif // _DEBUG
 
     /// ===================================================== ///
     /// ------------------ポストエフェクト描画-------------------///
     /// ===================================================== ///
 
-    switch (postEffectType)
-    {
-    case::MyGame::NoEffect:
-        PostEffect::GetInstance()->DrawPostEffect("NoEffect");
-        break;
-    case::MyGame::VignetteRed:
-        PostEffect::GetInstance()->DrawPostEffect("VignetteRed");
-        break;
-    case::MyGame::VignetteRedBloom:
-        PostEffect::GetInstance()->DrawPostEffect("VignetteRedBloom");
-        break;
-    case::MyGame::GrayScale:
-        PostEffect::GetInstance()->DrawPostEffect("GrayScale");
-        break;
-    case::MyGame::VigRedGrayScale:
-        PostEffect::GetInstance()->DrawPostEffect("VigRedGrayScale");
-        break;
-    case::MyGame::Bloom:
-        PostEffect::GetInstance()->DrawPostEffect("Bloom");
-        break;
-    case::MyGame::BloomFog:
-        PostEffect::GetInstance()->DrawPostEffect("BloomFog");
-        break;
-    }
+    // ポストエフェクトの描画
+    PostEffect::GetInstance()->Draw();
 
     /// ===================================================== ///
     /// ------------ポストエフェクト非適用対象の描画---------------///
@@ -226,7 +231,7 @@ void MyGame::Draw()
     /// ========================================= ///
     ///-------------------ImGui-------------------///
     /// ========================================= ///
-    #ifdef _DEBUG
+#ifdef _DEBUG
 
     eventTimer_->ImGui();
 
@@ -332,7 +337,7 @@ void MyGame::Draw()
 
     //imguiの描画
     imguiManager_->Draw();
-    #endif
+#endif
 
 
     // 描画後の処理
@@ -341,10 +346,10 @@ void MyGame::Draw()
 
 void MyGame::OverrideImGuiStyle()
 {
-    #ifdef _DEBUG
+#ifdef _DEBUG
     auto& style = ImGui::GetStyle();
     style.FramePadding = ImVec2(3.0f, 3.4f);
     style.IndentSpacing = 22.0f;
-    #endif
+#endif
 
 }
