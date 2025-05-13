@@ -1,5 +1,6 @@
 #include "MachineGunBullet.h"
 #include "Type/ColliderType.h"
+#include <Utility/Adaptor.h>
 
 MachineGunBullet::Bullet* MachineGunBullet::Bullet::Initialize() {
     model_ = std::make_unique<Object3d>();

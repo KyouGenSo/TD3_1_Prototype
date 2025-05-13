@@ -48,6 +48,10 @@ void GameScene::Initialize()
     camera_->Initialize();
     camera_->SetTarget(&player_->GetTransform());
 
+    freeLookCamera_ = std::make_unique<FreeLookCamera>();
+    freeLookCamera_->Initialize();
+    //Object3dBasic::GetInstance()->SetCamera(freeLookCamera_->GetCamera());
+
     // ChainViewModel
     chainViewModel_ = std::make_unique<ChainViewModel>();
     chainViewModel_->Initialize();
@@ -171,6 +175,7 @@ void GameScene::Update()
     eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });
     eventTimer_->Measure("Update Player", [&]() { player_->Update(); });
     eventTimer_->Measure("Update Camera", [&]() { camera_->Update(); });
+    freeLookCamera_->Update();
 
     eventTimer_->Measure("Update GUI", [&]()
     {
@@ -220,6 +225,7 @@ void GameScene::Draw()
     player_->Draw();
     boss_->Draw();
     enemyManager_->Draw();
+    camera_->Draw3D();
 
     GPUParticle::GetInstance()->Draw();
 
@@ -229,6 +235,8 @@ void GameScene::Draw()
     countDown_->Draw2D();
     minimap_->Draw();
     statusHUD_->Draw2D();
+
+    camera_->Draw2D();
 }
 
 void GameScene::DrawWithoutEffect()

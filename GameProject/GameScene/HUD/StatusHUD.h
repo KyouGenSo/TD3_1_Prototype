@@ -28,6 +28,7 @@ public:
     void Update();
     void Draw2D();
     void ImGui();
+    void OnResized(const NiVec2& _size);
 
     StatusBar* GetHpBar() { return hpBar_.get(); }
 
@@ -35,6 +36,8 @@ private:
     GlobalVariables* globalVariables_ = nullptr;
     TextureManager* textureManager_ = nullptr;
     Input* input_ = nullptr;
+
+    NiVec2 standardDisplaySize_ = {};
 
     std::unique_ptr<StatusBar> hpBar_ = nullptr;
     std::unique_ptr<StatusBar> bulletBar_ = nullptr;
