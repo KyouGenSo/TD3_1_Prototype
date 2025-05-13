@@ -7,5 +7,6 @@ namespace Collider{
         P_BULLET = 0b1 << 1,
         ENEMY = 0b1 << 2,
         STAGE = 0b1 << 3,
+        CAMERA = 0b1 << 4,
     };
 }

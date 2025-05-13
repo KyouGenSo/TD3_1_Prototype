@@ -17,7 +17,6 @@
 class Object{
 	std::string uuid_;
 protected:
-    Camera* pCamera_ = nullptr;
     std::unique_ptr<Object3d> model_;
 
     std::unique_ptr<Collision::Collider> pCollider_;
@@ -130,8 +129,6 @@ inline Object::Object()
         }
     } cleaner{ szUuid };
     uuid_ = reinterpret_cast<char*>(szUuid);
-
-    pCamera_ = Object3dBasic::GetInstance()->GetCamera();
 }
 
 inline void Object::Initialize()

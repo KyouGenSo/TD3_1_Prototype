@@ -53,9 +53,6 @@
     <Filter Include="Object\Weapons">
       <UniqueIdentifier>{efe50125-f3dc-4977-a4f0-2d965ccfca74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSystem\Collision">
-      <UniqueIdentifier>{549b4036-6036-462a-9e16-c81b96ee9001}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Enemy">
       <UniqueIdentifier>{abb3b82a-2dc0-4dcc-8a58-8a05aafcf25a}</UniqueIdentifier>
     </Filter>
@@ -127,6 +124,9 @@
     </Filter>
     <Filter Include="Utility\RandomGenerator">
       <UniqueIdentifier>{0a22e77e-b974-4aef-b846-bb93ace65c2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem\FreeLookCamera">
+      <UniqueIdentifier>{2d199bd3-51d5-4f80-a59c-cdabe1d294db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="Utility\RandomGenerator\RandomGenerator.cpp">
       <Filter>Utility\RandomGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\FreeCamera\FreeLookCamera.cpp">
+      <Filter>GameSystem\FreeLookCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -471,6 +474,9 @@
     </ClInclude>
     <ClInclude Include="Utility\Adaptor.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\FreeCamera\FreeLookCamera.h">
+      <Filter>GameSystem\FreeLookCamera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

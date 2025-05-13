@@ -9,13 +9,22 @@
 
 void FollowCamera::Initialize()
 {
-    pCamera_ = Object3dBasic::GetInstance()->GetCamera();
+    pCamera_ = *(Object3dBasic::GetInstance()->GetCamera());
     pCamera_->SetFarClip(1000.0f);
 
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
     pRay_ = std::make_unique<Collision::Ray>();
     pRay_->SetLength(100.0f);
     // プレイヤーとだけ当たらないようにしたい。
+    pRay_
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::CAMERA))
+        ->SetType(Collision::Type::Ray);
+
+    // Debug
+    pDebugObject_ = std::make_unique<Object3d>();
+    pDebugObject_->Initialize();
+    pDebugObject_->SetModel("box.gltf");
+    pDebugObject_->SetScale({ 0.1f, 0.1f, 0.1f });
 }
 
 void FollowCamera::Update()
@@ -28,17 +37,45 @@ void FollowCamera::Update()
     Vector3 direction = Mat4x4::TransFormNormal(rotation, shiftDirection_);
 
     // interpolation
-    Vector3 targetPosition = targetPositionPre_ * (1.0f - factorLerp_) + (pTarget_->translate + targetPositionOffset_) * factorLerp_;
+    Vector3 nextTargetPosition = targetPositionPre_ * (1.0f - factorLerp_) + (pTarget_->translate + targetPositionOffset_) * factorLerp_;
+
+    Vector3 nextCameraPosition = direction.Normalize() * offset_ + nextTargetPosition;
+
+    // ray collision
+    pRay_->SetOrigin(Adaptor(pTarget_->translate));
+    pRay_->SetDestination(Adaptor(nextCameraPosition));
+
+    auto hitData = pCollisionManager_->RayCast(pRay_.get());
+
+
+    // あたっていたら
+    auto otherCollider = pCollisionManager_->Get(hitData.uuid);
+    if (otherCollider)
+    {
+        pCamera_->SetTranslate(Adaptor(hitData.hitPoint));
+    }
+    else
+    {
+        pCamera_->SetTranslate(nextCameraPosition);
+    }
 
     pCamera_->SetRotate(rotate);
-    pCamera_->SetTranslate(direction.Normalize() * offset_ + targetPosition);
     pCamera_->Update();
 
-    targetPositionPre_ = targetPosition;
+    targetPositionPre_ = nextTargetPosition;
+
+    pDebugObject_->SetRotate(rotate);
+    pDebugObject_->SetTranslate(nextCameraPosition);
+    pDebugObject_->Update();
 }
 
 void FollowCamera::Finalize()
 {
+}
+
+void FollowCamera::Draw3D()
+{
+    pDebugObject_->Draw();
 }
 
 void FollowCamera::Draw2D()
