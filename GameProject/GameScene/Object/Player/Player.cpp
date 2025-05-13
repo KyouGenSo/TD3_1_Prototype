@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include "Player.h"
 
 #include "imgui.h"
@@ -15,6 +16,7 @@
 #include <GameSystem/Reinforcement/StatusReinforcement.h>
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
+#include <algorithm>
 #include <Utility/Adaptor.h>
 
 void Player::Initialize()
@@ -105,6 +107,7 @@ void Player::Finalize()
     {
         rfmManager->UnregisterReinforcement(reinforcement.get());
     }
+    ShowCursor(true);
 }
 
 void Player::ImGui()
@@ -206,18 +209,30 @@ void Player::UpdateInputCommands()
         }
     }
 
+    if (pInput_->TriggerKey(DIK_M)){
+        mouseAim_ = !mouseAim_;
+        ShowCursor(false);
+    }
+
     // Perspective
-    transform_.rotate.y += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;
-    transform_.rotate.x += static_cast<float>(Input::GetInstance()->PushKey(DIK_UPARROW) - Input::GetInstance()->PushKey(DIK_DOWNARROW)) * 0.03f;
+    if (mouseAim_){
+        POINT point;
+        GetCursorPos(&point);
+        SetCursorPos(ORIGIN.x, ORIGIN.y);
+
+        transform_.rotate.y += static_cast<float>(point.x - ORIGIN.x) * 0.001f;
+        transform_.rotate.x += static_cast<float>(point.y - ORIGIN.y) * 0.001f;
+    } else{
+        transform_.rotate.y += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;
+        transform_.rotate.x += static_cast<float>(Input::GetInstance()->PushKey(DIK_UPARROW) - Input::GetInstance()->PushKey(DIK_DOWNARROW)) * 0.03f;
+    }
+
 }
 
 void Player::UpdateMovement()
 {
     // floor clamp
-    if (transform_.translate.y < floor_)
-    {
-        transform_.translate.y = floor_;
-    }
+    transform_.translate.y = std::max(transform_.translate.y, floor_);
 
     // Movement
     if (Input::GetInstance()->IsConnect())
