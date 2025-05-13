@@ -24,11 +24,12 @@ void FreeLookCamera::Update()
     prevCursorPos_ = currCursorPos_;
     GetCursorPos(&currCursorPos_);
 
-    if(pInput_->PushMouse(1))
+    this->CatchMoveCommands();
+    if (pInput_->PushMouse(1))
     {
-        this->CatchMoveCommands();
         this->CatchRotateCommands();
     }
+
 
     pCamera_->Update();
 }
@@ -45,32 +46,40 @@ void FreeLookCamera::CatchMoveCommands()
     NiVec3 right = FMath::RotateVector({ 1.0f, 0.0f, 0.0f }, rotate_);
 
     /// 向いている方向に移動
-    if(pInput_->PushKey(DIK_W))
+    if (pInput_->PushKey(DIK_RSHIFT))
+    {
+        moveSpeed_ = 0.5f;
+    }
+    else
+    {
+        moveSpeed_ = 0.1f;
+    }
+    if(pInput_->PushKey(DIK_I))
     {
         NiVec3 cameraPosition = NiUtil::Adaptor(pCamera_->GetTranslate()) + forward * moveSpeed_;
         pCamera_->SetTranslate(NiUtil::Adaptor(cameraPosition));
     }
-    if(pInput_->PushKey(DIK_S))
+    if(pInput_->PushKey(DIK_K))
     {
         NiVec3 cameraPosition = NiUtil::Adaptor(pCamera_->GetTranslate()) - forward * moveSpeed_;
         pCamera_->SetTranslate(NiUtil::Adaptor(cameraPosition));
     }
-    if(pInput_->PushKey(DIK_A))
+    if(pInput_->PushKey(DIK_J))
     {
         NiVec3 cameraPosition = NiUtil::Adaptor(pCamera_->GetTranslate()) - right * moveSpeed_;
         pCamera_->SetTranslate(NiUtil::Adaptor(cameraPosition ));
     }
-    if(pInput_->PushKey(DIK_D))
+    if(pInput_->PushKey(DIK_L))
     {
         NiVec3 cameraPosition = NiUtil::Adaptor(pCamera_->GetTranslate()) + right * moveSpeed_;
         pCamera_->SetTranslate(NiUtil::Adaptor(cameraPosition));
     }
-    if(pInput_->PushKey(DIK_Q))
+    if(pInput_->PushKey(DIK_U))
     {
         NiVec3 cameraPosition = NiUtil::Adaptor(pCamera_->GetTranslate()) + NiVec3(0.0f, -moveSpeed_, 0.0f);
         pCamera_->SetTranslate(NiUtil::Adaptor(cameraPosition));
     }
-    if(pInput_->PushKey(DIK_E))
+    if(pInput_->PushKey(DIK_O))
     {
         NiVec3 cameraPosition = NiUtil::Adaptor(pCamera_->GetTranslate()) + NiVec3(0.0f, moveSpeed_, 0.0f);
         pCamera_->SetTranslate(NiUtil::Adaptor(cameraPosition));
