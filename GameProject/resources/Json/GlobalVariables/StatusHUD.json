@@ -1,5 +1,9 @@
 {
     "StatusHUD": {
+        "Standard_DisplaySize": [
+            1600.0,
+            900.0
+        ],
         "HPBar_Position": [
             536.0,
             780.0

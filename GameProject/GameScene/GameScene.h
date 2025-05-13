@@ -25,12 +25,14 @@
 #include "HUD/StatusHUD.h"
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 #include <GameSystem/Reinforcement/StatusReinforcement.h>
+#include <GameSystem/FreeCamera/FreeLookCamera.h>
 #include <GameSystem/SoundManager/SoundManager.h>
 
 class GameScene : public BaseScene
 {
     std::unique_ptr<Player> player_;
     std::unique_ptr<FollowCamera> camera_;
+    std::unique_ptr<FreeLookCamera> freeLookCamera_;
     std::unique_ptr<GUI_LvUP> guiLvUP_;
     std::unique_ptr<GUI_PauseMenu> guiPauseMenu_;
     std::unique_ptr<GUI_Chain> guiChain_;

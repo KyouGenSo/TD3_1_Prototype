@@ -4,6 +4,7 @@
 #include <Collision/Collider.h>
 
 #include "Type/ColliderType.h"
+#include <Utility/Adaptor.h>
 
 void MachineGunBullet::Initialize() {
     BulletBase::Initialize();
