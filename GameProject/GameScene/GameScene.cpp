@@ -50,7 +50,7 @@ void GameScene::Initialize()
 
     freeLookCamera_ = std::make_unique<FreeLookCamera>();
     freeLookCamera_->Initialize();
-    Object3dBasic::GetInstance()->SetCamera(freeLookCamera_->GetCamera());
+    //Object3dBasic::GetInstance()->SetCamera(freeLookCamera_->GetCamera());
 
     // ChainViewModel
     chainViewModel_ = std::make_unique<ChainViewModel>();
