@@ -29,6 +29,9 @@ class Player : public Object
     float moveSpeed_ = 35.0f; // 移動速度
     float frictionCoefficient_ = 5.0f; // 摩擦係数 (friction coefficient)
 
+    bool mouseAim_ = false;
+    const POINT ORIGIN = {990, 540};
+
 public:
     void Initialize() override;
     void Update() override;
