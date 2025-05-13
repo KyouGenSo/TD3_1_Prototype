@@ -134,16 +134,17 @@ void GameScene::Initialize()
     auto* reinforcementManager_ = ReinforcementManager::GetInstance();
     reinforcementManager_->Initialize("StatusReinforcement.json");
 
-    // BGM管理の初期化
+    // BGMグループの初期化
     soundGroup_ = std::make_unique<SoundGroup>();
-    soundGroup_->Initialize();
+    soundGroup_->Initialize(false);
+    soundGroup_->SetSoundGroupName("BGM");
     soundGroup_->SetInterval(2.0f);
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_0").handle);
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_1").handle);
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_2").handle);
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_3").handle);
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_4").handle);
-    soundGroup_->Play();
+    soundGroup_->Start();
 }
 
 void GameScene::Finalize()

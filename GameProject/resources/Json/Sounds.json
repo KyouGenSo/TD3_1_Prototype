@@ -40,5 +40,18 @@
         "Volume" : 0.5,
         "Pitch" : 1.0,
         "Loop" : false
+    },
+    "Fire_Rocket" : {
+        "Path" : "shot_assault.wav",
+        "Volume" : 0.5,
+        "Pitch" : 1.0,
+        "Loop" : false
+    },
+    "Fire_SMG" : {
+        "Path" : "shot_assault.wav",
+        "Volume" : 0.5,
+        "Pitch" : 1.0,
+        "Loop" : false
     }
+    
 }

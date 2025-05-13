@@ -1,10 +1,12 @@
 #include "RocketLauncher.h"
 
 #include <GameScene/Object/Bullets/BulletFactory.h>
+#include <GameSystem/SoundManager/SoundManager.h>
 
 void RocketLauncher::Initialize()
 {
-
+    sound_fire_ = SoundManager::GetInstance()->SearchSoundData("Fire_Rocket").handle;
+    EnableSound();
 }
 
 
@@ -24,13 +26,4 @@ void RocketLauncher::Draw()
     {
         bullet->Draw();
     }
-}
-
-void RocketLauncher::Fire()
-{
-    auto coolTime = pChain_->GetCoolTime(WeaponType::RocketLauncher);
-    if (coolTime > 0) return;
-
-    auto bullet = BulletFactory::CreateBullet(WeaponType::RocketLauncher);
-    AddNewBullet(std::move(bullet));
 }

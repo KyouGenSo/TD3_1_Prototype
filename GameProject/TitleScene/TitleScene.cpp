@@ -5,6 +5,7 @@
 #include "SpriteBasic.h"
 #include "Input.h"
 #include "Draw2D.h"
+#include "Audio.h"
 #include "GPUParticle.h"
 #include "Ease/Ease.h"
 
