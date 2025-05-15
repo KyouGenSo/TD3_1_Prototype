@@ -7,6 +7,7 @@
 #include "ModelManager.h"
 #include "Collision/Collider.h"
 #include "Type/ColliderType.h"
+#include <Utility/Adaptor.h>
 
 void RocketBullet::Initialize()
 {
@@ -37,7 +38,7 @@ void RocketBullet::Initialize()
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol){this->OnCollisionTrigger(pCol); })
         ->SetTranslate(Adaptor(transform_.translate))
-        ->SetSize(0.4f)
+        ->SetSize(0.3f)
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
@@ -80,6 +81,7 @@ void RocketBullet::Draw()
     }
 
     if (pNext_) pNext_->Draw();
+    Object::DrawCollider(pCollider_.get());
 }
 
 void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)

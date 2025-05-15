@@ -13,11 +13,11 @@
 #include <GameScene/Status/Status.h>
 
 #include "EmitterManager.h"
+#include <Collision/Collider.h>
 
 class Object{
 	std::string uuid_;
 protected:
-    Camera* pCamera_ = nullptr;
     std::unique_ptr<Object3d> model_;
 
     std::unique_ptr<Collision::Collider> pCollider_;
@@ -100,6 +100,9 @@ public: /// Getter
         return statusInit_;
     }
 
+public:
+    void DrawCollider(const Collision::Collider* _collider);
+
 protected:
     void DebugObject();
     void ApplyForce(const Vector3& _force)
@@ -110,15 +113,6 @@ protected:
     {
         Vector3 frictionForce = velocity_ * -_frictionCoef;
         velocity_ += frictionForce * deltaTime_;
-    }
-
-    static Collision::Vec3 Adaptor(Vector3 _vec)
-    {
-        return {_vec.x, _vec.y, _vec.z};
-    }
-    static Vector3 Adaptor(Collision::Vec3 _vec)
-    {
-        return {_vec.x, _vec.y, _vec.z};
     }
 
     void StatusUpdateOnCollision(const Collision::Collider* pObject);
@@ -139,8 +133,6 @@ inline Object::Object()
         }
     } cleaner{ szUuid };
     uuid_ = reinterpret_cast<char*>(szUuid);
-
-    pCamera_ = Object3dBasic::GetInstance()->GetCamera();
 }
 
 inline void Object::Initialize()

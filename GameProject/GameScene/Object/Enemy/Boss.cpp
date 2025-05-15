@@ -4,14 +4,13 @@
 #include "imgui.h"
 #include "Object3dBasic.h"
 #include "Type/ColliderType.h"
+#include <Utility/Adaptor.h>
 
 void Boss::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    pCamera_ = Object3dBasic::GetInstance()->GetCamera();
-    model_->SetCamera(pCamera_);
-    model_->SetModel("boss.gltf");
+    model_->SetModel("bigCube.gltf");
 
     // 初期化用 - 外部から設定するためこの値は適用されない
     transform_ = {

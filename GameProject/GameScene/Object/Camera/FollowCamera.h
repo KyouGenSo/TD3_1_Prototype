@@ -4,6 +4,10 @@
 #include <Collision/Collider.h>
 #include <Collision/CollisionManager.h>
 
+#include <Object3d.h>
+
+#include <memory>
+
 class FollowCamera
 {
     Camera* pCamera_ = nullptr;
@@ -20,10 +24,16 @@ class FollowCamera
     float rotationX_ = 0.1f;
     Collision::Manager* pCollisionManager_ = nullptr;
 
+    // for debug
+    std::unique_ptr<Object3d> pDebugObjectCamera_ = nullptr;
+    std::unique_ptr<Object3d> pDebugObjectHitPoint_ = nullptr;
+
 public:
     void Initialize();
     void Update();
     void Finalize();
+    void Draw3D();
+    void Draw2D();
 
     void SetTarget(const Transform* pTarget) { pTarget_ = pTarget; }
 

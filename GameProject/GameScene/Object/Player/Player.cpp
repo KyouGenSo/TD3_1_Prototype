@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include "Player.h"
 
 #include "imgui.h"
@@ -15,6 +16,9 @@
 #include <GameSystem/Reinforcement/StatusReinforcement.h>
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
+#include <algorithm>
+#include <Utility/Adaptor.h>
+
 void Player::Initialize()
 {
     Object::Initialize();
@@ -23,7 +27,6 @@ void Player::Initialize()
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetCamera(pCamera_);
     model_->SetModel("player.gltf");
 
     // 初期化用 - 外部から設定するためこの値は適用されない
@@ -39,6 +42,7 @@ void Player::Initialize()
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::CAMERA))
         ->SetSize(1.f)
         ->SetOwner(this)
         ->Enable();
@@ -57,6 +61,7 @@ void Player::Initialize()
 
     /// !!Debug!!
     weapon_ = std::make_unique<SMG>();
+    weapon_->Initialize();
     gravity_ = 1.8f;
 }
 
@@ -102,6 +107,7 @@ void Player::Finalize()
     {
         rfmManager->UnregisterReinforcement(reinforcement.get());
     }
+    ShowCursor(true);
 }
 
 void Player::ImGui()
@@ -168,6 +174,7 @@ void Player::OnChainConfirm()
 {
     weapon_.reset();
     weapon_ = WeaponFactory::CreateWeapon(chain_->Front());
+    weapon_->Initialize();
     weapon_->SetChain(chain_);
     weapon_->SetEmitter(emitter_);
 }
@@ -175,7 +182,7 @@ void Player::OnChainConfirm()
 void Player::UpdateInputCommands()
 {
     // Attack
-    if (pInput_->PushKey(DIK_RETURN) || pInput_->PushButton(JOY_BUTTON1))
+    if (pInput_->PushMouse(0) || pInput_->PushButton(JOY_BUTTON1))
     {
         weapon_->Fire();
     }
@@ -202,18 +209,30 @@ void Player::UpdateInputCommands()
         }
     }
 
+    if (pInput_->TriggerKey(DIK_M)){
+        mouseAim_ = !mouseAim_;
+        ShowCursor(!mouseAim_);
+    }
+
     // Perspective
-    transform_.rotate.y += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;
-    transform_.rotate.x += static_cast<float>(Input::GetInstance()->PushKey(DIK_UPARROW) - Input::GetInstance()->PushKey(DIK_DOWNARROW)) * 0.03f;
+    if (mouseAim_){
+        POINT point;
+        GetCursorPos(&point);
+        SetCursorPos(ORIGIN.x, ORIGIN.y);
+
+        transform_.rotate.y += static_cast<float>(point.x - ORIGIN.x) * 0.001f;
+        transform_.rotate.x += static_cast<float>(point.y - ORIGIN.y) * 0.001f;
+    } else{
+        transform_.rotate.y += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;
+        transform_.rotate.x += static_cast<float>(Input::GetInstance()->PushKey(DIK_UPARROW) - Input::GetInstance()->PushKey(DIK_DOWNARROW)) * 0.03f;
+    }
+
 }
 
 void Player::UpdateMovement()
 {
     // floor clamp
-    if (transform_.translate.y < floor_)
-    {
-        transform_.translate.y = floor_;
-    }
+    transform_.translate.y = std::max(transform_.translate.y, floor_);
 
     // Movement
     if (Input::GetInstance()->IsConnect())

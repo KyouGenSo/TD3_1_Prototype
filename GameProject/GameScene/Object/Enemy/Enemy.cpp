@@ -4,13 +4,12 @@
 #include "cmath"
 #include "ModelManager.h"
 #include "Type/ColliderType.h"
+#include <Utility/Adaptor.h>
 
 void Enemy::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    pCamera_ = Object3dBasic::GetInstance()->GetCamera();
-    model_->SetCamera(pCamera_);
     model_->SetModel("normalEnemy.gltf");
 
     transform_ = {

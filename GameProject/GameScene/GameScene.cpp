@@ -1,6 +1,5 @@
 #include "GameScene.h"
 
-#include "Draw2D.h"
 #include "ModelManager.h"
 #include "Object3dBasic.h"
 #include <Type/Singleton.h>
@@ -8,10 +7,13 @@
 #include "ImGuiManager.h"
 #include <GameSystem/StageManager/StageManager.h>
 #include <SceneManager.h>
+#include <WinApp.h>
 
 
 #include "GPUParticle.h"
 #include <Audio.h>
+#include <Vector2.h>
+#include <Draw2D.h>
 
 
 void GameScene::Initialize()
@@ -28,7 +30,7 @@ void GameScene::Initialize()
 		.intensity = 2.0f
 	};
 
-	emitterManager_ = make_unique<EmitterManager>(GPUParticle::GetInstance());
+    emitterManager_ = std::make_unique<EmitterManager>(GPUParticle::GetInstance());
 
 	pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
 
@@ -48,9 +50,14 @@ void GameScene::Initialize()
 	camera_->Initialize();
 	camera_->SetTarget(&player_->GetTransform());
 
-	// ChainViewModel
-	chainViewModel_ = std::make_unique<ChainViewModel>();
-	chainViewModel_->Initialize();
+    freeLookCamera_ = std::make_unique<FreeLookCamera>();
+    freeLookCamera_->Initialize();
+    //Object3dBasic::GetInstance()->SetCamera(freeLookCamera_->GetCamera());
+    //Draw2D::GetInstance()->SetCamera(freeLookCamera_->GetCamera());
+
+    // ChainViewModel
+    chainViewModel_ = std::make_unique<ChainViewModel>();
+    chainViewModel_->Initialize();
 
 	// GUIの初期化
 	guiLvUP_ = std::make_unique<GUI_LvUP>();
@@ -64,11 +71,11 @@ void GameScene::Initialize()
 	player_->AddObserver(guiPauseMenu_.get());
 	player_->AddObserver(guiChain_.get());
 
-	// Minimap
-	minimap_ = make_unique<Minimap>();
-	minimap_->Initialize();
-	minimap_->SetSize({ -30, 0, -30 }, { 30, 0, 30 });
-	minimap_->Register(player_.get());
+    // Minimap
+    minimap_ = std::make_unique<Minimap>();
+    minimap_->Initialize();
+    minimap_->SetSize({ -30, 0, -30 }, { 30, 0, 30 });
+    minimap_->Register(player_.get());
 
 	// Castle
 	castle_ = std::make_unique<Castle>();
@@ -133,20 +140,24 @@ void GameScene::Initialize()
   
 	statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
 
-	// ReinforcementManagerの初期化
-	auto* reinforcementManager_ = ReinforcementManager::GetInstance();
-	reinforcementManager_->Initialize("StatusReinforcement.json");
+    // リサイズ時コールバック登録
+    WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1));
 
-	// BGM管理の初期化
-	soundGroup_ = std::make_unique<SoundGroup>();
-	soundGroup_->Initialize();
-	soundGroup_->SetInterval(2.0f);
-	soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_0").handle);
-	soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_1").handle);
-	soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_2").handle);
-	soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_3").handle);
-	soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_4").handle);
-	soundGroup_->Play();
+    // ReinforcementManagerの初期化
+    auto* reinforcementManager_ = ReinforcementManager::GetInstance();
+    reinforcementManager_->Initialize("StatusReinforcement.json");
+
+    // BGMグループの初期化
+    soundGroup_ = std::make_unique<SoundGroup>();
+    soundGroup_->Initialize();
+    soundGroup_->SetSoundGroupName("BGM");
+    soundGroup_->SetInterval(2.0f);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_0").handle);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_1").handle);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_2").handle);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_3").handle);
+    soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_4").handle);
+    soundGroup_->Start();
 }
 
 void GameScene::Finalize()
@@ -169,10 +180,11 @@ void GameScene::Update()
 	timeKeeper_->Update();
 	chainViewModel_->Update();
 
-	eventTimer_->Measure("Update Terrain", [&]() { terrain_->Update(); });
-	eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });
-	eventTimer_->Measure("Update Player", [&]() { player_->Update(); });
-	eventTimer_->Measure("Update Camera", [&]() { camera_->Update(); });
+    eventTimer_->Measure("Update Terrain", [&]() { terrain_->Update(); });
+    eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });
+    eventTimer_->Measure("Update Player", [&]() { player_->Update(); });
+    eventTimer_->Measure("Update Camera", [&]() { camera_->Update(); });
+    freeLookCamera_->Update();
 
 	eventTimer_->Measure("Update GUI", [&]()
 	{
@@ -214,23 +226,26 @@ void GameScene::Draw()
 	// スプライト共通描画設定
 	SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
-	//-------------------Modelの描画-------------------//
-	// 3Dモデル共通描画設定
-	Object3dBasic::GetInstance()->SetCommonRenderSetting();
-	terrain_->Draw();
-	castle_->Draw();
-	player_->Draw();
-	boss_->Draw();
-	enemyManager_->Draw();
+    //-------------------Modelの描画-------------------//
+    // 3Dモデル共通描画設定
+    Object3dBasic::GetInstance()->SetCommonRenderSetting();
+    terrain_->Draw();
+    castle_->Draw();
+    player_->Draw();
+    boss_->Draw();
+    enemyManager_->Draw();
+    //camera_->Draw3D();
 
 	GPUParticle::GetInstance()->Draw();
 
-	//------------------前景Spriteの描画------------------//
-	// スプライト共通描画設定
-	SpriteBasic::GetInstance()->SetCommonRenderSetting();
-	countDown_->Draw2D();
-	minimap_->Draw();
-	statusHUD_->Draw2D();
+    //------------------前景Spriteの描画------------------//
+    // スプライト共通描画設定
+    SpriteBasic::GetInstance()->SetCommonRenderSetting();
+    countDown_->Draw2D();
+    minimap_->Draw();
+    statusHUD_->Draw2D();
+
+    //camera_->Draw2D();
 }
 
 void GameScene::DrawWithoutEffect()

@@ -2,6 +2,7 @@
 
 #include "QuatFunc.h"
 #include "GameScene/Object/Bullets/BulletFactory.h"
+#include <GameSystem/SoundManager/SoundManager.h>
 
 void WeaponBase::Fire()
 {
@@ -9,6 +10,12 @@ void WeaponBase::Fire()
     if (coolTime > 0) return;
     auto bullet = BulletFactory::CreateBullet(pChain_->GetChain().front());
     AddNewBullet(std::move(bullet));
+
+    // 発射音を再生
+    if (isEnableSound_)
+    {
+        SoundManager::GetInstance()->Play(sound_fire_);
+    }
 }
 
 void WeaponBase::AddNewBullet(std::unique_ptr<BulletBase> _bullet)

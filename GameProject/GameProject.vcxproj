@@ -215,6 +215,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameSystem\ChainViewModel\ChainViewModel.cpp" />
     <ClCompile Include="GameSystem\Chain\Chain.cpp" />
     <ClCompile Include="GameSystem\DeltaTimeManager\DeltaTimeManager.cpp" />
+    <ClCompile Include="GameSystem\FreeCamera\FreeLookCamera.cpp" />
     <ClCompile Include="GameSystem\GameController\GameController.cpp" />
     <ClCompile Include="GameSystem\Reinforcement\Manager\ReinforcementManager.cpp" />
     <ClCompile Include="GameSystem\Reinforcement\StatusReinforcement.cpp" />
@@ -270,6 +271,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameSystem\ChainViewModel\ChainViewModel.h" />
     <ClInclude Include="GameSystem\Chain\Chain.h" />
     <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h" />
+    <ClInclude Include="GameSystem\FreeCamera\FreeLookCamera.h" />
     <ClInclude Include="GameSystem\GameController\GameController.h" />
     <ClInclude Include="GameSystem\Reinforcement\IReinforcement.h" />
     <ClInclude Include="GameSystem\Reinforcement\Manager\ReinforcementManager.h" />
@@ -297,6 +299,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Type\ColliderType.h" />
     <ClInclude Include="Type\Singleton.h" />
     <ClInclude Include="Type\WeaponType.h" />
+    <ClInclude Include="Utility\Adaptor.h" />
     <ClInclude Include="Utility\RandomGenerator\RandomGenerator.h" />
     <ClInclude Include="Utility\Threadpool\Threadpool.h" />
   </ItemGroup>
