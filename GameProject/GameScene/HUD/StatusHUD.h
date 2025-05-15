@@ -28,7 +28,7 @@ public:
     void Update();
     void Draw2D();
     void ImGui();
-    void OnResized(const NiVec2& _size);
+    void OnResized(Vector2 _size);
 
     StatusBar* GetHpBar() { return hpBar_.get(); }
 

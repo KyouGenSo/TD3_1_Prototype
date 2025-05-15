@@ -182,7 +182,7 @@ void Player::OnChainConfirm()
 void Player::UpdateInputCommands()
 {
     // Attack
-    if (pInput_->PushKey(DIK_RETURN) || pInput_->PushButton(JOY_BUTTON1))
+    if (pInput_->PushMouse(0) || pInput_->PushButton(JOY_BUTTON1))
     {
         weapon_->Fire();
     }
@@ -211,7 +211,7 @@ void Player::UpdateInputCommands()
 
     if (pInput_->TriggerKey(DIK_M)){
         mouseAim_ = !mouseAim_;
-        ShowCursor(false);
+        ShowCursor(!mouseAim_);
     }
 
     // Perspective

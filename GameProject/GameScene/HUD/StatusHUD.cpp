@@ -68,9 +68,10 @@ void StatusHUD::ImGui()
     bulletBar_->ImGui();
 }
 
-void StatusHUD::OnResized(const NiVec2& _size)
+void StatusHUD::OnResized(Vector2 _size)
 {
-    NiVec2 retio = { _size.x / standardDisplaySize_.x, _size.y / standardDisplaySize_.y };
+    NiVec2 size = { _size.x, _size.y };
+    NiVec2 retio = { size.x / standardDisplaySize_.x, size.y / standardDisplaySize_.y };
     hpBar_->SetPosition(hpBarPos_ * retio);
     bulletBar_->SetPosition(bulletBarPos_ * retio);
 }

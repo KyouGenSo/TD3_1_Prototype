@@ -1,6 +1,5 @@
 #include "GameScene.h"
 
-#include "Draw2D.h"
 #include "ModelManager.h"
 #include "Object3dBasic.h"
 #include <Type/Singleton.h>
@@ -8,10 +7,12 @@
 #include "ImGuiManager.h"
 #include <GameSystem/StageManager/StageManager.h>
 #include <SceneManager.h>
+#include <WinApp.h>
 
 
 #include "GPUParticle.h"
 #include <Audio.h>
+#include <Vector2.h>
 
 
 void GameScene::Initialize()
@@ -28,7 +29,7 @@ void GameScene::Initialize()
         .intensity = 2.0f
     };
 
-    emitterManager_ = make_unique<EmitterManager>(GPUParticle::GetInstance());
+    emitterManager_ = std::make_unique<EmitterManager>(GPUParticle::GetInstance());
 
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
 
@@ -70,7 +71,7 @@ void GameScene::Initialize()
     player_->AddObserver(guiChain_.get());
 
     // Minimap
-    minimap_ = make_unique<Minimap>();
+    minimap_ = std::make_unique<Minimap>();
     minimap_->Initialize();
     minimap_->SetSize({ -30, 0, -30 }, { 30, 0, 30 });
     minimap_->Register(player_.get());
@@ -135,13 +136,16 @@ void GameScene::Initialize()
   
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
 
+    // リサイズ時コールバック登録
+    WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1));
+
     // ReinforcementManagerの初期化
     auto* reinforcementManager_ = ReinforcementManager::GetInstance();
     reinforcementManager_->Initialize("StatusReinforcement.json");
 
     // BGMグループの初期化
     soundGroup_ = std::make_unique<SoundGroup>();
-    soundGroup_->Initialize(false);
+    soundGroup_->Initialize();
     soundGroup_->SetSoundGroupName("BGM");
     soundGroup_->SetInterval(2.0f);
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_0").handle);
