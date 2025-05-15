@@ -37,6 +37,7 @@ void FollowCamera::Update()
     if (!pTarget_) return;
 
     // direction_
+    rotationX_ = pTarget_->rotate.x;
     Vector3 rotate = { rotationX_, pTarget_->rotate.y, 0.0f };
     Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(rotate);
     Vector3 direction = Mat4x4::TransFormNormal(rotation, shiftDirection_);
