@@ -13,6 +13,7 @@
 #include "GPUParticle.h"
 #include <Audio.h>
 #include <Vector2.h>
+#include <Draw2D.h>
 
 
 void GameScene::Initialize()
@@ -230,7 +231,7 @@ void GameScene::Draw()
     player_->Draw();
     boss_->Draw();
     enemyManager_->Draw();
-    camera_->Draw3D();
+    //camera_->Draw3D();
 
     GPUParticle::GetInstance()->Draw();
 
@@ -241,7 +242,7 @@ void GameScene::Draw()
     minimap_->Draw();
     statusHUD_->Draw2D();
 
-    camera_->Draw2D();
+    //camera_->Draw2D();
 }
 
 void GameScene::DrawWithoutEffect()
