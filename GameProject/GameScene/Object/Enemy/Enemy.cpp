@@ -2,6 +2,7 @@
 
 #include "Object3dBasic.h"
 #include "cmath"
+#include "ModelManager.h"
 #include "Type/ColliderType.h"
 
 void Enemy::Initialize()
@@ -10,7 +11,7 @@ void Enemy::Initialize()
     model_->Initialize();
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
     model_->SetCamera(pCamera_);
-    model_->SetModel("cube.gltf");
+    model_->SetModel("normalEnemy.gltf");
 
     transform_ = {
         {0.0f,0.0f,0.0f},

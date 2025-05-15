@@ -11,7 +11,7 @@ void Boss::Initialize()
     model_->Initialize();
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
     model_->SetCamera(pCamera_);
-    model_->SetModel("bigCube.gltf");
+    model_->SetModel("boss.gltf");
 
     // 初期化用 - 外部から設定するためこの値は適用されない
     transform_ = {

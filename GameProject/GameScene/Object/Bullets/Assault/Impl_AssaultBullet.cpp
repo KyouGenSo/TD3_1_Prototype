@@ -10,12 +10,12 @@ void AssaultBullet::Bullet::Initialize()
 {
     BulletBase::Initialize();
 
-    ModelManager::GetInstance()->LoadModel("box.gltf");
+    ModelManager::GetInstance()->LoadModel("assultBullet.gltf");
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("box.gltf");
-    model_->SetScale(Vector3(0.3f, 0.3f, 0.3f));
+    model_->SetModel("assultBullet.gltf");
+    model_->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 
     statusInit_
         .setAttack(7)

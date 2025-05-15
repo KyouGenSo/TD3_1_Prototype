@@ -13,7 +13,7 @@ void AssaultBullet::Initialize()
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("Box.gltf");
+    model_->SetModel("assultBullet.gltf");
 
     CalcLifeTime();
 }

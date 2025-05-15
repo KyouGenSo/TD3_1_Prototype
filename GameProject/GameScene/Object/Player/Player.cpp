@@ -19,12 +19,12 @@ void Player::Initialize()
 {
     Object::Initialize();
 
-    ModelManager::GetInstance()->LoadModel("box.gltf");
+    ModelManager::GetInstance()->LoadModel("player.gltf");
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetCamera(pCamera_);
-    model_->SetModel("box.gltf");
+    model_->SetModel("player.gltf");
 
     // 初期化用 - 外部から設定するためこの値は適用されない
     transform_ = {

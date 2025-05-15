@@ -9,7 +9,7 @@ void BounceEnemy::Initialize()
     model_->Initialize();
     pCamera_ = Object3dBasic::GetInstance()->GetCamera();
     model_->SetCamera(pCamera_);
-    model_->SetModel("cube.gltf");
+    model_->SetModel("bounceEnemy.gltf");
 
     transform_ = {
         {0.0f,0.0f,0.0f},
