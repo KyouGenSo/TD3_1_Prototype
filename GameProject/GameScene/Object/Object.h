@@ -13,6 +13,7 @@
 #include <GameScene/Status/Status.h>
 
 #include "EmitterManager.h"
+#include <Collision/Collider.h>
 
 class Object{
 	std::string uuid_;
@@ -98,6 +99,9 @@ public: /// Getter
     {
         return statusInit_;
     }
+
+public:
+    void DrawCollider(const Collision::Collider* _collider);
 
 protected:
     void DebugObject();
