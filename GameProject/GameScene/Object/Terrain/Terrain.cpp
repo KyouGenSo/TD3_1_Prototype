@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include "Type/ColliderType.h"
+#include <Draw2D.h>
 
 void Terrain::Initialize()
 {
@@ -44,7 +45,7 @@ void Terrain::Initialize()
     collider_ = std::make_unique<Collision::Collider>();
     collider_->SetEvent(Collision::EventType::Stay, [&](const Collision::Collider* pCol){OnCollision(pCol); })
         ->SetTranslate({transform_.translate.x, transform_.translate.y, transform_.translate.z})
-        ->SetSize(Collision::Vec3{100, 0, 400})
+        ->SetSize(Collision::Vec3{200, 4, 800})
         ->SetType(Collision::Type::AABB)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::STAGE))
         ->SetOwner(this)
@@ -59,8 +60,17 @@ void Terrain::Update()
 
 void Terrain::Draw()
 {
+    /* AABB Debug Draw
+    Vector3 size = Vector3(200.0f, 4.0f, 800.0f);
+    AABB aabb = {};
+    aabb.min = size * -0.5f + transform_.translate;
+    aabb.max = size * 0.5f + transform_.translate;
+
+    Draw2D::GetInstance()->DrawAABB(aabb, {0.0f, 1.0f, 0.0f, 1.0f});
+    */
+
     terrainObj_->Draw();
-    boxObj_->Draw();
+    //boxObj_->Draw();
 }
 
 void Terrain::Finalize()
