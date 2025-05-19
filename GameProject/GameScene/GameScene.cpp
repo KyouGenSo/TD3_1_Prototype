@@ -14,6 +14,7 @@
 #include <Audio.h>
 #include <Vector2.h>
 #include <Draw2D.h>
+#include <functional>
 
 
 void GameScene::Initialize()
@@ -136,7 +137,10 @@ void GameScene::Initialize()
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
 
     // リサイズ時コールバック登録
-    resizeFuncIdx = WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1));
+    handle_onresizes_ = {
+        WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1)),
+        WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&CountDown::OnResize, countDown_.get(), std::placeholders::_1)),
+    };
 
     // ReinforcementManagerの初期化
     auto* reinforcementManager_ = ReinforcementManager::GetInstance();
@@ -157,6 +161,11 @@ void GameScene::Initialize()
 
 void GameScene::Finalize()
 {
+    for (auto& handle : handle_onresizes_)
+    {
+        WinApp::GetInstance()->UnregisterOnResizeFunc(handle);
+    }
+
     terrain_->Finalize();
     player_->Finalize();
     boss_->Finalize();
@@ -165,7 +174,6 @@ void GameScene::Finalize()
     player_->Finalize();
 
     soundGroup_->Finalize();
-    WinApp::GetInstance()->UnregisterOnResizeFunc(resizeFuncIdx);
 }
 
 void GameScene::Update()
