@@ -11,10 +11,6 @@ void AssaultBullet::Initialize()
     type_ = WeaponType::Assault;
     speed_ = 1.0f;
 
-    model_ = std::make_unique<Object3d>();
-    model_->Initialize();
-    model_->SetModel("assultBullet.gltf");
-
     CalcLifeTime();
 }
 
