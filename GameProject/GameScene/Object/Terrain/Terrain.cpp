@@ -12,31 +12,20 @@ void Terrain::Initialize()
     transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
     transform_.translate = Vector3(0.0f, -2.0f, 0.0f);
 
-    terrainObj_ = std::make_unique<Object3d>();
-    terrainObj_->Initialize();
-    terrainObj_->SetModel("Terrain.gltf");
-    terrainObj_->SetScale(transform_.scale);
-    terrainObj_->SetTranslate(transform_.translate);
-    terrainObj_->SetMaterialColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-    terrainObj_->SetEnableLighting(true);
-    terrainObj_->SetEnableHighlight(false);
-    terrainObj_->SetRotate(Vector3(0.0f, 0.0f, 0.0f));
+    model_ = std::make_unique<Object3d>();
+    model_->Initialize();
+    model_->SetModel("Terrain.gltf");
+    model_->SetScale(transform_.scale);
+    model_->SetTranslate(transform_.translate);
+    model_->SetMaterialColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+    model_->SetEnableLighting(true);
+    model_->SetEnableHighlight(false);
+    model_->SetRotate(Vector3(0.0f, 0.0f, 0.0f));
     Transform uvTranform;
     uvTranform.scale = Vector3(400.0f, 100.0f, 1.0f);
     uvTranform.translate = Vector3(0.0f, 0.0f, 0.0f);
     uvTranform.rotate = Vector3(0.0f, 0.0f, 0.0f);
-    terrainObj_->SetUvTransform(uvTranform);
-
-    Vector3 boxScale = Vector3(transform_.scale.x, 300.0f, transform_.scale.z);
-    Vector3 boxTranslate = Vector3(0.0f, boxScale.y * 0.5f - transform_.scale.y * 0.5f, 0.0f);
-    boxObj_ = std::make_unique<Object3d>();
-    boxObj_->Initialize();
-    boxObj_->SetModel("boxInv.gltf");
-    boxObj_->SetScale(boxScale);
-    boxObj_->SetTranslate(boxTranslate);
-    boxObj_->SetMaterialColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-    boxObj_->SetEnableLighting(true);
-    boxObj_->SetEnableHighlight(false);
+    model_->SetUvTransform(uvTranform);
 
     collider_ = std::make_unique<Collision::Collider>();
     collider_->SetEvent(Collision::EventType::Stay, [&](const Collision::Collider* pCol){OnCollision(pCol); })
@@ -50,8 +39,7 @@ void Terrain::Initialize()
 
 void Terrain::Update()
 {
-    terrainObj_->Update();
-    boxObj_->Update();
+    model_->Update();
 }
 
 void Terrain::Draw()
@@ -65,7 +53,7 @@ void Terrain::Draw()
     Draw2D::GetInstance()->DrawAABB(aabb, {0.0f, 1.0f, 0.0f, 1.0f});
     */
 
-    terrainObj_->Draw();
+    model_->Draw();
     //boxObj_->Draw();
 }
 
@@ -79,17 +67,17 @@ void Terrain::ImGui()
     {
         if (ImGui::DragFloat3("Scale", &transform_.scale.x, 0.01f))
         {
-            terrainObj_->SetScale(transform_.scale);
+            model_->SetScale(transform_.scale);
         }
 
         if (ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f))
         {
-            terrainObj_->SetRotate(transform_.rotate);
+            model_->SetRotate(transform_.rotate);
         }
 
         if (ImGui::DragFloat3("Translate", &transform_.translate.x, 0.01f))
         {
-            terrainObj_->SetTranslate(transform_.translate);
+            model_->SetTranslate(transform_.translate);
         }
     }
     ImGui::End();

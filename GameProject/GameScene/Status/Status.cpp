@@ -4,9 +4,6 @@
 
 void Status::Initalize()
 {
-    /// インスタンス取得
-    pRandGen_ = RandomGenerator::GetInstance();
-
     hp_ = 0;
     maxHp_ = 0;
     attack_ = 0;
@@ -45,12 +42,7 @@ void Status::LoadFromFile(const std::string& _filename)
 
 float Status::getExperiencePoints() const
 {
-    return pRandGen_->Generate(1.0f, xpAmount_);
-}
-
-float Status::getGainedXP() const
-{
-    return gainedXP_;
+    return RandomGenerator::Generate(1.0f, xpAmount_);
 }
 
 void Status::OnCollision(const Status& _status)
@@ -65,10 +57,6 @@ void Status::OnCollision(const Status& _status)
     {
         damage = 0.0f;
     }
-
-    // 経験値
-    float gainXP = _status.getExperiencePoints();
-    gainedXP_ += gainXP;
 
     ///=================
     ///=== Apply =======

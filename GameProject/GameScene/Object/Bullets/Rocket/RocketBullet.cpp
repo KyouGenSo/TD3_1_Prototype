@@ -25,9 +25,6 @@ void RocketBullet::Initialize()
     statusInit_
         .setAttack(5)
         .setHp(1)
-        .setLevel(1)
-        .setExp(0)
-        .setMaxExp(1)
         .setSpeed(1)
         .setDefence(0)
         .setMaxHp(1);

@@ -39,22 +39,14 @@ public:
     void AddSpeed(float _speed)             { speed_ += _speed; }
     void AddXpAmount(float _xpAmount)       { xpAmount_ += _xpAmount; }
 
-    // Subtracter
-    void SubtractGainedXP(float _amount)    { gainedXP_ -= _amount; }
-
 public:
     void OnCollision(const Status& _status);
 
 private:
-    float               hp_         = 0;
-    float               maxHp_      = 0;
-    float               attack_     = 0;
-    float               defence_    = 0;
-    float               speed_      = 0;
-    float               xpAmount_   = 0;
-
-    float               gainedXP_   = 0;
-
-private:
-    RandomGenerator*    pRandGen_   = nullptr;
+    float               hp_             = 0;
+    float               maxHp_          = 0;
+    float               attack_         = 0;
+    float               defence_        = 0;
+    float               speed_          = 0;
+    float               xpAmount_       = 0;
 };

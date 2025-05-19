@@ -25,13 +25,7 @@ public:
     RandomGenerator(RandomGenerator&&) = delete;
     RandomGenerator& operator=(const RandomGenerator&&) = delete;
 
-    static RandomGenerator* GetInstance()
-    {
-        static RandomGenerator instance;
-        return &instance;
-    }
-
-    void Initialize();
+    static void Initialize();
 
 
 public:
@@ -43,15 +37,15 @@ public:
     /// <param name="_range">Range of the random value</param>
     /// <returns>Random value</returns>
     template <class T, typename U>
-    T Generate(Range<T, U> _range);
+    static T Generate(Range<T, U> _range);
     
     template <typename T>
-    T Generate(T _min, T _max);
+    static T Generate(T _min, T _max);
 
 
 private:
-    std::random_device rd_;
-    std::mt19937 gen_;
+    static thread_local std::random_device rd_;
+    static thread_local std::mt19937 gen_;
 
 
 private:

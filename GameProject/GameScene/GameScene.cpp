@@ -162,6 +162,7 @@ void GameScene::Finalize()
     boss_->Finalize();
     enemyManager_->Finalize();
     camera_->Finalize();
+    player_->Finalize();
 
     soundGroup_->Finalize();
     WinApp::GetInstance()->UnregisterOnResizeFunc(resizeFuncIdx);

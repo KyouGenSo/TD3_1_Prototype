@@ -38,7 +38,7 @@ void MyGame::Initialize()
 #pragma endregion
 
     // 乱数生成クラスの初期化
-    RandomGenerator::GetInstance()->Initialize();
+    RandomGenerator::Initialize();
 
     // シーンの初期化
     sceneFactory_ = new SceneFactory();

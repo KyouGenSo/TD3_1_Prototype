@@ -45,7 +45,7 @@ ReinforcementData ReinforcementManager::GetRandomCard(const std::string& _filena
     int begin = 0;
     int end = static_cast<int>(data.size() - 1);
 
-    int randValue = RandomGenerator::GetInstance()->Generate(begin, end);
+    int randValue = RandomGenerator::Generate(begin, end);
 
     auto it = data.begin();
     for (int i = 0; i < randValue; ++i)

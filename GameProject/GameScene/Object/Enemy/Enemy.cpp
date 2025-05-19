@@ -7,6 +7,8 @@
 
 void Enemy::Initialize()
 {
+    pGameEventNotifier_ = GameEventNotifier::GetInstance();
+
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("cube.gltf");
@@ -16,8 +18,8 @@ void Enemy::Initialize()
         {0.0f,0.0f,0.0f},
         {0.0f,0.0f,0.0f}
     };
-	model_->SetScale(transform_.scale);
-	model_->SetRotate(transform_.rotate);
+    model_->SetScale(transform_.scale);
+    model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
     statusInit_.setAttack(20)
@@ -30,7 +32,7 @@ void Enemy::Initialize()
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
-        ->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) {this->OnCollision(pObj); })
+        ->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) { this->OnCollision(pObj); })
         ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
         ->SetType(Collision::Type::Sphere)
         ->SetTranslate(Adaptor(transform_.translate))
@@ -60,7 +62,7 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-	model_->Draw();
+    model_->Draw();
 }
 
 void Enemy::Finalize()
@@ -71,18 +73,21 @@ void Enemy::OnCollision(const Collision::Collider* _other)
 {
     if (isDead_) return;
 
-    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY)){
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
+    {
 
         Object::StatusUpdateOnCollision(_other);
 
         isDead_ = true;
-      
-    if (!(_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE))){
-        if (emitter_){
-            emitter_->SetEmitterPosition("hit", transform_.translate);
-            emitter_->CreateTemporaryEmitterFrom("hit", "hit_tmp", 1.f);
+
+        if (!(_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE)))
+        {
+            if (emitter_)
+            {
+                emitter_->SetEmitterPosition("hit", transform_.translate);
+                emitter_->CreateTemporaryEmitterFrom("hit", "hit_tmp", 1.f);
+            }
         }
-    }
 
         transform_.translate = prePos_;
         model_->SetTranslate(transform_.translate);
@@ -91,35 +96,32 @@ void Enemy::OnCollision(const Collision::Collider* _other)
 
 void Enemy::OnCollisionTrigger(const Collision::Collider* _other)
 {
-    if (isDead_) return;
-
-    Object* object = static_cast<Object*>(_other->GetOwner());
-
-    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::P_BULLET))
-    {
-        Object::StatusUpdateOnCollision(_other);
-    }
+    EnemyBase::OnCollisionTrigger(_other);
 }
 
 void Enemy::Move()
 {
     prePos_ = transform_.translate;
-    if(isAppearing_) {
+    if (isAppearing_)
+    {
         AppearanceProduction();
-    }else {
+    }
+    else
+    {
         Vector3 direction;
         direction.x = pTarget_->GetTransform().translate.x - transform_.translate.x;
         direction.z = pTarget_->GetTransform().translate.z - transform_.translate.z;
 
         float length = std::sqrt(direction.x * direction.x + direction.z * direction.z);
-        if (length != 0) {
+        if (length != 0)
+        {
             direction.x /= length;
             direction.z /= length;
         }
 
         transform_.translate.x += direction.x * speed_;
         transform_.translate.z += direction.z * speed_;
-        
+
     }
     model_->SetTranslate(transform_.translate);
 }
@@ -137,7 +139,8 @@ void Enemy::AppearanceProduction()
     model_->SetRotate(transform_.rotate);
 
     appearCounter_++;
-    if (appearCounter_ >= appearDuration_) {
+    if (appearCounter_ >= appearDuration_)
+    {
         transform_.scale = defaultScale_;
         model_->SetScale(transform_.scale);
         transform_.rotate = defaultRotate_;

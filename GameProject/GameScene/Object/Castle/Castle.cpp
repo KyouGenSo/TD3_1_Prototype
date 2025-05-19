@@ -24,9 +24,6 @@ void Castle::Initialize() {
     statusInit_
         .setAttack(5000)
         .setHp(100)
-        .setLevel(1)
-        .setExp(0)
-        .setMaxExp(100)
         .setSpeed(1)
         .setDefence(0)
         .setMaxHp(5000);

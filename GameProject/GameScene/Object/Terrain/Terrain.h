@@ -1,11 +1,12 @@
 #pragma once
 
+#include <GameScene/Object/Object.h>
 #include <Object3d.h>
 #include <memory>
 
 #include <Collision/Collider.h>
 
-class Terrain
+class Terrain : public Object
 {
 public:
     Terrain() = default;
@@ -23,9 +24,5 @@ public:
     float GetFloorHeight() const;
 
 private:
-    std::unique_ptr<Object3d> terrainObj_;
-    std::unique_ptr<Object3d> boxObj_;
-    Transform transform_;
-
     std::unique_ptr<Collision::Collider> collider_;
 };
