@@ -83,17 +83,12 @@ void GameScene::Initialize()
 	castle_->SetTransform(currentStageData.castleTransform);
 
 	// 敵の初期化
-	ModelManager::GetInstance()->LoadModel("cube.gltf");
-	ModelManager::GetInstance()->LoadModel("normalEnemy.gltf",1);
-	ModelManager::GetInstance()->LoadModel("FlyEnemy.gltf");
-	ModelManager::GetInstance()->LoadModel("bounceEnemy.gltf");
 	enemyManager_ = std::make_unique<EnemyManager>();
 	//enemyManager_->SetMinimap(minimap_.get());
 	enemyManager_->Initialize(player_.get(), castle_.get());
 	enemyManager_->SetEmitter(emitterManager_.get());
 
 	// ボスの初期化
-	ModelManager::GetInstance()->LoadModel("boss.gltf",1,1);
 	boss_ = std::make_unique<Boss>();
 	boss_->Initialize();
 	boss_->SetTransform(currentStageData.bossTransform);

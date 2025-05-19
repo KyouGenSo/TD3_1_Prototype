@@ -10,7 +10,7 @@ void Enemy::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("normalEnemy.gltf");
+    model_->SetModel("normalEnemy.gltf",1,0);
 
     transform_ = {
         {0.0f,0.0f,0.0f},

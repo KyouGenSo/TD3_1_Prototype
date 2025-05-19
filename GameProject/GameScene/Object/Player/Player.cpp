@@ -23,8 +23,6 @@ void Player::Initialize()
 {
     Object::Initialize();
 
-    ModelManager::GetInstance()->LoadModel("player.gltf");
-
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("player.gltf");

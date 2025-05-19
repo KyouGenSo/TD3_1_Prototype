@@ -16,7 +16,6 @@ void RocketBullet::Initialize()
     type_ = WeaponType::RocketLauncher;
     speed_ = 0.4f;
 
-    ModelManager::GetInstance()->LoadModel("rocketBullet.gltf");
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("rocketBullet.gltf");

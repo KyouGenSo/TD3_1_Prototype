@@ -11,8 +11,6 @@ void AssaultBullet::Bullet::Initialize()
 {
     BulletBase::Initialize();
 
-    ModelManager::GetInstance()->LoadModel("assultBullet.gltf");
-
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("assultBullet.gltf");
