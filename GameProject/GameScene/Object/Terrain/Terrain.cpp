@@ -21,6 +21,7 @@ void Terrain::Initialize()
     model_->SetEnableLighting(true);
     model_->SetEnableHighlight(false);
     model_->SetRotate(Vector3(0.0f, 0.0f, 0.0f));
+  
     Transform uvTranform;
     uvTranform.scale = Vector3(400.0f, 100.0f, 1.0f);
     uvTranform.translate = Vector3(0.0f, 0.0f, 0.0f);

@@ -51,7 +51,7 @@ public:
 private:
     void SpawnEnemy();
     Vector3 RandomSpawnPosition(Type type);
-    //void CreateWaveFile(std::string key);
+    void CreateWaveFile(std::string key);
     void InitializeWaveFile(std::string key);
     void TurnControl();
 
