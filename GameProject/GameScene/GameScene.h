@@ -57,6 +57,8 @@ class GameScene : public BaseScene
 
     std::unique_ptr<SoundGroup> soundGroup_ = nullptr;
 
+    uint32_t resizeFuncIdx = 0;
+
 public:
     struct DirectionalLightParam
     {

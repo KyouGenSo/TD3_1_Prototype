@@ -6,6 +6,11 @@
 class RandomGenerator
 {
 public:
+    /// <summary>
+    /// T型の範囲を表す構造体。
+    /// </summary>
+    /// <typeparam name="T">範囲を表す型。</typeparam>
+    /// <typeparam name="U">範囲内の要素の型。</typeparam>
     template <class T, typename U>
     struct Range
     {

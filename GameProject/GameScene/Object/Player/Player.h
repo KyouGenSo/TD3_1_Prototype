@@ -32,6 +32,11 @@ class Player : public Object
     bool mouseAim_ = false;
     const POINT ORIGIN = {990, 540};
 
+    float xp_ = 0.0f;
+    float xpMax_ = 100.0f;
+    float level_ = 1.0f;
+    float xpGainRetio_ = 0.01f;
+
 public:
     void Initialize() override;
     void Update() override;
@@ -49,5 +54,6 @@ public:
 private:
     void UpdateInputCommands();
     void UpdateMovement();
+    void UpdateStatus();
 };
 

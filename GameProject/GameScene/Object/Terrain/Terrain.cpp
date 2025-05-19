@@ -12,10 +12,6 @@ void Terrain::Initialize()
     transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
     transform_.translate = Vector3(0.0f, -2.0f, 0.0f);
 
-    ModelManager::GetInstance()->LoadModel("box.gltf");
-    ModelManager::GetInstance()->LoadModel("boxInv.gltf");
-    ModelManager::GetInstance()->LoadModel("Terrain.gltf");
-
     terrainObj_ = std::make_unique<Object3d>();
     terrainObj_->Initialize();
     terrainObj_->SetModel("Terrain.gltf");

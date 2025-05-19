@@ -11,8 +11,6 @@ void AssaultBullet::Bullet::Initialize()
 {
     BulletBase::Initialize();
 
-    ModelManager::GetInstance()->LoadModel("box.gltf");
-
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("box.gltf");
@@ -21,9 +19,6 @@ void AssaultBullet::Bullet::Initialize()
     statusInit_
         .setAttack(7)
         .setHp(1)
-        .setLevel(1)
-        .setExp(0)
-        .setMaxExp(1)
         .setSpeed(1)
         .setDefence(0)
         .setMaxHp(1);

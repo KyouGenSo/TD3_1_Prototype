@@ -2,6 +2,7 @@
     {
         "name" : "Faster",
         "description" : "移動速度がすこし増加します。",
+        "image": "hud/card/card_faster_shadow.png",
         "status-type" : "speed",
         "operatorType" : "add",
         "value" : 1.0,
@@ -11,6 +12,7 @@
     {
         "name" : "Healthy",
         "description" : "体力がすこし増加します。",
+        "image": "hud/card/card_healthy_shadow.png",
         "status-type" : "health",
         "operatorType" : "add",
         "value" : 1.0,
@@ -20,6 +22,7 @@
     {
         "name" : "Strong",
         "description" : "攻撃力がすこし増加します。",
+        "image": "hud/card/card_attack_shadow.png",
         "status-type" : "attack",
         "operatorType" : "add",
         "value" : 1.0,
@@ -29,7 +32,8 @@
     {
         "name" : "Tough",
         "description" : "防御力がすこし増加します。",
-        "status-type" : "defence",
+        "image": "hud/card/card_defence_shadow.png",
+        "status-type" : "defense",
         "operatorType" : "add",
         "value" : 1.0,
         "rarity": 1,
@@ -38,6 +42,7 @@
     {
         "name" : "Critical",
         "description" : "クリティカル率がすこし増加します。",
+        "image": "hud/card/card_critical_shadow.png",
         "status-type" : "critical",
         "operatorType" : "add",
         "value" : 1.0,
@@ -47,6 +52,7 @@
     {
         "name" : "Steel",
         "description" : "ダメージを与えるたびにわずかにHPが上昇します。",
+        "image": "hud/card/card_steel_shadow.png",
         "status-type" : "health",
         "operatorType" : "add",
         "value" : 1.0,

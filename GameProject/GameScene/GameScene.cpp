@@ -83,14 +83,12 @@ void GameScene::Initialize()
     castle_->SetTransform(currentStageData.castleTransform);
 
     // 敵の初期化
-    ModelManager::GetInstance()->LoadModel("cube.gltf");
     enemyManager_ = std::make_unique<EnemyManager>();
     //enemyManager_->SetMinimap(minimap_.get());
     enemyManager_->Initialize(player_.get(), castle_.get());
     enemyManager_->SetEmitter(emitterManager_.get());
 
     // ボスの初期化
-    ModelManager::GetInstance()->LoadModel("bigCube.gltf");
     boss_ = std::make_unique<Boss>();
     boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
@@ -138,11 +136,11 @@ void GameScene::Initialize()
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
 
     // リサイズ時コールバック登録
-    WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1));
+    resizeFuncIdx = WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1));
 
     // ReinforcementManagerの初期化
     auto* reinforcementManager_ = ReinforcementManager::GetInstance();
-    reinforcementManager_->Initialize("StatusReinforcement.json");
+    reinforcementManager_->Initialize(reinforcementManager_->kFilename_json_status_);
 
     // BGMグループの初期化
     soundGroup_ = std::make_unique<SoundGroup>();
@@ -166,6 +164,7 @@ void GameScene::Finalize()
     camera_->Finalize();
 
     soundGroup_->Finalize();
+    WinApp::GetInstance()->UnregisterOnResizeFunc(resizeFuncIdx);
 }
 
 void GameScene::Update()

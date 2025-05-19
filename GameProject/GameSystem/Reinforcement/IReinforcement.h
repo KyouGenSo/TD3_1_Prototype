@@ -19,7 +19,9 @@ public:
     void ToggleDisable() { isDisabled_ = !isDisabled_; }
 
 public:
+    std::string GetName() const { return name_; }
     std::string GetEvent() const { return event_; }
+    std::string GetImagePath() const { return imagePath_; }
 
 protected:
     bool isDisabled_ = false;
@@ -29,6 +31,7 @@ protected:
     std::string     description_    = "no description";
     std::string     statusType      = "none";
     std::string     operatorType_   = "none";
+    std::string     imagePath_      = "none";
     float           value_          = 0.0f;
     int             rarity_         = 0;
     std::string     event_          = "none";

@@ -24,10 +24,8 @@ void Enemy::Initialize()
         .setDefence(0)
         .setHp(20)
         .setMaxHp(20)
-        .setExp(0)
-        .setMaxExp(1)
-        .setLevel(0)
-        .setSpeed(1);
+        .setSpeed(1)
+        .setXpAmount(20);
     statusCurrent_ = statusInit_;
 
     pCollider_ = std::make_unique<Collision::Collider>();

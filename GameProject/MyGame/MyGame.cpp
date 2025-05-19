@@ -54,8 +54,6 @@ void MyGame::Initialize()
     postEffectParam.fogColor = { 1.0f, 1.0f, 1.0f, 1.0f };
     postEffectParam.fogDensity = 0.01f;
 
-    ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
-
     // テーマ編集
     OverrideImGuiStyle();
 

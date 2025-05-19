@@ -18,12 +18,11 @@
 
 #include <algorithm>
 #include <Utility/Adaptor.h>
+#include <cmath>
 
 void Player::Initialize()
 {
     Object::Initialize();
-
-    ModelManager::GetInstance()->LoadModel("box.gltf");
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
@@ -51,9 +50,6 @@ void Player::Initialize()
     statusInit_
         .setAttack(0)
         .setHp(100)
-        .setLevel(1)
-        .setExp(0)
-        .setMaxExp(100)
         .setSpeed(1)
         .setDefence(0)
         .setMaxHp(100);
@@ -140,21 +136,22 @@ void Player::OnCollision(const Collision::Collider* pCollider) {
 void Player::OnCollisionTrigger(const Collision::Collider* pCollider)
 {
     Object::StatusUpdateOnCollision(pCollider);
+    float xp_gained_actually = 0.0f;
+    float xp_target = xp_ + statusCurrent_.getGainedXP();
+    float xp_pre = xp_;
+
+    // 線形補間
+    xp_ = std::lerp(xp_, xp_target, xpGainRetio_);
+
+    // 実際に増えた経験値量を計算
+    xp_gained_actually = xp_ - xp_pre;
+
+    statusCurrent_.SubtractGainedXP(xp_gained_actually);
+
+    UpdateStatus();
 
     if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
     {
-        //Collision::Vec3 pos = pCollider->GetTranslate();
-        //Vector3 diff = transform_.translate - Vector3(pos.x, pos.y, pos.z);
-        //diff.Normalize();
-        //if (isGround_)
-        //{
-        //    ApplyForce(diff * 3000.0f);
-        //}
-        //else
-        //{
-        //    ApplyForce(diff);
-        //}
-        
     }
 }
 
@@ -287,5 +284,20 @@ void Player::UpdateMovement()
 
     // 加速度初期化
     acceleration_ = {};
+}
+
+void Player::UpdateStatus()
+{
+    // レベルアップとレベルアップに必要な経験値量の計算
+    while (xp_ >= xpMax_)
+    {
+        level_++;
+        xp_ -= xpMax_;
+
+        float gainXpMax = xpMax_ * 0.05f + level_ * 2;
+        if (gainXpMax > 200.0f) gainXpMax = 200.0f;
+
+        xpMax_ += gainXpMax;
+    }
 }
 
