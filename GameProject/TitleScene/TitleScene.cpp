@@ -74,19 +74,7 @@ void TitleScene::Update()
 	///              更新処理               ///
 	/// ================================== ///
 
-    if (frameCount_ < AnimationFrames) {
-        float t = frameCount_ / AnimationFrames;
-        float progress = Ease::In::Back(t);
-        pos.x = start.x + (end.x - start.x) * progress;
-        pos.y = start.y + (end.y - start.y) * progress;
-        frameCount_++;
-    }
-
-    button_->SetPos(pos);
-    button_->Update();
-
     press_->Update();
-    guide_->Update();
 
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
 	{
@@ -117,9 +105,7 @@ void TitleScene::Draw()
 	// スプライト共通描画設定
 	SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
-    press_->Draw();
-    button_->Draw();
-    guide_->Draw();
+    
 
 }
 
@@ -146,7 +132,7 @@ void TitleScene::DrawWithoutEffect()
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
-
+    press_->Draw();
 }
 
 void TitleScene::DrawImGui()
