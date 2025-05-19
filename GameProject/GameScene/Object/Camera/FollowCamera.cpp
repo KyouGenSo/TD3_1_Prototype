@@ -87,17 +87,17 @@ void FollowCamera::Finalize()
 
 void FollowCamera::Draw3D()
 {
-    //pDebugObjectCamera_->Draw();
-    //pDebugObjectHitPoint_->Draw();
+    pDebugObjectCamera_->Draw();
+    pDebugObjectHitPoint_->Draw();
 }
 
 void FollowCamera::Draw2D()
 {
-    //Draw2D::GetInstance()->DrawLine(
-    //    Adaptor(pRay_->GetOrigin()),
-    //    Adaptor(pRay_->GetOrigin() + pRay_->GetDirection() * pRay_->GetLength()), 
-    //    { 1.0f, 0.0f, 0.0f, 1.0f }
-    //);
+    Draw2D::GetInstance()->DrawLine(
+        Adaptor(pRay_->GetOrigin()),
+        Adaptor(pRay_->GetOrigin() + pRay_->GetDirection() * pRay_->GetLength()), 
+        { 1.0f, 0.0f, 0.0f, 1.0f }
+    );
 }
 
 void FollowCamera::ImGui()
