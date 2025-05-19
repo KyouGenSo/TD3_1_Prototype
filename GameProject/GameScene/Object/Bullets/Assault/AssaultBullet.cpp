@@ -27,10 +27,6 @@ void AssaultBullet::Update()
         UpdateNormal();
     }
 
-    model_->SetRotate(transform_.rotate);
-    model_->SetTranslate(transform_.translate);
-    model_->Update();
-
     if (pNext_)
     {
         pNext_->Update();
