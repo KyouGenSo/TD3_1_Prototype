@@ -2,6 +2,7 @@
 
 #include "Object3dBasic.h"
 #include "cmath"
+#include "ModelManager.h"
 #include "Type/ColliderType.h"
 #include <Utility/Adaptor.h>
 
@@ -9,7 +10,7 @@ void Enemy::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("cube.gltf");
+    model_->SetModel("normalEnemy.gltf",1,0);
 
     transform_ = {
         {0.0f,0.0f,0.0f},

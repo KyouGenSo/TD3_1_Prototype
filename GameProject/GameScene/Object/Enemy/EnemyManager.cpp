@@ -311,7 +311,7 @@ Vector3 EnemyManager::RandomSpawnPosition(Type type)
     return randomPos;
 }
 
-/*
+
 void EnemyManager::CreateWaveFile(std::string key)
 {
     GlobalVariables::GetInstance()->CreateGroup(key);
@@ -322,7 +322,7 @@ void EnemyManager::CreateWaveFile(std::string key)
     GlobalVariables::GetInstance()->AddItem(key, "turn", wave_.turn);
     GlobalVariables::GetInstance()->AddItem(key, "time", wave_.time);
 }
-*/
+
 
 void EnemyManager::ChangeWave(std::string key, bool resetSpawnCount)
 {

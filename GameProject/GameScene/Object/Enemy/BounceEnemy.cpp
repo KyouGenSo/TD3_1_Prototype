@@ -7,7 +7,7 @@ void BounceEnemy::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("cube.gltf");
+    model_->SetModel("bounceEnemy.gltf");
 
     transform_ = {
         {0.0f,0.0f,0.0f},

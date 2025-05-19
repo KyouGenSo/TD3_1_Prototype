@@ -10,7 +10,7 @@ void Boss::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("bigCube.gltf");
+    model_->SetModel("boss.gltf",1,0);
 
     // 初期化用 - 外部から設定するためこの値は適用されない
     transform_ = {
