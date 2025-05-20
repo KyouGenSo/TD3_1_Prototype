@@ -23,6 +23,9 @@ void StatusHUD::Initialize()
     globalVariables_->AddItem("StatusHUD", "BulletBar_Position", Vector2());
     
     this->Reload();
+
+    retio_.x = WinApp::clientWidth / standardDisplaySize_.x;
+    retio_.y = WinApp::clientHeight / standardDisplaySize_.y;
 }
 
 void StatusHUD::Reload()
@@ -46,8 +49,8 @@ void StatusHUD::Update()
 
     if (isReloaded_)
     {
-        hpBar_->SetPosition(hpBarPos_);
-        bulletBar_->SetPosition(bulletBarPos_);
+        hpBar_->SetPosition(hpBarPos_ * retio_);
+        bulletBar_->SetPosition(bulletBarPos_ * retio_);
 
         isReloaded_ = false;
     }
@@ -71,9 +74,9 @@ void StatusHUD::ImGui()
 void StatusHUD::OnResized(Vector2 _size)
 {
     NiVec2 size = { _size.x, _size.y };
-    NiVec2 retio = { size.x / standardDisplaySize_.x, size.y / standardDisplaySize_.y };
-    hpBar_->SetPosition(hpBarPos_ * retio);
-    bulletBar_->SetPosition(bulletBarPos_ * retio);
+    retio_ = { size.x / standardDisplaySize_.x, size.y / standardDisplaySize_.y };
+    hpBar_->SetPosition(hpBarPos_ * retio_);
+    bulletBar_->SetPosition(bulletBarPos_ * retio_);
 }
 
 void StatusHUD::UpdateHotReload()

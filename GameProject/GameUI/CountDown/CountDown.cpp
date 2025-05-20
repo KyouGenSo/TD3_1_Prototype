@@ -21,24 +21,24 @@ void CountDown::Initialize()
     }
 
     NiVec2 clientSize = { static_cast<float>(WinApp::clientWidth), static_cast<float>(WinApp::clientHeight) };
-    NiVec2 harfSize = clientSize / 2.0f;
+    NiVec2 harfpos = clientSize / 2.0f;
 
     numbers_[0]->Initialize("number_1.png");
     numbers_[0]->SetAnchorPoint({0.5f, 0.5f});
-    numbers_[0]->SetPos(TO_VECTOR2(harfSize));
+    numbers_[0]->SetPos(TO_VECTOR2(harfpos));
     
     numbers_[1]->Initialize("number_2.png");
     numbers_[1]->SetAnchorPoint({ 0.5f, 0.5f });
-    numbers_[1]->SetPos(TO_VECTOR2(harfSize));
+    numbers_[1]->SetPos(TO_VECTOR2(harfpos));
     
     numbers_[2]->Initialize("number_3.png");
     numbers_[2]->SetAnchorPoint({ 0.5f, 0.5f });
-    numbers_[2]->SetPos(TO_VECTOR2(harfSize));
+    numbers_[2]->SetPos(TO_VECTOR2(harfpos));
 
     start_ = std::make_unique<Sprite>();
     start_->Initialize("start.png");
     start_->SetAnchorPoint({ 0.5f, 0.5f });
-    start_->SetPos(TO_VECTOR2(harfSize));
+    start_->SetPos(TO_VECTOR2(harfpos));
 
     timer_.Reset();
     startTimer_.Reset();
@@ -127,4 +127,23 @@ void CountDown::Reset()
     startTimer_.Reset();
 
     isInit_ = true;
+}
+
+void CountDown::OnResize(Vector2 _size)
+{
+    Vector2 harfpos = { _size.x / 2.0f, _size.y / 2.0f };
+    Vector2 harfSize = {};
+
+    Vector2 retio = { _size.x / client_standard_.x, _size.y / client_standard_.y };
+
+    for (auto& number : numbers_)
+    {
+        number->SetPos(TO_VECTOR2(harfpos));
+        auto size = number->GetSize();
+        number->SetSize({ size.x * retio.x, size.y * retio.y });
+    }
+
+    start_->SetPos(TO_VECTOR2(harfpos));
+    auto size = start_->GetSize();
+    start_->SetSize({ size.x * retio.x, size.y * retio.y });
 }

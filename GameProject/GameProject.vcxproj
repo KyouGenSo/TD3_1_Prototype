@@ -217,6 +217,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameSystem\DeltaTimeManager\DeltaTimeManager.cpp" />
     <ClCompile Include="GameSystem\FreeCamera\FreeLookCamera.cpp" />
     <ClCompile Include="GameSystem\GameController\GameController.cpp" />
+    <ClCompile Include="GameSystem\GameEventNotifier\GameEventNotifier.cpp" />
     <ClCompile Include="GameSystem\Reinforcement\Manager\ReinforcementManager.cpp" />
     <ClCompile Include="GameSystem\Reinforcement\StatusReinforcement.cpp" />
     <ClCompile Include="GameSystem\SoundManager\SoundManager.cpp" />
@@ -273,6 +274,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h" />
     <ClInclude Include="GameSystem\FreeCamera\FreeLookCamera.h" />
     <ClInclude Include="GameSystem\GameController\GameController.h" />
+    <ClInclude Include="GameSystem\GameEventNotifier\GameEventNotifier.h" />
     <ClInclude Include="GameSystem\Reinforcement\IReinforcement.h" />
     <ClInclude Include="GameSystem\Reinforcement\Manager\ReinforcementManager.h" />
     <ClInclude Include="GameSystem\Reinforcement\StatusReinforcement.h" />
@@ -302,6 +304,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Utility\Adaptor.h" />
     <ClInclude Include="Utility\RandomGenerator\RandomGenerator.h" />
     <ClInclude Include="Utility\Threadpool\Threadpool.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GameSystem\GameEventNotifier\EventList.md">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -199,7 +199,6 @@ void SoundManager::DecodeToSoundData()
 
 void SoundGroup::Initialize(bool _enableRandom)
 {
-    pRandomGenerator_ = RandomGenerator::GetInstance();
     pTimer_ = std::make_unique<Timer>();
     enableRandom_ = _enableRandom;
 }
@@ -293,7 +292,7 @@ void SoundGroup::RandomPick()
     do
     {
         if (soundGroup_.size() == 1u) break;
-        randomIndex = pRandomGenerator_->Generate<int>(0, static_cast<int>(soundGroup_.size() - 1));
+        randomIndex = RandomGenerator::Generate<int>(0, static_cast<int>(soundGroup_.size() - 1));
     }
     while (currentSoundGroupIndex_ == randomIndex);
     currentSoundGroupIndex_ = randomIndex;

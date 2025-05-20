@@ -15,9 +15,12 @@
 #include "Type/ColliderType.h"
 #include <GameSystem/Reinforcement/StatusReinforcement.h>
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 #include <algorithm>
 #include <Utility/Adaptor.h>
+#include <cmath>
+#include <any>
 
 void Player::Initialize()
 {
@@ -49,9 +52,6 @@ void Player::Initialize()
     statusInit_
         .setAttack(0)
         .setHp(100)
-        .setLevel(1)
-        .setExp(0)
-        .setMaxExp(100)
         .setSpeed(1)
         .setDefence(0)
         .setMaxHp(100);
@@ -61,6 +61,11 @@ void Player::Initialize()
     weapon_ = std::make_unique<SMG>();
     weapon_->Initialize();
     gravity_ = 1.8f;
+
+    // コールバック登録
+    id_callback_enemydead_ = GameEventNotifier::GetInstance()->RegisterCallback("EnemyDeadForXP", [this](std::any _gainedXP) {
+        xpGained_ += std::any_cast<float>(_gainedXP);
+    });
 }
 
 void Player::Update()
@@ -89,6 +94,8 @@ void Player::Update()
     model_->SetTranslate(transform_.translate);
 
     statusCurrent_.Update();
+
+    UpdateStatus();
 }
 
 void Player::Draw()
@@ -100,6 +107,8 @@ void Player::Draw()
 
 void Player::Finalize()
 {
+    GameEventNotifier::GetInstance()->UnregisterCallback("EnemyDeadForXP", id_callback_enemydead_);
+
     auto* rfmManager = ReinforcementManager::GetInstance();
     for (auto& reinforcement : reinforcementList_)
     {
@@ -128,6 +137,15 @@ void Player::ImGui()
             ImGui::DragFloat("FrictionCoefficient", &frictionCoefficient_, 0.01f);
             ImGui::TreePop();
         }
+
+        if (ImGui::TreeNode("Status"))
+        {
+            ImGui::Text("XP : %.1f", xp_);
+            ImGui::Text("XP Max : %.1f", xpMax_);
+            ImGui::ProgressBar(xp_ / xpMax_);
+            ImGui::Text("Level : %.1f", level_);
+            ImGui::TreePop();
+        }
     }
     ImGui::End();
 }
@@ -141,18 +159,6 @@ void Player::OnCollisionTrigger(const Collision::Collider* pCollider)
 
     if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
     {
-        //Collision::Vec3 pos = pCollider->GetTranslate();
-        //Vector3 diff = transform_.translate - Vector3(pos.x, pos.y, pos.z);
-        //diff.Normalize();
-        //if (isGround_)
-        //{
-        //    ApplyForce(diff * 3000.0f);
-        //}
-        //else
-        //{
-        //    ApplyForce(diff);
-        //}
-        
     }
 }
 
@@ -285,5 +291,33 @@ void Player::UpdateMovement()
 
     // 加速度初期化
     acceleration_ = {};
+}
+
+void Player::UpdateStatus()
+{
+    float xp_gained_actually = 0.0f;
+    float xp_target = xp_ + xpGained_;
+    float xp_pre = xp_;
+
+    // 線形補間
+    xp_ = std::lerp(xp_, xp_target, xpGainRetio_);
+
+    // 実際に増えた経験値量を計算
+    xp_gained_actually = xp_ - xp_pre;
+
+    // 経験値が増えた分を減算
+    xpGained_ -= xp_gained_actually;
+
+    // レベルアップとレベルアップに必要な経験値量の計算
+    while (xp_ >= xpMax_)
+    {
+        level_++;
+        xp_ -= xpMax_;
+
+        float gainXpMax = xpMax_ * 0.05f + level_ * 2;
+        if (gainXpMax > 200.0f) gainXpMax = 200.0f;
+
+        xpMax_ += gainXpMax;
+    }
 }
 
