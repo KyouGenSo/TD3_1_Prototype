@@ -53,4 +53,5 @@ void Object::StatusUpdateOnCollision(const Collision::Collider* pObject)
 {
     Object* object = static_cast<Object*>(pObject->GetOwner());
     statusCurrent_.OnCollision(object->getStatusCurrent());
+    statusCurrent_.Update();
 }

@@ -2,12 +2,16 @@
     "type": "array",
     "items": {
         "type": "object",
-        "required": ["name", "description", "status-type", "operatorType", "value", "rarity", "event"],
+        "required": ["name", "image", "description", "status-type", "operatorType", "value", "rarity", "event"],
         "additionalProperties": false,
         "properties": {
             "name": {
                 "type": "string",
                 "description": "アイテム名"
+            },
+            "image" : {
+                "type": "string",
+                "description": "アイテムの画像パス"
             },
             "description": {
                 "type": "string",

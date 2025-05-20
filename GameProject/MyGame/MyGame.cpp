@@ -14,11 +14,13 @@
 #include <GameSystem/StageManager/StageManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 #include <GameSystem/SoundManager/SoundManager.h>
+#include <SpriteBasic.h>
 
 #include <Utility/RandomGenerator/RandomGenerator.h>
 
 #include "GPUParticle.h"
 #include "ModelManager.h"
+#include <functional>
 
 
 void MyGame::Initialize()
@@ -38,7 +40,7 @@ void MyGame::Initialize()
 #pragma endregion
 
     // 乱数生成クラスの初期化
-    RandomGenerator::GetInstance()->Initialize();
+    RandomGenerator::Initialize();
 
     // シーンの初期化
     sceneFactory_ = new SceneFactory();
@@ -53,8 +55,6 @@ void MyGame::Initialize()
     postEffectParam.bloomSigma = 2.0f;
     postEffectParam.fogColor = { 1.0f, 1.0f, 1.0f, 1.0f };
     postEffectParam.fogDensity = 0.01f;
-
-    ModelManager::GetInstance()->LoadModel("AnimatedCube.gltf");
 
     // テーマ編集
     OverrideImGuiStyle();
@@ -96,10 +96,19 @@ void MyGame::Initialize()
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 
     SoundManager::GetInstance()->Initialize("Sounds.json");
+
+    handle_onresizes_.push_back(
+        winApp_->RegisterOnResizeFunc(std::bind(&SpriteBasic::OnResize, SpriteBasic::GetInstance(), std::placeholders::_1))
+    );
 }
 
 void MyGame::Finalize()
 {
+    for (auto& handle : handle_onresizes_)
+    {
+        winApp_->UnregisterOnResizeFunc(handle);
+    }
+
     TakoFramework::Finalize();
 
     GPUParticle::GetInstance()->Finalize();

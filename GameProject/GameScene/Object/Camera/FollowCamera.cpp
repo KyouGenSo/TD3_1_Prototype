@@ -18,6 +18,7 @@ void FollowCamera::Initialize()
     // プレイヤーとだけ当たらないようにしたい。
     pRay_
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::CAMERA))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->SetType(Collision::Type::Ray);
 
     // Debug

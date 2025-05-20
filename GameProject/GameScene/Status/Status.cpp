@@ -9,9 +9,7 @@ void Status::Initalize()
     attack_ = 0;
     defence_ = 0;
     speed_ = 0;
-    level_ = 0;
-    exp_ = 0;
-    maxExp_ = 0;
+    xpAmount_ = 0;
 }
 
 void Status::Update()
@@ -20,22 +18,6 @@ void Status::Update()
     if (hp_ > maxHp_)
     {
         hp_ = maxHp_;
-    }
-    if (exp_ > maxExp_)
-    {
-        exp_ = maxExp_;
-    }
-    if (level_ < 1.0f)
-    {
-        level_ = 1.0f;
-    }
-
-    // レベルアップ
-    if (exp_ >= maxExp_)
-    {
-        level_++;
-        exp_ -= maxExp_;
-        maxExp_ = level_ * 100.0f;
     }
 }
 
@@ -47,8 +29,7 @@ void Status::ImGui(const std::string& _name)
         ImGui::Text("Attack: %.1f", attack_);
         ImGui::Text("Defence: %.1f", defence_);
         ImGui::Text("Speed: %.1f", speed_);
-        ImGui::Text("Level: %.1f", level_);
-        ImGui::Text("Exp: %.1f / %.1f", exp_, maxExp_);
+        ImGui::Text("XPAmount: %.1f", xpAmount_);
     }
 
     ImGui::End();
@@ -59,19 +40,35 @@ void Status::LoadFromFile(const std::string& _filename)
 
 }
 
+float Status::getExperiencePoints() const
+{
+    return RandomGenerator::Generate(1.0f, xpAmount_);
+}
+
 void Status::OnCollision(const Status& _status)
 {
-    // ダメージ計算
+    ///=================
+    ///=== Calc ========
+    ///=================
+
+    // ダメージ
     float damage = _status.attack_ - defence_;
     if (damage < 0.0f)
     {
         damage = 0.0f;
     }
 
-    // ダメージ適用
+    ///=================
+    ///=== Apply =======
+    ///=================
+
+    // ダメージ
     hp_ -= damage;
     if (hp_ < 0.0f)
     {
         hp_ = 0.0f;
     }
+
+    // 経験値
+    
 }

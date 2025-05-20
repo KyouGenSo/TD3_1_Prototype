@@ -11,10 +11,6 @@ void AssaultBullet::Initialize()
     type_ = WeaponType::Assault;
     speed_ = 1.0f;
 
-    model_ = std::make_unique<Object3d>();
-    model_->Initialize();
-    model_->SetModel("Box.gltf");
-
     CalcLifeTime();
 }
 
@@ -30,10 +26,6 @@ void AssaultBullet::Update()
     {
         UpdateNormal();
     }
-
-    model_->SetRotate(transform_.rotate);
-    model_->SetTranslate(transform_.translate);
-    model_->Update();
 
     if (pNext_)
     {

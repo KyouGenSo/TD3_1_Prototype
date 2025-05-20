@@ -7,9 +7,12 @@
 
 void FlyEnemy::Initialize()
 {
+    pGameEventNotifier_ = GameEventNotifier::GetInstance();
+
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("cube.gltf");
+
+    model_->SetModel("FlyEnemy.gltf");
 
     transform_ = {
         {0.0f,0.0f,0.0f},
@@ -24,14 +27,12 @@ void FlyEnemy::Initialize()
         .setDefence(0)
         .setHp(20)
         .setMaxHp(20)
-        .setExp(0)
-        .setMaxExp(1)
-        .setLevel(0)
-        .setSpeed(1);
+        .setSpeed(1)
+        .setXpAmount(20);
     statusCurrent_ = statusInit_;
 
     pCollider_ = std::make_unique<Collision::Collider>();
-    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) { this->OnCollision(pObj); })
+    pCollider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
@@ -72,6 +73,11 @@ void FlyEnemy::OnCollision(const Collision::Collider* pCollider)
     {
         Object::StatusUpdateOnCollision(pCollider);
     }
+}
+
+void FlyEnemy::OnCollisionTrigger(const Collision::Collider* _other)
+{
+    EnemyBase::OnCollisionTrigger(_other);
 }
 
 void FlyEnemy::Move()

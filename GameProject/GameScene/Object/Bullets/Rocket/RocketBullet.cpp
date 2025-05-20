@@ -4,6 +4,7 @@
 #include <QuatFunc.h>
 
 #include "EmitterManager.h"
+#include "ModelManager.h"
 #include "Collision/Collider.h"
 #include "Type/ColliderType.h"
 #include <Utility/Adaptor.h>
@@ -17,7 +18,7 @@ void RocketBullet::Initialize()
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("AnimatedCube.gltf");
+    model_->SetModel("rocketBullet.gltf");
     model_->SetScale({ 0.4f, 0.4f, 0.4f });
 
     CalcLifeTime();
@@ -25,9 +26,6 @@ void RocketBullet::Initialize()
     statusInit_
         .setAttack(5)
         .setHp(1)
-        .setLevel(1)
-        .setExp(0)
-        .setMaxExp(1)
         .setSpeed(1)
         .setDefence(0)
         .setMaxHp(1);

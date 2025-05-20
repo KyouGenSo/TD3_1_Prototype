@@ -4,6 +4,8 @@
 
 #include <Interfaces/IObserver.h>
 #include <GameSystem/GameController/GameController.h>
+#include <vector>
+#include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
 class GUI_LvUP : public IObserver
 {
@@ -22,6 +24,7 @@ public:
 private:
     // レベルアップ画面を表示する
     void ShowLvUP();
+    void PickCardName();
 
 
 private:
@@ -30,11 +33,15 @@ private:
     const std::string TEX_CARD_DEFENCE_ = "hud/card/card_defence_shadow.png";
     const std::string TEX_CARD_STEEL_   = "hud/card/card_steel_shadow.png";
 
+    std::vector<ReinforcementData> rfCards_ = {};
+
     // レベルアップ画面を表示するかどうか
     bool isDisplay_ = false;
 
     bool isSelected_ = false;
     std::string selectedCard_ = "none";
+
+    bool isPickRandom_ = false;
 
 private:
     GameController* gameController_ = nullptr;
