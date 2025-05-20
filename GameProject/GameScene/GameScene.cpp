@@ -157,6 +157,12 @@ void GameScene::Initialize()
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_3").handle);
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_4").handle);
     soundGroup_->Start();
+
+    reticle_ = make_unique<Sprite>();
+    reticle_->Initialize("circle.png");
+    reticle_->SetAnchorPoint({0.5f, 0.5f});
+    reticle_->SetPos({static_cast<float>(WinApp::clientWidth) / 2.f, static_cast<float>(WinApp::clientHeight) / 2.f});
+    reticle_->SetSize({32.f,32.f});
 }
 
 void GameScene::Finalize()
@@ -218,6 +224,8 @@ void GameScene::Update()
 	emitterManager_->Update();
 	*(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
 
+    reticle_->Update();
+
 	// ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
 	this->MonitorStatus();
 }
@@ -249,6 +257,7 @@ void GameScene::Draw()
     countDown_->Draw2D();
     minimap_->Draw();
     statusHUD_->Draw2D();
+    reticle_->Draw();
 
     //camera_->Draw2D();
 }
