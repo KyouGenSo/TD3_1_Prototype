@@ -90,6 +90,8 @@ void FlyEnemy::Move()
         if (length != 0)
         {
             direction /= length;
+
+            transform_.rotate.y = std::atan2(direction.x, direction.z);
         }
 
         transform_.translate += direction * speed_;
@@ -99,6 +101,7 @@ void FlyEnemy::Move()
         }
     }
     model_->SetTranslate(transform_.translate);
+    model_->SetRotate(transform_.rotate);
 }
 
 void FlyEnemy::AppearanceProduction()

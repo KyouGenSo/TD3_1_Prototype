@@ -118,6 +118,8 @@ void Enemy::Move()
         if (length != 0) {
             direction.x /= length;
             direction.z /= length;
+
+            transform_.rotate.y = std::atan2(direction.x, direction.z);
         }
 
         transform_.translate.x += direction.x * speed_;
@@ -125,6 +127,7 @@ void Enemy::Move()
         
     }
     model_->SetTranslate(transform_.translate);
+    model_->SetRotate(transform_.rotate);
 }
 
 void Enemy::AppearanceProduction()
