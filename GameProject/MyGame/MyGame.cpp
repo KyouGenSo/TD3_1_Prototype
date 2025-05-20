@@ -14,6 +14,7 @@
 #include <GameSystem/StageManager/StageManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 #include <GameSystem/SoundManager/SoundManager.h>
+#include <GameUI/ColorResolver/ColorResolver.h>
 #include <SpriteBasic.h>
 
 #include <Utility/RandomGenerator/RandomGenerator.h>
@@ -96,6 +97,9 @@ void MyGame::Initialize()
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 
     SoundManager::GetInstance()->Initialize("Sounds.json");
+
+    ColorResolver::GetInstance()->Initialize()->LoadColorData("Color.json");
+
 
     handle_onresizes_.push_back(
         winApp_->RegisterOnResizeFunc(std::bind(&SpriteBasic::OnResize, SpriteBasic::GetInstance(), std::placeholders::_1))

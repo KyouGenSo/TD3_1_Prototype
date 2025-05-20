@@ -15,7 +15,7 @@ public:
     StatusBar() = default;
     ~StatusBar() = default;
 
-    void Initialize(const std::string& _nameTexturePath, const NiVec2& _barSize);
+    void Initialize(const std::string& _nameTexturePath, const NiVec2& _barSize, bool _enable_smoothing_color = true);
     void Update();
     void Draw2D();
     void ImGui();
@@ -59,6 +59,10 @@ private:
     float maxValue_ = 0.0f;
     float currentValue_ = 0.0f;
 
+    bool isEnable_lerp_color_ = false;
+    bool isDisplay_name_ = true;
+
 private:
     void UpdateTransform();
+    void UpdateColor();
 };
