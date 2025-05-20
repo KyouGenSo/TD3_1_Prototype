@@ -77,7 +77,7 @@ void StatusReinforcement::ApplicationByAddition()
     {
         status_->AddAttack(value_);
     }
-    else if (statusType == "defence")
+    else if (statusType == "defense")
     {
         status_->AddDefence(value_);
     }
@@ -85,6 +85,8 @@ void StatusReinforcement::ApplicationByAddition()
     {
         status_->AddSpeed(value_);
     }
+
+    status_->Update();
 }
 
 void StatusReinforcement::ApplicationByMultiplication()

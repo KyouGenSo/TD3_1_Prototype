@@ -128,6 +128,9 @@
     <Filter Include="GameSystem\FreeLookCamera">
       <UniqueIdentifier>{2d199bd3-51d5-4f80-a59c-cdabe1d294db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSystem\GameEventNotifier">
+      <UniqueIdentifier>{43bf3585-ee50-41f9-a46f-14624698b74a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -296,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="GameSystem\FreeCamera\FreeLookCamera.cpp">
       <Filter>GameSystem\FreeLookCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\GameEventNotifier\GameEventNotifier.cpp">
+      <Filter>GameSystem\GameEventNotifier</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -478,5 +484,13 @@
     <ClInclude Include="GameSystem\FreeCamera\FreeLookCamera.h">
       <Filter>GameSystem\FreeLookCamera</Filter>
     </ClInclude>
+    <ClInclude Include="GameSystem\GameEventNotifier\GameEventNotifier.h">
+      <Filter>GameSystem\GameEventNotifier</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GameSystem\GameEventNotifier\EventList.md">
+      <Filter>GameSystem\GameEventNotifier</Filter>
+    </None>
   </ItemGroup>
 </Project>

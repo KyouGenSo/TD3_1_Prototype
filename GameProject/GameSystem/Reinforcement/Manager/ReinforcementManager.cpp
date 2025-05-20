@@ -1,11 +1,14 @@
 #include "ReinforcementManager.h"
 
+#include <TextureManager.h>
+
 #include <fstream>
 #include <iostream>
 
 void ReinforcementManager::Initialize(const std::string& _filename)
 {
     this->LoadFromFile(kReinforcementDir_ + _filename);
+    this->LoadImages(kReinforcementDir_ + _filename);
 }
 
 void ReinforcementManager::Notify(const std::string& _event)
@@ -34,6 +37,28 @@ void ReinforcementManager::UnregisterReinforcement(IReinforcement* _reinforcemen
     {
         reinforcementList_.erase(it, reinforcementList_.end());
     }
+}
+
+ReinforcementData ReinforcementManager::GetRandomCard(const std::string& _filename) const
+{
+    auto& data = reinforcementData_.at(kReinforcementDir_ + _filename);
+    int begin = 0;
+    int end = static_cast<int>(data.size() - 1);
+
+    int randValue = RandomGenerator::Generate(begin, end);
+
+    auto it = data.begin();
+    for (int i = 0; i < randValue; ++i)
+    {
+        ++it;
+    }
+
+    ReinforcementData result = {};
+    result.name = (*it)["name"].get<std::string>();
+    result.description = (*it)["description"].get<std::string>();
+    result.imagepath = (*it)["image"].get<std::string>();
+
+    return result;
 }
 
 void ReinforcementManager::LoadFromFile(const std::string& _filename)
@@ -76,5 +101,15 @@ void ReinforcementManager::LoadFromFile(const std::string& _filename)
         std::cerr << "JSON parse error: " << e.what() << std::endl;
         assert(false && "Failed to parse JSON");
         return;
+    }
+}
+
+void ReinforcementManager::LoadImages(const std::string& _filename)
+{
+    auto tm = TextureManager::GetInstance();
+
+    for (auto& data : reinforcementData_.at(_filename))
+    {
+        tm->LoadTexture(data["image"].get<std::string>());
     }
 }

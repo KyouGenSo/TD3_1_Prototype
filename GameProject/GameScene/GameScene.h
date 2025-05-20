@@ -27,6 +27,8 @@
 #include <GameSystem/Reinforcement/StatusReinforcement.h>
 #include <GameSystem/FreeCamera/FreeLookCamera.h>
 #include <GameSystem/SoundManager/SoundManager.h>
+#include <vector>
+#include <vector>
 
 class GameScene : public BaseScene
 {
@@ -56,6 +58,8 @@ class GameScene : public BaseScene
     std::unique_ptr<EmitterManager> emitterManager_ = nullptr;
 
     std::unique_ptr<SoundGroup> soundGroup_ = nullptr;
+
+    std::vector<uint32_t> handle_onresizes_ = {};
 
 public:
     struct DirectionalLightParam
