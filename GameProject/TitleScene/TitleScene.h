@@ -51,5 +51,17 @@ private: // メンバ変数
     std::unique_ptr<Sprite> press_;
     std::unique_ptr<Sprite> guide_;
 
+    std::unique_ptr<Sprite> whiteBarVer_;
+    std::unique_ptr<Sprite> whiteBarVer2_;
+    std::unique_ptr<Sprite> whiteBarHor_;
+    std::unique_ptr<Sprite> whiteBarHor2_;
+    Vector2 whiteBarVerPos{ 190.f, 0.f };
+    Vector2 whiteBarVerPos2{ 1410.f, 0.f };
+    Vector2 whiteBarHorPos{ 0.f, 190.f };
+    Vector2 whiteBarHorPos2{ 0.f, 710.f };
+
+    Vector2 whiteBarVerSize{ 5.f, 900.f };
+    Vector2 whiteBarHorSize{ 1600.f, 5.f };
+
     uint32_t bgmPlayHandle_ = 0;
 };
