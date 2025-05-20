@@ -2,9 +2,13 @@
 
 #include "Object3dBasic.h"
 #include "cmath"
+#include "Type/ColliderType.h"
+#include "Utility/Adaptor.h"
 
 void BounceEnemy::Initialize()
 {
+    pGameEventNotifier_ = GameEventNotifier::GetInstance();
+
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("bounceEnemy.gltf");
@@ -18,9 +22,20 @@ void BounceEnemy::Initialize()
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
-    collider_ = std::make_unique<Collision::Collider>();
-    collider_
+    statusInit_.setAttack(20)
+        .setDefence(0)
+        .setHp(20)
+        .setMaxHp(20)
+        .setSpeed(1)
+        .setXpAmount(20);
+    statusCurrent_ = statusInit_;
+
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_
         ->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) { this->OnCollision(pObj); })
+        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
+        ->SetType(Collision::Type::Sphere)
+        ->SetTranslate(Adaptor(transform_.translate))
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
@@ -31,10 +46,18 @@ void BounceEnemy::Initialize()
 
 void BounceEnemy::Update()
 {
+    Object::Update();
     if (isDead_) return;
 
-    model_->Update();
     Move();
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
+
+    model_->Update();
+
+    statusInit_.Update();
+    statusCurrent_.Update();
+
 }
 
 void BounceEnemy::Draw()
@@ -46,25 +69,39 @@ void BounceEnemy::Finalize()
 {
 }
 
-void BounceEnemy::OnCollision(const Collision::Collider* pCollider)
+void BounceEnemy::OnCollision(const Collision::Collider* _other)
 {
-    if (isDead_) return;
+     if (isDead_) return;
 
-    if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY)) {
-        if (0 < hp_) {
-            hp_--;
-        }
-        else {
-            isDead_ = true;
-            return;
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
+    {
+
+        EnemyBase::StatusUpdateOnCollision(_other);
+
+        isDead_ = true;
+
+        if (!(_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE)))
+        {
+            if (emitter_)
+            {
+                emitter_->SetEmitterPosition("hit", transform_.translate);
+                emitter_->CreateTemporaryEmitterFrom("hit", "hit_tmp", 1.f);
+            }
         }
 
+        transform_.translate = prePos_;
         model_->SetTranslate(transform_.translate);
     }
 }
 
+void BounceEnemy::OnCollisionTrigger(const Collision::Collider* _other)
+{
+    EnemyBase::OnCollisionTrigger(_other);
+}
+
 void BounceEnemy::Move()
 {
+    prePos_ = transform_.translate;
     if (isAppearing_) {
         AppearanceProduction();
     }
