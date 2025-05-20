@@ -29,7 +29,6 @@ protected:
     std::mutex mutex_;
     std::unique_ptr<BulletBase> pNext_ = nullptr;
     std::unique_ptr<Timer> pLifeTimer_ = nullptr;
-    std::unique_ptr<Timer> pNextBulletTimer_ = nullptr;
     Vector3 forward_ = {};
     bool isChainBullet_ = false;
     WeaponType type_ = WeaponType::None;

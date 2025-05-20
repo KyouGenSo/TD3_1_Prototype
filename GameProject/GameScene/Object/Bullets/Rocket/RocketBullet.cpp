@@ -9,6 +9,91 @@
 #include "Type/ColliderType.h"
 #include <Utility/Adaptor.h>
 
+void RocketBullet::Explosion::Init() {
+    explosion_ = std::make_unique<Collision::Collider>();
+    explosion_
+        ->SetType(Collision::Type::Sphere)
+        ->SetTranslate(Adaptor(pos_))
+        ->SetSize(5.0f)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
+        ->Enable();
+
+    if (emitter_){
+        emitter_->SetEmitterPosition("explosion", pos_);
+        emitter_->CreateTemporaryEmitterFrom("explosion", "tmp", 2.f);
+    }
+
+    enable_ = true;
+}
+
+void RocketBullet::Explosion::Disable() {
+    if (explosion_){
+        explosion_->Disable();
+        explosion_.reset();
+    }
+}
+
+void RocketBullet::Explosion::SetPosition(const Vector3& pos) {
+    pos_ = pos;
+
+    if (explosion_){
+        explosion_->SetTranslate(Adaptor(pos_));
+    }
+}
+
+bool RocketBullet::Explosion::IsEnabled() const {
+    return enable_;
+}
+
+void RocketBullet::Explosion::SetEmitter(EmitterManager* _emitter) {
+    emitter_ = _emitter;
+}
+
+void RocketBullet::CB::Init() {
+    explosion_ = std::make_unique<Explosion>();
+    explosion_->Init();
+}
+
+void RocketBullet::CB::Update() {
+    if (!explosion_)return;
+
+    if (explosion_->IsEnabled()){
+        explosion_->Disable();
+    }
+
+    if (remaining_ <= 0){
+        explosion_->Disable();
+        explosion_.reset();
+        return;
+    }
+
+    if (0.f < exInterval_){
+        --exInterval_;
+        return;
+    }
+
+    explosion_->Init();
+    exInterval_ = INTERVAL;
+    --remaining_;
+}
+
+void RocketBullet::CB::SetPosition(const Vector3& pos) {
+    position_ = pos;
+    if (explosion_){
+        explosion_->SetPosition(pos);
+    }
+}
+
+bool RocketBullet::CB::IsFinish() const {
+    return remaining_ <= 0;
+}
+
+void RocketBullet::CB::SetEmitter(EmitterManager* _emitter) const {
+    if (explosion_) explosion_->SetEmitter(_emitter);
+}
+
 void RocketBullet::Initialize()
 {
     BulletBase::Initialize();
@@ -93,20 +178,7 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
     if (emitter_){
         emitter_->SetEmitterPosition("explosion", transform_.translate);
         emitter_->CreateTemporaryEmitterFrom("explosion", "tmp", 2.f);
-        explode_ = true;
     }
-
-
-    //爆発オブジェクトを生成
-    explosion_ = std::make_unique<Collision::Collider>();
-    explosion_
-        ->SetType(Collision::Type::Sphere)
-        ->SetTranslate(Adaptor(explosionPos_))
-        ->SetSize(5.0f)
-        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
-        ->SetOwner(this)
-        ->Enable();
 
     Next();
 }
@@ -123,6 +195,11 @@ void RocketBullet::InitializeNormal()
 
 void RocketBullet::InitializeChain()
 {
+    cb_ = std::make_unique<CB>();
+    cb_->SetPosition(transform_.translate);
+    cb_->Init();
+
+    cb_->SetEmitter(emitter_);
 }
 
 void RocketBullet::UpdateNormal()
@@ -134,4 +211,6 @@ void RocketBullet::UpdateNormal()
 
 void RocketBullet::UpdateChain()
 {
+    if (cb_->IsFinish()) return;
+    cb_->Update();
 }

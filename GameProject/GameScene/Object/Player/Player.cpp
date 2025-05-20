@@ -22,6 +22,8 @@
 #include <cmath>
 #include <any>
 
+#include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
+
 void Player::Initialize()
 {
     Object::Initialize();
@@ -58,8 +60,10 @@ void Player::Initialize()
     statusCurrent_ = statusInit_;
 
     /// !!Debug!!
-    weapon_ = std::make_unique<SMG>();
+    weapon_ = std::make_unique<AssaultRifle>();
     weapon_->Initialize();
+    weapon_->SetChain(chain_);
+    weapon_->SetEmitter(emitter_);
     gravity_ = 1.8f;
 
     // コールバック登録

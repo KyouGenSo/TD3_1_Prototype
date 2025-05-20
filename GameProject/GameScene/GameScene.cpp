@@ -299,6 +299,7 @@ void GameScene::DrawImGui()
 	timeKeeper_->ImGui();
 	statusHUD_->ImGui();
 	soundGroup_->ImGui();
+    chainViewModel_->ImGui();
 
 	ImGui::Begin("Directional Light");
 	ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);

@@ -1,6 +1,6 @@
 #include "BulletBase.h"
 
-#include <assert.h>
+#include <cassert>
 #include <mutex>
 #include <GameScene/Object/Bullets/BulletFactory.h>
 #include <Type/ColliderType.h>
@@ -10,8 +10,6 @@ void BulletBase::Initialize()
 {
     pLifeTimer_ = std::make_unique<Timer>();
     pLifeTimer_->Start();
-
-    pNextBulletTimer_ = std::make_unique<Timer>();
 }
 
 void BulletBase::Update() {
@@ -34,13 +32,12 @@ void BulletBase::Fire()
     }
 
     pChainManager_->OnAttacked(type_);
-    pNextBulletTimer_->Start();
 }
 
 bool BulletBase::IsDeadAll()
 {
     if (!isDead_) return false;
-    else if (pNext_ == nullptr) return true;
+     else if (pNext_ == nullptr) return true;
     else return pNext_->IsDeadAll();
 }
 
@@ -51,24 +48,20 @@ void BulletBase::SetNextBullet(std::unique_ptr<BulletBase> _bullet)
     _bullet->SetIsChainBullet(true);
     _bullet->SetChainManager(pChainManager_);
     _bullet->SetForward(forward_);
+    _bullet->SetEmitter(emitter_);
     pNext_ = std::move(_bullet);
 }
 
 void BulletBase::Next()
 {
-    if (pNextBulletTimer_->GetIsStart())
-    {
-        pNextBulletTimer_->Reset();
+    if (pChainManager_->IsLastWeapon(type_)) return;
 
-        if (pChainManager_->IsLastWeapon(type_)) return;
+    if (!BulletBase::CheckCoolTime()) return;
 
-        if (!BulletBase::CheckCoolTime()) return;
-
-        std::thread([this](){
-            BulletBase::CreateNextBullet();
-            rdy_ = true;
-        }).detach();
-    }
+    std::thread([this](){
+        BulletBase::CreateNextBullet();
+        rdy_ = true;
+    }).detach();
 }
 
 void BulletBase::CreateNextBullet()

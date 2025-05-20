@@ -33,6 +33,10 @@ void AssaultBullet::Update()
     }
 
     isDead_ = CheckLifeTime();
+
+    if (!pChainManager_){
+        __debugbreak();
+    }
 }
 
 void AssaultBullet::Draw()
@@ -60,6 +64,8 @@ void AssaultBullet::InitializeNormal()
     bullet_->SetRotation(transform_.rotate);
     bullet_->SetForward(forward_);
     bullet_->SetSpeed(speed_);
+    bullet_->SetChainManager(pChainManager_);
+    bullet_->SetEmitter(emitter_);
 }
 
 void AssaultBullet::InitializeChain()
@@ -83,6 +89,7 @@ void AssaultBullet::InitializeChain()
         bullets_[i]->SetPosition(position);
         bullets_[i]->SetForward(forward_);
         bullets_[i]->SetSpeed(speed_);
+        bullets_[i]->SetChainManager(pChainManager_);
     }
 }
 

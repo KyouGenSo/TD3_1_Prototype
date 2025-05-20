@@ -11,6 +11,8 @@ void AssaultBullet::Bullet::Initialize()
 {
     BulletBase::Initialize();
 
+    type_ = WeaponType::Assault;
+
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("assultBullet.gltf");
@@ -26,7 +28,7 @@ void AssaultBullet::Bullet::Initialize()
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
-        ->SetEvent(Collision::EventType::Trigger, [this](const auto* c) { this->OnCollisionTrigger(c); })
+        ->SetEvent(Collision::EventType::Trigger, std::bind(&Bullet::OnCollisionTrigger, this, std::placeholders::_1))
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.3f)
         ->SetType(Collision::Type::Sphere)
@@ -51,6 +53,10 @@ void AssaultBullet::Bullet::Update()
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
     model_->Update();
+
+    if (pNext_){
+        pNext_->Update();
+    }
 }
 
 void AssaultBullet::Bullet::Draw()
@@ -78,7 +84,7 @@ void AssaultBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _other
         //敵に当たった場合
         ReinforcementManager::GetInstance()->Notify("onHit");
 
-        Next();
+         Next();
     }
 }
 
