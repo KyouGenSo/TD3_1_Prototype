@@ -14,6 +14,7 @@
 #include <Audio.h>
 #include <Vector2.h>
 #include <Draw2D.h>
+#include <functional>
 
 
 void GameScene::Initialize()
@@ -77,70 +78,73 @@ void GameScene::Initialize()
     minimap_->SetSize({ -30, 0, -30 }, { 30, 0, 30 });
     minimap_->Register(player_.get());
 
-	// Castle
-	castle_ = std::make_unique<Castle>();
-	castle_->Initialize();
-	castle_->SetTransform(currentStageData.castleTransform);
+    // Castle
+    castle_ = std::make_unique<Castle>();
+    castle_->Initialize();
+    castle_->SetTransform(currentStageData.castleTransform);
 
-	// 敵の初期化
-	enemyManager_ = std::make_unique<EnemyManager>();
-	//enemyManager_->SetMinimap(minimap_.get());
-	enemyManager_->Initialize(player_.get(), castle_.get());
-	enemyManager_->SetEmitter(emitterManager_.get());
+    // 敵の初期化
+    enemyManager_ = std::make_unique<EnemyManager>();
+    //enemyManager_->SetMinimap(minimap_.get());
+    enemyManager_->Initialize(player_.get(), castle_.get());
+    enemyManager_->SetEmitter(emitterManager_.get());
 
-	// ボスの初期化
-	boss_ = std::make_unique<Boss>();
-	boss_->Initialize();
-	boss_->SetTransform(currentStageData.bossTransform);
+    // ボスの初期化
+    boss_ = std::make_unique<Boss>();
+    boss_->Initialize();
+    boss_->SetTransform(currentStageData.bossTransform);
 
-	// TimeKeeper
-	timeKeeper_ = std::make_unique<TimeKeeper>();
-	timeKeeper_->Initialize();
-	timeKeeper_->AddEvent("CountDown", 3.0f);
-	timeKeeper_->AddEvent("JunbiPhase", 12.0f);
-	timeKeeper_->Load();
-	timeKeeper_->Run("JunbiPhase");
+    // TimeKeeper
+    timeKeeper_ = std::make_unique<TimeKeeper>();
+    timeKeeper_->Initialize();
+    timeKeeper_->AddEvent("CountDown", 3.0f);
+    timeKeeper_->AddEvent("JunbiPhase", 12.0f);
+    timeKeeper_->Load();
+    timeKeeper_->Run("JunbiPhase");
 
-	player_->SetChain(chainViewModel_->GetChain());
+    player_->SetChain(chainViewModel_->GetChain());
 
-	gameController_ = std::make_unique<GameController>();
-	gameController_->SetPlayerModel(player_.get());
-	gameController_->SetGUIChainView(guiChain_.get());
+    gameController_ = std::make_unique<GameController>();
+    gameController_->SetPlayerModel(player_.get());
+    gameController_->SetGUIChainView(guiChain_.get());
 
-	guiChain_->SetGameController(gameController_.get());
-	guiLvUP_->SetGameController(gameController_.get());
+    guiChain_->SetGameController(gameController_.get());
+    guiLvUP_->SetGameController(gameController_.get());
 
-	threadpool_ = Threadpool::GetInstance();
+    threadpool_ = Threadpool::GetInstance();
 
-	// CountDownの初期化
-	countDown_ = std::make_unique<CountDown>();
-	countDown_->Initialize();
+    // CountDownの初期化
+    countDown_ = std::make_unique<CountDown>();
+    countDown_->Initialize();
 
-	// StatusHUDの初期化
-	statusHUD_ = std::make_unique<StatusHUD>();
-	statusHUD_->Initialize();
+    // StatusHUDの初期化
+    statusHUD_ = std::make_unique<StatusHUD>();
+    statusHUD_->Initialize();
 
-	emitterManager_->CreateSphereEmitter("explosion", {0,0, 0},  5, 250, 0);
-	emitterManager_->SetEmitterActive("explosion", false);
-	//emitterManager_->SetEmitterVelocityRange("explosion", {-0.1f, 0.1f}, {-0.1f,  0.1f}, {-0.1f, 0.1f});
-	emitterManager_->SetEmitterColor("explosion", {1.f, 0.f, 0.f, 1});
-	emitterManager_->SetEmitterStartColor("explosion", {1, 0, 0, 1});
-	emitterManager_->SetEmitterEndColor("explosion", {1.f, 1.f, 0.f, 1});
-	emitterManager_->SetEmitterScaleRange("explosion", {0.4f, 0.4f}, {0.4f, 0.4f});
+    emitterManager_->CreateSphereEmitter("explosion", {0,0, 0},  5, 250, 0);
+    emitterManager_->SetEmitterActive("explosion", false);
+    //emitterManager_->SetEmitterVelocityRange("explosion", {-0.1f, 0.1f}, {-0.1f,  0.1f}, {-0.1f, 0.1f});
+    emitterManager_->SetEmitterColor("explosion", {1.f, 0.f, 0.f, 1});
+    emitterManager_->SetEmitterStartColor("explosion", {1, 0, 0, 1});
+    emitterManager_->SetEmitterEndColor("explosion", {1.f, 1.f, 0.f, 1});
+    emitterManager_->SetEmitterScaleRange("explosion", {0.4f, 0.4f}, {0.4f, 0.4f});
 
-	emitterManager_->CreateSphereEmitter("hit", {0,0,0}, 5, 100, 0);
-	emitterManager_->SetEmitterActive("hit", false);
-	emitterManager_->SetEmitterColor("hit", {1.f, 0.f, 0.f, 1});
-	emitterManager_->SetEmitterScaleRange("hit", {0.1f, 0.1f}, {0.1f, 0.1f});
+    emitterManager_->CreateSphereEmitter("hit", {0,0,0}, 5, 100, 0);
+    emitterManager_->SetEmitterActive("hit", false);
+    emitterManager_->SetEmitterColor("hit", {1.f, 0.f, 0.f, 1});
+    emitterManager_->SetEmitterScaleRange("hit", {0.1f, 0.1f}, {0.1f, 0.1f});
   
-	statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
+    statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
 
     // リサイズ時コールバック登録
-    WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1));
+    handle_onresizes_ = {
+        WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1)),
+        WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&CountDown::OnResize, countDown_.get(), std::placeholders::_1)),
+    };
 
     // ReinforcementManagerの初期化
     auto* reinforcementManager_ = ReinforcementManager::GetInstance();
-    reinforcementManager_->Initialize("StatusReinforcement.json");
+    reinforcementManager_->Initialize(reinforcementManager_->kFilename_json_status_);
 
     // BGMグループの初期化
     soundGroup_ = std::make_unique<SoundGroup>();
@@ -157,13 +161,19 @@ void GameScene::Initialize()
 
 void GameScene::Finalize()
 {
-	terrain_->Finalize();
-	player_->Finalize();
-	boss_->Finalize();
-	enemyManager_->Finalize();
-	camera_->Finalize();
+    for (auto& handle : handle_onresizes_)
+    {
+        WinApp::GetInstance()->UnregisterOnResizeFunc(handle);
+    }
 
-	soundGroup_->Finalize();
+    terrain_->Finalize();
+    player_->Finalize();
+    boss_->Finalize();
+    enemyManager_->Finalize();
+    camera_->Finalize();
+    player_->Finalize();
+
+    soundGroup_->Finalize();
 }
 
 void GameScene::Update()

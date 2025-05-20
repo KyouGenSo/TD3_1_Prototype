@@ -53,6 +53,7 @@ private: // メンバ変数
     std::unique_ptr<NiGuiDrawer> drawer_ = nullptr;
     std::unique_ptr<ProcHandler> procHandler_ = nullptr;
     std::unique_ptr<NiGuiDebug> niguiDebug_ = nullptr;
+    std::vector<uint32_t> handle_onresizes_ = {};
 
     EventTimer* eventTimer_ = nullptr;
 
