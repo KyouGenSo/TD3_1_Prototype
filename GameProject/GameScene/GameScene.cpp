@@ -217,6 +217,8 @@ void GameScene::Update()
 
 	emitterManager_->Update();
 	*(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
+    *(statusHUD_->GetXPBar()) = player_->getXP();
+    statusHUD_->GetXPBar()->SetMaxValue(player_->getXPMax());
 
 	// ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
 	this->MonitorStatus();

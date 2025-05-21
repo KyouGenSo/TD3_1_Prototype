@@ -11,6 +11,10 @@
         "BulletBar_Position": [
             150.0,
             780.0
+        ],
+        "XPBar_Position": [
+            542.0,
+            830.0
         ]
     }
 }
