@@ -7,6 +7,8 @@
 #include <GameScene/Object/Weapon/Weapon.h>
 #include <Interfaces/IObserver.h>
 #include <GameSystem/Reinforcement/IReinforcement.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
+#include <cstdint>
 
 class Player : public Object
 {
@@ -33,6 +35,7 @@ class Player : public Object
     const POINT ORIGIN = {990, 540};
 
     uint32_t id_callback_enemydead_ = 0;
+    uint32_t id_callback_playerlevelup_ = 0;
     float xp_ = 0.0f;
     float xpMax_ = 100.0f;
     float xpGainRetio_ = 0.1f;
