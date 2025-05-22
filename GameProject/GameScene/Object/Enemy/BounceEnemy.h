@@ -2,7 +2,9 @@
 #include <memory>
 
 #include "EnemyBase.h"
-#include "GameScene/Object/Collision/Collider.h"
+#include "GameScene/Object/Object.h"
+#include "Collision/Collider.h"
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 class BounceEnemy : public EnemyBase
 {
@@ -16,6 +18,8 @@ public:
     void Finalize();
 
     void OnCollision(const Collision::Collider* pCollider);
+
+    void OnCollisionTrigger(const Collision::Collider* _other);
 
     void Move();
 
@@ -31,8 +35,7 @@ public:
 
 
 private:
-
-    std::unique_ptr<Collision::Collider> collider_;
+    Vector3 prePos_ = {};
 
     bool isAppearing_ = true;
     float appearCounter_ = 0.0f;
