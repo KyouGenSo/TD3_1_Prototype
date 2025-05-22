@@ -3,7 +3,7 @@
 #include "Object3dBasic.h"
 #include "cmath"
 #include "Type/ColliderType.h"
-#include <Utility/Adaptor.h>
+#include "Utility/Adaptor.h"
 
 void FlyEnemy::Initialize()
 {
@@ -32,7 +32,9 @@ void FlyEnemy::Initialize()
     statusCurrent_ = statusInit_;
 
     pCollider_ = std::make_unique<Collision::Collider>();
-    pCollider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
+    pCollider_
+        ->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) { this->OnCollision(pObj); })
+        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
@@ -54,6 +56,9 @@ void FlyEnemy::Update()
     pCollider_->SetTranslate(Adaptor(transform_.translate));
 
     model_->Update();
+
+    statusInit_.Update();
+    statusCurrent_.Update();
 }
 
 void FlyEnemy::Draw()
@@ -65,13 +70,27 @@ void FlyEnemy::Finalize()
 {
 }
 
-void FlyEnemy::OnCollision(const Collision::Collider* pCollider)
+void FlyEnemy::OnCollision(const Collision::Collider* _other)
 {
     if (isDead_) return;
 
-    if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
     {
-        Object::StatusUpdateOnCollision(pCollider);
+
+        EnemyBase::StatusUpdateOnCollision(_other);
+
+        isDead_ = true;
+
+        if (!(_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE)))
+        {
+            if (emitter_)
+            {
+                emitter_->SetEmitterPosition("hit", transform_.translate);
+                emitter_->CreateTemporaryEmitterFrom("hit", "hit_tmp", 1.f);
+            }
+        }
+
+        model_->SetTranslate(transform_.translate);
     }
 }
 
@@ -95,6 +114,8 @@ void FlyEnemy::Move()
         if (length != 0)
         {
             direction /= length;
+
+            transform_.rotate.y = std::atan2(direction.x, direction.z);
         }
 
         transform_.translate += direction * speed_;
@@ -104,6 +125,7 @@ void FlyEnemy::Move()
         }
     }
     model_->SetTranslate(transform_.translate);
+    model_->SetRotate(transform_.rotate);
 }
 
 void FlyEnemy::AppearanceProduction()

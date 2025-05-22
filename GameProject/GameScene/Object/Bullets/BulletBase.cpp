@@ -24,6 +24,9 @@ void BulletBase::Update() {
 
 void BulletBase::Fire()
 {
+    if (forward_.x != 0.0f || forward_.z != 0.0f) {
+        transform_.rotate.y = std::atan2(forward_.x, forward_.z);
+    }
     if (isChainBullet_)
     {
         InitializeChain();
