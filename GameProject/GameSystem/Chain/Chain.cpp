@@ -2,6 +2,8 @@
 
 #ifdef _DEBUG
 #include <imgui.h>
+
+#include <algorithm>
 #endif // _DEBUG
 
 WeaponType Chain::GetNextWeapon(WeaponType _weaponType) const {
@@ -71,7 +73,7 @@ void Chain::Update()
         float cooltime = static_cast<float>(COOLTIMES.at(type) - now);
 
         /// クールタイムがあがっていれば0にする
-        if (cooltime <= 0) cooltime = 0;
+        cooltime = std::max<float>(cooltime, 0);
 
         coolTimes_[type] = cooltime;
     }

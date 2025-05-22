@@ -157,6 +157,12 @@ void GameScene::Initialize()
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_3").handle);
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_4").handle);
     soundGroup_->Start();
+
+    reticle_ = make_unique<Sprite>();
+    reticle_->Initialize("circle.png");
+    reticle_->SetAnchorPoint({0.5f, 0.5f});
+    reticle_->SetPos({static_cast<float>(WinApp::clientWidth) / 2.f, static_cast<float>(WinApp::clientHeight) / 2.f});
+    reticle_->SetSize({32.f,32.f});
 }
 
 void GameScene::Finalize()
@@ -220,6 +226,8 @@ void GameScene::Update()
     *(statusHUD_->GetXPBar()) = player_->getXP();
     statusHUD_->GetXPBar()->SetMaxValue(player_->getXPMax());
 
+    reticle_->Update();
+
 	// ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
 	this->MonitorStatus();
 }
@@ -251,6 +259,7 @@ void GameScene::Draw()
     countDown_->Draw2D();
     minimap_->Draw();
     statusHUD_->Draw2D();
+    reticle_->Draw();
 
     //camera_->Draw2D();
 }
@@ -293,6 +302,7 @@ void GameScene::DrawImGui()
 	statusHUD_->ImGui();
 	soundGroup_->ImGui();
     castle_->ImGui();
+    chainViewModel_->ImGui();
 
 	ImGui::Begin("Directional Light");
 	ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);

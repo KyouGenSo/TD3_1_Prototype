@@ -8,6 +8,11 @@
 #include <imgui.h>
 #endif // _DEBUG
 
+void Object::UpdateCollider() const {
+    if (pCollider_ == nullptr) return;
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
+}
+
 void Object::DrawCollider(const Collision::Collider* _collider)
 {
     if (_collider == nullptr) return;

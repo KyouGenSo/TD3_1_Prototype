@@ -7,6 +7,48 @@
 
 class RocketBullet : public BulletBase
 {
+    class Explosion : public Object {
+        bool enable_ = false;
+
+    public:
+        void Init();
+        void Disable();
+        bool IsEnabled() const;
+        void Draw() override;
+    };
+
+    class CB{
+        std::unique_ptr<Explosion> explosion_;
+
+        uint16_t remaining_ = 3;
+
+        const float INTERVAL = 0.5f;
+
+        float exInterval_ = INTERVAL;
+
+        Vector3 position_ {};
+
+        EmitterManager* emitter_ = nullptr;
+
+    public:
+        void Init();
+        void Update();
+        void SetPosition(const Vector3& pos);
+        bool IsFinish() const;
+
+        void SetEmitter(EmitterManager* _emitter);
+    };
+
+    Vector3 forward_ = {};
+
+
+    Vector4 color_ = { 1,1,1,1 };
+
+    Timer timer;
+
+    std::unique_ptr<Explosion> exImpl_ = nullptr;
+
+    std::unique_ptr<CB> cb_ = nullptr;
 public:
     void Initialize() override;
     void Update() override;
@@ -19,17 +61,5 @@ private:
     void InitializeChain() override;
     void UpdateNormal() override;
     void UpdateChain() override;
-
-    Vector3 forward_ = {};
-
-
-    Vector4 color_ = { 1,1,1,1 };
-
-    Timer timer;
-
-    std::unique_ptr<Collision::Collider> explosion_;
-    bool createExpl_ = false;
-    Vector3 explosionPos_ = {};
-    bool explode_ = false;
 };
 
