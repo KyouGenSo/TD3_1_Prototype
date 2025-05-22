@@ -134,6 +134,9 @@
     <Filter Include="GameUI\ColorResolver">
       <UniqueIdentifier>{4ef69d86-7745-4686-9919-62083d197c8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameUI\HPBar">
+      <UniqueIdentifier>{ae9c4936-e224-406a-b564-2a061291306a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -309,6 +312,9 @@
     <ClCompile Include="GameUI\ColorResolver\ColorResolver.cpp" />
     <ClCompile Include="Type\Color.cpp">
       <Filter>Type</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\HPBar\HPBar.cpp">
+      <Filter>GameUI\HPBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="GameUI\ColorName\ColorName.h">
       <Filter>GameUI\ColorResolver</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\HPBar\HPBar.h">
+      <Filter>GameUI\HPBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
