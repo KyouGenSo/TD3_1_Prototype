@@ -7,23 +7,14 @@
 
 class RocketBullet : public BulletBase
 {
-    class Explosion{
-        std::unique_ptr<Collision::Collider> explosion_;
-        Vector3 pos_ = {};
-
-        Status status_;
-
+    class Explosion : public Object {
         bool enable_ = false;
-
-        EmitterManager* emitter_ = nullptr;
 
     public:
         void Init();
         void Disable();
-        void SetPosition(const Vector3& pos);
         bool IsEnabled() const;
-
-        void SetEmitter(EmitterManager* _emitter);
+        void Draw() override;
     };
 
     class CB{
@@ -37,13 +28,15 @@ class RocketBullet : public BulletBase
 
         Vector3 position_ {};
 
+        EmitterManager* emitter_ = nullptr;
+
     public:
         void Init();
         void Update();
         void SetPosition(const Vector3& pos);
         bool IsFinish() const;
 
-        void SetEmitter(EmitterManager* _emitter) const;
+        void SetEmitter(EmitterManager* _emitter);
     };
 
     Vector3 forward_ = {};

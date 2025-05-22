@@ -30,6 +30,7 @@ public:
     void Update() override;
     void Draw() override;
     void OnCollisionTrigger(const Collision::Collider* _other) override {};
+    bool IsDeadAll() override;
 
 private:
     std::unique_ptr<Bullet> bullet_;

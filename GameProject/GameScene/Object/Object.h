@@ -9,11 +9,9 @@
 #include "Transform.h"
 #include <Input.h>
 #include <Collision/Collider.h>
-#include <array>
 #include <GameScene/Status/Status.h>
 
 #include "EmitterManager.h"
-#include <Collision/Collider.h>
 
 class Object{
 	std::string uuid_;
@@ -101,6 +99,7 @@ public: /// Getter
     }
 
 public:
+    void UpdateCollider() const;
     void DrawCollider(const Collision::Collider* _collider);
 
 protected:

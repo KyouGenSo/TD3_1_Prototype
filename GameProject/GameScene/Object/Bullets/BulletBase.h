@@ -15,7 +15,7 @@ public:
     void Update() override;
     virtual void Fire();
     void OnCollisionTrigger(const Collision::Collider* _collider) override = 0;
-    bool IsDeadAll();
+    virtual bool IsDeadAll();
 
 
 public: /// Setter

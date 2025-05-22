@@ -56,6 +56,18 @@ void AssaultBullet::Draw()
     }
 }
 
+bool AssaultBullet::IsDeadAll() {
+    if (!isDead_) return false;
+
+    if (isChainBullet_){
+        for (const auto& bullet : bullets_){
+            if (!bullet) break;
+            if (!bullet->IsDeadAll()) return false;
+        }
+    }
+    return bullet_->IsDeadAll();
+}
+
 void AssaultBullet::InitializeNormal()
 {
     bullet_ = std::make_unique<Bullet>();

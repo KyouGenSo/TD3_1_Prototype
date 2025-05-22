@@ -80,11 +80,10 @@ void AssaultBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _other
     {
         pCollider_->Disable();
         isDead_ = true;
-
         //敵に当たった場合
         ReinforcementManager::GetInstance()->Notify("onHit");
 
-         Next();
+        Next();
     }
 }
 
