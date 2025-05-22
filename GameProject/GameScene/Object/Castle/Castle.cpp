@@ -32,7 +32,7 @@ void Castle::Initialize() {
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
-        ->SetEvent(Collision::EventType::Trigger, [&](const auto& c){})
+        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
         ->SetSize(Collision::Vec3{10.f, 10.f, 10.f})
         ->SetType(Collision::Type::AABB)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
@@ -52,4 +52,14 @@ void Castle::Update() {
 
 void Castle::Draw() {
     model_->Draw();
+}
+
+void Castle::OnCollisionTrigger(const Collision::Collider* _pCollider)
+{
+    Object::StatusUpdateOnCollision(_pCollider);
+}
+
+void Castle::ImGui()
+{
+    statusCurrent_.ImGui("Castle");
 }

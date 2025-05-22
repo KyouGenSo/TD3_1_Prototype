@@ -133,6 +133,8 @@ float4 main(VertexShaderOutput input) : SV_TARGET
     
     float2 texSize;
     gTexture.GetDimensions(texSize.x, texSize.y);
+
+    float2 uvSize = float2(1.0f, 0.5f);
     
     float4 bloomColor = GaussianBlur(input.texCoord, texSize, gBloomParam.direction);
     
