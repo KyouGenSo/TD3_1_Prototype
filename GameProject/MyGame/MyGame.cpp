@@ -70,6 +70,7 @@ void MyGame::Initialize()
 
     /// UIの初期化
     NiGui::Initialize({ WinApp::clientWidth, WinApp::clientHeight });
+    NiGui::SetClientSize({ WinApp::clientWidth, WinApp::clientHeight });
 
     /// 描画クラスの設定
     drawer_ = std::make_unique<NiGuiDrawer>();
@@ -144,7 +145,8 @@ void MyGame::Update()
     {
         // フルスクリーンの切り替え
         ToggleFullScreen();
-        NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, { 0, 0 });
+        NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, {});
+        NiGui::SetClientSize({ WinApp::clientWidth, WinApp::clientHeight });
     }
 
 #ifdef _DEBUG
