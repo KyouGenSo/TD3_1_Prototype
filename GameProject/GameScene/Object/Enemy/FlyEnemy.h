@@ -4,6 +4,7 @@
 #include "EnemyBase.h"
 #include "GameScene/Object/Object.h"
 #include "Collision/Collider.h"
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 class FlyEnemy : public EnemyBase
 {
@@ -16,7 +17,7 @@ public:
 
     void Finalize();
 
-    void OnCollision(const Collision::Collider* pCollider) override;
+    void OnCollision(const Collision::Collider* _other) override;
 
     void OnCollisionTrigger(const Collision::Collider* pCollider) override;
 
