@@ -131,6 +131,9 @@
     <Filter Include="GameSystem\GameEventNotifier">
       <UniqueIdentifier>{43bf3585-ee50-41f9-a46f-14624698b74a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameUI\ColorResolver">
+      <UniqueIdentifier>{4ef69d86-7745-4686-9919-62083d197c8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -302,6 +305,10 @@
     </ClCompile>
     <ClCompile Include="GameSystem\GameEventNotifier\GameEventNotifier.cpp">
       <Filter>GameSystem\GameEventNotifier</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\ColorResolver\ColorResolver.cpp" />
+    <ClCompile Include="Type\Color.cpp">
+      <Filter>Type</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -486,6 +493,15 @@
     </ClInclude>
     <ClInclude Include="GameSystem\GameEventNotifier\GameEventNotifier.h">
       <Filter>GameSystem\GameEventNotifier</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\ColorResolver\ColorResolver.h">
+      <Filter>GameUI\ColorResolver</Filter>
+    </ClInclude>
+    <ClInclude Include="Type\Color.h">
+      <Filter>Type</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\ColorName\ColorName.h">
+      <Filter>GameUI\ColorResolver</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

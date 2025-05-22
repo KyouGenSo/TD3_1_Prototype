@@ -21,7 +21,12 @@ public:
 public: /// Setter
     void SetIsChainBullet(bool _flag) { isChainBullet_ = _flag; }
     void SetChainManager(Chain* _chainManager) { pChainManager_ = _chainManager; }
-    void SetForward(const Vector3& _forward) { forward_ = _forward; }
+    void SetForward(const Vector3& _forward) {
+        forward_ = _forward;
+        if (forward_.x != 0.0f || forward_.z != 0.0f) {
+            transform_.rotate.y = std::atan2(forward_.x, forward_.z);
+        }
+    }
 
 private:
     std::atomic<bool> rdy_;

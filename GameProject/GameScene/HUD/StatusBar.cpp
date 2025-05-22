@@ -11,16 +11,20 @@ const NiVec4 StatusBar::COLOR_BAR_LOW = rgba(135, 48, 49, 255);
 
 const NiVec2 StatusBar::SPACING_HEAD_TO_DECO = { 0.0f, 10.0f };
 
-void StatusBar::Initialize(const std::string& _nameTexturePath, const NiVec2& _barSize)
+void StatusBar::Initialize(const std::string& _nameTexturePath, const NiVec2& _barSize, bool _enable_smoothing_color)
 {
     nameTexturePath_ = _nameTexturePath;
     barSize_ = _barSize;
 
+    isDisplay_name_ = !nameTexturePath_.empty();
+    isEnable_lerp_color_ = _enable_smoothing_color;
+
     // テクスチャの読み込み
     auto* tm = TextureManager::GetInstance();
-    tm->LoadTexture(nameTexturePath_);
     tm->LoadTexture(PATH_BAR);
     tm->LoadTexture(PATH_DECORATION);
+
+    if (isDisplay_name_) tm->LoadTexture(nameTexturePath_);
 
     // スプライトの初期化
     bar_ = std::make_unique<Sprite>();
@@ -37,8 +41,11 @@ void StatusBar::Initialize(const std::string& _nameTexturePath, const NiVec2& _b
         deco->SetSize({ y / 5.0f , y });
     }
 
-    name_ = std::make_unique<Sprite>();
-    name_->Initialize(nameTexturePath_);
+    if (isDisplay_name_)
+    {
+        name_ = std::make_unique<Sprite>();
+        name_->Initialize(nameTexturePath_);
+    }
 
     background_ = std::make_unique<Sprite>();
     background_->Initialize(PATH_BAR);
@@ -49,22 +56,11 @@ void StatusBar::Update()
 {
     this->UpdateTransform();
 
-    //if (currentValue_ < maxValue_ * BORDER_DANGER)
-    //{
-    //    bar_->SetColor(COLOR_BAR_LOW);
-    //}
-    //else
-    //{
-    //    bar_->SetColor(COLOR_BAR_NORMAL);
-    //}
-
     float t = currentValue_ - 0.1f / maxValue_ + 0.1f;
     if (t > 1.0f) t = 1.0f;
     if (t < 0.0f) t = 0.0f;
 
-    NiVec4 color = {};
-    color.Lerp(COLOR_BAR_LOW, COLOR_BAR_NORMAL, currentValue_ / maxValue_);
-    bar_->SetColor(TO_VECTOR4(color));
+    this->UpdateColor();
 
     for (auto& deco : decorations_)
     {
@@ -92,7 +88,17 @@ void StatusBar::Draw2D()
 
 void StatusBar::ImGui()
 {
-    if (ImGui::Begin(nameTexturePath_.c_str()))
+    bool isOpen = false;
+    if (nameTexturePath_.empty())
+    {
+        isOpen = ImGui::Begin("StatusBar (No Name)");
+    }
+    else
+    {
+        isOpen = ImGui::Begin(nameTexturePath_.c_str());
+    }
+
+    if (isOpen)
     {
         ImGui::Text("Position");
         ImGui::DragFloat2("Position", &position_.x, 0.1f);
@@ -109,9 +115,12 @@ void StatusBar::UpdateTransform()
     NiVec2 leftTop = position_ - anchor_ * size_;
     NiVec2 cPos = leftTop;
 
-    name_->SetPos(TO_VECTOR2(cPos));
+    if (name_) 
+    {
+        name_->SetPos(TO_VECTOR2(cPos));
+        cPos.y += name_->GetSize().y;
+    }
 
-    cPos.y += name_->GetSize().y;
     cPos += SPACING_HEAD_TO_DECO;
     decorations_[0]->SetPos(TO_VECTOR2(cPos));
     NiVec2 decoSize = { decorations_[0]->GetSize().x, decorations_[0]->GetSize().y };
@@ -130,4 +139,25 @@ void StatusBar::UpdateTransform()
     cPos.y -= decoSize.y / 2.0f - bar_->GetSize().y / 2.0f;
 
     decorations_[1]->SetPos(TO_VECTOR2(cPos));
+}
+
+void StatusBar::UpdateColor()
+{
+    if (isEnable_lerp_color_)
+    {
+        NiVec4 color = {};
+        color.Lerp(COLOR_BAR_LOW, COLOR_BAR_NORMAL, currentValue_ / maxValue_);
+        bar_->SetColor(TO_VECTOR4(color));
+    }
+    else
+    {
+        if (currentValue_ < maxValue_ * BORDER_DANGER)
+        {
+            bar_->SetColor(TO_VECTOR4(COLOR_BAR_LOW));
+        }
+        else
+        {
+            bar_->SetColor(TO_VECTOR4(COLOR_BAR_NORMAL));
+        }
+    }
 }

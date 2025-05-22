@@ -70,6 +70,14 @@ void Player::Initialize()
     id_callback_enemydead_ = GameEventNotifier::GetInstance()->RegisterCallback("EnemyDeadForXP", [this](std::any _gainedXP) {
         xpGained_ += std::any_cast<float>(_gainedXP);
     });
+
+    id_callback_playerlevelup_ = GameEventNotifier::GetInstance()->RegisterCallback("PlayerLevelUp", [this]([[maybe_unused]]std::any _unused) {
+        for (auto& obs : observers_)
+        {
+            obs->OnNotify("toggle_lvup");
+        }
+    });
+
 }
 
 void Player::Update()
@@ -112,6 +120,7 @@ void Player::Draw()
 void Player::Finalize()
 {
     GameEventNotifier::GetInstance()->UnregisterCallback("EnemyDeadForXP", id_callback_enemydead_);
+    GameEventNotifier::GetInstance()->UnregisterCallback("PlayerLevelUp", id_callback_playerlevelup_);
 
     auto* rfmManager = ReinforcementManager::GetInstance();
     for (auto& reinforcement : reinforcementList_)
@@ -322,6 +331,9 @@ void Player::UpdateStatus()
         if (gainXpMax > 200.0f) gainXpMax = 200.0f;
 
         xpMax_ += gainXpMax;
+
+        // イベント発行
+        GameEventNotifier::GetInstance()->Notify("PlayerLevelUp", nullptr);
     }
 }
 

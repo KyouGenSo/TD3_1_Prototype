@@ -223,6 +223,8 @@ void GameScene::Update()
 
 	emitterManager_->Update();
 	*(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
+    *(statusHUD_->GetXPBar()) = player_->getXP();
+    statusHUD_->GetXPBar()->SetMaxValue(player_->getXPMax());
 
     reticle_->Update();
 
@@ -299,6 +301,7 @@ void GameScene::DrawImGui()
 	timeKeeper_->ImGui();
 	statusHUD_->ImGui();
 	soundGroup_->ImGui();
+    castle_->ImGui();
     chainViewModel_->ImGui();
 
 	ImGui::Begin("Directional Light");
@@ -314,4 +317,8 @@ void GameScene::MonitorStatus()
 	{
 		SceneManager::GetInstance()->ChangeScene("result");
 	}
+    if (castle_->getStatusCurrent().getHp() <= 0)
+    {
+        SceneManager::GetInstance()->ChangeScene("result");
+    }
 }
