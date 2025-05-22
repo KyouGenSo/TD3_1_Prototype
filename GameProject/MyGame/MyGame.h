@@ -65,6 +65,7 @@ private: // メンバ変数
         GrayScale,
         VigRedGrayScale,
         Bloom,
+        NewBloom,
         BloomFog,
     };
 

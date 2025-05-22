@@ -180,6 +180,9 @@ void MyGame::Update()
     case Bloom:
         PostEffect::GetInstance()->SetEffectType("Bloom");
         break;
+    case NewBloom:
+        PostEffect::GetInstance()->SetEffectType("NewBloom");
+        break;
     case BloomFog:
         PostEffect::GetInstance()->SetEffectType("BloomFog");
         break;
@@ -292,11 +295,12 @@ void MyGame::Draw()
             if (ImGui::BeginTabItem("PostEffectType"))
             {
                 ImGui::RadioButton("NoEffect", reinterpret_cast<int*>(&postEffectType), NoEffect);
-                ImGui::RadioButton("VignetteRed", reinterpret_cast<int*>(&postEffectType), VignetteRed);
-                ImGui::RadioButton("VignetteRedBloom", reinterpret_cast<int*>(&postEffectType), VignetteRedBloom);
                 ImGui::RadioButton("GrayScale", reinterpret_cast<int*>(&postEffectType), GrayScale);
+                ImGui::RadioButton("VignetteRed", reinterpret_cast<int*>(&postEffectType), VignetteRed);
                 ImGui::RadioButton("VigRedGrayScale", reinterpret_cast<int*>(&postEffectType), VigRedGrayScale);
+                ImGui::RadioButton("VignetteRedBloom", reinterpret_cast<int*>(&postEffectType), VignetteRedBloom);
                 ImGui::RadioButton("Bloom", reinterpret_cast<int*>(&postEffectType), Bloom);
+                ImGui::RadioButton("NewBloom", reinterpret_cast<int*>(&postEffectType), NewBloom);
                 ImGui::RadioButton("BloomFog", reinterpret_cast<int*>(&postEffectType), BloomFog);
 
                 ImGui::EndTabItem();
@@ -319,7 +323,7 @@ void MyGame::Draw()
                     PostEffect::GetInstance()->SetBloomThreshold(postEffectParam.bloomThreshold);
                 }
 
-                if (postEffectType == Bloom || postEffectType == BloomFog)
+                if (postEffectType == Bloom || postEffectType == BloomFog || postEffectType == NewBloom)
                 {
                     ImGui::DragFloat("BloomIntensity", &postEffectParam.bloomIntensity, 0.01f, 0.0f, 10.0f);
                     PostEffect::GetInstance()->SetBloomIntensity(postEffectParam.bloomIntensity);
