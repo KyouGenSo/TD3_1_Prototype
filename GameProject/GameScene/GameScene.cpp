@@ -292,6 +292,7 @@ void GameScene::DrawImGui()
 	timeKeeper_->ImGui();
 	statusHUD_->ImGui();
 	soundGroup_->ImGui();
+    castle_->ImGui();
 
 	ImGui::Begin("Directional Light");
 	ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);
@@ -306,4 +307,8 @@ void GameScene::MonitorStatus()
 	{
 		SceneManager::GetInstance()->ChangeScene("result");
 	}
+    if (castle_->getStatusCurrent().getHp() <= 0)
+    {
+        SceneManager::GetInstance()->ChangeScene("result");
+    }
 }
