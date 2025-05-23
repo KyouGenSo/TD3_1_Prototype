@@ -1,6 +1,6 @@
 #include "BulletBase.h"
 
-#include <assert.h>
+#include <cassert>
 #include <mutex>
 #include <GameScene/Object/Bullets/BulletFactory.h>
 #include <Type/ColliderType.h>
@@ -8,18 +8,16 @@
 
 void BulletBase::Initialize()
 {
-    pLifeTimer_ = std::make_unique<Timer>();
-    pLifeTimer_->Start();
-
-    pNextBulletTimer_ = std::make_unique<Timer>();
+	pLifeTimer_ = std::make_unique<Timer>();
+	pLifeTimer_->Start();
 }
 
 void BulletBase::Update() {
-    std::lock_guard<std::mutex> lock(mutex_);
-    if (rdy_ && pNext_){
-        pNext_->Fire();
-        rdy_ = false;
-    }
+	std::lock_guard<std::mutex> lock(mutex_);
+	if (rdy_ && pNext_){
+		pNext_->Fire();
+		rdy_ = false;
+	}
 }
 
 void BulletBase::Fire()
@@ -36,70 +34,65 @@ void BulletBase::Fire()
         InitializeNormal();
     }
 
-    pChainManager_->OnAttacked(type_);
-    pNextBulletTimer_->Start();
+	pChainManager_->OnAttacked(type_);
 }
 
 bool BulletBase::IsDeadAll()
 {
-    if (!isDead_) return false;
-    else if (pNext_ == nullptr) return true;
-    else return pNext_->IsDeadAll();
+	if (!isDead_) return false;
+	else if (pNext_ == nullptr) return true;
+	else return pNext_->IsDeadAll();
 }
 
 void BulletBase::SetNextBullet(std::unique_ptr<BulletBase> _bullet)
 {
-    _bullet->Initialize();
-    _bullet->SetPosition(transform_.translate);
-    _bullet->SetIsChainBullet(true);
-    _bullet->SetChainManager(pChainManager_);
-    _bullet->SetForward(forward_);
-    pNext_ = std::move(_bullet);
+	_bullet->Initialize();
+	_bullet->SetPosition(transform_.translate);
+	_bullet->SetIsChainBullet(true);
+	_bullet->SetChainManager(pChainManager_);
+	_bullet->SetForward(forward_);
+	_bullet->SetEmitter(emitter_);
+	pNext_ = std::move(_bullet);
 }
 
 void BulletBase::Next()
 {
-    if (pNextBulletTimer_->GetIsStart())
-    {
-        pNextBulletTimer_->Reset();
+	if (pChainManager_->IsLastWeapon(type_)) return;
 
-        if (pChainManager_->IsLastWeapon(type_)) return;
+	if (!BulletBase::CheckCoolTime()) return;
 
-        if (!BulletBase::CheckCoolTime()) return;
-
-        std::thread([this](){
-            BulletBase::CreateNextBullet();
-            rdy_ = true;
-        }).detach();
-    }
+	std::thread([this](){
+		BulletBase::CreateNextBullet();
+		rdy_ = true;
+	}).detach();
 }
 
 void BulletBase::CreateNextBullet()
 {
-    std::lock_guard<std::mutex> lock(mutex_);
-    auto bullet = BulletFactory::CreateBullet(pChainManager_->GetNextWeapon(type_));
-    assert(bullet);
-    SetNextBullet(std::move(bullet));
+	std::lock_guard<std::mutex> lock(mutex_);
+	auto bullet = BulletFactory::CreateBullet(pChainManager_->GetNextWeapon(type_));
+	assert(bullet);
+	SetNextBullet(std::move(bullet));
 }
 
 bool BulletBase::CheckCoolTime()
 {
-    float coolTime = pChainManager_->GetNextCoolTime(type_);
-    return coolTime <= 0;
+	float coolTime = pChainManager_->GetNextCoolTime(type_);
+	return coolTime <= 0;
 }
 
 bool BulletBase::CheckLifeTime() const
 {
-    if (isDead_)return true;
+	if (isDead_)return true;
 
-    return pLifeTimer_->GetNow<float>() >= lifeTime_;
+	return pLifeTimer_->GetNow<float>() >= lifeTime_;
 }
 
 void BulletBase::NotifyReinforcementManager(const Collision::Collider* _other)
 {
-    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
-    {
-        //敵に当たった場合
-        ReinforcementManager::GetInstance()->Notify("onHit");
-    }
+	if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
+	{
+		//敵に当たった場合
+		ReinforcementManager::GetInstance()->Notify("onHit");
+	}
 }

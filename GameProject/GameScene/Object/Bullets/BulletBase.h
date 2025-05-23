@@ -15,7 +15,7 @@ public:
     void Update() override;
     virtual void Fire();
     void OnCollisionTrigger(const Collision::Collider* _collider) override = 0;
-    bool IsDeadAll();
+    virtual bool IsDeadAll();
 
 
 public: /// Setter
@@ -34,7 +34,6 @@ protected:
     std::mutex mutex_;
     std::unique_ptr<BulletBase> pNext_ = nullptr;
     std::unique_ptr<Timer> pLifeTimer_ = nullptr;
-    std::unique_ptr<Timer> pNextBulletTimer_ = nullptr;
     Vector3 forward_ = {};
     bool isChainBullet_ = false;
     WeaponType type_ = WeaponType::None;

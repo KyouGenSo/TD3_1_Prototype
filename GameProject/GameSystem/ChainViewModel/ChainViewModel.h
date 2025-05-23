@@ -15,9 +15,10 @@ public:
 
     void Initialize();
     void Update();
+    void ImGui();
     void UpdateChainData(const std::array<std::string, 4>& _chainData);
 
-    Chain* GetChain() { return chain_.get(); }
+    Chain* GetChain() const { return chain_.get(); }
 
 
 private:
