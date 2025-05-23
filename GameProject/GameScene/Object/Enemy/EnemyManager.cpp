@@ -6,6 +6,8 @@
 #include <random>
 
 #include "GlobalVariables.h"
+#include "EnemyBase.h"
+#include <list>
 
 EnemyManager::EnemyManager()
     : gen_(rd_()), wave_()
@@ -46,10 +48,7 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
 void EnemyManager::Update()
 {
-    if (!keys_.empty())
-    {
-        SpawnEnemy();
-    }
+    SpawnEnemy();
 
     std::vector<std::string> keysToRemove;
     for (auto key = keys_.begin(); key != keys_.end(); )
@@ -115,6 +114,14 @@ void EnemyManager::Draw()
     for (auto& enemy : bounceEnemies_) {
         enemy->Draw();
     }
+}
+
+void EnemyManager::Draw2d()
+{
+    std::list<EnemyBase*> allEnemies_ = {};
+    for (auto& e : enemies_) e->Draw2d();
+    for (auto& e : flyEnemies_) e->Draw2d();
+    for (auto& e : bounceEnemies_) e->Draw2d();
 }
 
 void EnemyManager::Finalize()
@@ -256,21 +263,30 @@ void EnemyManager::SetEmitter(EmitterManager* pEmitter) {
 
 void EnemyManager::SpawnEnemy()
 {
-    if (keys_.empty())
+    /// スポーンしたい敵の数をカウントアップする
+    if (!keys_.empty())
     {
-        return;
-    }
-    for (const auto& key : keys_)
-    {
-        spawnTimer_[key] += deltaTime_;
-        if (spawnTimer_[key] > waves_[key].interval)
+        for (const auto& key : keys_)
         {
-            for (int i = 0; i < waves_[key].amount; ++i)
+            const auto& wave = waves_[key];
+
+            spawnTimer_[key] += deltaTime_;
+            if (spawnTimer_[key] > wave.interval)
             {
-                AddEnemy(RandomSpawnPosition(waves_[key].type), waves_[key].type);
+                pendingSpawnCount_[wave.type] += wave.amount;
+                spawnTimer_[key] = 0.0f;
             }
-            spawnTimer_[key] = 0.0f;
         }
+    }
+
+
+    // 敵のスポーンを実行する (毎フレーム １タイずつ)
+    for (auto& [key, count] : pendingSpawnCount_)
+    {
+        if (count <= 0) continue;
+
+        AddEnemy(RandomSpawnPosition(key), key);
+        --count;
     }
 }
 

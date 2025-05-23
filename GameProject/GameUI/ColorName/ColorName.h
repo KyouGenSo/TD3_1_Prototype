@@ -5,6 +5,11 @@ enum class ColorName : uint32_t
 {
     None = 0,
     DeepTeal,
+    // Custom colors
+    CoffeeBlack,
+    Background,
+    // Primary colors
+    Gray,
     Red,
     Green,
     Blue,
@@ -25,6 +30,9 @@ static const char* ColorTypeToString(ColorName _colorName)
     switch (_colorName)
     {
     case ColorName::DeepTeal: return "DeepTeal";
+    case ColorName::CoffeeBlack: return "CoffeeBlack";
+    case ColorName::Background: return "Background";
+    case ColorName::Gray: return "Gray";
     case ColorName::Red: return "Red";
     case ColorName::Green: return "Green";
     case ColorName::Blue: return "Blue";

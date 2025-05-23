@@ -62,6 +62,7 @@ void GameScene::Initialize()
 
 	// GUIの初期化
 	guiLvUP_ = std::make_unique<GUI_LvUP>();
+    guiLvUP_->Initialize();
 	guiPauseMenu_ = std::make_unique<GUI_PauseMenu>();
 	guiChain_ = std::make_unique<GUI_Chain>();
 	guiChain_->Initialize();
@@ -140,6 +141,7 @@ void GameScene::Initialize()
     handle_onresizes_ = {
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1)),
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&CountDown::OnResize, countDown_.get(), std::placeholders::_1)),
+        WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&GUI_LvUP::OnResize, guiLvUP_.get(), std::placeholders::_1)),
     };
 
     // ReinforcementManagerの初期化
@@ -259,6 +261,7 @@ void GameScene::Draw()
     countDown_->Draw2D();
     minimap_->Draw();
     statusHUD_->Draw2D();
+    enemyManager_->Draw2d();
     reticle_->Draw();
 
     //camera_->Draw2D();

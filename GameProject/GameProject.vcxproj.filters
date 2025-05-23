@@ -134,6 +134,9 @@
     <Filter Include="GameUI\ColorResolver">
       <UniqueIdentifier>{4ef69d86-7745-4686-9919-62083d197c8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameUI\HPBar">
+      <UniqueIdentifier>{ae9c4936-e224-406a-b564-2a061291306a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -278,13 +281,9 @@
     <ClCompile Include="GameScene\HUD\StatusHUD.cpp">
       <Filter>GameUI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="NiGui\NiVec4.cpp">
-      <Filter>NiGui</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\HUD\StatusBar.cpp">
       <Filter>GameUI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\Object\Enemy\EnemyBase.cpp" />
     <ClCompile Include="GameSystem\Reinforcement\StatusReinforcement.cpp">
       <Filter>GameSystem\Reinforcement</Filter>
     </ClCompile>
@@ -306,9 +305,17 @@
     <ClCompile Include="GameSystem\GameEventNotifier\GameEventNotifier.cpp">
       <Filter>GameSystem\GameEventNotifier</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI\ColorResolver\ColorResolver.cpp" />
     <ClCompile Include="Type\Color.cpp">
       <Filter>Type</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\HPBar\HPBar.cpp">
+      <Filter>GameUI\HPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Object\Enemy\EnemyBase.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\ColorResolver\ColorResolver.cpp">
+      <Filter>GameUI\ColorResolver</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -447,9 +454,6 @@
     <ClInclude Include="GameScene\Object\Enemy\EnemyBase.h">
       <Filter>Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h">
-      <Filter>Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\BounceEnemy.h">
       <Filter>Object\Enemy</Filter>
     </ClInclude>
@@ -461,9 +465,6 @@
     </ClInclude>
     <ClInclude Include="GameScene\HUD\StatusBar.h">
       <Filter>GameUI\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="NiGui\NiVec4.h">
-      <Filter>NiGui</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
     <ClInclude Include="Type\ColliderType.h" />
@@ -502,6 +503,12 @@
     </ClInclude>
     <ClInclude Include="GameUI\ColorName\ColorName.h">
       <Filter>GameUI\ColorResolver</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\HPBar\HPBar.h">
+      <Filter>GameUI\HPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h">
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

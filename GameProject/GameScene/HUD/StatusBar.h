@@ -3,7 +3,7 @@
 #include <Sprite.h>
 #include <vector>
 
-#include <NiGui/NiVec4.h>
+#include <Math/NiVec4.h>
 #include <Math/NiVec2.h>
 #include <array>
 
