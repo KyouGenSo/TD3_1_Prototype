@@ -237,7 +237,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="NiGui\Derived\Drawer.cpp" />
     <ClCompile Include="NiGui\Derived\NiGui_Debug.cpp" />
     <ClCompile Include="NiGui\Derived\ProcHandler.cpp" />
-    <ClCompile Include="NiGui\NiVec4.cpp" />
     <ClCompile Include="ResultScene\ResultScene.cpp" />
     <ClCompile Include="Timer\Timer.cpp" />
     <ClCompile Include="TitleScene\TitleScene.cpp" />
@@ -300,7 +299,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="NiGui\Derived\Drawer.h" />
     <ClInclude Include="NiGui\Derived\NiGui_Debug.h" />
     <ClInclude Include="NiGui\Derived\ProcHandler.h" />
-    <ClInclude Include="NiGui\NiVec4.h" />
     <ClInclude Include="ResultScene\ResultScene.h" />
     <ClInclude Include="Timer\Timer.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />

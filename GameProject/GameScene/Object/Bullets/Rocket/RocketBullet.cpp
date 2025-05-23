@@ -14,7 +14,7 @@ void RocketBullet::Initialize()
     BulletBase::Initialize();
 
     type_ = WeaponType::RocketLauncher;
-    speed_ = 0.4f;
+    speed_ = 1.0f;
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();

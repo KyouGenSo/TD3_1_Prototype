@@ -123,7 +123,7 @@ void Player::Finalize()
     {
         rfmManager->UnregisterReinforcement(reinforcement.get());
     }
-    ShowCursor(true);
+    if (mouseAim_) ShowCursor(true);
 }
 
 void Player::ImGui()

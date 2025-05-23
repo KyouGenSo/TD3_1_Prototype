@@ -7,6 +7,8 @@
 
 void FlyEnemy::Initialize()
 {
+    EnemyBase::Initialize();
+
     pGameEventNotifier_ = GameEventNotifier::GetInstance();
 
     model_ = std::make_unique<Object3d>();
@@ -47,6 +49,8 @@ void FlyEnemy::Initialize()
 
 void FlyEnemy::Update()
 {
+    EnemyBase::Update();
+
     Object::Update();
 
     if (isDead_) return;
@@ -76,8 +80,7 @@ void FlyEnemy::OnCollision(const Collision::Collider* _other)
 
     if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
     {
-
-        EnemyBase::StatusUpdateOnCollision(_other);
+        Object::StatusUpdateOnCollision(_other);
 
         isDead_ = true;
 

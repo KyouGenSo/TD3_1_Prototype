@@ -8,6 +8,8 @@
 
 void Enemy::Initialize()
 {
+    EnemyBase::Initialize();
+
     pGameEventNotifier_ = GameEventNotifier::GetInstance();
 
     model_ = std::make_unique<Object3d>();
@@ -47,6 +49,8 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
+    EnemyBase::Update();
+
     Object::Update();
 
     if (isDead_) return;
@@ -76,7 +80,6 @@ void Enemy::OnCollision(const Collision::Collider* _other)
 
     if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
     {
-
         Object::StatusUpdateOnCollision(_other);
 
         isDead_ = true;

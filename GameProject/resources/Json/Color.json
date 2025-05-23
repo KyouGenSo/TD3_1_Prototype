@@ -1,15 +1,8 @@
 {
   "DeepTeal": "#32746d",
-  "Red": "#dc4428",
-  "Green" : "",
-  "Blue" : "",
-  "Yellow" : "",
-  "Orange" : "",
-  "Purple" : "",
-  "DarkRed" : "",
-  "DarkGreen" : "",
-  "DarkBlue" : "",
-  "DarkYellow" : "",
-  "DarkOrange" : "",
-  "DarkPurple" : ""
+  "Red": "#d91e1e",
+  "Gray": "#8d8d8d",
+  "DarkRed": "#a91414",
+  "CoffeeBlack": "#000000cc",
+  "Background": "#000000cc"
 }
