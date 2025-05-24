@@ -1,69 +1,98 @@
-#include "MachineGunBullet.h"
-#include "Type/ColliderType.h"
-#include <Utility/Adaptor.h>
+#include <GameScene/Object/Collision/Collider.h>
 
-MachineGunBullet::Bullet* MachineGunBullet::Bullet::Initialize() {
+#include "MachineGunBullet.h"
+#include "Utility/Adaptor.h"
+
+void MachineGunBullet::Bullet::Initialize() {
+    BulletBase::Initialize();
+    type_ = WeaponType::MachineGun;
+    speed_ = 0.9f;
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("box.gltf");
-    model_->SetScale({.2f, .2f, .2f});
-
-    collider_ = std::make_unique<Collision::Collider>();
-    collider_->SetEvent(Collision::EventType::Trigger, [&](auto c){OnCollisionTrigger(c); })
-        ->SetSize(0.2f)
+    model_->SetModel("AnimatedCube.gltf");
+    model_->SetScale({0.2f, 0.2f, 0.2f});
+    CalcLifeTime();
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_
+        ->SetEvent(Collision::EventType::Trigger, [&](const Collision::Collider* pCol){ OnCollisionTrigger(pCol); })
         ->SetTranslate(Adaptor(transform_.translate))
+        ->SetSize(0.2f)
         ->SetType(Collision::Type::Sphere)
-        ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
         ->SetOwner(this)
         ->Enable();
-    Update();
-    return this;
+
+    if (isChainBullet_){
+        InitializeChain();
+    } else{
+        InitializeNormal();
+    }
 }
 
 void MachineGunBullet::Bullet::Update() {
-    if (dead)return;
-    transform_.translate += forward_ * speed_;
-
-    if (50.f <= (transform_.translate - origin).Length()){
-        dead = true;
+    if (isChainBullet_){
+        UpdateChain();
+    } else{
+        UpdateNormal();
     }
+    model_->SetRotate(transform_.rotate);
+    model_->SetTranslate(transform_.translate);
+    model_->Update();
+    if (pNext_){
+        pNext_->Update();
+    }
+    isDead_ = CheckLifeTime();
+}
 
-    collider_->SetTranslate(Adaptor(transform_.translate));
+void MachineGunBullet::Bullet::Draw() {
+    if (isDead_ && !pNext_) return;
+    model_->Draw();
+    
+    if (pNext_){
+        pNext_->Draw();
+    }
+}
 
+void MachineGunBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _collider) {
+    if (isDead_ || pCollider_->IsDisabled()) return;
+    isDead_ = true;
+    pCollider_->Disable();
+    Next();
+}
+
+void MachineGunBullet::Bullet::InitializeNormal() {
+    statusInit_.setAttack(7)
+        .setHp(1)
+        .setSpeed(1)
+        .setDefence(0)
+        .setMaxHp(1);
+    statusCurrent_ = statusInit_;
+}
+
+void MachineGunBullet::Bullet::InitializeChain() {
+    statusInit_.setAttack(7)
+        .setHp(1)
+        .setSpeed(1)
+        .setDefence(0)
+        .setMaxHp(1);
+    statusCurrent_ = statusInit_;
+}
+
+void MachineGunBullet::Bullet::UpdateNormal() {
+    transform_.translate += forward_ * speed_;
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
     model_->Update();
 }
 
-void MachineGunBullet::Bullet::Draw() {
-    model_->Draw();
+void MachineGunBullet::Bullet::UpdateChain() {
+    transform_.translate += forward_ * speed_;
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
+    model_->SetRotate(transform_.rotate);
+    model_->SetTranslate(transform_.translate);
+    model_->Update();
 }
 
-MachineGunBullet::Bullet* MachineGunBullet::Bullet::SetOriginalPosition(const Vector3& _pos)
-{
-    origin = _pos;
-    transform_.translate = origin;
-    return this;
-}
-
-MachineGunBullet::Bullet* MachineGunBullet::Bullet::SetRotate(const Vector3& _rotate) {
-    transform_.rotate = _rotate;
-    return this;
-}
-
-MachineGunBullet::Bullet* MachineGunBullet::Bullet::SetForward(const Vector3& _forward) {
-    forward_ = _forward;
-    return this;
-}
-
-MachineGunBullet::Bullet* MachineGunBullet::Bullet::SetSpeed(float _speed) {
-    speed_ = _speed;
-    return this;
-}
-
-void MachineGunBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _other) {
-    dead = true;
-}
