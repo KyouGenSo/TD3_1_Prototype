@@ -51,17 +51,15 @@ public: // メンバ関数
 
 private: // メンバ変数
 
-    PostEffectParam postEffectParam = {};
-
-    bool FPSWindowVisible = true;
-    bool PostEffectWindowVisible = false;
-
     std::unique_ptr<NiGuiDrawer> drawer_ = nullptr;
     std::unique_ptr<ProcHandler> procHandler_ = nullptr;
     std::unique_ptr<NiGuiDebug> niguiDebug_ = nullptr;
     std::vector<uint32_t> handle_onresizes_ = {};
 
     EventTimer* eventTimer_ = nullptr;
+
+#ifdef _DEBUG
+    PostEffectParam postEffectParam = {};
 
     enum PostEffectType
     {
@@ -77,6 +75,10 @@ private: // メンバ変数
     };
 
     PostEffectType postEffectType = NoEffect;
+
+    bool FPSWindowVisible = true;
+    bool PostEffectWindowVisible = false;
+#endif // _DEBUG
 
 private:
     void OverrideImGuiStyle();

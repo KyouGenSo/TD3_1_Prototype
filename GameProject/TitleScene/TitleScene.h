@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include"Sprite.h"
 #include"Object3d.h"
+#include "EmitterManager.h"
 
 #include <memory>
 
@@ -35,33 +36,49 @@ public: // メンバ関数
     /// </summary>
     void DrawImGui() override;
 
+public: // 構造体
+    struct BloomParam
+    {
+        float intensity;
+        float threshold;
+        float sigma;
+        float sigmaIncreaSpeed;
+        bool sigmaIncreasing;
+        int kernelSize;
+    };
+
 private: // メンバ変数
 
     bool isDebug_ = false;
 
-    const float AnimationFrames = 120;
-    float frameCount_ = 0;
-    Vector2 pos{};
+    std::unique_ptr<EmitterManager> emitterManager_ = nullptr;
+    BoxEmitterParams emitterParams_ = {};
 
-    Vector2 start {1500, 300};
-    Vector2 end {300, 300};
+    BloomParam bloomParam_ = {};
+
+    Vector2 pressPos{ .x = 300, .y = 600 };
+    Vector2 pressSize{ .x = 500, .y = 100 };
+
+    float pressAlpha = 0.f;
+    float pressAlphaSpeed = 0.05f;
+    bool pressAlphaIncreasing = true;
 
     std::unique_ptr<Sprite> button_;
-
     std::unique_ptr<Sprite> press_;
     std::unique_ptr<Sprite> guide_;
+    std::unique_ptr<Sprite> bgSp_;
 
     std::unique_ptr<Sprite> whiteBarVer_;
     std::unique_ptr<Sprite> whiteBarVer2_;
     std::unique_ptr<Sprite> whiteBarHor_;
     std::unique_ptr<Sprite> whiteBarHor2_;
-    Vector2 whiteBarVerPos{ 190.f, 0.f };
-    Vector2 whiteBarVerPos2{ 1410.f, 0.f };
-    Vector2 whiteBarHorPos{ 0.f, 190.f };
-    Vector2 whiteBarHorPos2{ 0.f, 710.f };
+    Vector2 whiteBarVerPos{ .x= 80.f, .y= 0.f};
+    Vector2 whiteBarVerPos2{ .x= 1520.f, .y= 0.f};
+    Vector2 whiteBarHorPos{ .x= 0.f, .y= 80.f };
+    Vector2 whiteBarHorPos2{ .x= 0.f, .y= 880.f };
 
-    Vector2 whiteBarVerSize{ 5.f, 900.f };
-    Vector2 whiteBarHorSize{ 1600.f, 5.f };
+    Vector2 whiteBarVerSize{ .x= 5.f, .y= 2000.f };
+    Vector2 whiteBarHorSize{ .x= 2000.f, .y= 5.f};
 
     uint32_t bgmPlayHandle_ = 0;
 };
