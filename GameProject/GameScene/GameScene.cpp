@@ -19,37 +19,37 @@
 
 void GameScene::Initialize()
 {
-	// ステージデータの取得
-	const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
-	eventTimer_ = EventTimer::GetInstance();
+    // ステージデータの取得
+    const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
+    eventTimer_ = EventTimer::GetInstance();
 
 
-	directLightParam_ = {
-		.direction = { 0.0f, -1.0f, 0.0f },
-		.color = { 1.0f, 1.0f, 1.0f, 1.0f },
-		.lightType = 1,
-		.intensity = 2.0f
-	};
+    directLightParam_ = {
+        .direction = { 0.0f, -1.0f, 0.0f },
+        .color = { 1.0f, 1.0f, 1.0f, 1.0f },
+        .lightType = 1,
+        .intensity = 2.0f
+    };
 
     emitterManager_ = std::make_unique<EmitterManager>(GPUParticle::GetInstance());
 
-	pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
+    pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
 
-	// Terrain
-	terrain_ = std::make_unique<Terrain>();
-	terrain_->Initialize();
+    // Terrain
+    terrain_ = std::make_unique<Terrain>();
+    terrain_->Initialize();
 
-	// プレイヤーの初期化
-	player_ = std::make_unique<Player>();
-	player_->Initialize();
-	player_->SetFloor(terrain_->GetFloorHeight());
-	player_->SetTransform(currentStageData.playerTransform);
-	player_->SetEmitter(emitterManager_.get());
+    // プレイヤーの初期化
+    player_ = std::make_unique<Player>();
+    player_->Initialize();
+    player_->SetFloor(terrain_->GetFloorHeight());
+    player_->SetTransform(currentStageData.playerTransform);
+    player_->SetEmitter(emitterManager_.get());
 
-	// Camera
-	camera_ = std::make_unique<FollowCamera>();
-	camera_->Initialize();
-	camera_->SetTarget(&player_->GetTransform());
+    // Camera
+    camera_ = std::make_unique<FollowCamera>();
+    camera_->Initialize();
+    camera_->SetTarget(&player_->GetTransform());
 
     freeLookCamera_ = std::make_unique<FreeLookCamera>();
     freeLookCamera_->Initialize();
@@ -60,18 +60,18 @@ void GameScene::Initialize()
     chainViewModel_ = std::make_unique<ChainViewModel>();
     chainViewModel_->Initialize();
 
-	// GUIの初期化
-	guiLvUP_ = std::make_unique<GUI_LvUP>();
+    // GUIの初期化
+    guiLvUP_ = std::make_unique<GUI_LvUP>();
     guiLvUP_->Initialize();
-	guiPauseMenu_ = std::make_unique<GUI_PauseMenu>();
-	guiChain_ = std::make_unique<GUI_Chain>();
-	guiChain_->Initialize();
-	guiChain_->SetViewModel(chainViewModel_.get());
+    guiPauseMenu_ = std::make_unique<GUI_PauseMenu>();
+    guiChain_ = std::make_unique<GUI_Chain>();
+    guiChain_->Initialize();
+    guiChain_->SetViewModel(chainViewModel_.get());
 
-	// Observer登録
-	player_->AddObserver(guiLvUP_.get());
-	player_->AddObserver(guiPauseMenu_.get());
-	player_->AddObserver(guiChain_.get());
+    // Observer登録
+    player_->AddObserver(guiLvUP_.get());
+    player_->AddObserver(guiPauseMenu_.get());
+    player_->AddObserver(guiChain_.get());
 
     // Minimap
     minimap_ = std::make_unique<Minimap>();
@@ -174,6 +174,8 @@ void GameScene::Finalize()
         WinApp::GetInstance()->UnregisterOnResizeFunc(handle);
     }
 
+    emitterManager_->RemoveAllEmitters();
+
     terrain_->Finalize();
     player_->Finalize();
     boss_->Finalize();
@@ -186,12 +188,12 @@ void GameScene::Finalize()
 
 void GameScene::Update()
 {
-	Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
+    Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
 
-	soundGroup_->Update();
+    soundGroup_->Update();
 
-	timeKeeper_->Update();
-	chainViewModel_->Update();
+    timeKeeper_->Update();
+    chainViewModel_->Update();
 
     eventTimer_->Measure("Update Terrain", [&]() { terrain_->Update(); });
     eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });
@@ -199,49 +201,49 @@ void GameScene::Update()
     eventTimer_->Measure("Update Camera", [&]() { camera_->Update(); });
     freeLookCamera_->Update();
 
-	eventTimer_->Measure("Update GUI", [&]()
-	{
-		guiLvUP_->Update();
-		guiPauseMenu_->Update();
-		guiChain_->Update();
-	});
+    eventTimer_->Measure("Update GUI", [&]()
+    {
+        guiLvUP_->Update();
+        guiPauseMenu_->Update();
+        guiChain_->Update();
+    });
 
-	boss_->Update();
-	eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
-	eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
+    boss_->Update();
+    eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
+    eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
 
-	/// タイマーの更新
-	if (timeKeeper_->GetRemainTime("JunbiPhase") < 3.0f && !countDown_->IsStart())
-	{
-		countDown_->Start();
-		timeKeeper_->Reset("JunbiPhase");
-	}
+    /// タイマーの更新
+    if (timeKeeper_->GetRemainTime("JunbiPhase") < 3.0f && !countDown_->IsStart())
+    {
+        countDown_->Start();
+        timeKeeper_->Reset("JunbiPhase");
+    }
 
-	countDown_->Update();
+    countDown_->Update();
 
-	statusHUD_->Update();
-	eventTimer_->Measure("detect", [&]{pCollisionManager_->Detect(); });
-	eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
+    statusHUD_->Update();
+    eventTimer_->Measure("detect", [&]{pCollisionManager_->Detect(); });
+    eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
 
-	emitterManager_->Update();
-	*(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
+    emitterManager_->Update();
+    *(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
     *(statusHUD_->GetXPBar()) = player_->getXP();
     statusHUD_->GetXPBar()->SetMaxValue(player_->getXPMax());
 
     reticle_->Update();
 
-	// ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
-	this->MonitorStatus();
+    // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
+    this->MonitorStatus();
 }
 
 void GameScene::Draw()
 {
-	/// ================================== ///
-	///              描画処理               ///
-	/// ================================== ///
-	//------------------背景Spriteの描画------------------//
-	// スプライト共通描画設定
-	SpriteBasic::GetInstance()->SetCommonRenderSetting();
+    /// ================================== ///
+    ///              描画処理               ///
+    /// ================================== ///
+    //------------------背景Spriteの描画------------------//
+    // スプライト共通描画設定
+    SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
     //-------------------Modelの描画-------------------//
     // 3Dモデル共通描画設定
@@ -253,7 +255,7 @@ void GameScene::Draw()
     enemyManager_->Draw();
     //camera_->Draw3D();
 
-	GPUParticle::GetInstance()->Draw();
+    GPUParticle::GetInstance()->Draw();
 
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定
@@ -269,57 +271,57 @@ void GameScene::Draw()
 
 void GameScene::DrawWithoutEffect()
 {
-	/// ================================== ///
-	///              描画処理               ///
-	/// ================================== ///
-	//------------------背景Spriteの描画------------------//
-	// スプライト共通描画設定
-	SpriteBasic::GetInstance()->SetCommonRenderSetting();
+    /// ================================== ///
+    ///              描画処理               ///
+    /// ================================== ///
+    //------------------背景Spriteの描画------------------//
+    // スプライト共通描画設定
+    SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
 
 
 
-	//-------------------Modelの描画-------------------//
-	// 3Dモデル共通描画設定
-	Object3dBasic::GetInstance()->SetCommonRenderSetting();
+    //-------------------Modelの描画-------------------//
+    // 3Dモデル共通描画設定
+    Object3dBasic::GetInstance()->SetCommonRenderSetting();
 
 
 
 
-	//------------------前景Spriteの描画------------------//
-	// スプライト共通描画設定
-	SpriteBasic::GetInstance()->SetCommonRenderSetting();
+    //------------------前景Spriteの描画------------------//
+    // スプライト共通描画設定
+    SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
 
 }
 
 void GameScene::DrawImGui()
 {
-	terrain_->ImGui();
-	player_->ImGui();
-	enemyManager_->ImGui();
-	boss_->ImGui();
-	camera_->ImGui();
-	guiChain_->ImGui();
-	timeKeeper_->ImGui();
-	statusHUD_->ImGui();
-	soundGroup_->ImGui();
+    terrain_->ImGui();
+    player_->ImGui();
+    enemyManager_->ImGui();
+    boss_->ImGui();
+    camera_->ImGui();
+    guiChain_->ImGui();
+    timeKeeper_->ImGui();
+    statusHUD_->ImGui();
+    soundGroup_->ImGui();
     castle_->ImGui();
     chainViewModel_->ImGui();
 
-	ImGui::Begin("Directional Light");
-	ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);
-	ImGui::ColorEdit4("Color", &directLightParam_.color.x);
-	ImGui::DragFloat("Intensity", &directLightParam_.intensity, 0.01f);
-	ImGui::End();
+    ImGui::Begin("Directional Light");
+    ImGui::DragFloat3("Direction", &directLightParam_.direction.x, 0.01f);
+    ImGui::ColorEdit4("Color", &directLightParam_.color.x);
+    ImGui::DragFloat("Intensity", &directLightParam_.intensity, 0.01f);
+    ImGui::End();
 }
 
 void GameScene::MonitorStatus()
 {
-	if (player_->getStatusCurrent().getHp() <= 0)
-	{
-		SceneManager::GetInstance()->ChangeScene("result");
-	}
+    if (player_->getStatusCurrent().getHp() <= 0)
+    {
+        SceneManager::GetInstance()->ChangeScene("result");
+    }
     if (castle_->getStatusCurrent().getHp() <= 0)
     {
         SceneManager::GetInstance()->ChangeScene("result");
