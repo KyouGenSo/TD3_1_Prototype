@@ -7,6 +7,8 @@
 #include <GameScene/Object/Weapon/Weapon.h>
 #include <Interfaces/IObserver.h>
 #include <GameSystem/Reinforcement/IReinforcement.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
+#include <cstdint>
 
 class Player : public Object
 {
@@ -33,9 +35,10 @@ class Player : public Object
     const POINT ORIGIN = {990, 540};
 
     uint32_t id_callback_enemydead_ = 0;
+    uint32_t id_callback_playerlevelup_ = 0;
     float xp_ = 0.0f;
     float xpMax_ = 100.0f;
-    float xpGainRetio_ = 0.01f;
+    float xpGainRetio_ = 0.1f;
     float xpGained_ = 0.0f;
     float level_ = 1.0f;
 
@@ -53,6 +56,9 @@ public:
     void SetChain(Chain* _chain) { chain_ = _chain; weapon_->SetChain(_chain); }
     void AddReinforcement(const std::string& _cardName);
     void OnChainConfirm();
+
+    float getXP() const { return xp_; }
+    float getXPMax() const { return xpMax_; }
 
 
 private:

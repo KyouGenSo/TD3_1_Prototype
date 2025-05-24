@@ -14,6 +14,7 @@
 #include <GameSystem/StageManager/StageManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 #include <GameSystem/SoundManager/SoundManager.h>
+#include <GameUI/ColorResolver/ColorResolver.h>
 #include <SpriteBasic.h>
 
 #include <Utility/RandomGenerator/RandomGenerator.h>
@@ -21,6 +22,8 @@
 #include "GPUParticle.h"
 #include "ModelManager.h"
 #include <functional>
+
+#include "Transition.h"
 
 
 void MyGame::Initialize()
@@ -53,6 +56,9 @@ void MyGame::Initialize()
     postEffectParam.bloomThreshold = 1.0f;
     postEffectParam.bloomIntensity = 1.0f;
     postEffectParam.bloomSigma = 2.0f;
+    postEffectParam.bloomKernelSize = 10;
+    postEffectParam.bloomSampleCount = 10;
+    postEffectParam.downSampleFactor = 8;
     postEffectParam.fogColor = { 1.0f, 1.0f, 1.0f, 1.0f };
     postEffectParam.fogDensity = 0.01f;
 
@@ -64,6 +70,7 @@ void MyGame::Initialize()
 
     /// UIの初期化
     NiGui::Initialize({ WinApp::clientWidth, WinApp::clientHeight });
+    NiGui::SetClientSize({ WinApp::clientWidth, WinApp::clientHeight });
 
     /// 描画クラスの設定
     drawer_ = std::make_unique<NiGuiDrawer>();
@@ -97,6 +104,9 @@ void MyGame::Initialize()
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 
     SoundManager::GetInstance()->Initialize("Sounds.json");
+
+    ColorResolver::GetInstance()->Initialize()->LoadColorData("Color.json");
+
 
     handle_onresizes_.push_back(
         winApp_->RegisterOnResizeFunc(std::bind(&SpriteBasic::OnResize, SpriteBasic::GetInstance(), std::placeholders::_1))
@@ -136,7 +146,8 @@ void MyGame::Update()
     {
         // フルスクリーンの切り替え
         ToggleFullScreen();
-        NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, { 0, 0 });
+        NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, {});
+        NiGui::SetClientSize({ WinApp::clientWidth, WinApp::clientHeight });
     }
 
 #ifdef _DEBUG
@@ -177,8 +188,14 @@ void MyGame::Update()
     case Bloom:
         PostEffect::GetInstance()->SetEffectType("Bloom");
         break;
+    case NewBloom:
+        PostEffect::GetInstance()->SetEffectType("NewBloom");
+        break;
     case BloomFog:
         PostEffect::GetInstance()->SetEffectType("BloomFog");
+        break;
+    case RadialBlur:
+        PostEffect::GetInstance()->SetEffectType("RadialBlur");
         break;
     }
 #endif // _DEBUG
@@ -228,6 +245,9 @@ void MyGame::Draw()
     NiGui::DrawUI();
 
     Draw2D::GetInstance()->Draw();
+
+    Transition::GetInstance()->Draw();
+
     Draw2D::GetInstance()->Reset();
 
     /// ============================================= ///
@@ -281,20 +301,22 @@ void MyGame::Draw()
 
 
     // PostEffectのパラメータ調整
-    if (PostEffectWindowVisible)
-    {
+    if (PostEffectWindowVisible) {
         ImGui::Begin("PostEffect", &PostEffectWindowVisible);
         if (ImGui::BeginTabBar("PostEffectTab"))
         {
+
             if (ImGui::BeginTabItem("PostEffectType"))
             {
-                ImGui::RadioButton("NoEffect", reinterpret_cast<int*>(&postEffectType), NoEffect);
-                ImGui::RadioButton("VignetteRed", reinterpret_cast<int*>(&postEffectType), VignetteRed);
-                ImGui::RadioButton("VignetteRedBloom", reinterpret_cast<int*>(&postEffectType), VignetteRedBloom);
-                ImGui::RadioButton("GrayScale", reinterpret_cast<int*>(&postEffectType), GrayScale);
-                ImGui::RadioButton("VigRedGrayScale", reinterpret_cast<int*>(&postEffectType), VigRedGrayScale);
-                ImGui::RadioButton("Bloom", reinterpret_cast<int*>(&postEffectType), Bloom);
-                ImGui::RadioButton("BloomFog", reinterpret_cast<int*>(&postEffectType), BloomFog);
+                ImGui::RadioButton("NoEffect", (int*)&postEffectType, NoEffect);
+                ImGui::RadioButton("VignetteRed", (int*)&postEffectType, VignetteRed);
+                ImGui::RadioButton("VignetteRedBloom", (int*)&postEffectType, VignetteRedBloom);
+                ImGui::RadioButton("GrayScale", (int*)&postEffectType, GrayScale);
+                ImGui::RadioButton("VigRedGrayScale", (int*)&postEffectType, VigRedGrayScale);
+                ImGui::RadioButton("Bloom", (int*)&postEffectType, Bloom);
+                ImGui::RadioButton("NewBloom", (int*)&postEffectType, NewBloom);
+                ImGui::RadioButton("BloomFog", (int*)&postEffectType, BloomFog);
+                ImGui::RadioButton("RadialBlur", (int*)&postEffectType, RadialBlur);
 
                 ImGui::EndTabItem();
             }
@@ -316,14 +338,16 @@ void MyGame::Draw()
                     PostEffect::GetInstance()->SetBloomThreshold(postEffectParam.bloomThreshold);
                 }
 
-                if (postEffectType == Bloom || postEffectType == BloomFog)
+                if (postEffectType == Bloom || postEffectType == BloomFog || postEffectType == NewBloom)
                 {
                     ImGui::DragFloat("BloomIntensity", &postEffectParam.bloomIntensity, 0.01f, 0.0f, 10.0f);
                     PostEffect::GetInstance()->SetBloomIntensity(postEffectParam.bloomIntensity);
                     ImGui::DragFloat("BloomThreshold", &postEffectParam.bloomThreshold, 0.01f, 0.0f, 1.0f);
                     PostEffect::GetInstance()->SetBloomThreshold(postEffectParam.bloomThreshold);
-                    ImGui::DragFloat("BloomSigma", &postEffectParam.bloomSigma, 0.01f, 0.0f, 10.0f);
+                    ImGui::DragFloat("BloomSigma", &postEffectParam.bloomSigma, 0.01f, 0.1f, 50.0f);
                     PostEffect::GetInstance()->SetBloomSigma(postEffectParam.bloomSigma);
+                    ImGui::DragInt("BloomKernelSize", &postEffectParam.bloomKernelSize, 1, 1, 100);
+                    PostEffect::GetInstance()->SetBloomKernelSize(postEffectParam.bloomKernelSize);
                 }
 
                 if (postEffectType == BloomFog)
@@ -332,6 +356,22 @@ void MyGame::Draw()
                     PostEffect::GetInstance()->SetFogColor(postEffectParam.fogColor);
                     ImGui::DragFloat("FogDensity", &postEffectParam.fogDensity, 0.01f, 0.0f, 1.0f);
                     PostEffect::GetInstance()->SetFogDensity(postEffectParam.fogDensity);
+                }
+
+                if (postEffectType == RadialBlur)
+                {
+                    ImGui::DragFloat2("RadialBlurCenter", &postEffectParam.radialBlurCenter.x, 0.01f, 0.0f, 1.0f);
+                    PostEffect::GetInstance()->SetRadialBlurCenter(postEffectParam.radialBlurCenter);
+                    ImGui::DragFloat("RadialBlurWidth", &postEffectParam.radialBlurWidth, 0.01f, 0.0f, 1.0f);
+                    PostEffect::GetInstance()->SetRadialBlurWidth(postEffectParam.radialBlurWidth);
+                    ImGui::DragInt("RadialBlurSampleCount", &postEffectParam.radialBlurSampleCount, 1.0f, 1, 100);
+                    PostEffect::GetInstance()->SetBloomSampleCount(postEffectParam.radialBlurSampleCount);
+                }
+
+                if (postEffectType == NewBloom)
+                {
+                    ImGui::DragInt("BloomSampleCount", &postEffectParam.bloomSampleCount, 1, 1, 100);
+                    PostEffect::GetInstance()->SetBloomSampleCount(postEffectParam.bloomSampleCount);
                 }
 
                 ImGui::EndTabItem();

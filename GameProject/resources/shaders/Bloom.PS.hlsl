@@ -2,13 +2,13 @@
 
 static const float PI = 3.14159265f;
 
-static const int KERNEL_SIZE = 30;
-
 struct BloomParam
 {
     float intensity;
     float threshold;
     float sigma;
+    int kernelSize;
+    float2 direction; // x方向: float2(1,0), y方向: float2(0,1)
 };
 
 ConstantBuffer<BloomParam> gBloomParam : register(b0);
@@ -28,13 +28,19 @@ float Gaussian(float x, float sigma)
 float4 BloomExtract(float2 texcoord)
 {
     float4 color = gTexture.Sample(gSampler, texcoord);
-    // 閾値の範囲を定義
-    float minThreshold = gBloomParam.threshold - 0.1f;
-    float maxThreshold = gBloomParam.threshold;
-    // smoothstepで滑らかな閾値適用
-    float brightness = max(color.r, max(color.g, color.b));
-    float factor = smoothstep(minThreshold, maxThreshold, brightness);
-    return color * factor;
+    //// 閾値の範囲を定義
+    //float minThreshold = gBloomParam.threshold;
+    //float maxThreshold = gBloomParam.threshold + 0.1f;
+    //// smoothstepで滑らかな閾値適用
+    //float brightness = max(color.r, max(color.g, color.b));
+    //float factor = smoothstep(minThreshold, maxThreshold, brightness);
+    //return color * factor;
+
+    float brightness = dot(color.rgb, float3(0.299, 0.587, 0.114));
+
+    float4 output = brightness > gBloomParam.threshold ? color : float4(0.0f, 0.0f, 0.0f, 0.0f);
+
+    return output;
 }
 
 float4 GaussianBlur(float2 texcoord, float2 texSize, float2 dir)
@@ -47,11 +53,11 @@ float4 GaussianBlur(float2 texcoord, float2 texSize, float2 dir)
     
     float4 result = BloomExtract(texcoord);
     
-    float sum;
+    float sum = 0.0f; // 重みの合計
     
-    float weight;
+    float weight; // 重みの初期化
     
-    for (int karnelStep = -KERNEL_SIZE / 2; karnelStep <= KERNEL_SIZE / 2; ++karnelStep)
+    for (int karnelStep = -gBloomParam.kernelSize / 2; karnelStep <= gBloomParam.kernelSize / 2; ++karnelStep)
     {
         uvOffset = texcoord;
         uvOffset.x += karnelStep * texOffset.x * dir.x;
@@ -73,7 +79,7 @@ float4 GaussianBlur(float2 texcoord, float2 texSize, float2 dir)
 float4 SquareGaussianBlur(float2 texcoord, float2 texSize)
 {
     // 9x9の四角形カーネルのオフセット
-    const float2 offsets[81] =
+    const float2 offsets9x9[81] =
     {
         float2(-4.0, -4.0), float2(-3.0, -4.0), float2(-2.0, -4.0), float2(-1.0, -4.0), float2(0.0, -4.0), float2(1.0, -4.0), float2(2.0, -4.0), float2(3.0, -4.0), float2(4.0, -4.0),
         float2(-4.0, -3.0), float2(-3.0, -3.0), float2(-2.0, -3.0), float2(-1.0, -3.0), float2(0.0, -3.0), float2(1.0, -3.0), float2(2.0, -3.0), float2(3.0, -3.0), float2(4.0, -3.0),
@@ -86,17 +92,27 @@ float4 SquareGaussianBlur(float2 texcoord, float2 texSize)
         float2(-4.0, 4.0), float2(-3.0, 4.0), float2(-2.0, 4.0), float2(-1.0, 4.0), float2(0.0, 4.0), float2(1.0, 4.0), float2(2.0, 4.0), float2(3.0, 4.0), float2(4.0, 4.0)
     };
 
+    // 5x5の四角形カーネルのオフセット
+    const float2 offsets5x5[25] =
+    {
+        float2(-2.0, -2.0), float2(-1.0, -2.0), float2(0.0, -2.0), float2(1.0, -2.0), float2(2.0, -2.0),
+        float2(-2.0, -1.0), float2(-1.0, -1.0), float2(0.0, -1.0), float2(1.0, -1.0), float2(2.0, -1.0),
+        float2(-2.0, 0.0), float2(-1.0, 0.0), float2(0.0, 0.0), float2(1.0, 0.0), float2(2.0, 0.0),
+        float2(-2.0, 1.0), float2(-1.0, 1.0), float2(0.0, 1.0), float2(1.0, 1.0), float2(2.0, 1.0),
+        float2(-2.0, 2.0), float2(-1.0, 2.0), float2(0.0, 2.0), float2(1.0, 2.0), float2(2.0, 2.0)
+    };
+
     float2 texOffset = float2(rcp(texSize.x), rcp(texSize.y)); // 1ピクセルの長さ
     float4 result = float4(0.0, 0.0, 0.0, 0.0); // 結果の初期化
     float sum = 0.0f; // 重みの合計
 
-    for (int i = 0; i < 81; i++)
+    for (int i = 0; i < 25; i++)
     {
         // サンプル位置の座標
-        float2 sampleCoord = texcoord + offsets[i] * texOffset * 1;
+        float2 sampleCoord = texcoord + offsets5x5[i] * texOffset * 1;
 
         // ガウシアン重み（中心からの距離に基づく）
-        float weight = Gaussian(length(offsets[i]), gBloomParam.sigma);
+        float weight = Gaussian(length(offsets5x5[i]), gBloomParam.sigma);
 
         // サンプルと重みを加算
         result.xyz += BloomExtract(sampleCoord).xyz * weight;
@@ -117,10 +133,12 @@ float4 main(VertexShaderOutput input) : SV_TARGET
     
     float2 texSize;
     gTexture.GetDimensions(texSize.x, texSize.y);
+
+    float2 uvSize = float2(1.0f, 0.5f);
     
-    //float4 bloomColor = GaussianBlur(input.texCoord, texSize, float2(1.0f, 0.0f)) + GaussianBlur(input.texCoord, texSize, float2(0.0f, 1.0f));
+    float4 bloomColor = GaussianBlur(input.texCoord, texSize, gBloomParam.direction);
     
-    float4 bloomColor = SquareGaussianBlur(input.texCoord, texSize);
+    //float4 bloomColor = SquareGaussianBlur(input.texCoord, texSize);
     
     bloomColor.rgb *= gBloomParam.intensity;
     

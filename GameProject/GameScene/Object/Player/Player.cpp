@@ -22,6 +22,8 @@
 #include <cmath>
 #include <any>
 
+#include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
+
 void Player::Initialize()
 {
     Object::Initialize();
@@ -58,14 +60,24 @@ void Player::Initialize()
     statusCurrent_ = statusInit_;
 
     /// !!Debug!!
-    weapon_ = std::make_unique<SMG>();
+    weapon_ = std::make_unique<AssaultRifle>();
     weapon_->Initialize();
+    weapon_->SetChain(chain_);
+    weapon_->SetEmitter(emitter_);
     gravity_ = 1.8f;
 
     // コールバック登録
     id_callback_enemydead_ = GameEventNotifier::GetInstance()->RegisterCallback("EnemyDeadForXP", [this](std::any _gainedXP) {
         xpGained_ += std::any_cast<float>(_gainedXP);
     });
+
+    id_callback_playerlevelup_ = GameEventNotifier::GetInstance()->RegisterCallback("PlayerLevelUp", [this]([[maybe_unused]]std::any _unused) {
+        for (auto& obs : observers_)
+        {
+            obs->OnNotify("toggle_lvup");
+        }
+    });
+
 }
 
 void Player::Update()
@@ -108,6 +120,7 @@ void Player::Draw()
 void Player::Finalize()
 {
     GameEventNotifier::GetInstance()->UnregisterCallback("EnemyDeadForXP", id_callback_enemydead_);
+    GameEventNotifier::GetInstance()->UnregisterCallback("PlayerLevelUp", id_callback_playerlevelup_);
 
     auto* rfmManager = ReinforcementManager::GetInstance();
     for (auto& reinforcement : reinforcementList_)
@@ -318,6 +331,9 @@ void Player::UpdateStatus()
         if (gainXpMax > 200.0f) gainXpMax = 200.0f;
 
         xpMax_ += gainXpMax;
+
+        // イベント発行
+        GameEventNotifier::GetInstance()->Notify("PlayerLevelUp", nullptr);
     }
 }
 
