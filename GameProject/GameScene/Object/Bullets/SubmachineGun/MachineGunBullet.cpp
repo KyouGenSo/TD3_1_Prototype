@@ -54,13 +54,13 @@ void MachineGunBullet::InitializeNormal()
 {
     bullets_.resize(1);
     bullets_[0] = std::make_unique<Bullet>();
-    bullets_[0]->Initialize();
+    bullets_[0]->SetIsChainBullet(isChainBullet_);
+    bullets_[0]->SetChainManager(pChainManager_);
     bullets_[0]->SetTransform(transform_);
     bullets_[0]->SetForward(forward_);
     bullets_[0]->SetSpeed(speed_);
-    bullets_[0]->SetChainManager(pChainManager_);
     bullets_[0]->SetEmitter(emitter_);
-    bullets_[0]->SetIsChainBullet(isChainBullet_);
+    bullets_[0]->Initialize();
 }
 
 void MachineGunBullet::InitializeChain()
@@ -73,11 +73,13 @@ void MachineGunBullet::InitializeChain()
     {
         float angle = std::numbers::pi_v<float> / static_cast<float>(bullets_.size()) * static_cast<float>(i) * 2.0f;
         bullets_[i] = std::make_unique<Bullet>();
-        bullets_[i]->SetIsChainBullet(true);
-        bullets_[i]->Initialize();
+        bullets_[i]->SetIsChainBullet(isChainBullet_);
+        bullets_[i]->SetChainManager(pChainManager_);
         bullets_[i]->SetTransform({.scale= {.x= 1, .y= 1, .z= 1}, .rotate= {0.f, angle, 0.f}, .translate= pos});
         bullets_[i]->SetForward({.x= sin(angle), .y= 0.0f, .z= cos(angle)});
         bullets_[i]->SetSpeed(speed_);
+        bullets_[i]->SetEmitter(emitter_);
+        bullets_[i]->Initialize();
     }
 }
 
