@@ -1,6 +1,5 @@
 #include "Object.h"
 
-#include <GameScene/Object/Collision/Collider.h>
 #include <Utility/Adaptor.h>
 #include <Draw2D.h>
 

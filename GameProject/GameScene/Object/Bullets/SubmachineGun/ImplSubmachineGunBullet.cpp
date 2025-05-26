@@ -1,6 +1,6 @@
-#include <GameScene/Object/Collision/Collider.h>
-
 #include "MachineGunBullet.h"
+#include "GameSystem/Reinforcement/Manager/ReinforcementManager.h"
+#include "Type/ColliderType.h"
 #include "Utility/Adaptor.h"
 
 void MachineGunBullet::Bullet::Initialize() {
@@ -18,7 +18,8 @@ void MachineGunBullet::Bullet::Initialize() {
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.2f)
         ->SetType(Collision::Type::Sphere)
-        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
         ->SetOwner(this)
@@ -57,9 +58,15 @@ void MachineGunBullet::Bullet::Draw() {
 
 void MachineGunBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _collider) {
     if (isDead_ || pCollider_->IsDisabled()) return;
-    isDead_ = true;
-    pCollider_->Disable();
-    Next();
+
+    if (_collider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY)){
+        pCollider_->Disable();
+        isDead_ = true;
+
+        ReinforcementManager::GetInstance()->Notify("onHit");
+
+        Next();
+    }
 }
 
 void MachineGunBullet::Bullet::InitializeNormal() {

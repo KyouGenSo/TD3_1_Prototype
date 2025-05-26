@@ -19,11 +19,16 @@
 
 void GameScene::Initialize()
 {
-    // ステージデータの取得
-    const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
     eventTimer_ = EventTimer::GetInstance();
 
+    eventTimer_->BeginEvent("Initialize");
 
+    //ModelManager::GetInstance()->GetModel("rocketBullet.gltf");
+
+    // ステージデータの取得
+    const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
+
+    
     directLightParam_ = {
         .direction = { 0.0f, -1.0f, 0.0f },
         .color = { 1.0f, 1.0f, 1.0f, 1.0f },
@@ -31,20 +36,30 @@ void GameScene::Initialize()
         .intensity = 2.0f
     };
 
+    eventTimer_->BeginEvent("EmitterManager");
+
     emitterManager_ = std::make_unique<EmitterManager>(GPUParticle::GetInstance());
+    eventTimer_->EndEvent("EmitterManager");
+
 
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
 
+    eventTimer_->BeginEvent("Terrain");
     // Terrain
     terrain_ = std::make_unique<Terrain>();
     terrain_->Initialize();
 
+    eventTimer_->EndEvent("Terrain");
+
+    eventTimer_->BeginEvent("Player");
     // プレイヤーの初期化
     player_ = std::make_unique<Player>();
     player_->Initialize();
     player_->SetFloor(terrain_->GetFloorHeight());
     player_->SetTransform(currentStageData.playerTransform);
     player_->SetEmitter(emitterManager_.get());
+
+    eventTimer_->EndEvent("Player");
 
     // Camera
     camera_ = std::make_unique<FollowCamera>();
@@ -56,9 +71,12 @@ void GameScene::Initialize()
     //Object3dBasic::GetInstance()->SetCamera(freeLookCamera_->GetCamera());
     //Draw2D::GetInstance()->SetCamera(freeLookCamera_->GetCamera());
 
+    eventTimer_->BeginEvent("Chain");
     // ChainViewModel
     chainViewModel_ = std::make_unique<ChainViewModel>();
     chainViewModel_->Initialize();
+
+    eventTimer_->EndEvent("Chain");
 
     // GUIの初期化
     guiLvUP_ = std::make_unique<GUI_LvUP>();
@@ -84,6 +102,7 @@ void GameScene::Initialize()
     castle_->Initialize();
     castle_->SetTransform(currentStageData.castleTransform);
 
+    eventTimer_->BeginEvent("Enemy");
     // 敵の初期化
     enemyManager_ = std::make_unique<EnemyManager>();
     //enemyManager_->SetMinimap(minimap_.get());
@@ -94,6 +113,8 @@ void GameScene::Initialize()
     boss_ = std::make_unique<Boss>();
     boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
+
+    eventTimer_->EndEvent("Enemy");
 
     // TimeKeeper
     timeKeeper_ = std::make_unique<TimeKeeper>();
@@ -148,6 +169,7 @@ void GameScene::Initialize()
     auto* reinforcementManager_ = ReinforcementManager::GetInstance();
     reinforcementManager_->Initialize(reinforcementManager_->kFilename_json_status_);
 
+    eventTimer_->BeginEvent("Sound");
     // BGMグループの初期化
     soundGroup_ = std::make_unique<SoundGroup>();
     soundGroup_->Initialize();
@@ -159,12 +181,15 @@ void GameScene::Initialize()
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_3").handle);
     soundGroup_->AddSound(SoundManager::GetInstance()->SearchSoundData("BGM_Game_4").handle);
     soundGroup_->Start();
+    eventTimer_->EndEvent("Sound");
 
     reticle_ = make_unique<Sprite>();
     reticle_->Initialize("circle.png");
     reticle_->SetAnchorPoint({0.5f, 0.5f});
     reticle_->SetPos({static_cast<float>(WinApp::clientWidth) / 2.f, static_cast<float>(WinApp::clientHeight) / 2.f});
     reticle_->SetSize({32.f,32.f});
+
+    eventTimer_->EndEvent("Initialize");
 }
 
 void GameScene::Finalize()

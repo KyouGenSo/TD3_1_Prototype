@@ -50,6 +50,7 @@ class RocketBullet : public BulletBase
 
     std::unique_ptr<CB> cb_ = nullptr;
 public:
+    RocketBullet();
     void Initialize() override;
     void Update() override;
     void Draw() override;
