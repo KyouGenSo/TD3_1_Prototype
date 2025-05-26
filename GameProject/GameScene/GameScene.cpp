@@ -68,8 +68,6 @@ void GameScene::Initialize()
 
     freeLookCamera_ = std::make_unique<FreeLookCamera>();
     freeLookCamera_->Initialize();
-    //Object3dBasic::GetInstance()->SetCamera(freeLookCamera_->GetCamera());
-    //Draw2D::GetInstance()->SetCamera(freeLookCamera_->GetCamera());
 
     eventTimer_->BeginEvent("Chain");
     // ChainViewModel
@@ -279,6 +277,7 @@ void GameScene::Draw()
     boss_->Draw();
     enemyManager_->Draw();
     //camera_->Draw3D();
+    player_->DrawDebug();
 
     GPUParticle::GetInstance()->Draw();
 

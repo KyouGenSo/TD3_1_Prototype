@@ -6,10 +6,16 @@
 #include <Utility/Adaptor.h>
 #include <Type/ColliderType.h>
 #include <Draw2D.h>
+#include <GPUParticle.h>
 
 void FollowCamera::Initialize()
 {
-    pCamera_ = *(Object3dBasic::GetInstance()->GetCamera());
+    pCamera_ = std::make_unique<Camera>();
+
+    Object3dBasic::GetInstance()->SetCamera(pCamera_.get());
+    GPUParticle::GetInstance()->SetCamera(pCamera_.get());
+    Draw2D::GetInstance()->SetCamera(pCamera_.get());
+
     pCamera_->SetFarClip(1000.0f);
 
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
