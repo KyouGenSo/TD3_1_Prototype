@@ -12,6 +12,7 @@
 #include <GameScene/Status/Status.h>
 
 #include "EmitterManager.h"
+#include <functional>
 
 class Object{
 	std::string uuid_;
@@ -20,6 +21,7 @@ protected:
 
     std::unique_ptr<Collision::Collider> pCollider_;
 
+    std::string name_ = {};
 	Transform transform_ = {};
     Vector3 velocity_ = {};
     Vector3 acceleration_ = {};
@@ -34,6 +36,9 @@ protected:
     EmitterManager* emitter_ = nullptr;
 
 protected:
+    bool enableUpdateStatus_ = true;
+
+protected:
     Input* pInput_ = nullptr;
 
 public:
@@ -43,10 +48,12 @@ public:
     virtual void Initialize();
     virtual void Update();
     virtual void Draw() = 0;
+    virtual void ImGui(std::function<void()> _guiWidgetsFunc);
+    virtual void ImGui();
 
-    virtual void OnCollisionTrigger(const Collision::Collider* pObject){}
-    virtual void OnCollision(const Collision::Collider* pObject){}
-    virtual void OnCollisionExit(const Collision::Collider* pObject){}
+    virtual void OnCollisionTrigger(const Collision::Collider* _other) {};
+    virtual void OnCollision(const Collision::Collider* _other){}
+    virtual void OnCollisionExit(const Collision::Collider* _other){}
 
 
 public: /// Setter
@@ -98,12 +105,13 @@ public: /// Getter
         return statusInit_;
     }
 
+
 public:
     void UpdateCollider() const;
     void DrawCollider(const Collision::Collider* _collider);
 
+
 protected:
-    void DebugObject();
     void ApplyForce(const Vector3& _force)
     {
         acceleration_ += _force / mass_;
@@ -114,7 +122,7 @@ protected:
         velocity_ += frictionForce * deltaTime_;
     }
 
-    void StatusUpdateOnCollision(const Collision::Collider* pObject);
+    void StatusUpdateOnCollision(const Collision::Collider* _other);
 };
 
 inline Object::Object()

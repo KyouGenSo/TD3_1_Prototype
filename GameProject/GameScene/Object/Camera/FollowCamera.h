@@ -10,7 +10,7 @@
 
 class FollowCamera
 {
-    Camera* pCamera_ = nullptr;
+    std::unique_ptr<Camera> pCamera_ = nullptr;
     const Transform* pTarget_ = nullptr;
 
     std::unique_ptr<Collision::Ray> pRay_ = nullptr;
@@ -38,6 +38,7 @@ public:
     void SetTarget(const Transform* pTarget) { pTarget_ = pTarget; }
 
     void SetTranslate(const Vector3& translate) { pCamera_->SetTranslate(translate); }
+    Camera* GetCamera() { return pCamera_.get(); }
 
     void ImGui();
 };

@@ -8,5 +8,6 @@ namespace Collider{
         ENEMY = 0b1 << 2,
         STAGE = 0b1 << 3,
         CAMERA = 0b1 << 4,
+        WEAPON = 0b1 << 5,
     };
 }

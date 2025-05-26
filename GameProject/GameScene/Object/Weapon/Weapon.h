@@ -4,17 +4,23 @@
 #include <memory>
 #include <list>
 
+#include <Collision/Collider.h>
 #include <GameScene/Object/Bullets/BulletBase.h>
 #include <GameSystem/Chain/Chain.h>
+#include <Vector3.h>
+#include <Camera.h>
+#include <Object3d.h>
+#include <Collision/CollisionManager.h>
 
 class WeaponBase : public Object
 {
 public:
     virtual void Fire();
 
-    void Initialize() override = 0;
-    void Update() override = 0;
+    void Initialize();
+    void Update() override;
     void Draw() override = 0;
+    void DrawDebug();
 
 
 public:
@@ -25,6 +31,7 @@ protected:
     std::list<std::unique_ptr<BulletBase>> bullets_;
     Chain* pChain_;
     uint32_t sound_fire_ = 0;
+    std::unique_ptr<Collision::Ray> pRayToReticle_ = nullptr;
 
 
 protected:
@@ -35,5 +42,12 @@ protected:
 
 private:
     bool isEnableSound_ = false;
+    Vector3 forward_ = {};
+    Collision::Manager::RayHitData hitdata_ = {};
+    void UpdateRay();
+
+
+private:
+    Collision::Manager* pCollisionManager_ = nullptr;
 };
 
