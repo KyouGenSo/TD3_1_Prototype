@@ -102,9 +102,6 @@ void WeaponBase::UpdateRay()
         Vector3 direction = toHitPoint.Normalize();
 
         forward_ = direction;
-
-        // デバッグオブジェクトをヒットポイントに移動
-        pDebugObj_->SetTranslate(Adaptor(hitdata_.hitPoint));
     }
     else
     {
