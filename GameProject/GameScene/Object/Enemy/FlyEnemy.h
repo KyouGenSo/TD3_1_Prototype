@@ -15,7 +15,7 @@ public:
 
     void Draw() override;
 
-    void Finalize();
+    void Finalize() override;
 
     void OnCollision(const Collision::Collider* _other) override;
 
@@ -24,12 +24,6 @@ public:
     void Move();
 
     void AppearanceProduction();
-
-    void SetTranslate(Vector3 translate) { transform_.translate = translate; }
-
-    void SetIsAppearing(bool isAppearing) { isAppearing_ = true; }
-
-    void SetAppearCounter(float appearCounter) { appearCounter_ = appearCounter; }
 
     float GetAmoRotate() { return amoRotate_; }
 
@@ -42,9 +36,6 @@ private:
     std::unique_ptr<Collision::Collider> collider_ = nullptr;
 
     Vector3 prePosY_ = {};
-
-    bool isAppearing_ = false;
-    float appearCounter_ = 0.0f;
 
     float amoRotate_ = 0.1f;
     float targetRotate_ = 2.0f;
