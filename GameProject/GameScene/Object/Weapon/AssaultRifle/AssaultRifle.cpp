@@ -3,12 +3,14 @@
 
 void AssaultRifle::Initialize()
 {
+    WeaponBase::Initialize();
     sound_fire_ = SoundManager::GetInstance()->SearchSoundData("Fire_Assault").handle;
     EnableSound();
 }
 
 void AssaultRifle::Update()
 {
+    WeaponBase::Update();
     for (auto& bullet : bullets_)
     {
         bullet->Update();

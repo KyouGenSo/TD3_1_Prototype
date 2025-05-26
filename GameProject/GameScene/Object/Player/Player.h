@@ -47,8 +47,9 @@ public:
     void Initialize() override;
     void Update() override;
     void Draw() override;
+    void DrawDebug();
     void Finalize();
-    void ImGui();
+    void ImGui() override;
     void OnCollision(const Collision::Collider* pCollider) override;
     void OnCollisionTrigger(const Collision::Collider* pCollider) override;
     void AddObserver(IObserver* _observer) { observers_.push_back(_observer); }

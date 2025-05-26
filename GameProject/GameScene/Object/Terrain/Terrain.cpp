@@ -45,14 +45,14 @@ void Terrain::Update()
 
 void Terrain::Draw()
 {
-    /* AABB Debug Draw
+    // AABB Debug Draw
     Vector3 size = Vector3(200.0f, 4.0f, 800.0f);
     AABB aabb = {};
     aabb.min = size * -0.5f + transform_.translate;
     aabb.max = size * 0.5f + transform_.translate;
 
     Draw2D::GetInstance()->DrawAABB(aabb, {0.0f, 1.0f, 0.0f, 1.0f});
-    */
+    
 
     model_->Draw();
     //boxObj_->Draw();
