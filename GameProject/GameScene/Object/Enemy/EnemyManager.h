@@ -8,7 +8,8 @@
 #include "BounceEnemy.h"  
 #include "GameScene/HUD/Minimap.h"  
 #include "Timer/Timer.h"  
-#include <cstdint>  
+#include <cstdint>
+#include "Utility/RandomGenerator/RandomGenerator.h"
 
 class Player;  
 class Castle;  
@@ -102,8 +103,4 @@ private:
 
    Vector3 bounceMinSpawnPoint_ = { -55.0f,1.0f,-55.0f };  
    Vector3 bounceMaxSpawnPoint_ = { 55.0f,1.0f,55.0f };  
-
-   std::random_device rd_;  
-   std::mt19937 gen_;  
-
 };

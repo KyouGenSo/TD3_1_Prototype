@@ -11,7 +11,7 @@
 #include <list>
 
 EnemyManager::EnemyManager()
-    : gen_(rd_()), wave_()
+    : wave_()
 {
 }
 
@@ -21,6 +21,8 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Initialize(Object* player, Object* castle)
 {
+    RandomGenerator::Initialize();
+
     pPlayer_ = player;
     pCastle_ = castle;
 
@@ -241,29 +243,20 @@ Vector3 EnemyManager::RandomSpawnPosition(EnemyBase::Type type)
     {
         while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z))
         {
-
-            std::uniform_real_distribution<float> disX(minSpawnPoint_.x, maxSpawnPoint_.x);
-            std::uniform_real_distribution<float> disY(minSpawnPoint_.y, maxSpawnPoint_.y);
-            std::uniform_real_distribution<float> disZ(minSpawnPoint_.z, maxSpawnPoint_.z);
-            randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+            randomPos = Vector3{ RandomGenerator::Generate(minSpawnPoint_.x, maxSpawnPoint_.x), RandomGenerator::Generate(minSpawnPoint_.y, maxSpawnPoint_.y), RandomGenerator::Generate(minSpawnPoint_.z, maxSpawnPoint_.z)};
         }
     }
     else if (type == EnemyBase::Type::Fly)
     {
         while ((randomPos.x < flyMaxSpawnRange_.x && randomPos.x > flyMinSpawnRange_.x) && (randomPos.z < flyMaxSpawnRange_.z && randomPos.z > flyMinSpawnRange_.z))
         {
-            std::uniform_real_distribution<float> disX(flyMinSpawnPoint_.x, flyMaxSpawnPoint_.x);
-            std::uniform_real_distribution<float> disY(flyMinSpawnPoint_.y, flyMaxSpawnPoint_.y);
-            std::uniform_real_distribution<float> disZ(flyMinSpawnPoint_.z, flyMaxSpawnPoint_.z);
-            randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+            randomPos = Vector3{ RandomGenerator::Generate(flyMinSpawnPoint_.x, flyMaxSpawnPoint_.x), RandomGenerator::Generate(flyMinSpawnPoint_.y, flyMaxSpawnPoint_.y), RandomGenerator::Generate(flyMinSpawnPoint_.z, flyMaxSpawnPoint_.z), };
         }
     }
     else if (type == EnemyBase::Type::Bounce) {
-        while ((randomPos.x < bounceMaxSpawnRange_.x && randomPos.x > bounceMinSpawnRange_.x) && (randomPos.z < bounceMaxSpawnRange_.z && randomPos.z > bounceMinSpawnRange_.z)) {
-            std::uniform_real_distribution<float> disX(bounceMinSpawnPoint_.x, bounceMaxSpawnPoint_.x);
-            std::uniform_real_distribution<float> disY(bounceMinSpawnPoint_.y, bounceMaxSpawnPoint_.y);
-            std::uniform_real_distribution<float> disZ(bounceMinSpawnPoint_.z, bounceMaxSpawnPoint_.z);
-            randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+        while ((randomPos.x < bounceMaxSpawnRange_.x && randomPos.x > bounceMinSpawnRange_.x) && (randomPos.z < bounceMaxSpawnRange_.z && randomPos.z > bounceMinSpawnRange_.z)) 
+        {
+            randomPos = Vector3{ RandomGenerator::Generate(bounceMinSpawnPoint_.x, bounceMaxSpawnPoint_.x), RandomGenerator::Generate(bounceMinSpawnPoint_.y, bounceMaxSpawnPoint_.y), RandomGenerator::Generate(bounceMinSpawnPoint_.z, bounceMaxSpawnPoint_.z), };
         }
     }
 
