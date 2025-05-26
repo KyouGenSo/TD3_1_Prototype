@@ -4,12 +4,14 @@
 
 void SMG::Initialize()
 {
+    WeaponBase::Initialize();
     sound_fire_ = SoundManager::GetInstance()->SearchSoundData("Fire_SMG").handle;
     EnableSound();
 }
 
 void SMG::Update()
 {
+    WeaponBase::Update();
     for (auto& bullet : bullets_)
     {
         bullet->Update();

@@ -5,6 +5,7 @@
 
 void RocketLauncher::Initialize()
 {
+    WeaponBase::Initialize();
     sound_fire_ = SoundManager::GetInstance()->SearchSoundData("Fire_Rocket").handle;
     EnableSound();
 }
@@ -12,6 +13,7 @@ void RocketLauncher::Initialize()
 
 void RocketLauncher::Update()
 {
+    WeaponBase::Update();
     for (auto& bullet : bullets_)
     {
         bullet->Update();
