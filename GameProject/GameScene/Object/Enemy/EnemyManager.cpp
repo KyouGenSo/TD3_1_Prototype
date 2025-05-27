@@ -33,17 +33,17 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
 
 
-    //InitializeWaveFile("0101n");
-    //InitializeWaveFile("0102n");
-    //InitializeWaveFile("0103n");
+    InitializeWaveFile("0101n");
+    InitializeWaveFile("0102n");
+    InitializeWaveFile("0103n");
     //InitializeWaveFile("0103f");
 
-    InitializeWaveFile("0201n");
-    InitializeWaveFile("0202n");
-    InitializeWaveFile("0202b");
-    InitializeWaveFile("0203n");
-    InitializeWaveFile("0203f");
-    InitializeWaveFile("0203b");
+    //InitializeWaveFile("0201n");
+    //InitializeWaveFile("0202n");
+    //InitializeWaveFile("0202b");
+    //InitializeWaveFile("0203n");
+    //InitializeWaveFile("0203f");
+    //InitializeWaveFile("0203b");
 
     TurnControl();
     turnProgress++;
