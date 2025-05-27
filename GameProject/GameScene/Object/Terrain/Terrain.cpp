@@ -91,5 +91,4 @@ void Terrain::OnCollision(const Collision::Collider* pCollider) const {
 float Terrain::GetFloorHeight() const
 {
     return 0.0f;
-    //return 0.0f;
 }
