@@ -59,14 +59,16 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
 void EnemyManager::Update()
 {
-    SpawnEnemy();
+    bool spawnLimitReached = (enemies_.size() >= maxSpawnCount_);
 
     std::vector<std::string> keysToRemove;
     for (auto key = keys_.begin(); key != keys_.end(); )
     {
         if (waves_[*key].time > 0.0f)
         {
-            waves_[*key].time -= deltaTime_;
+            if (!spawnLimitReached) {
+                waves_[*key].time -= deltaTime_;
+            }
             key++;
         }
         else
@@ -80,6 +82,10 @@ void EnemyManager::Update()
     {
         TurnControl();
         turnProgress++;
+    }
+
+    if (!spawnLimitReached) {
+        SpawnEnemy();
     }
 
     for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {
