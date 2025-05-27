@@ -64,7 +64,8 @@ bool AssaultBullet::IsDeadAll() {
             if (!bullet) break;
             if (!bullet->IsDeadAll()) return false;
         }
-    }
+        return true;
+    } 
     return bullet_->IsDeadAll();
 }
 

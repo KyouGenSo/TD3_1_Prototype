@@ -317,6 +317,8 @@
     <ClCompile Include="GameUI\ColorResolver\ColorResolver.cpp">
       <Filter>GameUI\ColorResolver</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Object\Weapon\ThunderRod\ThunderRod.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\Thunder\ThunderBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -510,6 +512,8 @@
     <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h">
       <Filter>Object\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="GameScene\Object\Weapon\ThunderRod\ThunderRod.hpp" />
+    <ClInclude Include="GameScene\Object\Bullets\Thunder\ThunderBullet.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GameSystem\GameEventNotifier\EventList.md">

@@ -199,14 +199,12 @@ void RocketBullet::InitializeChain()
 	cb_->SetEmitter(emitter_);
 	cb_->Init();
 
-    timer.Stop();
-
 	isDead_ = false;
 }
 
 void RocketBullet::UpdateNormal()
 {
-	transform_.translate += forward_ * speed_;
+	transform_.translate += forward_ * speed_ * deltaTime_;
 
 	pCollider_->SetTranslate(Adaptor(transform_.translate));
 }
