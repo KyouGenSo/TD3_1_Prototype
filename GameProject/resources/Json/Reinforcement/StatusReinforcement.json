@@ -11,11 +11,11 @@
     },
     {
         "name" : "Healthy",
-        "description" : "体力がすこし増加します。",
+        "description" : "体力がすこし回復します。",
         "image": "hud/card/card_healthy_shadow.png",
-        "status-type" : "health",
+        "status-type" : "heal",
         "operatorType" : "add",
-        "value" : 1.0,
+        "value" : 10.0,
         "rarity": 1,
         "event" : "onGet"
     },

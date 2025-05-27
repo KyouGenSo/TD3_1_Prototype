@@ -15,7 +15,7 @@ public:
 
     void Draw() override;
 
-    void Finalize();
+    void Finalize() override;
 
     void OnCollision(const Collision::Collider* pCollider);
 
@@ -25,20 +25,11 @@ public:
 
     void AppearanceProduction();
 
-    void SetTranslate(Vector3 translate) { transform_.translate = translate; }
-
-    void SetIsAppearing(bool isAppearing) { isAppearing_ = true; }
-
-    void SetAppearCounter(float appearCounter) { appearCounter_ = appearCounter; }
-
     void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
 
 
 private:
     Vector3 prePos_ = {};
-
-    bool isAppearing_ = true;
-    float appearCounter_ = 0.0f;
 
     float targetRotate = 2.0f;
 
@@ -54,8 +45,5 @@ private:
     float bounceHight_ = 5.0f;
 
     float standardHeight_ = 1.0f;
-
-    //status
-    uint16_t hp_ = 5;
 };
 

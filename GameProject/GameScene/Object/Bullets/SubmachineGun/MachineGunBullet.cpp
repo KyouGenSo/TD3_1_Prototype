@@ -12,7 +12,7 @@ void MachineGunBullet::Initialize() {
     BulletBase::Initialize();
 
     type_ = WeaponType::MachineGun;
-    speed_ = 0.9f;
+    speed_ = 60.0f;
 
     if (isChainBullet_){
         InitializeChain();
@@ -85,6 +85,13 @@ void MachineGunBullet::InitializeChain()
 
 void MachineGunBullet::UpdateNormal()
 {
+    transform_.translate += forward_ * speed_ * deltaTime_;
+
+    pCollider_->SetTranslate(Adaptor(transform_.translate));
+
+    model_->SetRotate(transform_.rotate);
+    model_->SetTranslate(transform_.translate);
+    model_->Update();
     std::erase_if(bullets_, [&](const auto& bullet){ return bullet->IsDead(); });
     for (const auto& bullet : bullets_){
         bullet->Update();

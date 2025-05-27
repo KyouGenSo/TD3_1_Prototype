@@ -69,8 +69,16 @@ void StatusReinforcement::ParseFromJson(const std::string& _cardName)
 
 void StatusReinforcement::ApplicationByAddition()
 {
-    if (statusType == "health")
+    if (statusType == "heal")
     {
+        status_->AddHp(value_);
+    }
+    else if (statusType == "health")
+    {
+        if (status_->getHp() + value_ > status_->getMaxHp())
+        {
+            status_->setMaxHp(status_->getHp() + value_);
+        }
         status_->AddHp(value_);
     }
     else if (statusType == "attack")

@@ -1,0 +1,10 @@
+{
+    "07f": {
+        "amount": 3,
+        "hpMultiplier": 1.5,
+        "interval": 5.0,
+        "time": 30.0,
+        "turn": 7,
+        "type": 1
+    }
+}

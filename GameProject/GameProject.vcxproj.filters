@@ -134,6 +134,9 @@
     <Filter Include="GameUI\ColorResolver">
       <UniqueIdentifier>{4ef69d86-7745-4686-9919-62083d197c8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\shader">
+      <UniqueIdentifier>{4a8786bc-79a6-4c75-a290-9821d937f85e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GameUI\HPBar">
       <UniqueIdentifier>{ae9c4936-e224-406a-b564-2a061291306a}</UniqueIdentifier>
     </Filter>
@@ -317,6 +320,7 @@
     <ClCompile Include="GameUI\ColorResolver\ColorResolver.cpp">
       <Filter>GameUI\ColorResolver</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Object\Enemy\EnemyFactory.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\ThunderRod\ThunderRod.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\Thunder\ThunderBullet.cpp" />
   </ItemGroup>
@@ -512,6 +516,7 @@
     <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h">
       <Filter>Object\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="GameScene\Object\Enemy\EnemyFactory.h" />
     <ClInclude Include="GameScene\Object\Weapon\ThunderRod\ThunderRod.hpp" />
     <ClInclude Include="GameScene\Object\Bullets\Thunder\ThunderBullet.hpp" />
   </ItemGroup>
@@ -519,5 +524,127 @@
     <None Include="GameSystem\GameEventNotifier\EventList.md">
       <Filter>GameSystem\GameEventNotifier</Filter>
     </None>
+    <None Include="resources\shaders\FullScreen.hlsli">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="resources\shaders\NoTex.hlsli">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="resources\shaders\Object3d.hlsli">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="resources\shaders\Particle.hlsli">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="resources\shaders\Random.hlsli">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="resources\shaders\SkyBox.hlsli">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="resources\shaders\Sprite.hlsli">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="resources\shaders\2D.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\2D.VS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Bloom.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\BloomCombine.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\BloomFog.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Composite.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\EmitParticle.CS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\FullScreen.VS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\GaussianBlur.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\GPUParticle.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\GPUParticle.VS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\GrayScale.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\InitParticle.CS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\NoEffect.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\NoTex.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\NoTex.VS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Object3d.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Object3D.VS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Particle.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Particle.VS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\RadialBlur.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Skinning.CS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\SkinningObject3d.VS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\SkyBox.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\SkyBox.VS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Sprite.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Sprite.VS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\ThresholdExtract.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\UpdateParticle.CS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Vignette.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\VignetteRed.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\VignetteRedBloom.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\VigRedGrayScale.PS.hlsl">
+      <Filter>リソース ファイル\shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

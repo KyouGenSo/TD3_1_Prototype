@@ -5,6 +5,7 @@
 #include <GameScene/Object/Bullets/BulletFactory.h>
 #include <Type/ColliderType.h>
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
+#include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 
 #include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
 
@@ -20,7 +21,7 @@ void BulletBase::Update() {
 		pNext_->Fire();
 		rdy_ = false;
 	}
-    deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(0);
+    deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
 }
 
 void BulletBase::Fire()
