@@ -1,6 +1,5 @@
 #include "GameScene.h"
 
-#include "ModelManager.h"
 #include "Object3dBasic.h"
 #include <Type/Singleton.h>
 #include "SpriteBasic.h"
@@ -8,12 +7,9 @@
 #include <GameSystem/StageManager/StageManager.h>
 #include <SceneManager.h>
 #include <WinApp.h>
-
+#include <NiGui.h>
 
 #include "GPUParticle.h"
-#include <Audio.h>
-#include <Vector2.h>
-#include <Draw2D.h>
 #include <functional>
 
 #include "PostEffect.h"
@@ -22,7 +18,8 @@
 void GameScene::Initialize()
 {
     eventTimer_ = EventTimer::GetInstance();
-
+  
+    NiGui::ResetItemToArea();
     eventTimer_->BeginEvent("Initialize");
 
     //ModelManager::GetInstance()->GetModel("rocketBullet.gltf");
@@ -185,7 +182,7 @@ void GameScene::Initialize()
     soundGroup_->Start();
     eventTimer_->EndEvent("Sound");
 
-    reticle_ = make_unique<Sprite>();
+    reticle_ = std::make_unique<Sprite>();
     reticle_->Initialize("circle.png");
     reticle_->SetAnchorPoint({0.5f, 0.5f});
     reticle_->SetPos({static_cast<float>(WinApp::clientWidth) / 2.f, static_cast<float>(WinApp::clientHeight) / 2.f});
@@ -253,6 +250,7 @@ void GameScene::Update()
     eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
 
     emitterManager_->Update();
+    statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
     *(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
     *(statusHUD_->GetXPBar()) = player_->getXP();
     statusHUD_->GetXPBar()->SetMaxValue(player_->getXPMax());

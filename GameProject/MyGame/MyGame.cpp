@@ -69,6 +69,7 @@ void MyGame::Initialize()
 
     // デルタタイムマネージャの初期化
     DeltaTimeManager::GetInstance()->SetDeltaTime(0, 1.0f / 60.0f);
+    DeltaTimeManager::GetInstance()->SetDeltaTime(1, 1.0f / 60.0f);
 
     /// UIの初期化
     NiGui::Initialize({ WinApp::clientWidth, WinApp::clientHeight });

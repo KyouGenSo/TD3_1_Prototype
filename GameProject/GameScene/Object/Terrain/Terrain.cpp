@@ -23,7 +23,7 @@ void Terrain::Initialize()
     model_->SetRotate(Vector3(0.0f, 0.0f, 0.0f));
   
     Transform uvTranform;
-    uvTranform.scale = Vector3(400.0f, 100.0f, 1.0f);
+    uvTranform.scale = Vector3(200.0f, 100.0f, 1.0f);
     uvTranform.translate = Vector3(0.0f, 0.0f, 0.0f);
     uvTranform.rotate = Vector3(0.0f, 0.0f, 0.0f);
     model_->SetUvTransform(uvTranform);

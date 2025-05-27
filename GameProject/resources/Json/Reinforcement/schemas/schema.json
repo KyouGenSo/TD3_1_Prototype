@@ -20,7 +20,7 @@
             "status-type": {
                 "type": "string",
                 "description": "ステータス名",
-                "enum": ["health", "speed", "attack", "defense", "critical"]
+                "enum": ["heal", "health", "speed", "attack", "defense", "critical"]
             },
             "operatorType": {
                 "type": "string",
