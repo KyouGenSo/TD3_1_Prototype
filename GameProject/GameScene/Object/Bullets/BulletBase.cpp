@@ -48,12 +48,12 @@ bool BulletBase::IsDeadAll()
 
 void BulletBase::SetNextBullet(std::unique_ptr<BulletBase> _bullet)
 {
-	_bullet->Initialize();
-	_bullet->SetPosition(transform_.translate);
 	_bullet->SetIsChainBullet(true);
 	_bullet->SetChainManager(pChainManager_);
+	_bullet->SetPosition(transform_.translate);
 	_bullet->SetForward(forward_);
 	_bullet->SetEmitter(emitter_);
+	_bullet->Initialize();
 	pNext_ = std::move(_bullet);
 }
 

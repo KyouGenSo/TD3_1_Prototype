@@ -28,7 +28,9 @@ void AssaultBullet::Bullet::Initialize()
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
-        ->SetEvent(Collision::EventType::Trigger, std::bind(&Bullet::OnCollisionTrigger, this, std::placeholders::_1))
+        ->SetEvent(Collision::EventType::Trigger, [this]<typename T0>(T0&& PH1) {
+            OnCollisionTrigger(std::forward<T0>(PH1));
+        })
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(0.3f)
         ->SetType(Collision::Type::Sphere)

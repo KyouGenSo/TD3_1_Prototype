@@ -38,6 +38,10 @@ void EnemyBase::Update()
     pHPBar_->Update();
 }
 
+void EnemyBase::Finalize()
+{
+}
+
 void EnemyBase::UpdateHPBarPosition()
 {
     auto camera = Object3dBasic::GetInstance()->GetCamera();

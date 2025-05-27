@@ -90,6 +90,10 @@ void RocketBullet::CB::SetEmitter(EmitterManager* _emitter) {
 	emitter_ = _emitter;
 }
 
+RocketBullet::RocketBullet() :BulletBase(){
+    
+}
+
 void RocketBullet::Initialize()
 {
 	BulletBase::Initialize();
