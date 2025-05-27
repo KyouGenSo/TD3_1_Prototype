@@ -12,6 +12,8 @@
 #include "GPUParticle.h"
 #include <functional>
 
+#include "PostEffect.h"
+
 
 void GameScene::Initialize()
 {
@@ -21,6 +23,8 @@ void GameScene::Initialize()
     eventTimer_->BeginEvent("Initialize");
 
     //ModelManager::GetInstance()->GetModel("rocketBullet.gltf");
+
+    PostEffect::GetInstance()->SetEffectType("NoEffect");
 
     // ステージデータの取得
     const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();

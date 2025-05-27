@@ -42,14 +42,7 @@ void MyGame::Initialize()
 
 #pragma endregion
 
-    // 乱数生成クラスの初期化
-    RandomGenerator::Initialize();
-
-    // シーンの初期化
-    sceneFactory_ = new SceneFactory();
-    SceneManager::GetInstance()->SetSceneFactory(sceneFactory_);
-    SceneManager::GetInstance()->ChangeScene("title", 0.0f);
-
+#ifdef _DEBUG
     // PostEffectParamの設定
     postEffectParam.vignettePower = 0.f;
     postEffectParam.vignetteRange = 20.0f;
@@ -61,6 +54,15 @@ void MyGame::Initialize()
     postEffectParam.downSampleFactor = 8;
     postEffectParam.fogColor = { 1.0f, 1.0f, 1.0f, 1.0f };
     postEffectParam.fogDensity = 0.01f;
+#endif // _DEBUG
+
+    // 乱数生成クラスの初期化
+    RandomGenerator::Initialize();
+
+    // シーンの初期化
+    sceneFactory_ = new SceneFactory();
+    SceneManager::GetInstance()->SetSceneFactory(sceneFactory_);
+    SceneManager::GetInstance()->ChangeScene("title", 0.0f);
 
     // テーマ編集
     OverrideImGuiStyle();
@@ -100,6 +102,7 @@ void MyGame::Initialize()
     eventTimer_ = EventTimer::GetInstance();
 
     TextureManager::GetInstance()->LoadTexture("circle.png");
+    TextureManager::GetInstance()->LoadTexture("white.png");
 
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 
@@ -139,34 +142,6 @@ void MyGame::Update()
 
     eventTimer_->BeginEvent("Update");
 
-    // 入力情報の更新
-    Input::GetInstance()->Update();
-
-    if (Input::GetInstance()->TriggerKey(DIK_F11))
-    {
-        // フルスクリーンの切り替え
-        ToggleFullScreen();
-        NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, {});
-        NiGui::SetClientSize({ WinApp::clientWidth, WinApp::clientHeight });
-    }
-
-#ifdef _DEBUG
-    imguiManager_->Begin();
-#endif // _DEBUG
-
-    // UIの更新
-    NiGui::BeginFrame();
-
-    TakoFramework::Update();
-
-    //　サウンドの更新
-    Audio::GetInstance()->Update();
-
-    // ゲームパッドの状態をリフレッシュ
-    Input::GetInstance()->RefreshGamePadState();
-
-    GPUParticle::GetInstance()->Update();
-
 #ifdef _DEBUG
     switch (postEffectType)
     {
@@ -198,7 +173,51 @@ void MyGame::Update()
         PostEffect::GetInstance()->SetEffectType("RadialBlur");
         break;
     }
+    PostEffect::GetInstance()->SetVignettePower(postEffectParam.vignettePower);
+    PostEffect::GetInstance()->SetVignetteRange(postEffectParam.vignetteRange);
+    //PostEffect::GetInstance()->SetBloomThreshold(postEffectParam.bloomThreshold);
+    //PostEffect::GetInstance()->SetBloomIntensity(postEffectParam.bloomIntensity);
+    //PostEffect::GetInstance()->SetBloomThreshold(postEffectParam.bloomThreshold);
+    //PostEffect::GetInstance()->SetBloomSigma(postEffectParam.bloomSigma);
+    //PostEffect::GetInstance()->SetBloomKernelSize(postEffectParam.bloomKernelSize);
+    PostEffect::GetInstance()->SetFogColor(postEffectParam.fogColor);
+    PostEffect::GetInstance()->SetFogDensity(postEffectParam.fogDensity);
+    PostEffect::GetInstance()->SetRadialBlurCenter(postEffectParam.radialBlurCenter);
+    PostEffect::GetInstance()->SetRadialBlurWidth(postEffectParam.radialBlurWidth);
+    PostEffect::GetInstance()->SetBloomSampleCount(postEffectParam.radialBlurSampleCount);
+    PostEffect::GetInstance()->SetBloomSampleCount(postEffectParam.bloomSampleCount);
 #endif // _DEBUG
+
+    // 入力情報の更新
+    Input::GetInstance()->Update();
+
+    // カメラの更新
+    defaultCamera_->Update();
+
+    if (Input::GetInstance()->TriggerKey(DIK_F11))
+    {
+        // フルスクリーンの切り替え
+        ToggleFullScreen();
+        NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, {});
+        NiGui::SetClientSize({ WinApp::clientWidth, WinApp::clientHeight });
+    }
+
+#ifdef _DEBUG
+    imguiManager_->Begin();
+#endif // _DEBUG
+
+    // UIの更新
+    NiGui::BeginFrame();
+
+    GPUParticle::GetInstance()->Update();
+
+    TakoFramework::Update();
+
+    //　サウンドの更新
+    Audio::GetInstance()->Update();
+
+    // ゲームパッドの状態をリフレッシュ
+    Input::GetInstance()->RefreshGamePadState();
 
     eventTimer_->EndEvent("Update");
 }
@@ -217,7 +236,6 @@ void MyGame::Draw()
     // テクスチャ用のsrvヒープの設定
     SrvManager::GetInstance()->BeginDraw();
 
-    GPUParticle::GetInstance()->Draw();
     // シーンの描画
     SceneManager::GetInstance()->Draw();
 
@@ -245,6 +263,8 @@ void MyGame::Draw()
     NiGui::DrawUI();
 
     Draw2D::GetInstance()->Draw();
+
+    GPUParticle::GetInstance()->Draw();
 
     Transition::GetInstance()->Draw();
 
@@ -327,51 +347,40 @@ void MyGame::Draw()
                 if (postEffectType == VignetteRed || postEffectType == VignetteRedBloom || postEffectType == VigRedGrayScale)
                 {
                     ImGui::DragFloat("VignettePower", &postEffectParam.vignettePower, 0.01f, 0.0f, 10.0f);
-                    PostEffect::GetInstance()->SetVignettePower(postEffectParam.vignettePower);
                     ImGui::DragFloat("VignetteRange", &postEffectParam.vignetteRange, 0.01f, 0.0f, 100.0f);
-                    PostEffect::GetInstance()->SetVignetteRange(postEffectParam.vignetteRange);
                 }
 
                 if (postEffectType == VignetteRedBloom)
                 {
                     ImGui::DragFloat("BloomThreshold", &postEffectParam.bloomThreshold, 0.01f, 0.0f, 1.0f);
-                    PostEffect::GetInstance()->SetBloomThreshold(postEffectParam.bloomThreshold);
+                    
                 }
 
                 if (postEffectType == Bloom || postEffectType == BloomFog || postEffectType == NewBloom)
                 {
                     ImGui::DragFloat("BloomIntensity", &postEffectParam.bloomIntensity, 0.01f, 0.0f, 10.0f);
-                    PostEffect::GetInstance()->SetBloomIntensity(postEffectParam.bloomIntensity);
                     ImGui::DragFloat("BloomThreshold", &postEffectParam.bloomThreshold, 0.01f, 0.0f, 1.0f);
-                    PostEffect::GetInstance()->SetBloomThreshold(postEffectParam.bloomThreshold);
                     ImGui::DragFloat("BloomSigma", &postEffectParam.bloomSigma, 0.01f, 0.1f, 50.0f);
-                    PostEffect::GetInstance()->SetBloomSigma(postEffectParam.bloomSigma);
                     ImGui::DragInt("BloomKernelSize", &postEffectParam.bloomKernelSize, 1, 1, 100);
-                    PostEffect::GetInstance()->SetBloomKernelSize(postEffectParam.bloomKernelSize);
+                    
                 }
 
                 if (postEffectType == BloomFog)
                 {
                     ImGui::ColorEdit4("FogColor", &postEffectParam.fogColor.x);
-                    PostEffect::GetInstance()->SetFogColor(postEffectParam.fogColor);
                     ImGui::DragFloat("FogDensity", &postEffectParam.fogDensity, 0.01f, 0.0f, 1.0f);
-                    PostEffect::GetInstance()->SetFogDensity(postEffectParam.fogDensity);
                 }
 
                 if (postEffectType == RadialBlur)
                 {
                     ImGui::DragFloat2("RadialBlurCenter", &postEffectParam.radialBlurCenter.x, 0.01f, 0.0f, 1.0f);
-                    PostEffect::GetInstance()->SetRadialBlurCenter(postEffectParam.radialBlurCenter);
                     ImGui::DragFloat("RadialBlurWidth", &postEffectParam.radialBlurWidth, 0.01f, 0.0f, 1.0f);
-                    PostEffect::GetInstance()->SetRadialBlurWidth(postEffectParam.radialBlurWidth);
                     ImGui::DragInt("RadialBlurSampleCount", &postEffectParam.radialBlurSampleCount, 1.0f, 1, 100);
-                    PostEffect::GetInstance()->SetBloomSampleCount(postEffectParam.radialBlurSampleCount);
                 }
 
                 if (postEffectType == NewBloom)
                 {
                     ImGui::DragInt("BloomSampleCount", &postEffectParam.bloomSampleCount, 1, 1, 100);
-                    PostEffect::GetInstance()->SetBloomSampleCount(postEffectParam.bloomSampleCount);
                 }
 
                 ImGui::EndTabItem();
