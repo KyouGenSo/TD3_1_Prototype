@@ -1,10 +1,9 @@
 #include "Enemy.h"
 
-#include "Object3dBasic.h"
 #include "cmath"
-#include "ModelManager.h"
 #include "Type/ColliderType.h"
 #include <Utility/Adaptor.h>
+#include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 
 void Enemy::Initialize()
 {
@@ -125,8 +124,9 @@ void Enemy::Move()
             transform_.rotate.y = std::atan2(direction.x, direction.z);
         }
 
-        transform_.translate.x += direction.x * speed_;
-        transform_.translate.z += direction.z * speed_;
+        float deltaTime = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
+        transform_.translate.x += direction.x * speed_ * deltaTime;
+        transform_.translate.z += direction.z * speed_ * deltaTime;
 
     }
     model_->SetTranslate(transform_.translate);

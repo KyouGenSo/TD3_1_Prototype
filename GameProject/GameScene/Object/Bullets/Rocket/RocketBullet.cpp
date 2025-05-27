@@ -99,7 +99,7 @@ void RocketBullet::Initialize()
 	BulletBase::Initialize();
 
 	type_ = WeaponType::RocketLauncher;
-	speed_ = 0.4f;
+	speed_ = 30.0f;
 
 	model_ = std::make_unique<Object3d>();
 	model_->Initialize();
@@ -206,7 +206,7 @@ void RocketBullet::InitializeChain()
 
 void RocketBullet::UpdateNormal()
 {
-	transform_.translate += forward_ * speed_;
+	transform_.translate += forward_ * speed_ * deltaTime_;
 
 	pCollider_->SetTranslate(Adaptor(transform_.translate));
 }

@@ -8,10 +8,11 @@
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 #include <GameScene/Object/Weapon/WeaponFactory.h>
 
+#include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
+
 // DEBUG
 #include <QuatFunc.h>
 
-#include "GameScene/Object/Weapon/SMG/SMG.h"
 #include "Type/ColliderType.h"
 #include <GameSystem/Reinforcement/StatusReinforcement.h>
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
@@ -77,21 +78,20 @@ void Player::Initialize()
         for (auto& obs : observers_)
         {
             obs->OnNotify("toggle_lvup");
+            DeltaTimeManager::GetInstance()->SetDeltaTime(1, 0.0f);
         }
+    });
+
+    id_callback_chainconfirm_ = GameEventNotifier::GetInstance()->RegisterCallback("ChainConfirm", [this]([[maybe_unused]]std::any _unused) {
+        this->OnChainConfirm();
+        DeltaTimeManager::GetInstance()->SetDeltaTime(1, 1.0f / 60.0f);
     });
 
 }
 
 void Player::Update()
 {
-    if (deltaTime_ == 0.0f)
-    {
-        for (auto observer : observers_)
-        {
-            observer->OnNotify("toggle_lvup");
-        }
-    }
-    deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(0);
+    deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
 
     UpdateInputCommands();
     UpdateMovement();
@@ -123,6 +123,7 @@ void Player::Finalize()
 {
     GameEventNotifier::GetInstance()->UnregisterCallback("EnemyDeadForXP", id_callback_enemydead_);
     GameEventNotifier::GetInstance()->UnregisterCallback("PlayerLevelUp", id_callback_playerlevelup_);
+    GameEventNotifier::GetInstance()->UnregisterCallback("ChainConfirm", id_callback_chainconfirm_);
 
     auto* rfmManager = ReinforcementManager::GetInstance();
     for (auto& reinforcement : reinforcementList_)

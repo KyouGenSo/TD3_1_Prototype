@@ -36,6 +36,7 @@ class Player : public Object
 
     uint32_t id_callback_enemydead_ = 0;
     uint32_t id_callback_playerlevelup_ = 0;
+    uint32_t id_callback_chainconfirm_ = 0;
     float xp_ = 0.0f;
     float xpMax_ = 100.0f;
     float xpGainRetio_ = 0.1f;
