@@ -20,6 +20,7 @@
 void TitleScene::Finalize()
 {
     Audio::GetInstance()->StopWave(bgmPlayHandle_);
+    emitterManager_->RemoveAllEmitters();
 }
 
 void TitleScene::Initialize()
@@ -78,6 +79,7 @@ void TitleScene::Initialize()
     TextureManager::GetInstance()->LoadTexture("press_space_text.png");
     TextureManager::GetInstance()->LoadTexture("guide.png");
     TextureManager::GetInstance()->LoadTexture("white.png");
+    TextureManager::GetInstance()->LoadTexture("NeoSiege_Title.png");
 
     bgmPlayHandle_ = SoundManager::GetInstance()->Play("BGM_Title");
 
@@ -98,6 +100,10 @@ void TitleScene::Initialize()
     bgSp_ = make_unique<Sprite>();
     bgSp_->Initialize("black.png");
     bgSp_->SetPos({ 0, 0 });
+
+    titleSprite_ = make_unique<Sprite>();
+    titleSprite_->Initialize("NeoSiege_Title.png");
+    titleSprite_->SetPos(titlePos);
 
     button_ = std::make_unique<Sprite>();
     button_->Initialize("prot-title.png");
@@ -191,6 +197,11 @@ void TitleScene::Update()
     press_->SetPos(pressPos);
     press_->Update();
 
+    titlePos.x = WinApp::clientWidth / 2 - titleSprite_->GetSize().x / 2;
+    titlePos.y = titleSprite_->GetSize().y + 100.f;
+    titleSprite_->SetPos(titlePos);
+    titleSprite_->Update();
+
     whiteBarVerPos.x = whiteBarVerSize.x + 80.f;
     whiteBarVer_->SetPos(whiteBarVerPos);
     whiteBarVer_->SetSize(whiteBarVerSize);
@@ -275,7 +286,9 @@ void TitleScene::DrawWithoutEffect()
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
+    titleSprite_->Draw();
     press_->Draw();
+    
 }
 
 void TitleScene::DrawImGui()

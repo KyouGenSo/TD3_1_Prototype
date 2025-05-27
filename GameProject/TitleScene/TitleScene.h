@@ -58,6 +58,7 @@ private: // メンバ変数
 
     Vector2 pressPos{ .x = 300, .y = 600 };
     Vector2 pressSize{ .x = 500, .y = 100 };
+    Vector2 titlePos{ .x = 300, .y = 50 };
 
     float pressAlpha = 0.f;
     float pressAlphaSpeed = 0.05f;
@@ -67,6 +68,7 @@ private: // メンバ変数
     std::unique_ptr<Sprite> press_;
     std::unique_ptr<Sprite> guide_;
     std::unique_ptr<Sprite> bgSp_;
+    std::unique_ptr<Sprite> titleSprite_;
 
     std::unique_ptr<Sprite> whiteBarVer_;
     std::unique_ptr<Sprite> whiteBarVer2_;
