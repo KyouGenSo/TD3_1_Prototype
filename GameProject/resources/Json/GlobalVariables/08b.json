@@ -1,0 +1,10 @@
+{
+    "08b": {
+        "amount": 5,
+        "hpMultiplier": 1.5,
+        "interval": 5.0,
+        "time": 30.0,
+        "turn": 8,
+        "type": 2
+    }
+}

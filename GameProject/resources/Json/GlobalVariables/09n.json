@@ -1,0 +1,10 @@
+{
+    "09n": {
+        "amount": 10,
+        "hpMultiplier": 2.0,
+        "interval": 3.0,
+        "time": 30.0,
+        "turn": 9,
+        "type": 0
+    }
+}
