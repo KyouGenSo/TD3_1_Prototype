@@ -48,7 +48,7 @@ void AssaultBullet::Bullet::Update()
 
     isDead_ = BulletBase::CheckLifeTime();
 
-    transform_.translate += forward_ * speed_;
+    transform_.translate += forward_ * speed_ * deltaTime_;
 
     pCollider_->SetTranslate(Adaptor(transform_.translate));
 

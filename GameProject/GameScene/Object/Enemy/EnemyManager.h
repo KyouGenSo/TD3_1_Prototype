@@ -50,12 +50,14 @@ public:
     void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
     void SetEmitter(EmitterManager* pEmitter);
 
+
 private:
     void SpawnEnemy();
     Vector3 RandomSpawnPosition(Type type);
     void CreateWaveFile(std::string key);
     void InitializeWaveFile(std::string key);
     void TurnControl();
+
 
 private:
     float deltaTime_ = 1.0f / 60.0f;

@@ -10,7 +10,7 @@ void MachineGunBullet::Initialize() {
     BulletBase::Initialize();
 
     type_ = WeaponType::MachineGun;
-    speed_ = 0.9f;
+    speed_ = 60.0f;
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
@@ -34,6 +34,8 @@ void MachineGunBullet::Initialize() {
 
 void MachineGunBullet::Update()
 {
+    BulletBase::Update();
+
     if (isChainBullet_)
     {
         UpdateChain();
@@ -109,7 +111,7 @@ void MachineGunBullet::InitializeChain()
 
 void MachineGunBullet::UpdateNormal()
 {
-    transform_.translate += forward_ * speed_;
+    transform_.translate += forward_ * speed_ * deltaTime_;
 
     pCollider_->SetTranslate(Adaptor(transform_.translate));
 

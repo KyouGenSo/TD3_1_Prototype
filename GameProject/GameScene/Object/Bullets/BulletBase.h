@@ -37,8 +37,8 @@ protected:
     Vector3 forward_ = {};
     bool isChainBullet_ = false;
     WeaponType type_ = WeaponType::None;
-    float speed_ = 1.f;
-    float lifeTime_ = 300.0f / speed_ * 0.0166f;
+    float speed_ = 60.0f;
+    float lifeTime_ = 300.0f / speed_;
 
 
 protected:
@@ -50,7 +50,7 @@ protected:
     void Next();
 
     // ライフタイムを算出
-    void CalcLifeTime() { lifeTime_ = 300.0f / speed_ * 0.0166f; }
+    void CalcLifeTime() { lifeTime_ = 300.0f / speed_; }
     // ライフタイムをチェック
     bool CheckLifeTime() const;
 

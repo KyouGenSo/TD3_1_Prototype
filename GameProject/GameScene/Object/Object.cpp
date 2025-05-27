@@ -10,6 +10,8 @@
 
 void Object::ImGui(std::function<void()> _guiWidgetsFunc)
 {
+    #ifdef _DEBUG
+
     bool isOpen = true;
 
     if (name_.empty())
@@ -57,6 +59,8 @@ void Object::ImGui(std::function<void()> _guiWidgetsFunc)
     }
 
     ImGui::End();
+
+    #endif // _DEBUG
 }
 
 void Object::ImGui()
