@@ -263,11 +263,11 @@ void MyGame::Draw()
 
     Draw2D::GetInstance()->Draw();
 
-    GPUParticle::GetInstance()->Draw();
-
     Transition::GetInstance()->Draw();
 
     Draw2D::GetInstance()->Reset();
+
+    GPUParticle::GetInstance()->Draw();
 
     /// ============================================= ///
     /// ---------最終結果をスワップチェーンに描画---------///

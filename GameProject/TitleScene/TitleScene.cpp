@@ -40,17 +40,17 @@ void TitleScene::Initialize()
     emitterManager_ = std::make_unique<EmitterManager>(particleSystem);
 
     emitterParams_ = {
-        .position = { 0.0f, .0f, 0.0f },
+        .position = { 0.0f, -7.5f, 0.0f },
         .size = { 200.0f, 1.0f, 1.0f },
         .rotation = { 0.0f, 0.0f, 0.0f },
-        .count = 100,
-        .frequency = 0.1f,
-        .scaleRangeX = { 1.0f, 1.0f },
-        .scaleRangeY = { 1.0f, 1.0f },
+        .count = 10,
+        .frequency = 0.05f,
+        .scaleRangeX = { 0.05f, 0.05f },
+        .scaleRangeY = { 0.5f, 1.0f },
         .velRangeX = { 0.001f, 0.001f },
         .velRangeY = { 0.05f, 0.1f },
         .velRangeZ = { 0.001f, 0.001f },
-        .lifeTimeRange = { 30.0f, 30.0f },
+        .lifeTimeRange = { 1.0f, 5.0f },
         .isActive = true,
     };
     emitterManager_->CreateBoxEmitter("bg", emitterParams_.position, emitterParams_.size, emitterParams_.rotation, emitterParams_.count, emitterParams_.frequency);
@@ -234,7 +234,7 @@ void TitleScene::Draw()
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
-    //bgSp_->Draw();
+    bgSp_->Draw();
 
 
     //-------------------Modelの描画-------------------//
