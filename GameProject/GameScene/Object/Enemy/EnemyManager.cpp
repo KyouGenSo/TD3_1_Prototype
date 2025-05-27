@@ -7,10 +7,11 @@
 
 #include "GlobalVariables.h"
 #include "EnemyBase.h"
+#include "EnemyFactory.h"
 #include <list>
 
 EnemyManager::EnemyManager()
-    : gen_(rd_()), wave_()
+    : wave_()
 {
 }
 
@@ -20,6 +21,8 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Initialize(Object* player, Object* castle)
 {
+    RandomGenerator::Initialize();
+
     pPlayer_ = player;
     pCastle_ = castle;
 
@@ -30,17 +33,17 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
 
 
-    InitializeWaveFile("0101n");
-    InitializeWaveFile("0102n");
-    InitializeWaveFile("0103n");
-    InitializeWaveFile("0103f");
+    //InitializeWaveFile("0101n");
+    //InitializeWaveFile("0102n");
+    //InitializeWaveFile("0103n");
+    //InitializeWaveFile("0103f");
 
-    //InitializeWaveFile("0201n");
-    //InitializeWaveFile("0202n");
-    //InitializeWaveFile("0202b");
-    //InitializeWaveFile("0203n");
-    //InitializeWaveFile("0203f");
-    //InitializeWaveFile("0203b");
+    InitializeWaveFile("0201n");
+    InitializeWaveFile("0202n");
+    InitializeWaveFile("0202b");
+    InitializeWaveFile("0203n");
+    InitializeWaveFile("0203f");
+    InitializeWaveFile("0203b");
 
     TurnControl();
     turnProgress++;
@@ -72,27 +75,9 @@ void EnemyManager::Update()
     }
 
     for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {
-        if ((*enemy)->IsDead()){
+        if ((*enemy)->IsDead()) {
             //pMinimap_->Unregister(enemy.get());
             enemy = enemies_.erase(enemy);
-            continue;
-        }
-        SelectTarget(enemy->get());
-        (*enemy)->Update();
-        ++enemy;
-    }
-    for (auto enemy = flyEnemies_.begin(); enemy != flyEnemies_.end(); ){
-        if ((*enemy)->IsDead()){
-            enemy = flyEnemies_.erase(enemy);
-            continue;
-        }
-        SelectTarget(enemy->get());
-        (*enemy)->Update();
-        ++enemy;
-    }
-    for (auto enemy = bounceEnemies_.begin(); enemy != bounceEnemies_.end(); ) {
-        if ((*enemy)->IsDead()) {
-            enemy = bounceEnemies_.erase(enemy);
             continue;
         }
         SelectTarget(enemy->get());
@@ -107,21 +92,12 @@ void EnemyManager::Draw()
     {
         enemy->Draw();
     }
-    for (auto& enemy : flyEnemies_)
-    {
-        enemy->Draw();
-    }
-    for (auto& enemy : bounceEnemies_) {
-        enemy->Draw();
-    }
 }
 
 void EnemyManager::Draw2d()
 {
     std::list<EnemyBase*> allEnemies_ = {};
     for (auto& e : enemies_) e->Draw2d();
-    for (auto& e : flyEnemies_) e->Draw2d();
-    for (auto& e : bounceEnemies_) e->Draw2d();
 }
 
 void EnemyManager::Finalize()
@@ -131,49 +107,18 @@ void EnemyManager::Finalize()
         enemy->Finalize();
     }
     enemies_.clear();
-    for (auto& enemy : flyEnemies_)
-    {
-        enemy->Finalize();
-    }
-    flyEnemies_.clear();
-    for (auto& enemy : bounceEnemies_) {
-        enemy->Finalize();
-    }
-    bounceEnemies_.clear();
 }
 
-void EnemyManager::AddEnemy(const Vector3& position, Type type)
+void EnemyManager::AddEnemy(const Vector3& position, EnemyBase::Type type)
 {
-    if (type == Type::Normal)
-    {
-        auto enemy = std::make_unique<Enemy>();
-        enemy->Initialize();
-        enemy->SetTranslate(position);
-        enemy->SetIsAppearing(true);
-        enemy->SetAppearCounter(0.0f);
-        enemy->SetEmitter(pEmitter_);
-        //pMinimap_->Register(enemy.get());
-        enemies_.push_back(std::move(enemy));
-    }
-    else if (type == Type::Fly)
-    {
-        auto flyEnemy = std::make_unique<FlyEnemy>();
-        flyEnemy->Initialize();
-        flyEnemy->SetTranslate(position);
-        flyEnemy->SetIsAppearing(true);
-        flyEnemy->SetAppearCounter(0.0f);
-        flyEnemy->SetEmitter(pEmitter_);
-        flyEnemies_.push_back(std::move(flyEnemy));
-    }
-    else if (type == Type::Bounce) {
-        auto bounceEnemy = std::make_unique<BounceEnemy>();
-        bounceEnemy->Initialize();
-        bounceEnemy->SetTranslate(position);
-        bounceEnemy->SetIsAppearing(true);
-        bounceEnemy->SetAppearCounter(0.0f);
-        bounceEnemy->SetEmitter(pEmitter_);
-        bounceEnemies_.push_back(std::move(bounceEnemy));
-    }
+    auto enemy = EnemyFactory::CreateEnemy(type);
+    enemy->Initialize();
+    enemy->SetTranslate(position);
+    enemy->SetIsAppearing(true);
+    enemy->SetAppearCounter(0.0f);
+    enemy->SetEmitter(pEmitter_);
+    //pMinimap_->Register(enemy.get());
+    enemies_.push_back(std::move(enemy));
 }
 
 void EnemyManager::SelectTarget(EnemyBase* enemy)
@@ -198,15 +143,15 @@ void EnemyManager::ImGui()
     ImGui::Begin("EnemyManager");
     if (ImGui::Button("Normal"))
     {
-        AddEnemy({ 0.0f,1.0f,0.0f }, Type::Normal);
+        AddEnemy({ 0.0f,1.0f,0.0f }, EnemyBase::Type::Normal);
     }
     if (ImGui::Button("Fly"))
     {
-        AddEnemy({ 0.0f,5.0f,0.0f }, Type::Fly);
+        AddEnemy({ 0.0f,5.0f,0.0f }, EnemyBase::Type::Fly);
     }
     if (ImGui::Button("Bounce"))
     {
-        AddEnemy({ 0.0f,1.0f,0.0f }, Type::Bounce);
+        AddEnemy({ 0.0f,1.0f,0.0f }, EnemyBase::Type::Bounce);
     }
     if (ImGui::Button("TurnControl"))
     {
@@ -231,7 +176,7 @@ void EnemyManager::InitializeWaveFile(std::string key)
     spawnCount_[key] = 0;
 
     Wave wave;
-    wave.type = static_cast<Type>(GlobalVariables::GetInstance()->GetValueInt(key, "type"));
+    wave.type = static_cast<EnemyBase::Type>(GlobalVariables::GetInstance()->GetValueInt(key, "type"));
     wave.interval = GlobalVariables::GetInstance()->GetValueFloat(key, "interval");
     wave.amount = GlobalVariables::GetInstance()->GetValueInt(key, "amount");
     wave.hpMultiplier = GlobalVariables::GetInstance()->GetValueFloat(key, "hpMultiplier");
@@ -290,37 +235,28 @@ void EnemyManager::SpawnEnemy()
     }
 }
 
-Vector3 EnemyManager::RandomSpawnPosition(Type type)
+Vector3 EnemyManager::RandomSpawnPosition(EnemyBase::Type type)
 {
     Vector3 randomPos = {};
 
-    if (type == Type::Normal)
+    if (type == EnemyBase::Type::Normal)
     {
         while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z))
         {
-
-            std::uniform_real_distribution<float> disX(minSpawnPoint_.x, maxSpawnPoint_.x);
-            std::uniform_real_distribution<float> disY(minSpawnPoint_.y, maxSpawnPoint_.y);
-            std::uniform_real_distribution<float> disZ(minSpawnPoint_.z, maxSpawnPoint_.z);
-            randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+            randomPos = Vector3{ RandomGenerator::Generate(minSpawnPoint_.x, maxSpawnPoint_.x), RandomGenerator::Generate(minSpawnPoint_.y, maxSpawnPoint_.y), RandomGenerator::Generate(minSpawnPoint_.z, maxSpawnPoint_.z)};
         }
     }
-    else if (type == Type::Fly)
+    else if (type == EnemyBase::Type::Fly)
     {
         while ((randomPos.x < flyMaxSpawnRange_.x && randomPos.x > flyMinSpawnRange_.x) && (randomPos.z < flyMaxSpawnRange_.z && randomPos.z > flyMinSpawnRange_.z))
         {
-            std::uniform_real_distribution<float> disX(flyMinSpawnPoint_.x, flyMaxSpawnPoint_.x);
-            std::uniform_real_distribution<float> disY(flyMinSpawnPoint_.y, flyMaxSpawnPoint_.y);
-            std::uniform_real_distribution<float> disZ(flyMinSpawnPoint_.z, flyMaxSpawnPoint_.z);
-            randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+            randomPos = Vector3{ RandomGenerator::Generate(flyMinSpawnPoint_.x, flyMaxSpawnPoint_.x), RandomGenerator::Generate(flyMinSpawnPoint_.y, flyMaxSpawnPoint_.y), RandomGenerator::Generate(flyMinSpawnPoint_.z, flyMaxSpawnPoint_.z), };
         }
     }
-    else if (type == Type::Bounce) {
-        while ((randomPos.x < bounceMaxSpawnRange_.x && randomPos.x > bounceMinSpawnRange_.x) && (randomPos.z < bounceMaxSpawnRange_.z && randomPos.z > bounceMinSpawnRange_.z)) {
-            std::uniform_real_distribution<float> disX(bounceMinSpawnPoint_.x, bounceMaxSpawnPoint_.x);
-            std::uniform_real_distribution<float> disY(bounceMinSpawnPoint_.y, bounceMaxSpawnPoint_.y);
-            std::uniform_real_distribution<float> disZ(bounceMinSpawnPoint_.z, bounceMaxSpawnPoint_.z);
-            randomPos = Vector3{ disX(gen_), disY(gen_), disZ(gen_) };
+    else if (type == EnemyBase::Type::Bounce) {
+        while ((randomPos.x < bounceMaxSpawnRange_.x && randomPos.x > bounceMinSpawnRange_.x) && (randomPos.z < bounceMaxSpawnRange_.z && randomPos.z > bounceMinSpawnRange_.z)) 
+        {
+            randomPos = Vector3{ RandomGenerator::Generate(bounceMinSpawnPoint_.x, bounceMaxSpawnPoint_.x), RandomGenerator::Generate(bounceMinSpawnPoint_.y, bounceMaxSpawnPoint_.y), RandomGenerator::Generate(bounceMinSpawnPoint_.z, bounceMaxSpawnPoint_.z), };
         }
     }
 
@@ -342,7 +278,7 @@ void EnemyManager::CreateWaveFile(std::string key)
 
 void EnemyManager::ChangeWave(std::string key, bool resetSpawnCount)
 {
-    waves_[key].type = static_cast<Type>(GlobalVariables::GetInstance()->GetValueInt(key, "type"));
+    waves_[key].type = static_cast<EnemyBase::Type>(GlobalVariables::GetInstance()->GetValueInt(key, "type"));
     waves_[key].interval = GlobalVariables::GetInstance()->GetValueFloat(key, "interval");
     waves_[key].amount = GlobalVariables::GetInstance()->GetValueInt(key, "amount");
     waves_[key].hpMultiplier = GlobalVariables::GetInstance()->GetValueFloat(key, "hpMultiplier");

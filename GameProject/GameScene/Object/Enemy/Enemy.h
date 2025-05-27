@@ -15,7 +15,7 @@ public:
 
     void Draw() override;
 
-    void Finalize();
+    void Finalize() override;
 
 	void OnCollision(const Collision::Collider* pCollider) override;
 
@@ -25,12 +25,6 @@ public:
 
     void AppearanceProduction();
 
-    void SetTranslate(Vector3 translate) { transform_.translate = translate; }
-
-    void SetIsAppearing(bool isAppearing) { isAppearing_ = true; }
-
-    void SetAppearCounter(float appearCounter) { appearCounter_ = appearCounter; }
-
     float GetAmoRotate() { return amoRotate_; }
 
     Vector3 GetDirection() { return direction_; }
@@ -38,9 +32,6 @@ public:
 
 private:
     Vector3 prePos_ = {};
-
-    bool isAppearing_ = false;
-    float appearCounter_ = 0.0f;
 
     float amoRotate_ = 0.1f;
     float targetRotate_ = 2.0f;

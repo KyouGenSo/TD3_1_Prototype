@@ -7,6 +7,8 @@
 
 void BounceEnemy::Initialize()
 {
+    EnemyBase::Initialize();
+
     pGameEventNotifier_ = GameEventNotifier::GetInstance();
 
     model_ = std::make_unique<Object3d>();
@@ -46,7 +48,7 @@ void BounceEnemy::Initialize()
 
 void BounceEnemy::Update()
 {
-    Object::Update();
+    EnemyBase::Update();
     if (isDead_) return;
 
     Move();
@@ -76,7 +78,7 @@ void BounceEnemy::OnCollision(const Collision::Collider* _other)
     if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
     {
 
-        EnemyBase::StatusUpdateOnCollision(_other);
+        Object::StatusUpdateOnCollision(_other);
 
         isDead_ = true;
 
