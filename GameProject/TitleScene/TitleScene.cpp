@@ -299,28 +299,7 @@ void TitleScene::DrawImGui()
     ///             ImGuiの描画              ///
     /// ================================== ///
 
-    ImGui::Begin("TitleScene");
-    // emitterManagerのImGui
-    ImGui::DragFloat3("Emitter Position", &emitterParams_.position.x, 0.1f, -1000.f, 1000.f);
-    ImGui::DragFloat3("Emitter Size", &emitterParams_.size.x, 0.1f, 0.f, 1000.f);
-    ImGui::DragFloat3("Emitter Rotation", &emitterParams_.rotation.x, 0.1f, -3.14f, 3.14f);
-    ImGui::DragInt("Emitter Count", reinterpret_cast<int*>(&emitterParams_.count), 1, 1, 20000);
-    ImGui::DragFloat("Emitter Frequency", &emitterParams_.frequency, 0.01f, 0.f, 10.f);
-    ImGui::DragFloat2("Emitter Scale Range X", &emitterParams_.scaleRangeX.x, 0.01f, 0.f, 10.f);
-    ImGui::DragFloat2("Emitter Scale Range Y", &emitterParams_.scaleRangeY.x, 0.01f, 0.f, 10.f);
-    ImGui::DragFloat2("Emitter Velocity Range X", &emitterParams_.velRangeX.x, 0.01f, -1000.f, 1000.f);
-    ImGui::DragFloat2("Emitter Velocity Range Y", &emitterParams_.velRangeY.x, 0.01f, -1000.f, 1000.f);
-    ImGui::DragFloat2("Emitter Velocity Range Z", &emitterParams_.velRangeZ.x, 0.01f, -1000.f, 1000.f);
-    ImGui::DragFloat2("Emitter Life Time Range", &emitterParams_.lifeTimeRange.x, 0.01f, 0.f, 10.f);
-    ImGui::Checkbox("Emitter Active", &emitterParams_.isActive);
 
-    // buttonを押すと一時的なエミッターを生成
-    if (ImGui::Button("Create Temporary Emitter"))
-    {
-        emitterManager_->CreateTemporaryEmitterFrom("bg", "temp", 1.f);
-    }
-
-    ImGui::End();
 
 #endif // _DEBUG
 }
