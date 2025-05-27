@@ -78,13 +78,11 @@ void Player::Initialize()
         for (auto& obs : observers_)
         {
             obs->OnNotify("toggle_lvup");
-            DeltaTimeManager::GetInstance()->SetDeltaTime(1, 0.0f);
         }
     });
 
     id_callback_chainconfirm_ = GameEventNotifier::GetInstance()->RegisterCallback("ChainConfirm", [this]([[maybe_unused]]std::any _unused) {
         this->OnChainConfirm();
-        DeltaTimeManager::GetInstance()->SetDeltaTime(1, 1.0f / 60.0f);
     });
 
 }

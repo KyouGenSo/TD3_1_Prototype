@@ -14,20 +14,22 @@ void GUI_Chain::Initialize()
 
 void GUI_Chain::OnNotify(const std::string& _event)
 {
+    auto dtm = DeltaTimeManager::GetInstance();
     if (_event == "open_chain")
     {
+        dtm->SetDeltaTime(1, 0.0f);
         isDisplay_ = true;
     }
     else if (_event == "close_chain")
     {
+        dtm->SetDeltaTime(1, 1.0f / 60.0f);
         isDisplay_ = false;
     }
     else if (_event == "toggle_chain")
     {
-        auto dtm = DeltaTimeManager::GetInstance();
-        isDisplay_ = !isDisplay_;
-        if (dtm->GetDeltaTime(1) == 0.0f) dtm->SetDeltaTime(1, 1.0f / 60.0f);
+        if (isDisplay_) dtm->SetDeltaTime(1, 1.0f / 60.0f);
         else dtm->SetDeltaTime(1, 0.0f);
+        isDisplay_ = !isDisplay_;
     }
 }
 
