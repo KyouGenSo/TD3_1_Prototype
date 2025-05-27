@@ -7,6 +7,7 @@
 #include <imgui.h>
 #include <WinApp.h>
 #include <Utility/Adaptor.h>
+#include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 
 void GUI_LvUP::Initialize()
 {
@@ -59,16 +60,21 @@ void GUI_LvUP::Initialize()
 
 void GUI_LvUP::OnNotify(const std::string& _event)
 {
+    auto dtm = DeltaTimeManager::GetInstance();
     if (_event == "open_lvup")
     {
+        dtm->SetDeltaTime(1, 0.0f);
         isDisplay_ = true;
     }
     else if (_event == "close_lvup")
     {
+        dtm->SetDeltaTime(1, 1.0f / 60.0f);
         isDisplay_ = false;
     }
     else if (_event == "toggle_lvup")
     {
+        if (isDisplay_) dtm->SetDeltaTime(1, 1.0f / 60.0f);
+        else dtm->SetDeltaTime(1, 0.0f);
         isDisplay_ = !isDisplay_;
     }
 }
@@ -93,6 +99,7 @@ void GUI_LvUP::Update()
         gameController_->HandleConfirmCard(selectedCard_);
         isSelected_ = false;
         isPickRandom_ = false;
+        DeltaTimeManager::GetInstance()->SetDeltaTime(1, 1.0f / 60.0f);
     }
 }
 
