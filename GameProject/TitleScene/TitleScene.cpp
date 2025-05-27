@@ -61,7 +61,7 @@ void TitleScene::Initialize()
     emitterManager_->SetEmitterActive("bg", emitterParams_.isActive);
 
     bloomParam_ = {
-                .intensity = 1.0f,
+                .intensity = 1.8f,
                 .threshold = 0.9f,
                 .sigma = 0.f,
                 .sigmaIncreaSpeed = 0.2f,
@@ -152,17 +152,17 @@ void TitleScene::Update()
     bgSp_->Update();
 
     if (bloomParam_.sigmaIncreasing) {
-        if (bloomParam_.sigma < 10.f) {
+        if (bloomParam_.sigma < 12.f) {
             bloomParam_.sigma += bloomParam_.sigmaIncreaSpeed;
         } else {
-            bloomParam_.sigma = 10.f;
+            bloomParam_.sigma = 12.f;
             bloomParam_.sigmaIncreasing = false;
         }
     } else {
-        if (bloomParam_.sigma > 0.1f) {
+        if (bloomParam_.sigma > 1.5f) {
             bloomParam_.sigma -= bloomParam_.sigmaIncreaSpeed * 0.5f;
         } else {
-            bloomParam_.sigma = 0.1f;
+            bloomParam_.sigma = 1.5f;
             bloomParam_.sigmaIncreasing = true;
         }
     }
@@ -236,11 +236,9 @@ void TitleScene::Draw()
 
     bgSp_->Draw();
 
-
     //-------------------Modelの描画-------------------//
     // 3Dモデル共通描画設定
     Object3dBasic::GetInstance()->SetCommonRenderSetting();
-
 
 
 
@@ -253,7 +251,6 @@ void TitleScene::Draw()
 
     whiteBarVer2_->Draw();
     whiteBarHor2_->Draw();
-
 }
 
 void TitleScene::DrawWithoutEffect()
