@@ -3,31 +3,21 @@
 
 class MachineGunBullet : public BulletBase
 {
-    struct Bullet
-    {
-    private:
-        Vector3 origin{};
-
-        std::unique_ptr<Object3d> model_;
-        std::unique_ptr<Collision::Collider> collider_;
-
-        Transform transform_ = {};
-        Vector3 forward_ = {};
-        float speed_ = 0.0f;
-
-        bool dead = false;
-
+    class Bullet : public BulletBase{
     public:
-        Bullet* Initialize();
-        void Update();
-        void Draw();
+        void Initialize() override;
+        void Update() override;
+        void Draw() override;
+        void OnCollisionTrigger(const Collision::Collider* _collider) override;
 
-        Bullet* SetOriginalPosition(const Vector3& _pos);
-        Bullet* SetRotate(const Vector3& _rotate);
-        Bullet* SetForward(const Vector3& _forward);
-        Bullet* SetSpeed(float _speed);
-        bool IsDead() const {return dead;}
-        void OnCollisionTrigger(const Collision::Collider* _other);
+        void SetSpeed(float speed) {
+            speed_ = speed;
+        }
+    protected:
+        void InitializeNormal() override;
+        void InitializeChain() override;
+        void UpdateNormal() override;
+        void UpdateChain() override;
     };
 
     Vector3 origin{};
@@ -37,7 +27,7 @@ public:
     void Update() override;
     void Draw() override;
     void OnCollisionTrigger(const Collision::Collider* _collider) override;
-
+    bool IsDeadAll() override;
 protected:
     void InitializeNormal() override;
     void InitializeChain() override;

@@ -24,6 +24,10 @@ public:
     RGB(const RGB& _other) : r_(_other.r_), g_(_other.g_), b_(_other.b_) {}
     RGB(RGB&& _other) noexcept : r_(_other.r_), g_(_other.g_), b_(_other.b_) {}
 
+    uint8_t& r() { return r_; }
+    uint8_t& g() { return g_; }
+    uint8_t& b() { return b_; }
+
     RGB& operator=(const RGB& other) { r_ = other.r_; g_ = other.g_; b_ = other.b_; return *this; }
     RGB& operator=(RGB&& other) noexcept { r_ = other.r_; g_ = other.g_; b_ = other.b_; return *this; }
     RGB& operator=(const RGBA& other);
@@ -81,10 +85,10 @@ class RGBA : public IColor
 public:
     RGBA() = default;
 
-    uint8_t r() const { return r_; }
-    uint8_t g() const { return g_; }
-    uint8_t b() const { return b_; }
-    uint8_t a() const { return a_; }
+    uint8_t& r() { return r_; }
+    uint8_t& g() { return g_; }
+    uint8_t& b() { return b_; }
+    uint8_t& a() { return a_; }
 
     RGBA(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a) : r_(_r), g_(_g), b_(_b), a_(_a) {}
     RGBA(const RGBA& _other) : r_(_other.r_), g_(_other.g_), b_(_other.b_), a_(_other.a_) {}
@@ -141,5 +145,8 @@ private:
 
 namespace color
 {
-    RGBA create(const std::string& _hex);
+    RGBA create(const std::string& _colorstr);
+    RGBA _HexToRGBA(const std::string& _hexstr);
+    RGBA _RGBToRGBA(const std::string& _rgbstr);
+    RGBA _RGBAToRGBA(const std::string& _rgbastr);
 }

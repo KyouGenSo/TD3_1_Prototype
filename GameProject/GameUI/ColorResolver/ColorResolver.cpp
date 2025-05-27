@@ -36,7 +36,15 @@ void ColorResolver::DesirializeFromJson(const json& _jsonData)
         RGBA            result          = {};
         ColorName       colorname       = static_cast<ColorName>(idx_colorname++);
         std::string     str_colorname   = ColorTypeToString(colorname);
-        std::string     hex             = _jsonData.at(str_colorname).get<std::string>();
+        auto            finditr         = _jsonData.find(str_colorname);
+
+        if (finditr == _jsonData.end())
+        {
+            // ファイルに色名が存在しない
+            continue;
+        }
+
+        std::string     hex             = finditr->get<std::string>();
 
         if (hex.empty())
         {

@@ -8,7 +8,6 @@
 #include "Collision/Collider.h"
 #include "Type/ColliderType.h"
 #include <Utility/Adaptor.h>
-
 #include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
 
 void RocketBullet::Explosion::Init() {
@@ -89,6 +88,10 @@ bool RocketBullet::CB::IsFinish() const {
 
 void RocketBullet::CB::SetEmitter(EmitterManager* _emitter) {
 	emitter_ = _emitter;
+}
+
+RocketBullet::RocketBullet() :BulletBase(){
+    
 }
 
 void RocketBullet::Initialize()

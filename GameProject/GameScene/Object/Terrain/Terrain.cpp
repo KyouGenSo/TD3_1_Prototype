@@ -31,7 +31,7 @@ void Terrain::Initialize()
     collider_ = std::make_unique<Collision::Collider>();
     collider_->SetEvent(Collision::EventType::Stay, [&](const Collision::Collider* pCol){OnCollision(pCol); })
         ->SetTranslate({transform_.translate.x, transform_.translate.y, transform_.translate.z})
-        ->SetSize(Collision::Vec3{200, 4, 800})
+        ->SetSize(Collision::Vec3{200.0f, 4.1f, 800.0f})
         ->SetType(Collision::Type::AABB)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::STAGE))
         ->SetOwner(this)
@@ -45,14 +45,14 @@ void Terrain::Update()
 
 void Terrain::Draw()
 {
-    /* AABB Debug Draw
+    // AABB Debug Draw
     Vector3 size = Vector3(200.0f, 4.0f, 800.0f);
     AABB aabb = {};
     aabb.min = size * -0.5f + transform_.translate;
     aabb.max = size * 0.5f + transform_.translate;
 
     Draw2D::GetInstance()->DrawAABB(aabb, {0.0f, 1.0f, 0.0f, 1.0f});
-    */
+    
 
     model_->Draw();
     //boxObj_->Draw();

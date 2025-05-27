@@ -40,6 +40,10 @@ void Castle::Initialize() {
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
         ->SetOwner(this)
         ->Enable();
+
+    #ifdef _DEBUG
+    enableUpdateStatus_ = false;
+    #endif // DEBUG
 }
 
 void Castle::Update() {
@@ -61,5 +65,5 @@ void Castle::OnCollisionTrigger(const Collision::Collider* _pCollider)
 
 void Castle::ImGui()
 {
-    statusCurrent_.ImGui("Castle");
+    Object::ImGui([&]() { statusCurrent_.ImGui("Castle"); });
 }

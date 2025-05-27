@@ -28,6 +28,8 @@ void Player::Initialize()
 {
     Object::Initialize();
 
+    name_ = "Player";
+
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("player.gltf");
@@ -127,21 +129,14 @@ void Player::Finalize()
     {
         rfmManager->UnregisterReinforcement(reinforcement.get());
     }
-    ShowCursor(true);
+    if (mouseAim_) ShowCursor(true);
 }
 
 void Player::ImGui()
 {
-    statusInit_.ImGui("PlayerInit");
-    statusCurrent_.ImGui("PlayerCurrent");
-
-    if (ImGui::Begin("Player"))
-    {
-        if (ImGui::TreeNode("Object"))
-        {
-            Object::DebugObject();
-            ImGui::TreePop();
-        }
+    Object::ImGui([&]() {
+        statusInit_.ImGui("PlayerInit");
+        statusCurrent_.ImGui("PlayerCurrent");
 
         if (ImGui::TreeNode("Common"))
         {
@@ -159,8 +154,7 @@ void Player::ImGui()
             ImGui::Text("Level : %.1f", level_);
             ImGui::TreePop();
         }
-    }
-    ImGui::End();
+    });
 }
 
 void Player::OnCollision(const Collision::Collider* pCollider) {
@@ -169,10 +163,6 @@ void Player::OnCollision(const Collision::Collider* pCollider) {
 void Player::OnCollisionTrigger(const Collision::Collider* pCollider)
 {
     Object::StatusUpdateOnCollision(pCollider);
-
-    if (pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY))
-    {
-    }
 }
 
 void Player::AddReinforcement(const std::string& _cardName)
@@ -337,3 +327,7 @@ void Player::UpdateStatus()
     }
 }
 
+void Player::DrawDebug()
+{
+    weapon_->DrawDebug();
+}

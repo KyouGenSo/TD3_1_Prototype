@@ -226,6 +226,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameUI\Chain\GUI_Chain.cpp" />
     <ClCompile Include="GameUI\ColorResolver\ColorResolver.cpp" />
     <ClCompile Include="GameUI\CountDown\CountDown.cpp" />
+    <ClCompile Include="GameUI\HPBar\HPBar.cpp" />
     <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp" />
     <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp" />
     <ClCompile Include="Internal\SingletonFinalizer.cpp" />
@@ -236,7 +237,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="NiGui\Derived\Drawer.cpp" />
     <ClCompile Include="NiGui\Derived\NiGui_Debug.cpp" />
     <ClCompile Include="NiGui\Derived\ProcHandler.cpp" />
-    <ClCompile Include="NiGui\NiVec4.cpp" />
     <ClCompile Include="ResultScene\ResultScene.cpp" />
     <ClCompile Include="Timer\Timer.cpp" />
     <ClCompile Include="TitleScene\TitleScene.cpp" />
@@ -287,6 +287,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameUI\ColorName\ColorName.h" />
     <ClInclude Include="GameUI\ColorResolver\ColorResolver.h" />
     <ClInclude Include="GameUI\CountDown\CountDown.h" />
+    <ClInclude Include="GameUI\HPBar\HPBar.h" />
     <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h" />
     <ClInclude Include="Internal\SingletonFinalizer.h" />
     <ClInclude Include="MyGame\MyGame.h" />
@@ -298,7 +299,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="NiGui\Derived\Drawer.h" />
     <ClInclude Include="NiGui\Derived\NiGui_Debug.h" />
     <ClInclude Include="NiGui\Derived\ProcHandler.h" />
-    <ClInclude Include="NiGui\NiVec4.h" />
     <ClInclude Include="ResultScene\ResultScene.h" />
     <ClInclude Include="Timer\Timer.h" />
     <ClInclude Include="TitleScene\TitleScene.h" />

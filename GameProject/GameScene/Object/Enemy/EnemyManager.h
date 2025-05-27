@@ -9,6 +9,7 @@
 #include "BounceEnemy.h"
 #include "GameScene/HUD/Minimap.h"
 #include "Timer/Timer.h"
+#include <cstdint>
 
 class Player;
 class Castle;
@@ -38,6 +39,7 @@ public:
     void Initialize(Object* player, Object* castle);
     void Update();
     void Draw();
+    void Draw2d();
     void Finalize();
     void AddEnemy(const Vector3& position, Type type);
     void SelectTarget(EnemyBase* enemy);
@@ -74,6 +76,8 @@ private:
     const float leave = 10.0f;
 
     int turnProgress = 0;
+
+    std::unordered_map<Type, uint32_t> pendingSpawnCount_ = {};
 
     //bool resetSpawnCount = true;
 
