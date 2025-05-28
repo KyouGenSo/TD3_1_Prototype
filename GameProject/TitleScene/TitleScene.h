@@ -51,7 +51,9 @@ private: // メンバ変数
 
     bool isDebug_ = false;
 
-    std::unique_ptr<EmitterManager> emitterManager_ = nullptr;
+    Camera* camera_ = nullptr;
+    
+    EmitterManager* emitterManager_ = nullptr;
     BoxEmitterParams emitterParams_ = {};
 
     BloomParam bloomParam_ = {};
