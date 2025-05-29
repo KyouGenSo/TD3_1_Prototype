@@ -190,6 +190,12 @@ void GameScene::Initialize()
     reticle_->SetPos({static_cast<float>(WinApp::clientWidth) / 2.f, static_cast<float>(WinApp::clientHeight) / 2.f});
     reticle_->SetSize({32.f,32.f});
 
+    f11Sprite_ = std::make_unique<Sprite>();
+    f11Sprite_->Initialize("F11.png");
+    f11SpritePos_ = { .x = 0.f, .y = 0.f };
+    f11Sprite_->SetPos(f11SpritePos_);
+    f11Sprite_->SetSize({ 250.f, 40.f });
+
     eventTimer_->EndEvent("Initialize");
 }
 
@@ -267,6 +273,10 @@ void GameScene::Update()
 
     reticle_->Update();
 
+    f11SpritePos_.x = static_cast<float>(WinApp::clientWidth) - f11Sprite_->GetSize().x - 10.f;
+    f11Sprite_->SetPos(f11SpritePos_);
+    f11Sprite_->Update();
+
     // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
     this->MonitorStatus();
 }
@@ -329,6 +339,7 @@ void GameScene::DrawWithoutEffect()
     statusHUD_->Draw2D();
     enemyManager_->Draw2d();
     reticle_->Draw();
+    f11Sprite_->Draw();
 }
 
 void GameScene::DrawImGui()
