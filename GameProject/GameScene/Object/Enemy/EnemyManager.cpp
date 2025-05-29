@@ -131,7 +131,7 @@ void EnemyManager::AddEnemy(const Vector3& position, EnemyBase::Type type)
     enemy->SetIsAppearing(true);
     enemy->SetAppearCounter(0.0f);
     enemy->SetEmitter(pEmitter_);
-    //pMinimap_->Register(enemy.get());
+    pMinimap_->Register(enemy.get());
     enemies_.push_back(std::move(enemy));
 }
 
