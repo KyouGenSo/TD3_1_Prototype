@@ -8,6 +8,8 @@ public:
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
+
+	void Fire() override;
 }; // class ThunderRod
 
 #endif // ThunderRod_HPP_

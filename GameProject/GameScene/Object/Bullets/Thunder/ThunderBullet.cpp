@@ -6,28 +6,23 @@
 #include "Utility/Adaptor.h"
 
 void ThunderBullet::Bullet::Draw() {
+    if (!isDead_ && model_){
+        model_->Draw();
+    }
+    if (pNext_){
+        pNext_->Draw();
+    }
 }
 
 void ThunderBullet::Bullet::Initialize() {
     BulletBase::Initialize();
     type_ = WeaponType::Thunder;
-    speed_ = 6.f;
+    speed_ = 8.f;
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("thunderBullet.gltf");
-    model_->SetScale({1.f, 1.f, 1.f});
+    model_->SetScale({0.4f, 0.4f, 0.4f});
     CalcLifeTime();
-    pCollider_ = std::make_unique<Collision::Collider>();
-    pCollider_
-        ->SetEvent(Collision::EventType::Trigger, [&](const Collision::Collider* pCol){ OnCollisionTrigger(pCol); })
-        ->SetSize(0.5f)
-        ->SetType(Collision::Type::Sphere)
-        ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
-        ->SetOwner(this)
-        ->Enable();
 
     if (isChainBullet_){
         InitializeChain();
@@ -67,7 +62,14 @@ void ThunderBullet::Bullet::SetSpeed(float _speed) {
 }
 
 void ThunderBullet::Bullet::InitializeNormal() {
-    transform_.translate.y = 4.f;
+    transform_.translate.y = 8.f;
+
+    statusInit_.setAttack(6)
+        .setHp(1)
+        .setSpeed(1)
+        .setDefence(0)
+        .setMaxHp(1);
+    statusCurrent_ = statusInit_;
 }
 
 void ThunderBullet::Bullet::InitializeChain() {
@@ -83,14 +85,17 @@ void ThunderBullet::Bullet::UpdateNormal() {
     if (!isExploded_){
         transform_.translate.y = 0.7f; // 床に着地した位置に調整
         isExploded_ = true;
-        pCollider_->Disable();
-        explosion_ = std::make_unique<Collision::Collider>();
-        explosion_->SetType(Collision::Type::Sphere)
+        pCollider_ = std::make_unique<Collision::Collider>();
+        pCollider_
+            ->SetEvent(Collision::EventType::Trigger, [&](const Collision::Collider* pCol){ OnCollisionTrigger(pCol); })
+            ->SetType(Collision::Type::Sphere) 
             ->SetTranslate(Adaptor(transform_.translate))
             ->SetSize(3.f)
-            ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
             ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+            ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
+            ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
             ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+            ->SetOwner(this)
             ->Enable();
 
         if (emitter_){
@@ -100,9 +105,9 @@ void ThunderBullet::Bullet::UpdateNormal() {
     }
 
     if (isExploded_){
-        if (explosion_ && explosion_->IsEnabled()){
-            explosion_->SetTranslate(Adaptor(transform_.translate));
-            explosion_->Disable();
+        if (pCollider_ && pCollider_->IsEnabled()){
+            pCollider_->SetTranslate(Adaptor(transform_.translate));
+            pCollider_->Disable();
             isDead_ = true;
         }
     }

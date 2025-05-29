@@ -55,6 +55,7 @@ void GameScene::Initialize()
     eventTimer_->BeginEvent("Player");
     // プレイヤーの初期化
     player_ = std::make_unique<Player>();
+    player_->SetEmitter(emitterManager_.get());
     player_->Initialize();
     player_->SetFloor(terrain_->GetFloorHeight());
     player_->SetTransform(currentStageData.playerTransform);
@@ -156,7 +157,7 @@ void GameScene::Initialize()
     emitterManager_->SetEmitterActive("thunder", false);
     //emitterManager_->SetEmitterVelocityRange("explosion", {-0.1f, 0.1f}, {-0.1f,  0.1f}, {-0.1f, 0.1f});
     emitterManager_->SetEmitterColor("thunder", {1.f, 0.f, 0.f, 1});
-    emitterManager_->SetEmitterStartColor("thunder", {1, 0, 0, 1});
+    emitterManager_->SetEmitterStartColor("thunder", {1, 0.6f, 0.2f, 1});
     emitterManager_->SetEmitterEndColor("thunder", {1.f, 1.f, 0.f, 1});
     emitterManager_->SetEmitterScaleRange("thunder", {0.4f, 0.4f}, {0.4f, 0.4f});
 

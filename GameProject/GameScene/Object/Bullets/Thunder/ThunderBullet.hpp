@@ -4,7 +4,6 @@
 
 class ThunderBullet final : public BulletBase{
     class Bullet : public BulletBase{
-        std::unique_ptr<Collision::Collider> explosion_;
         bool isExploded_ = false;
 
         Object* target_ = nullptr;

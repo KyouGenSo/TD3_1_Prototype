@@ -33,6 +33,8 @@ protected:
     Chain* pChain_;
     uint32_t sound_fire_ = 0;
     std::unique_ptr<Collision::Ray> pRayToReticle_ = nullptr;
+    Collision::Manager::RayHitData hitdata_ = {};
+    Vector3 forward_ = {};
 
 
 protected:
@@ -45,9 +47,7 @@ private:
     bool isEnableSound_ = false;
     bool isHitRayToReticle_ = false;
     Vector3 cameraForward_ = {};
-    Vector3 forward_ = {};
     Vector3 cameraPosition_ = {};
-    Collision::Manager::RayHitData hitdata_ = {};
     void UpdateRay();
 
 
