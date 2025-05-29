@@ -108,10 +108,13 @@ void MyGame::Initialize()
     /// EventTimerの初期化
     eventTimer_ = EventTimer::GetInstance();
 
+    /// テクスチャの読み込み
     TextureManager::GetInstance()->LoadTexture("circle.png");
     TextureManager::GetInstance()->LoadTexture("white.png");
     TextureManager::GetInstance()->LoadTexture("GameOver.png");
     TextureManager::GetInstance()->LoadTexture("GameClear.png");
+    TextureManager::GetInstance()->LoadTexture("press_space_text.png");
+    TextureManager::GetInstance()->LoadTexture("NeoSiege_Title.png");
 
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 
