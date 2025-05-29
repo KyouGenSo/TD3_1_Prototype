@@ -110,6 +110,8 @@ void MyGame::Initialize()
 
     TextureManager::GetInstance()->LoadTexture("circle.png");
     TextureManager::GetInstance()->LoadTexture("white.png");
+    TextureManager::GetInstance()->LoadTexture("GameOver.png");
+    TextureManager::GetInstance()->LoadTexture("GameClear.png");
 
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 
