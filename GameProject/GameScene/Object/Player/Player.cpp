@@ -69,22 +69,7 @@ void Player::Initialize()
     weapon_->SetEmitter(emitter_);
     gravity_ = 1.8f;
 
-    // コールバック登録
-    id_callback_enemydead_ = GameEventNotifier::GetInstance()->RegisterCallback("EnemyDeadForXP", [this](std::any _gainedXP) {
-        xpGained_ += std::any_cast<float>(_gainedXP);
-    });
-
-    id_callback_playerlevelup_ = GameEventNotifier::GetInstance()->RegisterCallback("PlayerLevelUp", [this]([[maybe_unused]]std::any _unused) {
-        for (auto& obs : observers_)
-        {
-            obs->OnNotify("toggle_lvup");
-        }
-    });
-
-    id_callback_chainconfirm_ = GameEventNotifier::GetInstance()->RegisterCallback("ChainConfirm", [this]([[maybe_unused]]std::any _unused) {
-        this->OnChainConfirm();
-    });
-
+    this->InitializeCallbacks();
 }
 
 void Player::Update()
@@ -183,6 +168,25 @@ void Player::OnChainConfirm()
     weapon_->Initialize();
     weapon_->SetChain(chain_);
     weapon_->SetEmitter(emitter_);
+}
+
+void Player::InitializeCallbacks()
+{
+    // コールバック登録
+    id_callback_enemydead_ = GameEventNotifier::GetInstance()->RegisterCallback("EnemyDeadForXP", [this](std::any _gainedXP) {
+        xpGained_ += std::any_cast<float>(_gainedXP);
+    });
+
+    id_callback_playerlevelup_ = GameEventNotifier::GetInstance()->RegisterCallback("PlayerLevelUp", [this]([[maybe_unused]]std::any _unused) {
+        for (auto& obs : observers_)
+        {
+            obs->OnNotify("toggle_lvup");
+        }
+    });
+
+    id_callback_chainconfirm_ = GameEventNotifier::GetInstance()->RegisterCallback("ChainConfirm", [this]([[maybe_unused]]std::any _unused) {
+        this->OnChainConfirm();
+    });
 }
 
 void Player::UpdateInputCommands()

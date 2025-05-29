@@ -25,8 +25,13 @@ void WeaponBase::Initialize()
 {
     pRayToReticle_ = std::make_unique<Collision::Ray>();
     pRayToReticle_->SetLength(1000.0f);
-
     pRayToReticle_->AddAttribute(static_cast<uint32_t>(Collider::Type::WEAPON))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY));
+
+    pRayShooting_ = std::make_unique<Collision::Ray>();
+    pRayShooting_->SetLength(1000.0f);
+    pRayShooting_->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY));
 
@@ -49,6 +54,13 @@ void WeaponBase::Fire()
     if (isEnableSound_)
     {
         SoundManager::GetInstance()->Play(sound_fire_);
+    }
+
+    if (isHitRayToReticle_)
+    {
+        pRayShooting_->SetOrigin(Adaptor(transform_.translate));
+        pRayShooting_->SetDirection(Adaptor(cameraForward_));
+        pCollisionManager_->RayCast(pRayShooting_.get());
     }
 }
 
@@ -85,11 +97,11 @@ void WeaponBase::UpdateRay()
     NiQuaternion combinedRotation = yawQuat * pitchQuat;
 
     // カメラの前方向ベクトルを取得（Z軸を回転）
-    Vector3 cameraForward = NiUtil::Adaptor(FMath::RotateVector({ 0.0f, 0.0f, 1.0f }, combinedRotation));
+    cameraForward_ = NiUtil::Adaptor(FMath::RotateVector({ 0.0f, 0.0f, 1.0f }, combinedRotation));
 
     // レイの原点と方向を設定
     pRayToReticle_->SetOrigin(Adaptor(cameraPosition));
-    pRayToReticle_->SetDirection(Adaptor(cameraForward));
+    pRayToReticle_->SetDirection(Adaptor(cameraForward_));
 
     // レイキャストによる当たり判定
     hitdata_ = pCollisionManager_->RayCast(pRayToReticle_.get());
@@ -102,6 +114,7 @@ void WeaponBase::UpdateRay()
         Vector3 direction = toHitPoint.Normalize();
 
         forward_ = direction;
+        isHitRayToReticle_ = true;
     }
     else
     {
@@ -109,6 +122,7 @@ void WeaponBase::UpdateRay()
         Quaternion yaw   = Quat::MakeRotateAxisAngle({ 0, 1, 0 }, transform_.rotate.y);
         Quaternion pitch = Quat::MakeRotateAxisAngle({ 1, 0, 0 }, transform_.rotate.x);
         forward_ = Quat::RotateVec3({ 0, 0, 1 }, yaw * pitch);
+        isHitRayToReticle_ = false;
     }
 }
 
