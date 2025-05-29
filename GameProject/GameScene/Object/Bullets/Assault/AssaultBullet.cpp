@@ -9,7 +9,7 @@ void AssaultBullet::Initialize()
     BulletBase::Initialize();
 
     type_ = WeaponType::Assault;
-    speed_ = 120.0f;
+    speed_ = 360.0f;
 
     CalcLifeTime();
 }
