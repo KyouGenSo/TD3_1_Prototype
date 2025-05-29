@@ -62,6 +62,8 @@ class GameScene : public BaseScene
     std::vector<uint32_t> handle_onresizes_ = {};
 
     std::unique_ptr<Sprite> reticle_ = nullptr;
+    std::unique_ptr<Sprite> f11Sprite_ = nullptr;
+    Vector2 f11SpritePos_{ 0.0f, 0.0f };
 
 public:
     struct DirectionalLightParam

@@ -185,10 +185,16 @@ void GameScene::Initialize()
     eventTimer_->EndEvent("Sound");
 
     reticle_ = std::make_unique<Sprite>();
-    reticle_->Initialize("circle.png");
+    reticle_->Initialize("cross.png");
     reticle_->SetAnchorPoint({0.5f, 0.5f});
     reticle_->SetPos({static_cast<float>(WinApp::clientWidth) / 2.f, static_cast<float>(WinApp::clientHeight) / 2.f});
     reticle_->SetSize({32.f,32.f});
+
+    f11Sprite_ = std::make_unique<Sprite>();
+    f11Sprite_->Initialize("F11.png");
+    f11SpritePos_ = { .x = 0.f, .y = 0.f };
+    f11Sprite_->SetPos(f11SpritePos_);
+    f11Sprite_->SetSize({ 250.f, 40.f });
 
     eventTimer_->EndEvent("Initialize");
 }
@@ -252,12 +258,24 @@ void GameScene::Update()
     eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
 
     emitterManager_->Update();
+
+    // プレイヤーのHPのUIを更新
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
     *(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
-    *(statusHUD_->GetXPBar()) = player_->getXP();
+
+    // プレイヤーのXPのUIを更新
     statusHUD_->GetXPBar()->SetMaxValue(player_->getXPMax());
+    *(statusHUD_->GetXPBar()) = player_->getXP();
+
+    // 城のHPのUIを更新
+    statusHUD_->GetCastleHpBar()->SetMaxValue(castle_->getStatusCurrent().getMaxHp());
+    *(statusHUD_->GetCastleHpBar()) = castle_->getStatusCurrent().getHp();
 
     reticle_->Update();
+
+    f11SpritePos_.x = static_cast<float>(WinApp::clientWidth) - f11Sprite_->GetSize().x - 10.f;
+    f11Sprite_->SetPos(f11SpritePos_);
+    f11Sprite_->Update();
 
     // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
     this->MonitorStatus();
@@ -288,11 +306,7 @@ void GameScene::Draw()
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
-    countDown_->Draw2D();
-    minimap_->Draw();
-    statusHUD_->Draw2D();
-    enemyManager_->Draw2d();
-    reticle_->Draw();
+
 
     //camera_->Draw2D();
 }
@@ -320,7 +334,12 @@ void GameScene::DrawWithoutEffect()
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
-
+    countDown_->Draw2D();
+    minimap_->Draw();
+    statusHUD_->Draw2D();
+    enemyManager_->Draw2d();
+    reticle_->Draw();
+    f11Sprite_->Draw();
 }
 
 void GameScene::DrawImGui()
