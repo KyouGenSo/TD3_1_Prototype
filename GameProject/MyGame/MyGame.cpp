@@ -32,6 +32,8 @@ void MyGame::Initialize()
 
     TakoFramework::Initialize();
 
+    winApp_->SetWindowTitle(L"3141_ネオシージ");
+
 #pragma region General functions initialization
 
     // 入力クラスの初期化
