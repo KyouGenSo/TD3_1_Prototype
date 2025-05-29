@@ -29,12 +29,6 @@ void WeaponBase::Initialize()
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY));
 
-    pRayShooting_ = std::make_unique<Collision::Ray>();
-    pRayShooting_->SetLength(1000.0f);
-    pRayShooting_->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY));
-
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
 }
 
@@ -45,30 +39,28 @@ void WeaponBase::Update()
 
 void WeaponBase::Fire()
 {
+    Fire(transform_.translate);
+}
+
+void WeaponBase::Fire(const Vector3& _position)
+{
     auto coolTime = pChain_->GetCoolTime(pChain_->GetChain().front());
     if (coolTime > 0) return;
     auto bullet = BulletFactory::CreateBullet(pChain_->GetChain().front());
-    AddNewBullet(std::move(bullet));
+    AddNewBullet(std::move(bullet), _position);
 
     // 発射音を再生
     if (isEnableSound_)
     {
         SoundManager::GetInstance()->Play(sound_fire_);
     }
-
-    if (isHitRayToReticle_)
-    {
-        pRayShooting_->SetOrigin(Adaptor(transform_.translate));
-        pRayShooting_->SetDirection(Adaptor(cameraForward_));
-        pCollisionManager_->RayCast(pRayShooting_.get());
-    }
 }
 
-void WeaponBase::AddNewBullet(std::unique_ptr<BulletBase> _bullet)
+void WeaponBase::AddNewBullet(std::unique_ptr<BulletBase> _bullet, const Vector3& _position)
 {
     _bullet->SetEmitter(emitter_);
     _bullet->Initialize();
-    _bullet->SetPosition(transform_.translate);
+    _bullet->SetPosition(_position);
     _bullet->SetRotation(transform_.rotate);
     _bullet->SetForward(forward_);
     _bullet->SetIsChainBullet(false);
@@ -88,7 +80,7 @@ void WeaponBase::UpdateRay()
 {
     // カメラ情報の取得
     Camera* pCamera = *Object3dBasic::GetInstance()->GetCamera();
-    Vector3 cameraPosition = pCamera->GetTranslate();
+    cameraPosition_ = pCamera->GetTranslate();
     NiVec3 cameraRotation = NiUtil::Adaptor(pCamera->GetRotate());
 
     // カメラの回転からクォータニオンを計算（ヨーとピッチ）
@@ -100,7 +92,7 @@ void WeaponBase::UpdateRay()
     cameraForward_ = NiUtil::Adaptor(FMath::RotateVector({ 0.0f, 0.0f, 1.0f }, combinedRotation));
 
     // レイの原点と方向を設定
-    pRayToReticle_->SetOrigin(Adaptor(cameraPosition));
+    pRayToReticle_->SetOrigin(Adaptor(cameraPosition_));
     pRayToReticle_->SetDirection(Adaptor(cameraForward_));
 
     // レイキャストによる当たり判定

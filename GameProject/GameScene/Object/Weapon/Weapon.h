@@ -16,6 +16,7 @@ class WeaponBase : public Object
 {
 public:
     virtual void Fire();
+    virtual void Fire(const Vector3& _position);
 
     void Initialize();
     void Update() override;
@@ -32,21 +33,20 @@ protected:
     Chain* pChain_;
     uint32_t sound_fire_ = 0;
     std::unique_ptr<Collision::Ray> pRayToReticle_ = nullptr;
-    std::unique_ptr<Collision::Ray> pRayShooting_ = nullptr; // Ray for shooting
 
 
 protected:
-    void AddNewBullet(std::unique_ptr<BulletBase> _bullet);
+    void AddNewBullet(std::unique_ptr<BulletBase> _bullet, const Vector3& _spawnPosition);
     void DeleteDeadBullet();
     void EnableSound() { isEnableSound_ = true; }
 
 
 private:
     bool isEnableSound_ = false;
-    bool enableHitscan_ = false;
     bool isHitRayToReticle_ = false;
     Vector3 cameraForward_ = {};
     Vector3 forward_ = {};
+    Vector3 cameraPosition_ = {};
     Collision::Manager::RayHitData hitdata_ = {};
     void UpdateRay();
 
