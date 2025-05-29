@@ -93,7 +93,7 @@ void GameScene::Initialize()
     // Minimap
     minimap_ = std::make_unique<Minimap>();
     minimap_->Initialize();
-    minimap_->SetSize({ -30, 0, -30 }, { 30, 0, 30 });
+    minimap_->SetSize({ -100, 0, -400.f }, { 100, 0, 400 });
     minimap_->Register(player_.get());
 
     // Castle
@@ -107,11 +107,13 @@ void GameScene::Initialize()
     //enemyManager_->SetMinimap(minimap_.get());
     enemyManager_->Initialize(player_.get(), castle_.get());
     enemyManager_->SetEmitter(emitterManager_.get());
+    enemyManager_->SetMinimap(minimap_.get());
 
     // ボスの初期化
     boss_ = std::make_unique<Boss>();
     boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
+    minimap_->Register(boss_.get());
 
     eventTimer_->EndEvent("Enemy");
 
