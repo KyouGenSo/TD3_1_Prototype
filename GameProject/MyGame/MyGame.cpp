@@ -32,6 +32,8 @@ void MyGame::Initialize()
 
     TakoFramework::Initialize();
 
+    winApp_->SetWindowTitle(L"3141_ネオシージ");
+
 #pragma region General functions initialization
 
     // 入力クラスの初期化
@@ -54,6 +56,11 @@ void MyGame::Initialize()
     postEffectParam.downSampleFactor = 8;
     postEffectParam.fogColor = { 1.0f, 1.0f, 1.0f, 1.0f };
     postEffectParam.fogDensity = 0.01f;
+    postEffectParam.bwFilterThreshold = 0.5f;
+    postEffectParam.rgbSplitIntensity = 1.0f;
+    postEffectParam.redOffset = { 0.005f, 0.0f };
+    postEffectParam.greenOffset = { -0.005f, 0.0f };
+    postEffectParam.blueOffset = { 0.0f, 0.0f };
 #endif // _DEBUG
 
     // 乱数生成クラスの初期化
@@ -173,6 +180,12 @@ void MyGame::Update()
     case RadialBlur:
         PostEffect::GetInstance()->SetEffectType("RadialBlur");
         break;
+    case BWFilter:
+        PostEffect::GetInstance()->SetEffectType("BWFilter");
+        break;
+    case RGBSplit:
+        PostEffect::GetInstance()->SetEffectType("RGBSplit");
+        break;
     }
     PostEffect::GetInstance()->SetVignettePower(postEffectParam.vignettePower);
     PostEffect::GetInstance()->SetVignetteRange(postEffectParam.vignetteRange);
@@ -187,6 +200,9 @@ void MyGame::Update()
     PostEffect::GetInstance()->SetRadialBlurWidth(postEffectParam.radialBlurWidth);
     PostEffect::GetInstance()->SetBloomSampleCount(postEffectParam.radialBlurSampleCount);
     PostEffect::GetInstance()->SetBloomSampleCount(postEffectParam.bloomSampleCount);
+    PostEffect::GetInstance()->SetBWFilterThreshold(postEffectParam.bwFilterThreshold);
+    PostEffect::GetInstance()->SetRGBSplitIntensity(postEffectParam.rgbSplitIntensity);
+    PostEffect::GetInstance()->SetRGBSplitOffsets(postEffectParam.redOffset, postEffectParam.greenOffset, postEffectParam.blueOffset);
 #endif // _DEBUG
 
     // 入力情報の更新
@@ -338,6 +354,8 @@ void MyGame::Draw()
                 ImGui::RadioButton("NewBloom", (int*)&postEffectType, NewBloom);
                 ImGui::RadioButton("BloomFog", (int*)&postEffectType, BloomFog);
                 ImGui::RadioButton("RadialBlur", (int*)&postEffectType, RadialBlur);
+                ImGui::RadioButton("BWFilter", (int*)&postEffectType, BWFilter);
+                ImGui::RadioButton("RGBSplit", (int*)&postEffectType, RGBSplit);
 
                 ImGui::EndTabItem();
             }
@@ -382,6 +400,19 @@ void MyGame::Draw()
                 if (postEffectType == NewBloom)
                 {
                     ImGui::DragInt("BloomSampleCount", &postEffectParam.bloomSampleCount, 1, 1, 100);
+                }
+
+                if (postEffectType == BWFilter)
+                {
+                    ImGui::DragFloat("BWFilterThreshold", &postEffectParam.bwFilterThreshold, 0.01f, 0.0f, 1.0f);
+                }
+
+                if (postEffectType == RGBSplit)
+                {
+                    ImGui::DragFloat("RGBSplitIntensity", &postEffectParam.rgbSplitIntensity, 0.01f, 0.0f, 1.0f);
+                    ImGui::DragFloat2("RedOffset", &postEffectParam.redOffset.x, 0.001f, -1.0f, 1.0f);
+                    ImGui::DragFloat2("GreenOffset", &postEffectParam.greenOffset.x, 0.001f, -1.0f, 1.0f);
+                    ImGui::DragFloat2("BlueOffset", &postEffectParam.blueOffset.x, 0.001f, -1.0f, 1.0f);
                 }
 
                 ImGui::EndTabItem();

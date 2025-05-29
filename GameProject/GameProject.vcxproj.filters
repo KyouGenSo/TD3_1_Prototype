@@ -515,6 +515,7 @@
       <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\EnemyFactory.h" />
+    <ClInclude Include="Utility\Equals.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GameSystem\GameEventNotifier\EventList.md">

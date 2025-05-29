@@ -105,6 +105,10 @@ public: /// Getter
         return statusInit_;
     }
 
+    const std::string& GetName() const
+    {
+        return name_;
+    }
 
 public:
     void UpdateCollider() const;
