@@ -55,25 +55,30 @@ float4 GaussianBlur(float2 texcoord, float2 texSize, float2 dir)
     
     float sum = 0.0f; // 重みの合計
     
-    float weight; // 重みの初期化
+    float weight; // 重み
     
     for (int karnelStep = -gBloomParam.kernelSize / 2; karnelStep <= gBloomParam.kernelSize / 2; ++karnelStep)
     {
+        if (karnelStep == 0)
+        {
+            continue; // 中心のサンプルは既にresultに含まれているのでスキップ
+        }
+
         uvOffset = texcoord;
         uvOffset.x += karnelStep * texOffset.x * dir.x;
         uvOffset.y += karnelStep * texOffset.y * dir.y;
         
-        weight = Gaussian(karnelStep, gBloomParam.sigma);
-        
+        weight = Gaussian(float(karnelStep), gBloomParam.sigma);
+
         result.xyz += BloomExtract(uvOffset).xyz * weight;
         
         sum += weight;
         
     }
     
-    result *= (1.0f / sum);
+    result *= (1.0f / sum); // normalizing the result
     
-    return result;
+    return result; // return the blurred result
 }
 
 float4 SquareGaussianBlur(float2 texcoord, float2 texSize)
@@ -133,8 +138,6 @@ float4 main(VertexShaderOutput input) : SV_TARGET
     
     float2 texSize;
     gTexture.GetDimensions(texSize.x, texSize.y);
-
-    float2 uvSize = float2(1.0f, 0.5f);
     
     float4 bloomColor = GaussianBlur(input.texCoord, texSize, gBloomParam.direction);
     
@@ -144,6 +147,6 @@ float4 main(VertexShaderOutput input) : SV_TARGET
     
     bloomColor.rgb += output.color.rgb;
     
-    return bloomColor;
+    return bloomColor; // return the final combined color   
 
 }

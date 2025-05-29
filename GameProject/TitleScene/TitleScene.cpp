@@ -21,6 +21,7 @@ void TitleScene::Finalize()
 {
     Audio::GetInstance()->StopWave(bgmPlayHandle_);
     emitterManager_->RemoveAllEmitters();
+    delete emitterManager_;
 }
 
 void TitleScene::Initialize()
@@ -36,9 +37,16 @@ void TitleScene::Initialize()
     ///              初期化処理              ///
     /// ================================== ///
 
+      // デフォルトカメラを生成
+    camera_ = new Camera();
+    camera_->SetRotate(Vector3(0.2f, 0.0f, 0.0f));
+    camera_->SetTranslate(Vector3(0.0f, 9.0f, -34.0f));
+
     GPUParticle* particleSystem = GPUParticle::GetInstance();
 
-    emitterManager_ = std::make_unique<EmitterManager>(particleSystem);
+    particleSystem->SetCamera(camera_);
+
+    emitterManager_ = new EmitterManager(particleSystem);
 
     emitterParams_ = {
         .position = { 0.0f, -7.5f, 0.0f },
@@ -153,6 +161,8 @@ void TitleScene::Update()
     /// ================================== ///
     ///              更新処理               ///
     /// ================================== ///
+
+    camera_->Update();
 
     bgSp_->SetSize({ static_cast<float>(WinApp::clientWidth), static_cast<float>(WinApp::clientHeight) });
     bgSp_->Update();

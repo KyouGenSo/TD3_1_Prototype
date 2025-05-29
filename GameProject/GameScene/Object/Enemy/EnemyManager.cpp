@@ -33,17 +33,25 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
 
 
-    //InitializeWaveFile("0101n");
-    //InitializeWaveFile("0102n");
-    //InitializeWaveFile("0103n");
-    //InitializeWaveFile("0103f");
+    InitializeWaveFile("00n");
+    InitializeWaveFile("01n");
+    InitializeWaveFile("02n");
+    InitializeWaveFile("03f");
+    InitializeWaveFile("04n");
+    InitializeWaveFile("04f");
+    InitializeWaveFile("05n");
+    InitializeWaveFile("05f");
+    InitializeWaveFile("06n");
+    InitializeWaveFile("06b");
+    InitializeWaveFile("07f");
+    InitializeWaveFile("07b");
+    InitializeWaveFile("08f");
+    InitializeWaveFile("08b");
+    InitializeWaveFile("09n");
+    InitializeWaveFile("10n");
+    InitializeWaveFile("10f");
+    InitializeWaveFile("10b");
 
-    InitializeWaveFile("0201n");
-    InitializeWaveFile("0202n");
-    InitializeWaveFile("0202b");
-    InitializeWaveFile("0203n");
-    InitializeWaveFile("0203f");
-    InitializeWaveFile("0203b");
 
     TurnControl();
     turnProgress++;
@@ -51,14 +59,16 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
 void EnemyManager::Update()
 {
-    SpawnEnemy();
+    bool spawnLimitReached = (enemies_.size() >= maxSpawnCount_);
 
     std::vector<std::string> keysToRemove;
     for (auto key = keys_.begin(); key != keys_.end(); )
     {
         if (waves_[*key].time > 0.0f)
         {
-            waves_[*key].time -= deltaTime_;
+            if (!spawnLimitReached) {
+                waves_[*key].time -= deltaTime_;
+            }
             key++;
         }
         else
@@ -72,6 +82,10 @@ void EnemyManager::Update()
     {
         TurnControl();
         turnProgress++;
+    }
+
+    if (!spawnLimitReached) {
+        SpawnEnemy();
     }
 
     for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {

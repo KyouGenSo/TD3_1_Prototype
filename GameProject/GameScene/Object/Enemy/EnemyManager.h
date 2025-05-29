@@ -59,7 +59,8 @@ private:
    std::unordered_map<std::string, Wave>waves_;  
 
    std::unordered_map<std::string, int> spawnCount_;  
-   std::unordered_map<std::string, float> spawnTimer_;  
+   std::unordered_map<std::string, float> spawnTimer_;
+   int maxSpawnCount_ = 30;
 
    std::vector<std::string> keys_;  
    int keyIndex_ = 0;  
@@ -68,7 +69,7 @@ private:
 
    const float leave = 10.0f;  
 
-   int turnProgress = 0;  
+   int turnProgress = 0;
 
    std::unordered_map<EnemyBase::Type, uint32_t> pendingSpawnCount_ = {};
 
