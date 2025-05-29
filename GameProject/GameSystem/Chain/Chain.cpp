@@ -60,7 +60,7 @@ void Chain::Initialize()
         coolTimeCounter_[WeaponType].Start();
     }
 
-    Data(WeaponType::Assault);
+    Data(WeaponType::Thunder);
 }
 
 void Chain::Update()

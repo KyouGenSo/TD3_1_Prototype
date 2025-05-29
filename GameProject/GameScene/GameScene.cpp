@@ -152,6 +152,14 @@ void GameScene::Initialize()
     emitterManager_->SetEmitterEndColor("explosion", {1.f, 1.f, 0.f, 1});
     emitterManager_->SetEmitterScaleRange("explosion", {0.4f, 0.4f}, {0.4f, 0.4f});
 
+    emitterManager_->CreateSphereEmitter("thunder", {0,0, 0},  3, 250, 0);
+    emitterManager_->SetEmitterActive("thunder", false);
+    //emitterManager_->SetEmitterVelocityRange("explosion", {-0.1f, 0.1f}, {-0.1f,  0.1f}, {-0.1f, 0.1f});
+    emitterManager_->SetEmitterColor("thunder", {1.f, 0.f, 0.f, 1});
+    emitterManager_->SetEmitterStartColor("thunder", {1, 0, 0, 1});
+    emitterManager_->SetEmitterEndColor("thunder", {1.f, 1.f, 0.f, 1});
+    emitterManager_->SetEmitterScaleRange("thunder", {0.4f, 0.4f}, {0.4f, 0.4f});
+
     emitterManager_->CreateSphereEmitter("hit", {0,0,0}, 5, 100, 0);
     emitterManager_->SetEmitterActive("hit", false);
     emitterManager_->SetEmitterColor("hit", {1.f, 0.f, 0.f, 1});

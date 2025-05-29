@@ -15,7 +15,7 @@ void ThunderBullet::Bullet::Initialize() {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("thunderBullet.gltf");
-    model_->SetScale({0.2f, 0.2f, 0.2f});
+    model_->SetScale({1.f, 1.f, 1.f});
     CalcLifeTime();
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
@@ -50,8 +50,6 @@ void ThunderBullet::Bullet::Update() {
     if (pNext_){
         pNext_->Update();
     }
-
-    isDead_ = CheckLifeTime();
 }
 
 void ThunderBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _collider) {
@@ -76,6 +74,7 @@ void ThunderBullet::Bullet::InitializeChain() {
 }
 
 void ThunderBullet::Bullet::UpdateNormal() {
+    if (isDead_) return;
     if (0.7f <= transform_.translate.y){
         transform_.translate.y -= speed_ * deltaTime_;
         return;
