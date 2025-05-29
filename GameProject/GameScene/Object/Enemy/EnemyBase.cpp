@@ -25,6 +25,7 @@ void EnemyBase::OnCollisionTrigger(const Collision::Collider* _other)
 
 void EnemyBase::Initialize()
 {
+    name_ = "enemy";
     pHPBar_ = std::make_unique<HPBar>();
     pHPBar_->Initialize();
     UpdateHPBarPosition();

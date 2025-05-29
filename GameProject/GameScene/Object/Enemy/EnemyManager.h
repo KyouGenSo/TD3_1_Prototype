@@ -44,7 +44,6 @@ public:
 
    void SetTarget(Object* pTarget) { pTarget_ = pTarget; }  
    void SetEmitter(EmitterManager* pEmitter);  
-
 private:  
    void SpawnEnemy();  
    Vector3 RandomSpawnPosition(EnemyBase::Type type); 
