@@ -110,6 +110,7 @@ void MyGame::Initialize()
 
     /// テクスチャの読み込み
     TextureManager::GetInstance()->LoadTexture("circle.png");
+    TextureManager::GetInstance()->LoadTexture("cross.png");
     TextureManager::GetInstance()->LoadTexture("white.png");
     TextureManager::GetInstance()->LoadTexture("GameOver.png");
     TextureManager::GetInstance()->LoadTexture("GameClear.png");

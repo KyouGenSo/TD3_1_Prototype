@@ -64,8 +64,10 @@ public:
 
 
 private:
+    void InitializeCallbacks();
     void UpdateInputCommands();
     void UpdateMovement();
     void UpdateStatus();
+    void UpdateOpacityByCameraDistance();
 };
 

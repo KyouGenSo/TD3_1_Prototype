@@ -24,10 +24,6 @@ class FollowCamera
     float rotationX_ = 0.1f;
     Collision::Manager* pCollisionManager_ = nullptr;
 
-    // for debug
-    std::unique_ptr<Object3d> pDebugObjectCamera_ = nullptr;
-    std::unique_ptr<Object3d> pDebugObjectHitPoint_ = nullptr;
-
 public:
     void Initialize();
     void Update();
@@ -41,5 +37,9 @@ public:
     Camera* GetCamera() { return pCamera_.get(); }
 
     void ImGui();
+
+private:
+    void CameraUpdate();
+    void NotifyByCondition();
 };
 

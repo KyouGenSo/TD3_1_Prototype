@@ -185,7 +185,7 @@ void GameScene::Initialize()
     eventTimer_->EndEvent("Sound");
 
     reticle_ = std::make_unique<Sprite>();
-    reticle_->Initialize("circle.png");
+    reticle_->Initialize("cross.png");
     reticle_->SetAnchorPoint({0.5f, 0.5f});
     reticle_->SetPos({static_cast<float>(WinApp::clientWidth) / 2.f, static_cast<float>(WinApp::clientHeight) / 2.f});
     reticle_->SetSize({32.f,32.f});
@@ -252,10 +252,18 @@ void GameScene::Update()
     eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
 
     emitterManager_->Update();
+
+    // プレイヤーのHPのUIを更新
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
     *(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
-    *(statusHUD_->GetXPBar()) = player_->getXP();
+
+    // プレイヤーのXPのUIを更新
     statusHUD_->GetXPBar()->SetMaxValue(player_->getXPMax());
+    *(statusHUD_->GetXPBar()) = player_->getXP();
+
+    // 城のHPのUIを更新
+    statusHUD_->GetCastleHpBar()->SetMaxValue(castle_->getStatusCurrent().getMaxHp());
+    *(statusHUD_->GetCastleHpBar()) = castle_->getStatusCurrent().getHp();
 
     reticle_->Update();
 
