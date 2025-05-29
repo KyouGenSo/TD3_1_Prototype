@@ -78,6 +78,7 @@ void Player::Update()
 
     UpdateInputCommands();
     UpdateMovement();
+    UpdateOpacityByCameraDistance();
 
     weapon_->SetPosition(transform_.translate);
     weapon_->SetRotation(transform_.rotate);
@@ -328,6 +329,17 @@ void Player::UpdateStatus()
         // イベント発行
         GameEventNotifier::GetInstance()->Notify("PlayerLevelUp", nullptr);
     }
+}
+
+void Player::UpdateOpacityByCameraDistance()
+{
+    // カメラとの距離に応じて透明度を調整する処理
+    auto camera = *Object3dBasic::GetInstance()->GetCamera();
+    Vector3 cameraPos = camera->GetTranslate();
+    float distance = (transform_.translate - cameraPos).Length();
+    // 透明度の計算（距離が近いほど透明、遠いほど不透明）
+    float opacity = std::clamp(1.0f - (distance / 3.0f), 0.0f, 1.0f);
+    model_->SetMaterialColor({1.0f, 1.0f, 1.0f, opacity});
 }
 
 void Player::DrawDebug()

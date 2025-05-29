@@ -68,5 +68,6 @@ private:
     void UpdateInputCommands();
     void UpdateMovement();
     void UpdateStatus();
+    void UpdateOpacityByCameraDistance();
 };
 

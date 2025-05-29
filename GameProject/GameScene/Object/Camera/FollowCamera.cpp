@@ -7,6 +7,7 @@
 #include <Type/ColliderType.h>
 #include <Draw2D.h>
 #include <GPUParticle.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 void FollowCamera::Initialize()
 {
@@ -25,67 +26,11 @@ void FollowCamera::Initialize()
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::CAMERA))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
         ->SetType(Collision::Type::Ray);
-
-    // Debug
-    pDebugObjectCamera_ = std::make_unique<Object3d>();
-    pDebugObjectCamera_->Initialize();
-    pDebugObjectCamera_->SetModel("box.gltf");
-    pDebugObjectCamera_->SetScale({ 0.5f, 0.5f, 0.5f });
-
-    pDebugObjectHitPoint_ = std::make_unique<Object3d>();
-    pDebugObjectHitPoint_->Initialize();
-    pDebugObjectHitPoint_->SetModel("box.gltf");
-    pDebugObjectHitPoint_->SetScale({ 0.1f, 0.1f, 0.1f });
 }
 
 void FollowCamera::Update()
 {
-    if (!pTarget_) return;
-
-    // direction_
-    rotationX_ = pTarget_->rotate.x;
-    Vector3 rotate = { rotationX_, pTarget_->rotate.y, 0.0f };
-    Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(rotate);
-    Vector3 direction = Mat4x4::TransFormNormal(rotation, shiftDirection_);
-
-    // interpolation
-    Vector3 nextTargetPosition = targetPositionPre_ * (1.0f - factorLerp_) + (pTarget_->translate + targetPositionOffset_) * factorLerp_;
-
-    Vector3 nextCameraPosition = direction.Normalize() * offset_ + nextTargetPosition;
-
-    // ray collision
-    pRay_->SetOrigin(Adaptor(pTarget_->translate));
-    pRay_->SetDestination(Adaptor(nextCameraPosition));
-    pRay_->SetLength((nextCameraPosition - pTarget_->translate).Length());
-
-    auto hitData = pCollisionManager_->RayCast(pRay_.get());
-
-
-    // あたっていたら
-    auto otherCollider = pCollisionManager_->Get(hitData.uuid);
-    if (otherCollider)
-    {
-        pCamera_->SetTranslate(Adaptor(hitData.hitPoint));
-        pDebugObjectHitPoint_->SetTranslate(Adaptor(hitData.hitPoint));
-    }
-    else
-    {
-        pCamera_->SetTranslate(nextCameraPosition);
-        pDebugObjectHitPoint_->SetTranslate(nextCameraPosition);
-    }
-
-    pCamera_->SetRotate(rotate);
-    pCamera_->Update();
-
-    targetPositionPre_ = nextTargetPosition;
-
-    pDebugObjectCamera_->SetRotate(rotate);
-    pDebugObjectCamera_->SetTranslate(nextCameraPosition);
-    pDebugObjectCamera_->Update();
-
-    pDebugObjectHitPoint_->SetRotate(rotate);
-    pDebugObjectHitPoint_->Update();
-
+    CameraUpdate();
 }
 
 void FollowCamera::Finalize()
@@ -94,8 +39,6 @@ void FollowCamera::Finalize()
 
 void FollowCamera::Draw3D()
 {
-    pDebugObjectCamera_->Draw();
-    pDebugObjectHitPoint_->Draw();
 }
 
 void FollowCamera::Draw2D()
@@ -146,4 +89,49 @@ void FollowCamera::ImGui()
     {
         shiftDirection_ = shiftDirection_.Normalize();
     }
+}
+
+void FollowCamera::CameraUpdate()
+{
+    if (!pTarget_) return;
+
+    // direction_
+    rotationX_ = pTarget_->rotate.x;
+    Vector3 rotate = { rotationX_, pTarget_->rotate.y, 0.0f };
+    Matrix4x4 rotation = Mat4x4::MakeRotateXYZ(rotate);
+    Vector3 direction = Mat4x4::TransFormNormal(rotation, shiftDirection_);
+
+    // interpolation
+    Vector3 nextTargetPosition = targetPositionPre_ * (1.0f - factorLerp_) + (pTarget_->translate + targetPositionOffset_) * factorLerp_;
+
+    Vector3 nextCameraPosition = direction.Normalize() * offset_ + nextTargetPosition;
+
+    // ray collision
+    pRay_->SetOrigin(Adaptor(pTarget_->translate));
+    pRay_->SetDestination(Adaptor(nextCameraPosition));
+    float len = (nextCameraPosition - nextTargetPosition).Length();
+    pRay_->SetLength(len);
+
+    auto hitData = pCollisionManager_->RayCast(pRay_.get());
+
+
+    // あたっていたら
+    auto otherCollider = pCollisionManager_->Get(hitData.uuid);
+    if (otherCollider)
+    {
+        pCamera_->SetTranslate(Adaptor(hitData.hitPoint));
+    }
+    else
+    {
+        pCamera_->SetTranslate(nextCameraPosition);
+    }
+
+    pCamera_->SetRotate(rotate);
+    pCamera_->Update();
+
+    targetPositionPre_ = nextTargetPosition;
+}
+
+void FollowCamera::NotifyByCondition()
+{
 }

@@ -10,10 +10,10 @@ void StatusHUD::Initialize()
     hpBar_->SetMaxValue(100.0f);
     hpBar_->SetCurrentValue(80.0f);
 
-    bulletBar_ = std::make_unique<StatusBar>();
-    bulletBar_->Initialize("hud/name_assault.png", { 159.0f, 10.0f }, false);
-    bulletBar_->SetMaxValue(30.0f);
-    bulletBar_->SetCurrentValue(30.0f);
+    castleHpBar_ = std::make_unique<StatusBar>();
+    castleHpBar_->Initialize("hud/name_castle.png", { 159.0f, 10.0f }, false);
+    castleHpBar_->SetMaxValue(30.0f);
+    castleHpBar_->SetCurrentValue(30.0f);
 
     xpBar_ = std::make_unique<StatusBar>();
     xpBar_->Initialize("", { 512.0f, 8.0f });
@@ -57,28 +57,28 @@ void StatusHUD::Update()
     if (isReloaded_)
     {
         hpBar_->SetPosition(hpBarPos_ * retio_);
-        bulletBar_->SetPosition(bulletBarPos_ * retio_);
+        castleHpBar_->SetPosition(bulletBarPos_ * retio_);
         xpBar_->SetPosition(xpBarPos_ * retio_);
 
         isReloaded_ = false;
     }
 
     hpBar_->Update();
-    bulletBar_->Update();
+    castleHpBar_->Update();
     xpBar_->Update();
 }
 
 void StatusHUD::Draw2D()
 {
     hpBar_->Draw2D();
-    bulletBar_->Draw2D();
+    castleHpBar_->Draw2D();
     xpBar_->Draw2D();
 }
 
 void StatusHUD::ImGui()
 {
     hpBar_->ImGui();
-    bulletBar_->ImGui();
+    castleHpBar_->ImGui();
     xpBar_->ImGui();
 }
 
@@ -87,7 +87,7 @@ void StatusHUD::OnResized(Vector2 _size)
     NiVec2 size = { _size.x, _size.y };
     retio_ = { size.x / standardDisplaySize_.x, size.y / standardDisplaySize_.y };
     hpBar_->SetPosition(hpBarPos_ * retio_);
-    bulletBar_->SetPosition(bulletBarPos_ * retio_);
+    castleHpBar_->SetPosition(bulletBarPos_ * retio_);
     xpBar_->SetPosition(xpBarPos_ * retio_);
 }
 
