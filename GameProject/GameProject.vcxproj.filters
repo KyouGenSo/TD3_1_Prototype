@@ -321,6 +321,9 @@
       <Filter>GameUI\ColorResolver</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Object\Enemy\EnemyFactory.cpp" />
+    <ClCompile Include="ClearScene\ClearScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -516,6 +519,9 @@
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\EnemyFactory.h" />
     <ClInclude Include="Utility\Equals.h" />
+    <ClInclude Include="ClearScene\ClearScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="GameSystem\GameEventNotifier\EventList.md">
