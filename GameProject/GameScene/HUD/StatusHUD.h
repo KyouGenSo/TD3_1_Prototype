@@ -30,8 +30,9 @@ public:
     void ImGui();
     void OnResized(Vector2 _size);
 
-    StatusBar* GetHpBar() { return hpBar_.get(); }
-    StatusBar* GetXPBar() { return xpBar_.get(); }
+    StatusBar* GetHpBar()       { return hpBar_.get(); }
+    StatusBar* GetXPBar()       { return xpBar_.get(); }
+    StatusBar* GetCastleHpBar() { return castleHpBar_.get(); }
 
 private:
     GlobalVariables* globalVariables_ = nullptr;
@@ -41,7 +42,7 @@ private:
     NiVec2 standardDisplaySize_ = {};
 
     std::unique_ptr<StatusBar> hpBar_ = nullptr;
-    std::unique_ptr<StatusBar> bulletBar_ = nullptr;
+    std::unique_ptr<StatusBar> castleHpBar_ = nullptr;
     std::unique_ptr<StatusBar> xpBar_ = nullptr;
     NiVec2 retio_ = { 1.0f, 1.0f };
     NiVec2 hpBarPos_ = { 0.0f, 0.0f };

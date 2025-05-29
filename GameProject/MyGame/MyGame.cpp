@@ -109,6 +109,7 @@ void MyGame::Initialize()
     eventTimer_ = EventTimer::GetInstance();
 
     TextureManager::GetInstance()->LoadTexture("circle.png");
+    TextureManager::GetInstance()->LoadTexture("cross.png");
     TextureManager::GetInstance()->LoadTexture("white.png");
 
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);

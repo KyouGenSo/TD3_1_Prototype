@@ -41,6 +41,8 @@ void AssaultBullet::Bullet::Initialize()
         ->SetOwner(this)
         ->Enable();
 
+    speed_ = 120.0f;
+
     Update();
 }
 
