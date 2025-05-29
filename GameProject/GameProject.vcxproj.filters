@@ -519,6 +519,7 @@
     <ClInclude Include="GameScene\Object\Enemy\EnemyFactory.h" />
     <ClInclude Include="GameScene\Object\Weapon\ThunderRod\ThunderRod.hpp" />
     <ClInclude Include="GameScene\Object\Bullets\Thunder\ThunderBullet.hpp" />
+    <ClInclude Include="Utility\Equals.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GameSystem\GameEventNotifier\EventList.md">

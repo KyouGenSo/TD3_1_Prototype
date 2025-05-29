@@ -25,4 +25,18 @@ public:
 
 private:
     std::unique_ptr<Collision::Collider> collider_;
+
+    std::unique_ptr<Object3d> longWallModel1_;
+    Transform longWallTransform1_;
+
+    std::unique_ptr<Object3d> longWallModel2_;
+    Transform longWallTransform2_;
+
+    std::unique_ptr<Object3d> shortWallModel1_;
+    Transform shortWallTransform1_;
+
+    std::unique_ptr<Object3d> shortWallModel2_;
+    Transform shortWallTransform2_;
+
+    Transform wallUvTransform;
 };

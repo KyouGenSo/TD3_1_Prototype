@@ -34,6 +34,8 @@ void Boss::Initialize()
         ->Enable();
 
     isValid_ = false;
+
+    name_ = "boss";
 }
 
 void Boss::Update()
