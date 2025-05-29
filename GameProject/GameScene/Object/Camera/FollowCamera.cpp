@@ -20,7 +20,6 @@ void FollowCamera::Initialize()
 
     pCollisionManager_ = Singleton<Collision::Manager>::GetInstance();
     pRay_ = std::make_unique<Collision::Ray>();
-    pRay_->SetLength(100.0f);
     // プレイヤーとだけ当たらないようにしたい。
     pRay_
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::CAMERA))
@@ -57,6 +56,7 @@ void FollowCamera::Update()
     // ray collision
     pRay_->SetOrigin(Adaptor(pTarget_->translate));
     pRay_->SetDestination(Adaptor(nextCameraPosition));
+    pRay_->SetLength((nextCameraPosition - pTarget_->translate).Length());
 
     auto hitData = pCollisionManager_->RayCast(pRay_.get());
 
