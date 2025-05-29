@@ -296,11 +296,7 @@ void GameScene::Draw()
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
-    countDown_->Draw2D();
-    minimap_->Draw();
-    statusHUD_->Draw2D();
-    enemyManager_->Draw2d();
-    reticle_->Draw();
+
 
     //camera_->Draw2D();
 }
@@ -328,7 +324,11 @@ void GameScene::DrawWithoutEffect()
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
-
+    countDown_->Draw2D();
+    minimap_->Draw();
+    statusHUD_->Draw2D();
+    enemyManager_->Draw2d();
+    reticle_->Draw();
 }
 
 void GameScene::DrawImGui()
