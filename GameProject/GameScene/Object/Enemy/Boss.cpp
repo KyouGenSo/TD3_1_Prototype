@@ -10,7 +10,7 @@ void Boss::Initialize()
 {
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("boss.gltf",1,0);
+    model_->SetModel("boss.gltf", 1, 0);
 
     // 初期化用 - 外部から設定するためこの値は適用されない
     transform_ = {
@@ -22,8 +22,8 @@ void Boss::Initialize()
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
 
-	pCollider_ = std::make_unique<Collision::Collider>();
-	pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol) {this->OnCollision(pCol); })
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol) {this->OnCollision(pCol); })
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
@@ -44,16 +44,15 @@ void Boss::Update()
     {
         prePos_ = transform_.translate;
         transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
-    }
-    else
+    } else
     {
 
     }
 
     pCollider_->SetTranslate(Adaptor(transform_.translate));
 
-	model_->SetTranslate(transform_.translate);
-	model_->Update();
+    model_->SetTranslate(transform_.translate);
+    model_->Update();
 }
 
 void Boss::Draw()

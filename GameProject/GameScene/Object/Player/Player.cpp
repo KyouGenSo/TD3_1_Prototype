@@ -289,6 +289,28 @@ void Player::UpdateMovement()
 
     transform_.translate += velocity_ * deltaTime_;
 
+    if (transform_.translate.x > posXMinMax.max)
+    {
+        transform_.translate.x = posXMinMax.max;
+        velocity_.x = 0.0f;
+    }
+    else if (transform_.translate.x < posXMinMax.min)
+    {
+        transform_.translate.x = posXMinMax.min;
+        velocity_.x = 0.0f;
+    }
+
+    if (transform_.translate.z > posZMinMax.max)
+    {
+        transform_.translate.z = posZMinMax.max;
+        velocity_.z = 0.0f;
+    }
+    else if (transform_.translate.z < posZMinMax.min)
+    {
+        transform_.translate.z = posZMinMax.min;
+        velocity_.z = 0.0f;
+    }
+
     if (transform_.translate.y < floor_ + HEIGHT_HALF)
     {
         transform_.translate.y = floor_ + HEIGHT_HALF;
