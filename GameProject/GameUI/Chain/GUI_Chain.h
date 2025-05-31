@@ -28,8 +28,9 @@ private:
     const std::string TEX_WHITE_ = "white.png";
     const std::filesystem::path ICONDIR_ = "hud/chain/ico";
     const std::filesystem::path CHAINDIR_ = "hud/chain";
-    const std::filesystem::path TEX_ROCKETLAUNCHER_ = "RocketLauncher_Text.png";
-    const std::filesystem::path TEX_ASSAULT_ = "Assault_Text.png";
+    const std::filesystem::path TEX_ROCKETLAUNCHER_ = "RocketLauncher.png";
+    const std::filesystem::path TEX_ASSAULT_ = "assault.png";
+    const std::filesystem::path TEX_SUBMACHINEGUN_ = "submachinegun.png";
     const std::filesystem::path TEX_FRAME_ = "itemarea.png";
     const std::filesystem::path TEX_WND_ = "window.png";
     const std::filesystem::path TEX_BUTTON_CONFIRM_ = "button_confirm.png";
