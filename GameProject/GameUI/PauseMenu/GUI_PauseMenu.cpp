@@ -39,11 +39,11 @@ void GUI_PauseMenu::ShowPauseMenu()
 
     if (NiGui::BeginDiv("PauseMenu", "white.png", NiGui::BLACK, {}, { 250, 250 }, center, center))
     {
-        if (NiGui::Button("Resume", "white.png", NiGui::WHITE, { 0.0f, -50.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
+        if (NiGui::Button("Resume", "resume.png", NiGui::WHITE, { 0.0f, -50.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
         {
             showPauseMenu_ = false;
         }
-        if (NiGui::Button("Exit", "white.png", NiGui::WHITE, { 0.0f, 50.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
+        if (NiGui::Button("Exit", "exit.png", NiGui::WHITE, { 0.0f, 50.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
         {
             showPauseMenu_ = false;
         }
