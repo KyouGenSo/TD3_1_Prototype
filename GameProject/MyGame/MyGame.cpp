@@ -16,6 +16,7 @@
 #include <GameSystem/SoundManager/SoundManager.h>
 #include <GameUI/ColorResolver/ColorResolver.h>
 #include <SpriteBasic.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 #include <Utility/RandomGenerator/RandomGenerator.h>
 
@@ -115,6 +116,7 @@ void MyGame::Initialize()
     handle_onresizes_.push_back(
         winApp_->RegisterOnResizeFunc(std::bind(&SpriteBasic::OnResize, SpriteBasic::GetInstance(), std::placeholders::_1))
     );
+    handle_onExit_ = GameEventNotifier::GetInstance()->RegisterCallback("Exit", [this](auto) { endFlag_ = true; });
 }
 
 void MyGame::Finalize()
@@ -123,6 +125,8 @@ void MyGame::Finalize()
     {
         winApp_->UnregisterOnResizeFunc(handle);
     }
+
+    GameEventNotifier::GetInstance()->UnregisterCallback("Exit", handle_onExit_);
 
     TakoFramework::Finalize();
 

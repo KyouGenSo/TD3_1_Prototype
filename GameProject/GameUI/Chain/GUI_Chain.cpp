@@ -5,6 +5,7 @@
 
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 #include <GameSystem/GameController/GameController.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 void GUI_Chain::Initialize()
 {

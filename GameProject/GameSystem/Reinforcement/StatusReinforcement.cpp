@@ -1,12 +1,37 @@
 #include "StatusReinforcement.h"
 
 #include "Manager/ReinforcementManager.h"
-
+#include <Utility/JSON/jsonutl.h>
 #include <iostream>
 
 void StatusReinforcement::Initialize(const std::string& _cardName)
 {
     ParseFromJson(_cardName);
+}
+
+void StatusReinforcement::Update()
+{
+    if (event_ == "interval")
+    {
+        if (!timer_.GetIsStart())
+        {
+            timer_.Reset();
+            timer_.Start();
+        }
+
+        if (timer_.GetNow<float>() > interval_)
+        {
+            if (operatorType_ == "add")
+            {
+                ApplicationByAddition();
+            }
+            else if (operatorType_ == "mul")
+            {
+
+            }
+            timer_.Reset();
+        }
+    }
 }
 
 void StatusReinforcement::Apply()
@@ -65,6 +90,7 @@ void StatusReinforcement::ParseFromJson(const std::string& _cardName)
     value_ = target["value"].get<float>();
     rarity_ = target["rarity"].get<int>();
     event_ = target["event"].get<std::string>();
+    utl::json::try_assign(target, "interval", interval_);
 }
 
 void StatusReinforcement::ApplicationByAddition()
@@ -92,6 +118,14 @@ void StatusReinforcement::ApplicationByAddition()
     else if (statusType == "speed")
     {
         status_->AddSpeed(value_);
+    }
+    else if (statusType == "jump")
+    {
+        behavior_limitter_->num_jump_max_ += value_;
+    }
+    else if (statusType == "bsize")
+    {
+        behavior_limitter_->size_bullet_ += value_;
     }
 
     status_->Update();

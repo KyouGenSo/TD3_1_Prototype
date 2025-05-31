@@ -4,11 +4,9 @@
 #include "imgui.h"
 #include "Input.h"
 
-#include <ModelManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 #include <GameScene/Object/Weapon/WeaponFactory.h>
-
-#include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 // DEBUG
 #include <QuatFunc.h>
@@ -43,7 +41,7 @@ void Player::Initialize()
     };
 
     pCollider_ = std::make_unique<Collision::Collider>();
-    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol){this->OnCollision(pCol); })
+    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol) { this->OnCollision(pCol); })
         ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol) { this->OnCollisionTrigger(pCol); })
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetType(Collision::Type::Sphere)
@@ -67,9 +65,15 @@ void Player::Initialize()
     weapon_->Initialize();
     weapon_->SetChain(chain_);
     weapon_->SetEmitter(emitter_);
-    gravity_ = 1.8f;
+    gravity_ = 1.3f;
 
     this->InitializeCallbacks();
+
+    GameEventNotifier::GetInstance()->RegisterCallback("OnWindowOpen", [this](std::any _isOpen)
+    {
+        ChangeAimMode(!std::any_cast<bool>(_isOpen));
+    });
+    ChangeAimMode(true); // 初期状態はマウスエイム
 }
 
 void Player::Update()
@@ -108,13 +112,18 @@ void Player::Finalize()
     GameEventNotifier::GetInstance()->UnregisterCallback("EnemyDeadForXP", id_callback_enemydead_);
     GameEventNotifier::GetInstance()->UnregisterCallback("PlayerLevelUp", id_callback_playerlevelup_);
     GameEventNotifier::GetInstance()->UnregisterCallback("ChainConfirm", id_callback_chainconfirm_);
+    GameEventNotifier::GetInstance()->UnregisterCallback("ChainConfirm", id_callback_windowOpen_);
 
     auto* rfmManager = ReinforcementManager::GetInstance();
     for (auto& reinforcement : reinforcementList_)
     {
         rfmManager->UnregisterReinforcement(reinforcement.get());
     }
-    if (mouseAim_) ShowCursor(true);
+
+    if (mouseAim_)
+    {
+        ChangeAimModeForce(false);
+    }
 }
 
 void Player::ImGui()
@@ -155,6 +164,7 @@ void Player::AddReinforcement(const std::string& _cardName)
     auto reinforcement = std::make_unique<StatusReinforcement>();
     reinforcement->Initialize(_cardName);
     reinforcement->SetStatus(&statusCurrent_);
+    reinforcement->SetBehaviorLimitter(&behaviorLimitter_);
     reinforcement->Apply();
 
     reinforcementList_.emplace_back(std::move(reinforcement));
@@ -221,8 +231,7 @@ void Player::UpdateInputCommands()
     }
 
     if (pInput_->TriggerKey(DIK_M)){
-        mouseAim_ = !mouseAim_;
-        ShowCursor(!mouseAim_);
+        ToggleAimModeForce();
     }
 
     // Perspective
@@ -237,7 +246,6 @@ void Player::UpdateInputCommands()
         transform_.rotate.y += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;
         transform_.rotate.x += static_cast<float>(Input::GetInstance()->PushKey(DIK_UPARROW) - Input::GetInstance()->PushKey(DIK_DOWNARROW)) * 0.03f;
     }
-
 }
 
 void Player::UpdateMovement()
@@ -268,14 +276,20 @@ void Player::UpdateMovement()
 
 
     // Jump
-    if (isGround_)
+    if (numAbleJump_.get_current() > 0)
     {
         if (Input::GetInstance()->TriggerKey(DIK_SPACE))
         {
-            acceleration_.y += jumpPower_;
+            acceleration_.y += jumpPower_ * (numAbleJump_.get_initial() - numAbleJump_.get_current() + 1);
             isGround_ = false;
+            --numAbleJump_;
         }
+    }
+
+    if (isGround_)
+    {
         ApplyFriction(frictionCoefficient_);
+        numAbleJump_.reset(); // 地面にいる場合はジャンプ可能回数をリセット
     }
     else
     {
@@ -285,7 +299,6 @@ void Player::UpdateMovement()
 
     // 速度を加算
     velocity_ += acceleration_;
-
 
     transform_.translate += velocity_ * deltaTime_;
 
@@ -340,6 +353,56 @@ void Player::UpdateOpacityByCameraDistance()
     // 透明度の計算（距離が近いほど透明、遠いほど不透明）
     float opacity = std::clamp(1.0f - (distance / 3.0f), 0.0f, 1.0f);
     model_->SetMaterialColor({1.0f, 1.0f, 1.0f, opacity});
+}
+
+void Player::ChangeAimMode(bool isMouseAim)
+{
+    if (isMouseAim)
+    {
+        --countCursorVisible_;
+        if (countCursorVisible_ == 0)
+        {
+            ShowCursor(false);
+            mouseAim_ = true;
+        }
+    }
+    else
+    {
+        ++countCursorVisible_;
+        if (countCursorVisible_ == 1)
+        {
+            ShowCursor(true);
+            mouseAim_ = false;
+        }
+    }
+}
+
+void Player::ChangeAimModeForce(bool _isMouseAim)
+{
+    if (_isMouseAim)
+    {
+        countCursorVisible_ = 0;
+        ShowCursor(false);
+        mouseAim_ = true;
+    }
+    else
+    {
+        countCursorVisible_ = 1;
+        ShowCursor(true);
+        mouseAim_ = false;
+    }
+}
+
+void Player::ToggleAimModeForce()
+{
+    if (mouseAim_)
+    {
+        ChangeAimModeForce(false);
+    }
+    else
+    {
+        ChangeAimModeForce(true);
+    }
 }
 
 void Player::DrawDebug()

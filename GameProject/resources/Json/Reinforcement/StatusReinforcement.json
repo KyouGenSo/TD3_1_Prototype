@@ -58,5 +58,16 @@
         "value" : 1.0,
         "rarity": 2,
         "event" : "onHit"
+    },
+    {
+        "name": "AutoHeal",
+        "description": "一定時間ごとにHPが回復します。",
+        "image": "white.png",
+        "status-type": "heal",
+        "operatorType": "add",
+        "value": 5.0,
+        "rarity": 2,
+        "event": "interval",
+        "interval": 5.0
     }
 ]

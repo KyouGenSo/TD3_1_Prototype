@@ -20,7 +20,7 @@
             "status-type": {
                 "type": "string",
                 "description": "ステータス名",
-                "enum": ["heal", "health", "speed", "attack", "defense", "critical"]
+                "enum": ["heal", "health", "speed", "attack", "defense", "critical", "jump"]
             },
             "operatorType": {
                 "type": "string",
@@ -39,8 +39,13 @@
             },
             "event": {
                 "type": "string",
-                "description": "発動イベント。 onGetは取得時, onHitは攻撃時, onKillは敵を倒したときに発動",
-                "enum": ["onGet", "onHit", "onKill"]
+                "description": "発動イベント。 onGetは取得時, onHitは攻撃時, onKillは敵を倒したときに発動, intervalは一定時間ごとに発動します。",
+                "enum": ["onGet", "onHit", "onKill", "interval"]
+            },
+            "interval" : {
+                "type": "number",
+                "description": "効果発動の間隔。intervalイベントでのみ使用可",
+                "default": 0
             }
         }
     }

@@ -5,7 +5,6 @@
 #include <NiGui/Derived/ProcHandler.h>
 #include <NiGui/Derived/NiGui_Debug.h>
 #include <EventTimer/EventTimer.h>
-#include <Utility/Threadpool/Threadpool.h>
 #include <memory>
 
 class MyGame : public TakoFramework
@@ -55,6 +54,7 @@ private: // メンバ変数
     std::unique_ptr<ProcHandler> procHandler_ = nullptr;
     std::unique_ptr<NiGuiDebug> niguiDebug_ = nullptr;
     std::vector<uint32_t> handle_onresizes_ = {};
+    uint32_t handle_onExit_ = 0;
 
     EventTimer* eventTimer_ = nullptr;
 

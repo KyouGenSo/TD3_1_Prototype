@@ -2,6 +2,7 @@
 
 #include <GameUI/ColorResolver/ColorResolver.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 #include <string>
 #include <Math/NiVec4.h>
 #include <Type/NiGui_Enum.h>
@@ -64,6 +65,7 @@ void GUI_PauseMenu::ShowPauseMenu()
         if (NiGui::Button("Exit", "white.png", NiGui::WHITE, { 0.0f, 50.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
         {
             dtm->SetDeltaTime(1, 1.0f / 60.0f);
+            GameEventNotifier::GetInstance()->Notify("Exit", nullptr);
             showPauseMenu_ = false;
         }
     }
