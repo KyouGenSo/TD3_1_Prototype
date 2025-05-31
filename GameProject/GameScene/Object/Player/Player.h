@@ -54,6 +54,7 @@ private:
     float xpGained_ = 0.0f;
     float level_ = 1.0f;
 
+    bool isCollidCastle_ = false;
 
 public:
     void Initialize() override;
@@ -62,6 +63,7 @@ public:
     void DrawDebug();
     void Finalize();
     void ImGui() override;
+    float CalculatePenetrationDepth(const Collision::Collider* collider);
     void OnCollision(const Collision::Collider* pCollider) override;
     void OnCollisionTrigger(const Collision::Collider* pCollider) override;
     void AddObserver(IObserver* _observer) { observers_.push_back(_observer); }

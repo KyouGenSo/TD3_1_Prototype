@@ -14,7 +14,7 @@ void StageManager::Initialize()
         },
         .castleTransform = 
         {
-            .scale = {10.0f, 10.0f, 10.0f},
+            .scale = {5.0f, 5.0f, 5.0f},
             .rotate = {0.0f, 0.0f, 0.0f},
             .translate = {0.0f, 0.0f, -180.0f},
         },
