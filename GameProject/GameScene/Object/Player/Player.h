@@ -34,6 +34,7 @@ private:
     bool isGround_ = true;
 
     const float HEIGHT_HALF = 0.5f;
+    bool        isCollidCastle_ = false;
 
     // 挙動データ
     float       floor_                  = 0.5f;
@@ -54,7 +55,7 @@ private:
     uint32_t    id_callback_windowOpen_     = 0;
 
     // プレイヤー独自のステータス
-    BehaviorLimitter behaviorLimitter_ = {}; // 行動制限
+    PlayerBehavior behaviorData_    = {}; // 行動制限
     float       xp_                 = 0.0f;
     float       xpMax_              = 100.0f;
     float       xpGainRetio_        = 0.1f;
@@ -65,7 +66,6 @@ private:
     // 特殊なステータス
     with_initial<uint32_t>    numAbleJump_        = 2;        // ジャンプ可能回数
 
-    bool isCollidCastle_ = false;
 
 public:
     // 一般

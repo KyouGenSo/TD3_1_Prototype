@@ -16,7 +16,7 @@ void GUI_PauseMenu::Initialize()
 
 void GUI_PauseMenu::Update()
 {
-    if (showPauseMenu_)
+    if (isDisplay_)
     {
         // PauseMenuの描画処理
         ShowPauseMenu();
@@ -29,18 +29,21 @@ void GUI_PauseMenu::OnNotify(const std::string& _event)
     if (_event == "open_pause_menu")
     {
         dtm->SetDeltaTime(1, 0.0f);
-        showPauseMenu_ = true;
+        notifier_->Notify("OnWindowOpen", true);
+        isDisplay_ = true;
     }
     else if (_event == "close_pause_menu")
     {
         dtm->SetDeltaTime(1, 1.0f / 60.0f);
-        showPauseMenu_ = false;
+        notifier_->Notify("OnWindowOpen", false);
+        isDisplay_ = false;
     }
     else if (_event == "toggle_pause_menu")
     {
-        if (showPauseMenu_) dtm->SetDeltaTime(1, 1.0f / 60.0f);
+        if (isDisplay_) dtm->SetDeltaTime(1, 1.0f / 60.0f);
         else dtm->SetDeltaTime(1, 0.0f);
-        showPauseMenu_ = !showPauseMenu_;
+        isDisplay_ = !isDisplay_;
+        notifier_->Notify("OnWindowOpen", isDisplay_);
     }
 }
 
@@ -60,13 +63,14 @@ void GUI_PauseMenu::ShowPauseMenu()
         if (NiGui::Button("Resume", "resume.png", NiGui::WHITE, { 0.0f, -50.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
         {
             dtm->SetDeltaTime(1, 1.0f / 60.0f);
-            showPauseMenu_ = false;
+            notifier_->Notify("OnWindowOpen", false);
+            isDisplay_ = false;
         }
         if (NiGui::Button("Exit", "exit.png", NiGui::WHITE, { 0.0f, 50.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
         {
             dtm->SetDeltaTime(1, 1.0f / 60.0f);
             GameEventNotifier::GetInstance()->Notify("Exit", nullptr);
-            showPauseMenu_ = false;
+            isDisplay_ = false;
         }
     }
     NiGui::EndDiv();
