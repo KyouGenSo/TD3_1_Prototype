@@ -17,7 +17,7 @@ void Castle::Initialize() {
     transform_ = {
         {0, 0, 0},
         {0, 0, 0},
-        {0, 0, -50}
+        {0, 0, 0}
     };
 
     model_->SetScale(transform_.scale);

@@ -49,4 +49,5 @@ private:
     float               defence_        = 0;
     float               speed_          = 0;
     float               xpAmount_       = 0;
+    uint32_t            numAbleJumps_   = 0; // Number of jumps the character can perform
 };

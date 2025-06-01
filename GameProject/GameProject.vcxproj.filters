@@ -140,6 +140,9 @@
     <Filter Include="GameUI\HPBar">
       <UniqueIdentifier>{ae9c4936-e224-406a-b564-2a061291306a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utility\JSON">
+      <UniqueIdentifier>{916d4784-73fb-466d-b33e-78cafc49c36a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -518,6 +521,12 @@
       <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Enemy\EnemyFactory.h" />
+    <ClInclude Include="Type\with_initial.h">
+      <Filter>Type</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\JSON\jsonutl.h">
+      <Filter>Utility\JSON</Filter>
+    </ClInclude>
     <ClInclude Include="Utility\Equals.h" />
     <ClInclude Include="ClearScene\ClearScene.h">
       <Filter>Scene</Filter>

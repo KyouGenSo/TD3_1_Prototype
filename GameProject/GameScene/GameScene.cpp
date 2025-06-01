@@ -222,6 +222,8 @@ void GameScene::Update()
 {
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
 
+    ReinforcementManager::GetInstance()->Update();
+
     soundGroup_->Update();
 
     timeKeeper_->Update();

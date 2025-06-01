@@ -8,6 +8,7 @@
 #include <WinApp.h>
 #include <Utility/Adaptor.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 void GUI_LvUP::Initialize()
 {
@@ -61,21 +62,26 @@ void GUI_LvUP::Initialize()
 void GUI_LvUP::OnNotify(const std::string& _event)
 {
     auto dtm = DeltaTimeManager::GetInstance();
+    auto gen = GameEventNotifier::GetInstance();
     if (_event == "open_lvup")
     {
         dtm->SetDeltaTime(1, 0.0f);
+        gen->Notify("OnWindowOpen", true);
         isDisplay_ = true;
     }
     else if (_event == "close_lvup")
     {
         dtm->SetDeltaTime(1, 1.0f / 60.0f);
+        gen->Notify("OnWindowOpen", false);
         isDisplay_ = false;
     }
     else if (_event == "toggle_lvup")
     {
-        if (isDisplay_) dtm->SetDeltaTime(1, 1.0f / 60.0f);
+        if (isDisplay_) 
+            dtm->SetDeltaTime(1, 1.0f / 60.0f);
         else dtm->SetDeltaTime(1, 0.0f);
         isDisplay_ = !isDisplay_;
+        gen->Notify("OnWindowOpen", isDisplay_);
     }
 }
 
@@ -156,6 +162,7 @@ void GUI_LvUP::ShowLvUP()
     {
         isDisplay_ = false;
         isSelected_ = true;
+        GameEventNotifier::GetInstance()->Notify("OnWindowOpen", false);
     }
 
     return;

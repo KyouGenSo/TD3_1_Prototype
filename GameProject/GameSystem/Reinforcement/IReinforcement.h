@@ -1,12 +1,21 @@
 #pragma once
+
+#include <Timer/Timer.h>
 #include <cstdint>
 #include <string>
+
+struct BehaviorLimitter
+{
+    uint32_t num_jump_max_ = 1u;
+    uint32_t size_bullet_ = 1u;
+};
 
 class IReinforcement
 {
 public:
     virtual ~IReinforcement() = default;
 
+    virtual void Update() = 0;
     virtual void Apply() = 0;
     virtual void Remove() = 0;
     virtual void IncrementLevel() = 0;
@@ -24,6 +33,7 @@ public:
     std::string GetImagePath() const { return imagePath_; }
 
 protected:
+    Timer timer_;
     bool isDisabled_ = false;
     uint32_t level_ = 0u;
 
@@ -35,4 +45,5 @@ protected:
     float           value_          = 0.0f;
     int             rarity_         = 0;
     std::string     event_          = "none";
+    float           interval_       = 0.0f;
 };
