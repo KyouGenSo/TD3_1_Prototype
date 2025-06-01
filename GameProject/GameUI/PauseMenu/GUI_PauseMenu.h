@@ -14,7 +14,7 @@ public:
     void OnNotify(const std::string& _event) override;
 
 private:
-    bool showPauseMenu_ = false;
+    bool isDisplay_ = false;
 
 private:
     void ShowPauseMenu();

@@ -21,7 +21,7 @@ public:
     void OnHit() override;
 
     void SetStatus(Status* _status) { status_ = _status; }
-    void SetBehaviorLimitter(BehaviorLimitter* _behaviorLimitter) { behavior_limitter_ = _behaviorLimitter; }
+    void SetBehaviorLimitter(PlayerBehavior* _behaviorData) { behaviorData_ = _behaviorData; }
 
 private:
     void ParseFromJson(const std::string& _cardName);
@@ -30,6 +30,6 @@ private:
 
 private:
     Status* status_ = nullptr;
-    BehaviorLimitter* behavior_limitter_ = nullptr;
+    PlayerBehavior* behaviorData_ = nullptr;
 
 };

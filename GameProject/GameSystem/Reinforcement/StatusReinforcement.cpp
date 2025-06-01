@@ -121,11 +121,11 @@ void StatusReinforcement::ApplicationByAddition()
     }
     else if (statusType == "jump")
     {
-        behavior_limitter_->num_jump_max_ += value_;
+        behaviorData_->num_jump_max_ += static_cast<uint32_t>(value_);
     }
-    else if (statusType == "bsize")
+    else if (statusType == "bullet_size")
     {
-        behavior_limitter_->size_bullet_ += value_;
+        behaviorData_->size_bullet_ += static_cast<uint32_t>(value_);
     }
 
     status_->Update();
