@@ -32,7 +32,7 @@ void GameScene::Initialize()
     
     directLightParam_ = {
         .direction = { 0.0f, -1.0f, 0.0f },
-        .color = { 1.0f, 1.0f, 1.0f, 1.0f },
+        .color = {1.000f, 0.254f, 0.254f, 1.000f},
         .lightType = 1,
         .intensity = 2.0f
     };
@@ -164,6 +164,7 @@ void GameScene::Initialize()
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1)),
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&CountDown::OnResize, countDown_.get(), std::placeholders::_1)),
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&GUI_LvUP::OnResize, guiLvUP_.get(), std::placeholders::_1)),
+        WinApp::GetInstance()->RegisterOnResizeFunc([this](Vector2 size) { reticle_->SetPos({size.x / 2.0f, size.y / 2.0f}); }),
     };
 
     // ReinforcementManagerの初期化

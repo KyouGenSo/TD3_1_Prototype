@@ -28,7 +28,6 @@
 #include <GameSystem/FreeCamera/FreeLookCamera.h>
 #include <GameSystem/SoundManager/SoundManager.h>
 #include <vector>
-#include <vector>
 
 class GameScene : public BaseScene
 {

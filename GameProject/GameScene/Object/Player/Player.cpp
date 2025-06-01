@@ -141,6 +141,7 @@ void Player::ImGui()
 
         if (ImGui::TreeNode("Common"))
         {
+            ImGui::DragFloat("Start lerp distance", &distance_start_lerp_, 0.01f);
             ImGui::DragFloat("JumpPower", &jumpPower_, 0.01f);
             ImGui::DragFloat("MoveSpeed", &moveSpeed_, 0.01f);
             ImGui::DragFloat("FrictionCoefficient", &frictionCoefficient_, 0.01f);
@@ -435,7 +436,7 @@ void Player::UpdateOpacityByCameraDistance()
     Vector3 cameraPos = camera->GetTranslate();
     float distance = (transform_.translate - cameraPos).Length();
     // 透明度の計算（距離が近いほど透明、遠いほど不透明）
-    float opacity = std::clamp(1.0f - (distance / 3.0f), 0.0f, 1.0f);
+    float opacity = std::clamp((distance / distance_start_lerp_) - 1.0f, 0.0f, 1.0f);
     model_->SetMaterialColor({1.0f, 1.0f, 1.0f, opacity});
 }
 

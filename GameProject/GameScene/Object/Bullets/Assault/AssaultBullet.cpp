@@ -9,7 +9,7 @@ void AssaultBullet::Initialize()
     BulletBase::Initialize();
 
     type_ = WeaponType::Assault;
-    speed_ = 360.0f;
+    speed_ = 60.0f;
 
     CalcLifeTime();
 }
@@ -65,7 +65,9 @@ bool AssaultBullet::IsDeadAll() {
             if (!bullet->IsDeadAll()) return false;
         }
     }
-    return bullet_->IsDeadAll();
+    if (bullet_ && !bullet_->IsDeadAll()) return false;
+
+    return true;
 }
 
 void AssaultBullet::InitializeNormal()

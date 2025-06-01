@@ -25,6 +25,7 @@
 #include <functional>
 
 #include "Transition.h"
+#include <Vector2.h>
 
 
 void MyGame::Initialize()
@@ -230,6 +231,7 @@ void MyGame::Update()
         ToggleFullScreen();
         NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, {});
         NiGui::SetClientSize({ WinApp::clientWidth, WinApp::clientHeight });
+        GameEventNotifier::GetInstance()->Notify("OnWindowResized", Vector2(WinApp::clientWidth, WinApp::clientHeight));
     }
 
 #ifdef _DEBUG
