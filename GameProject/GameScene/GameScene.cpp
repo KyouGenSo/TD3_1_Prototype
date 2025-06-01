@@ -101,6 +101,7 @@ void GameScene::Initialize()
     castle_ = std::make_unique<Castle>();
     castle_->Initialize();
     castle_->SetTransform(currentStageData.castleTransform);
+    minimap_->Register(castle_.get());
 
     eventTimer_->BeginEvent("Enemy");
     // 敵の初期化

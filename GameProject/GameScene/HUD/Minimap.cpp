@@ -22,7 +22,7 @@ void Minimap::Update() {size_t i = 0;
             objects_.erase(std::ranges::remove(objects_,o).begin(), objects_.end());
             assert(pObjects_.size() == objects_.size());
         } else{
-            Vector2 pos = {pObjects_[i]->GetTransform().translate.x, pObjects_[i]->GetTransform().translate.z};
+            Vector2 pos = { pObjects_[i]->GetTransform().translate.x,  pObjects_[i]->GetTransform().translate.z};
 
             pos.x = std::clamp(pos.x, stageRange_.min.x + OBJECT_SIZE / 2.f, stageRange_.max.x - OBJECT_SIZE / 2.f);
             pos.y = std::clamp(pos.y, stageRange_.min.z + OBJECT_SIZE / 2.f, stageRange_.max.z - OBJECT_SIZE / 2.f);
@@ -54,12 +54,15 @@ void Minimap::Register(Object* object) {
 
 	std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
 	sprite->Initialize("white.png");
-    sprite->SetSize({5, 5});
+    sprite->SetSize({OBJECT_SIZE, OBJECT_SIZE});
     sprite->SetAnchorPoint({0.5f, 0.5f});
 
-	if (Utility::EqualsIgnoreCase(object->GetName(), std::string("Player")))sprite->SetColor({0, 1, 1, 1});
+    if (Utility::EqualsIgnoreCase(object->GetName(), std::string("Player")))sprite->SetColor({0, 1, 1, 1});
     else if (Utility::EqualsIgnoreCase(object->GetName(), std::string("enemy"))) sprite->SetColor({1, 0, 0, 1});
-    else if (Utility::EqualsIgnoreCase(object->GetName(), std::string("boss"))) sprite->SetColor({1, 0, 0, 1});
+    else if (Utility::EqualsIgnoreCase(object->GetName(), std::string("boss"))){
+        sprite->SetSize({OBJECT_SIZE * 2 ,OBJECT_SIZE * 2});
+        sprite->SetColor({1, 0, 0, 1});
+    } else if (Utility::EqualsIgnoreCase(object->GetName(), std::string("castle")))sprite->SetColor({0, 1, 0, 1});
     else{
         __debugbreak();
         return;
