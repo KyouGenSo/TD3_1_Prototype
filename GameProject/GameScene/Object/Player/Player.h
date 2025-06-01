@@ -12,6 +12,15 @@
 
 class Player : public Object
 {
+public:
+    struct MinMax
+    {
+        float min = 0.0f;
+        float max = 0.0f;
+    };
+
+private:
+
     std::unique_ptr<Collision::Collider> collider_;
 
     Chain* chain_ = nullptr;
@@ -31,6 +40,8 @@ class Player : public Object
     float       jumpPower_              = 20.0f;    // ジャンプ力
     float       moveSpeed_              = 35.0f;    // 移動速度
     float       frictionCoefficient_    = 5.0f;     // 摩擦係数 (friction coefficient)
+    MinMax      posXMinMax              = { .min= -94.0f, .max= 95.0f}; // X座標の最小値と最大値
+    MinMax      posZMinMax              = { .min= -395.0f, .max= 395.0f }; // Z座標の最小値と最大値
 
     // カーソルの状態
     bool        mouseAim_       = false;
@@ -54,6 +65,7 @@ class Player : public Object
     // 特殊なステータス
     with_initial<uint32_t>    numAbleJump_        = 2;        // ジャンプ可能回数
 
+    bool isCollidCastle_ = false;
 
 public:
     // 一般

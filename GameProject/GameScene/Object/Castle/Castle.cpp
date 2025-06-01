@@ -7,15 +7,17 @@
 void Castle::Initialize() {
     Object::Initialize();
 
+    name_ = "Castle";
+
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("castle.gltf");
 
     // 初期化用 - 外部から設定するためこの値は適用されない
     transform_ = {
-        {1, 1, 1},
         {0, 0, 0},
-        {0, 0, -50}
+        {0, 0, 0},
+        {0, 0, 0}
     };
 
     model_->SetScale(transform_.scale);
@@ -33,11 +35,11 @@ void Castle::Initialize() {
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
         ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
-        ->SetSize(Collision::Vec3{10.f, 10.f, 10.f})
+        ->SetSize(Collision::Vec3{20.f, 20.f, 22.5f})
         ->SetType(Collision::Type::AABB)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        //->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
         ->SetOwner(this)
         ->Enable();
 

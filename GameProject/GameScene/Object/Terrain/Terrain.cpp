@@ -7,8 +7,6 @@
 
 void Terrain::Initialize()
 {
-    //transform_.scale = Vector3(100.0f, 2.0f, 400.0f);
-    //transform_.translate = Vector3(0.0f, -transform_.scale.y * 0.5f, 0.0f);
     transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
     transform_.translate = Vector3(0.0f, -2.0f, 0.0f);
 
@@ -106,6 +104,44 @@ void Terrain::Initialize()
     shortWallModel1_->SetUvTransform(wallUvTransform);
     shortWallModel2_->SetUvTransform(wallUvTransform);
 
+    longWall1Collider_ = std::make_unique<Collision::Collider>();
+    longWall1Collider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
+        ->SetTranslate({ longWallTransform1_.translate.x, longWallTransform1_.translate.y, longWallTransform1_.translate.z })
+        ->SetSize(Collision::Vec3{ 4.1f, 200.0f, 800.0f })
+        ->SetType(Collision::Type::AABB)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
+        ->Enable();
+
+    longWall2Collider_ = std::make_unique<Collision::Collider>();
+    longWall2Collider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
+        ->SetTranslate({ longWallTransform2_.translate.x, longWallTransform2_.translate.y, longWallTransform2_.translate.z })
+        ->SetSize(Collision::Vec3{ 4.1f, 200.0f, 800.0f })
+        ->SetType(Collision::Type::AABB)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
+        ->Enable();
+
+    shortWall1Collider_ = std::make_unique<Collision::Collider>();
+    shortWall1Collider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
+        ->SetTranslate({ shortWallTransform1_.translate.x, shortWallTransform1_.translate.y, shortWallTransform1_.translate.z })
+        ->SetSize(Collision::Vec3{ 200.0f, 800.0f, 4.1f })
+        ->SetType(Collision::Type::AABB)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
+        ->Enable();
+
+    shortWall2Collider_ = std::make_unique<Collision::Collider>();
+    shortWall2Collider_->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
+        ->SetTranslate({ shortWallTransform2_.translate.x, shortWallTransform2_.translate.y, shortWallTransform2_.translate.z })
+        ->SetSize(Collision::Vec3{ 200.0f, 800.0f, 4.1f })
+        ->SetType(Collision::Type::AABB)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
+        ->Enable();
 }
 
 void Terrain::Update()

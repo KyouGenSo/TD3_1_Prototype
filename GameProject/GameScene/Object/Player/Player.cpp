@@ -4,6 +4,10 @@
 #include "imgui.h"
 #include "Input.h"
 
+#include "Collision/Mathematics.h"
+#include <Utility/Adaptor.h>
+
+#include <ModelManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 #include <GameScene/Object/Weapon/WeaponFactory.h>
 #include <GameSystem/GameEventNotifier/GameEventNotifier.h>
@@ -80,6 +84,8 @@ void Player::Update()
 {
     deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
 
+    isCollidCastle_ = false;
+
     UpdateInputCommands();
     UpdateMovement();
     UpdateOpacityByCameraDistance();
@@ -94,6 +100,7 @@ void Player::Update()
     model_->SetScale(transform_.scale);
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
+    model_->Update();
 
     statusCurrent_.Update();
 
@@ -152,11 +159,62 @@ void Player::ImGui()
 }
 
 void Player::OnCollision(const Collision::Collider* pCollider) {
+    if (static_cast<Object*>(pCollider->GetOwner())->GetName() == "Castle") {
+        isCollidCastle_ = true;
+
+        // AABBの情報取得
+        Vector3 colliderPos = {
+            pCollider->GetTranslate().x,
+            pCollider->GetTranslate().y,
+            pCollider->GetTranslate().z
+        };
+        Vector3 colliderSize = Adaptor(std::get<Collision::Vec3>(pCollider->GetSize()));
+        Vector3 aabbMin = colliderPos - colliderSize * 0.5f;
+        Vector3 aabbMax = colliderPos + colliderSize * 0.5f;
+
+        // XZ平面での最近点を計算（Y座標はPlayerの位置を使用）
+        Vector3 closestPoint;
+        closestPoint.x = std::clamp(transform_.translate.x, aabbMin.x, aabbMax.x);
+        closestPoint.y = transform_.translate.y; // Y座標は変更しない
+        closestPoint.z = std::clamp(transform_.translate.z, aabbMin.z, aabbMax.z);
+
+        // XZ平面での押し出し方向
+        Vector3 pushDirection;
+        pushDirection.x = transform_.translate.x - closestPoint.x;
+        pushDirection.y = 0.0f; // Y方向の押し出しなし
+        pushDirection.z = transform_.translate.z - closestPoint.z;
+
+        float distance = pushDirection.Length();
+
+        if (distance > 0.0f) {
+            pushDirection = pushDirection.Normalize();
+
+            // XZ平面でのめり込み量計算
+            float penetration = 1.f - distance;
+            if (penetration > 0.0f) {
+                // XZ平面でのみ位置補正
+                transform_.translate.x += pushDirection.x * penetration;
+                transform_.translate.z += pushDirection.z * penetration;
+            }
+
+            // 速度のXZ成分のみ反射
+            Vector3 velocityXZ = { velocity_.x, 0.0f, velocity_.z };
+            float dotProduct = Vec3::Dot(velocityXZ, pushDirection);
+
+            if (dotProduct < 0.0f) {
+                velocity_.x -= pushDirection.x * (dotProduct * 1.8f);
+                velocity_.z -= pushDirection.z * (dotProduct * 1.8f);
+            }
+        }
+    }
 }
 
 void Player::OnCollisionTrigger(const Collision::Collider* pCollider)
 {
-    Object::StatusUpdateOnCollision(pCollider);
+    if (static_cast<Object*>(pCollider->GetOwner())->GetName() != "Castle")
+    {
+        Object::StatusUpdateOnCollision(pCollider);
+    }
 }
 
 void Player::AddReinforcement(const std::string& _cardName)
@@ -258,7 +316,7 @@ void Player::UpdateMovement()
     {
         // Joycon Movement
     }
-    else
+    else if (!isCollidCastle_)
     {
         Quaternion yaw = Quat::MakeRotateAxisAngle({ 0.0f, 1.0f, 0.0f }, transform_.rotate.y);
         Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, 0.0f);
@@ -301,6 +359,28 @@ void Player::UpdateMovement()
     velocity_ += acceleration_;
 
     transform_.translate += velocity_ * deltaTime_;
+
+    if (transform_.translate.x > posXMinMax.max)
+    {
+        transform_.translate.x = posXMinMax.max;
+        velocity_.x = 0.0f;
+    }
+    else if (transform_.translate.x < posXMinMax.min)
+    {
+        transform_.translate.x = posXMinMax.min;
+        velocity_.x = 0.0f;
+    }
+
+    if (transform_.translate.z > posZMinMax.max)
+    {
+        transform_.translate.z = posZMinMax.max;
+        velocity_.z = 0.0f;
+    }
+    else if (transform_.translate.z < posZMinMax.min)
+    {
+        transform_.translate.z = posZMinMax.min;
+        velocity_.z = 0.0f;
+    }
 
     if (transform_.translate.y < floor_ + HEIGHT_HALF)
     {
