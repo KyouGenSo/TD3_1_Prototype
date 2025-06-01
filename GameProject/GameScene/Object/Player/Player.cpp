@@ -222,7 +222,7 @@ void Player::AddReinforcement(const std::string& _cardName)
     auto reinforcement = std::make_unique<StatusReinforcement>();
     reinforcement->Initialize(_cardName);
     reinforcement->SetStatus(&statusCurrent_);
-    reinforcement->SetBehaviorLimitter(&behaviorLimitter_);
+    reinforcement->SetBehaviorLimitter(&behaviorData_);
     reinforcement->Apply();
 
     reinforcementList_.emplace_back(std::move(reinforcement));
@@ -352,12 +352,16 @@ void Player::UpdateMovement()
     else
     {
         // 重力を加算
+        // 落下中かつスペースが押されていたらスロー
+        if (velocity_.y < 0 && pInput_->PushKey(DIK_SPACE))
+        {
+
+        }
         acceleration_.y += -gravity_;
     }
 
     // 速度を加算
     velocity_ += acceleration_;
-
     transform_.translate += velocity_ * deltaTime_;
 
     if (transform_.translate.x > posXMinMax.max)

@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <string>
 
-struct BehaviorLimitter
+struct PlayerBehavior
 {
     uint32_t num_jump_max_ = 1u;
     uint32_t size_bullet_ = 1u;
