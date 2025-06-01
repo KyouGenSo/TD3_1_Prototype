@@ -196,6 +196,23 @@ void GameScene::Initialize()
     f11Sprite_->SetPos(f11SpritePos_);
     f11Sprite_->SetSize({ 250.f, 40.f });
 
+    pauseKeySp_ = std::make_unique<Sprite>();
+    pauseKeySp_->Initialize("pauseKey.png");
+    pauseKeySp_->SetPos(pauseKeySpPos_);
+    pauseKeySp_->SetSize({ pauseKeySp_->GetSize().x * 0.5f, pauseKeySp_->GetSize().y * 0.5f });
+
+    statusKeySpPos_ = { .x = 44.89f, .y = 259.21 };
+    statusKeySp_ = std::make_unique<Sprite>();
+    statusKeySp_->Initialize("statusKey.png");
+    statusKeySp_->SetPos(statusKeySpPos_);
+    statusKeySp_->SetSize({ statusKeySp_->GetSize().x * 0.5f, statusKeySp_->GetSize().y * 0.5f });
+
+    weaponChainKeySpPos_ = { .x = 42.8f, .y = 304.6 };
+    weaponChainKeySp_ = std::make_unique<Sprite>();
+    weaponChainKeySp_->Initialize("weaponChainKey.png");
+    weaponChainKeySp_->SetPos(weaponChainKeySpPos_);
+    weaponChainKeySp_->SetSize({ weaponChainKeySp_->GetSize().x * 0.5f, weaponChainKeySp_->GetSize().y * 0.5f });
+
     eventTimer_->EndEvent("Initialize");
 }
 
@@ -279,6 +296,15 @@ void GameScene::Update()
     f11Sprite_->SetPos(f11SpritePos_);
     f11Sprite_->Update();
 
+    pauseKeySp_->SetPos(pauseKeySpPos_);
+    pauseKeySp_->Update();
+
+    statusKeySp_->SetPos(statusKeySpPos_);
+    statusKeySp_->Update();
+
+    weaponChainKeySp_->SetPos(weaponChainKeySpPos_);
+    weaponChainKeySp_->Update();
+
     // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
     this->MonitorStatus();
 }
@@ -342,6 +368,9 @@ void GameScene::DrawWithoutEffect()
     enemyManager_->Draw2d();
     reticle_->Draw();
     f11Sprite_->Draw();
+    pauseKeySp_->Draw();
+    statusKeySp_->Draw();
+    weaponChainKeySp_->Draw();
 }
 
 void GameScene::DrawImGui()
