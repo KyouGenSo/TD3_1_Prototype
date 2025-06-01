@@ -9,7 +9,7 @@ void Castle::Initialize() {
 
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
-    model_->SetModel("box.gltf");
+    model_->SetModel("castle.gltf");
 
     // 初期化用 - 外部から設定するためこの値は適用されない
     transform_ = {

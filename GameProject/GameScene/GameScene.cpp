@@ -93,7 +93,7 @@ void GameScene::Initialize()
     // Minimap
     minimap_ = std::make_unique<Minimap>();
     minimap_->Initialize();
-    minimap_->SetSize({ -30, 0, -30 }, { 30, 0, 30 });
+    minimap_->SetSize({ -100, 0, -400.f }, { 100, 0, 400 });
     minimap_->Register(player_.get());
 
     // Castle
@@ -107,11 +107,13 @@ void GameScene::Initialize()
     //enemyManager_->SetMinimap(minimap_.get());
     enemyManager_->Initialize(player_.get(), castle_.get());
     enemyManager_->SetEmitter(emitterManager_.get());
+    enemyManager_->SetMinimap(minimap_.get());
 
     // ボスの初期化
     boss_ = std::make_unique<Boss>();
     boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
+    minimap_->Register(boss_.get());
 
     eventTimer_->EndEvent("Enemy");
 
@@ -187,6 +189,12 @@ void GameScene::Initialize()
     reticle_->SetAnchorPoint({0.5f, 0.5f});
     reticle_->SetPos({static_cast<float>(WinApp::clientWidth) / 2.f, static_cast<float>(WinApp::clientHeight) / 2.f});
     reticle_->SetSize({32.f,32.f});
+
+    f11Sprite_ = std::make_unique<Sprite>();
+    f11Sprite_->Initialize("F11.png");
+    f11SpritePos_ = { .x = 0.f, .y = 0.f };
+    f11Sprite_->SetPos(f11SpritePos_);
+    f11Sprite_->SetSize({ 250.f, 40.f });
 
     eventTimer_->EndEvent("Initialize");
 }
@@ -267,6 +275,10 @@ void GameScene::Update()
 
     reticle_->Update();
 
+    f11SpritePos_.x = static_cast<float>(WinApp::clientWidth) - f11Sprite_->GetSize().x - 10.f;
+    f11Sprite_->SetPos(f11SpritePos_);
+    f11Sprite_->Update();
+
     // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
     this->MonitorStatus();
 }
@@ -296,11 +308,7 @@ void GameScene::Draw()
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
-    countDown_->Draw2D();
-    minimap_->Draw();
-    statusHUD_->Draw2D();
-    enemyManager_->Draw2d();
-    reticle_->Draw();
+
 
     //camera_->Draw2D();
 }
@@ -328,7 +336,12 @@ void GameScene::DrawWithoutEffect()
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
-
+    countDown_->Draw2D();
+    minimap_->Draw();
+    statusHUD_->Draw2D();
+    enemyManager_->Draw2d();
+    reticle_->Draw();
+    f11Sprite_->Draw();
 }
 
 void GameScene::DrawImGui()

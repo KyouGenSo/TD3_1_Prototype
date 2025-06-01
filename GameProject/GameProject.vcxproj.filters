@@ -324,6 +324,9 @@
       <Filter>GameUI\ColorResolver</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Object\Enemy\EnemyFactory.cpp" />
+    <ClCompile Include="ClearScene\ClearScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -523,6 +526,10 @@
     </ClInclude>
     <ClInclude Include="Utility\JSON\jsonutl.h">
       <Filter>Utility\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Equals.h" />
+    <ClInclude Include="ClearScene\ClearScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

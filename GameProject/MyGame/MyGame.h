@@ -35,17 +35,27 @@ public: // メンバ関数
     {
         float vignettePower;
         float vignetteRange;
+
         float bloomThreshold;
         float bloomIntensity;
         float bloomSigma;
         int bloomKernelSize;
         int bloomSampleCount;
         int downSampleFactor;
+
         Vector4 fogColor;
         float fogDensity;
+
         Vector2 radialBlurCenter;
         float radialBlurWidth;
         int32_t radialBlurSampleCount;
+
+        float bwFilterThreshold;
+
+        float rgbSplitIntensity;
+        Vector2 redOffset;
+        Vector2 blueOffset;
+        Vector2 greenOffset;
     };
 
 private: // メンバ変数
@@ -61,6 +71,7 @@ private: // メンバ変数
 #ifdef _DEBUG
     PostEffectParam postEffectParam = {};
 
+
     enum PostEffectType
     {
         NoEffect,
@@ -72,6 +83,8 @@ private: // メンバ変数
         NewBloom,
         BloomFog,
         RadialBlur,
+        BWFilter,
+        RGBSplit,
     };
 
     PostEffectType postEffectType = NoEffect;
