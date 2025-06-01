@@ -39,9 +39,6 @@ class RocketBullet : public BulletBase
         void SetEmitter(EmitterManager* _emitter);
     };
 
-    Vector3 forward_ = {};
-
-
     Vector4 color_ = { 1,1,1,1 };
 
     Timer timer;

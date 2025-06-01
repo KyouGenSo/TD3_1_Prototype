@@ -43,6 +43,7 @@ private:
     float       frictionCoefficient_    = 5.0f;     // 摩擦係数 (friction coefficient)
     MinMax      posXMinMax              = { .min= -94.0f, .max= 95.0f}; // X座標の最小値と最大値
     MinMax      posZMinMax              = { .min= -395.0f, .max= 395.0f }; // Z座標の最小値と最大値
+    float       distance_start_lerp_    = 10.0f;
 
     // カーソルの状態
     bool        mouseAim_       = false;
