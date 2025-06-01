@@ -118,6 +118,9 @@ void MyGame::Initialize()
     TextureManager::GetInstance()->LoadTexture("press_space_text.png");
     TextureManager::GetInstance()->LoadTexture("NeoSiege_Title.png");
     TextureManager::GetInstance()->LoadTexture("F11.png");
+    TextureManager::GetInstance()->LoadTexture("pauseKey.png");
+    TextureManager::GetInstance()->LoadTexture("statusKey.png");
+    TextureManager::GetInstance()->LoadTexture("weaponChainKey.png");
 
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 
