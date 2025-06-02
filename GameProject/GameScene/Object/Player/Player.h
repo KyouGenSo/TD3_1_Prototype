@@ -34,7 +34,7 @@ private:
     bool isGround_ = true;
 
     const float HEIGHT_HALF = 0.5f;
-    bool        isCollidCastle_ = false;
+    bool        isCollideCastle_ = false;
 
     // 挙動データ
     float       floor_                  = 0.5f;
@@ -48,6 +48,7 @@ private:
     // カーソルの状態
     bool        mouseAim_       = false;
     const POINT ORIGIN          = {990, 540};
+    float       sensitivity_    = 1.f; // マウス感度
 
     // コールバックID
     uint32_t    id_callback_enemydead_      = 0;
@@ -92,6 +93,7 @@ public:
     float   getXP() const { return xp_; }
     float   getXPMax() const { return xpMax_; }
 
+    void    SetSens(float sens) { sensitivity_ = sens; }
 
 private:
     // 内部関数
