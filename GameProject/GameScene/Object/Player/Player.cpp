@@ -223,6 +223,7 @@ void Player::UpdateInputCommands()
 
     if (pInput_->TriggerKey(DIK_M)){
         mouseAim_ = !mouseAim_;
+        SetCursorPos(ORIGIN.x, ORIGIN.y);
         ShowCursor(!mouseAim_);
     }
 
