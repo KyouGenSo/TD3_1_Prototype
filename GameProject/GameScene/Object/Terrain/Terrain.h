@@ -6,6 +6,8 @@
 
 #include <Collision/Collider.h>
 
+#include "AABB.h"
+
 class Terrain : public Object
 {
 public:
@@ -25,6 +27,10 @@ public:
 
 private:
     std::unique_ptr<Collision::Collider> collider_;
+    std::unique_ptr<Collision::Collider> longWall1Collider_;
+    std::unique_ptr<Collision::Collider> longWall2Collider_;
+    std::unique_ptr<Collision::Collider> shortWall1Collider_;
+    std::unique_ptr<Collision::Collider> shortWall2Collider_;
 
     std::unique_ptr<Object3d> longWallModel1_;
     Transform longWallTransform1_;

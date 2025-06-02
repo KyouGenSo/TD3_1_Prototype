@@ -77,9 +77,6 @@ void BounceEnemy::OnCollision(const Collision::Collider* _other)
 
     if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
     {
-
-        Object::StatusUpdateOnCollision(_other);
-
         isDead_ = true;
 
         if (!(_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE)))

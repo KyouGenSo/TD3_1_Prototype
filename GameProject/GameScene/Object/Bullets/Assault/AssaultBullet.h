@@ -34,7 +34,7 @@ public:
 
 private:
     std::unique_ptr<Bullet> bullet_;
-    std::array<std::unique_ptr<Bullet>, 16> bullets_ = {};
+    std::array<std::unique_ptr<Bullet>, 8> bullets_ = {};
 
 private:
     void InitializeNormal() override;

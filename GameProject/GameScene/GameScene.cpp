@@ -32,7 +32,7 @@ void GameScene::Initialize()
     
     directLightParam_ = {
         .direction = { 0.0f, -1.0f, 0.0f },
-        .color = { 1.0f, 1.0f, 1.0f, 1.0f },
+        .color = {1.000f, 0.254f, 0.254f, 1.000f},
         .lightType = 1,
         .intensity = 2.0f
     };
@@ -174,6 +174,7 @@ void GameScene::Initialize()
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1)),
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&CountDown::OnResize, countDown_.get(), std::placeholders::_1)),
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&GUI_LvUP::OnResize, guiLvUP_.get(), std::placeholders::_1)),
+        WinApp::GetInstance()->RegisterOnResizeFunc([this](Vector2 size) { reticle_->SetPos({size.x / 2.0f, size.y / 2.0f}); }),
     };
 
     // ReinforcementManagerの初期化
@@ -200,6 +201,29 @@ void GameScene::Initialize()
     reticle_->SetPos({static_cast<float>(WinApp::clientWidth) / 2.f, static_cast<float>(WinApp::clientHeight) / 2.f});
     reticle_->SetSize({32.f,32.f});
 
+    f11Sprite_ = std::make_unique<Sprite>();
+    f11Sprite_->Initialize("F11.png");
+    f11SpritePos_ = { .x = 0.f, .y = 0.f };
+    f11Sprite_->SetPos(f11SpritePos_);
+    f11Sprite_->SetSize({ 250.f, 40.f });
+
+    pauseKeySp_ = std::make_unique<Sprite>();
+    pauseKeySp_->Initialize("pauseKey.png");
+    pauseKeySp_->SetPos(pauseKeySpPos_);
+    pauseKeySp_->SetSize({ pauseKeySp_->GetSize().x * 0.5f, pauseKeySp_->GetSize().y * 0.5f });
+
+    statusKeySpPos_ = { .x = 44.89f, .y = 259.21 };
+    statusKeySp_ = std::make_unique<Sprite>();
+    statusKeySp_->Initialize("statusKey.png");
+    statusKeySp_->SetPos(statusKeySpPos_);
+    statusKeySp_->SetSize({ statusKeySp_->GetSize().x * 0.5f, statusKeySp_->GetSize().y * 0.5f });
+
+    weaponChainKeySpPos_ = { .x = 42.8f, .y = 304.6 };
+    weaponChainKeySp_ = std::make_unique<Sprite>();
+    weaponChainKeySp_->Initialize("weaponChainKey.png");
+    weaponChainKeySp_->SetPos(weaponChainKeySpPos_);
+    weaponChainKeySp_->SetSize({ weaponChainKeySp_->GetSize().x * 0.5f, weaponChainKeySp_->GetSize().y * 0.5f });
+
     eventTimer_->EndEvent("Initialize");
 }
 
@@ -225,6 +249,8 @@ void GameScene::Finalize()
 void GameScene::Update()
 {
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
+
+    ReinforcementManager::GetInstance()->Update();
 
     soundGroup_->Update();
 
@@ -277,6 +303,19 @@ void GameScene::Update()
 
     reticle_->Update();
 
+    f11SpritePos_.x = static_cast<float>(WinApp::clientWidth) - f11Sprite_->GetSize().x - 10.f;
+    f11Sprite_->SetPos(f11SpritePos_);
+    f11Sprite_->Update();
+
+    pauseKeySp_->SetPos(pauseKeySpPos_);
+    pauseKeySp_->Update();
+
+    statusKeySp_->SetPos(statusKeySpPos_);
+    statusKeySp_->Update();
+
+    weaponChainKeySp_->SetPos(weaponChainKeySpPos_);
+    weaponChainKeySp_->Update();
+
     // ステータスの監視 (ゲームシーンからリザルトシーンへの移行)
     this->MonitorStatus();
 }
@@ -306,11 +345,7 @@ void GameScene::Draw()
     //------------------前景Spriteの描画------------------//
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
-    countDown_->Draw2D();
-    minimap_->Draw();
-    statusHUD_->Draw2D();
-    enemyManager_->Draw2d();
-    reticle_->Draw();
+
 
     //camera_->Draw2D();
 }
@@ -338,7 +373,15 @@ void GameScene::DrawWithoutEffect()
     // スプライト共通描画設定
     SpriteBasic::GetInstance()->SetCommonRenderSetting();
 
-
+    countDown_->Draw2D();
+    minimap_->Draw();
+    statusHUD_->Draw2D();
+    enemyManager_->Draw2d();
+    reticle_->Draw();
+    f11Sprite_->Draw();
+    pauseKeySp_->Draw();
+    statusKeySp_->Draw();
+    weaponChainKeySp_->Draw();
 }
 
 void GameScene::DrawImGui()

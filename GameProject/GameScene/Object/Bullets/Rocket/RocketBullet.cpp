@@ -9,6 +9,7 @@
 #include "Type/ColliderType.h"
 #include <Utility/Adaptor.h>
 #include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
+#include <variant>
 
 void RocketBullet::Explosion::Init() {
 	pCollider_ = std::make_unique<Collision::Collider>();
@@ -99,7 +100,7 @@ void RocketBullet::Initialize()
 	BulletBase::Initialize();
 
 	type_ = WeaponType::RocketLauncher;
-	speed_ = 30.0f;
+	speed_ = 80.0f;
 
 	model_ = std::make_unique<Object3d>();
 	model_->Initialize();
@@ -184,12 +185,6 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
 
 void RocketBullet::InitializeNormal()
 {
-	Quaternion yaw = Quat::MakeRotateAxisAngle({ 0.0f, 1.0f, 0.0f }, transform_.rotate.y);
-	Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, transform_.rotate.x);
-
-	Quaternion rotate = yaw * pitch;
-
-	forward_ = Quat::RotateVec3({ 0.0f, 0.0f, 1.0f }, rotate);
 }
 
 void RocketBullet::InitializeChain()

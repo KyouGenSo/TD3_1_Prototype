@@ -102,6 +102,12 @@ void WeaponBase::UpdateRay()
     // ヒットしている場合：ヒットポイントの方向をforward_に設定
     if (pOtherCollider)
     {
+        // 衝突点が近すぎる場合 (床にカメラが近づいたとき)
+        if (hitdata_.distance <= 0.01f)
+        {
+            hitdata_ = pCollisionManager_->GetNextClosestHitData(hitdata_.distance);
+        }
+
         Vector3 toHitPoint = Adaptor(hitdata_.hitPoint) - transform_.translate;
         Vector3 direction = toHitPoint.Normalize();
 

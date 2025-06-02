@@ -3,6 +3,7 @@
 #include <TitleScene/TitleScene.h>
 #include <GameScene/GameScene.h>
 #include <ResultScene/ResultScene.h>
+#include <ClearScene/ClearScene.h>
 
 BaseScene* SceneFactory::CreateScene(const std::string& sceneName)
 {
@@ -17,6 +18,9 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName)
     else if (sceneName == "result")
     {
         newScene = new ResultScene();
+    }
+    else if (sceneName == "clear") {
+        newScene = new ClearScene();
     }
 
 	return newScene;

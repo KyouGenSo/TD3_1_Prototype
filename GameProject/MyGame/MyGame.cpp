@@ -16,6 +16,7 @@
 #include <GameSystem/SoundManager/SoundManager.h>
 #include <GameUI/ColorResolver/ColorResolver.h>
 #include <SpriteBasic.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 #include <Utility/RandomGenerator/RandomGenerator.h>
 
@@ -24,6 +25,7 @@
 #include <functional>
 
 #include "Transition.h"
+#include <Vector2.h>
 
 
 void MyGame::Initialize()
@@ -108,9 +110,18 @@ void MyGame::Initialize()
     /// EventTimerの初期化
     eventTimer_ = EventTimer::GetInstance();
 
+    /// テクスチャの読み込み
     TextureManager::GetInstance()->LoadTexture("circle.png");
     TextureManager::GetInstance()->LoadTexture("cross.png");
     TextureManager::GetInstance()->LoadTexture("white.png");
+    TextureManager::GetInstance()->LoadTexture("GameOver.png");
+    TextureManager::GetInstance()->LoadTexture("GameClear.png");
+    TextureManager::GetInstance()->LoadTexture("press_space_text.png");
+    TextureManager::GetInstance()->LoadTexture("NeoSiege_Title.png");
+    TextureManager::GetInstance()->LoadTexture("F11.png");
+    TextureManager::GetInstance()->LoadTexture("pauseKey.png");
+    TextureManager::GetInstance()->LoadTexture("statusKey.png");
+    TextureManager::GetInstance()->LoadTexture("weaponChainKey.png");
 
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 
@@ -122,6 +133,7 @@ void MyGame::Initialize()
     handle_onresizes_.push_back(
         winApp_->RegisterOnResizeFunc(std::bind(&SpriteBasic::OnResize, SpriteBasic::GetInstance(), std::placeholders::_1))
     );
+    handle_onExit_ = GameEventNotifier::GetInstance()->RegisterCallback("Exit", [this](auto) { endFlag_ = true; });
 }
 
 void MyGame::Finalize()
@@ -130,6 +142,8 @@ void MyGame::Finalize()
     {
         winApp_->UnregisterOnResizeFunc(handle);
     }
+
+    GameEventNotifier::GetInstance()->UnregisterCallback("Exit", handle_onExit_);
 
     TakoFramework::Finalize();
 
@@ -217,6 +231,7 @@ void MyGame::Update()
         ToggleFullScreen();
         NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, {});
         NiGui::SetClientSize({ WinApp::clientWidth, WinApp::clientHeight });
+        GameEventNotifier::GetInstance()->Notify("OnWindowResized", Vector2(WinApp::clientWidth, WinApp::clientHeight));
     }
 
 #ifdef _DEBUG

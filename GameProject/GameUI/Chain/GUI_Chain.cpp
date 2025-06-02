@@ -5,6 +5,7 @@
 
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 #include <GameSystem/GameController/GameController.h>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 void GUI_Chain::Initialize()
 {
@@ -89,8 +90,8 @@ void GUI_Chain::ShowChain()
 
         NiGui::DragItem("RocketLauncher", (ICONDIR_ / TEX_ROCKETLAUNCHER_).string(), NiGui::WHITE, { -240, 70 }, { 100, 100 }, center, center);
         NiGui::DragItem("Assault", (ICONDIR_ / TEX_ASSAULT_).string(), NiGui::WHITE, { 0, 70 }, { 100, 100 }, center, center);
-        NiGui::DragItem("MachineGun", TEX_WHITE_, NiGui::MAGENTA, { 240, 70 }, { 100, 100 }, center, center);
-        //NiGui::DragItem("Thunder", TEX_WHITE_, NiGui::YELLOW, {0, 70}, {100, 100}, center, center);
+        NiGui::DragItem("MachineGun", (ICONDIR_ / TEX_SUBMACHINEGUN_).string(), NiGui::WHITE, { 240, 70 }, { 100, 100 }, center, center);
+
 
         if (NiGui::Button("ConfirmChain", (CHAINDIR_ / TEX_BUTTON_CONFIRM_).string(), NiGui::WHITE, { 642, 533 }, { 292,84 }, {}, lefttop, lefttop) == confirm)
         {

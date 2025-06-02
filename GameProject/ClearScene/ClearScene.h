@@ -1,5 +1,4 @@
 #pragma once
-
 #include <BaseScene.h>
 #include <memory>
 
@@ -8,17 +7,34 @@
 #include "EmitterStruct.h"
 #include "Sprite.h"
 
-class ResultScene : public BaseScene
+class ClearScene : public BaseScene
 {
-public:
-    ResultScene() = default;
-    ~ResultScene() override = default;
+public: // メンバ関数
 
+    /// <summary>
+    /// 初期化
+    /// </summary>
     void Initialize() override;
+
+    /// <summary>
+    /// 終了処理
+    /// </summary>
     void Finalize() override;
+
+    /// <summary>
+    /// 更新
+    /// </summary>
     void Update() override;
+
+    /// <summary>
+    /// 描画
+    /// </summary>
     void Draw() override;
     void DrawWithoutEffect() override;
+
+    /// <summary>
+    /// ImGuiの描画
+    /// </summary>
     void DrawImGui() override;
 
 public: // 構造体
@@ -45,14 +61,14 @@ private: // メンバ変数
 
     Vector2 pressPos{ .x = 300, .y = 600 };
     Vector2 pressSize{ .x = 500, .y = 100 };
-    Vector2 overPos{ .x = 300, .y = 50 };
+    Vector2 clearTextPos{ .x = 300, .y = 50 };
 
     float pressAlpha = 0.f;
     float pressAlphaSpeed = 0.05f;
     bool pressAlphaIncreasing = true;
 
     std::unique_ptr<Sprite> press_;
-    std::unique_ptr<Sprite> overText_;
+    std::unique_ptr<Sprite> clearText_;
     std::unique_ptr<Sprite> bgSp_;
 
     std::unique_ptr<Sprite> whiteBarVer_;
@@ -66,4 +82,6 @@ private: // メンバ変数
 
     Vector2 whiteBarVerSize{ .x = 5.f, .y = 2000.f };
     Vector2 whiteBarHorSize{ .x = 2000.f, .y = 5.f };
+
 };
+

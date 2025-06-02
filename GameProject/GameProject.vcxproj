@@ -183,6 +183,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClearScene\ClearScene.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\EnemyFactory.cpp" />
     <ClCompile Include="GameScene\HUD\StatusBar.cpp" />
     <ClCompile Include="GameScene\HUD\StatusHUD.cpp" />
@@ -248,6 +249,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Utility\Threadpool\Threadpool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClearScene\ClearScene.h" />
     <ClInclude Include="GameScene\Object\Enemy\EnemyFactory.h" />
     <ClInclude Include="GameScene\HUD\StatusBar.h" />
     <ClInclude Include="GameScene\HUD\StatusHUD.h" />
@@ -312,7 +314,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Type\Color.h" />
     <ClInclude Include="Type\Singleton.h" />
     <ClInclude Include="Type\WeaponType.h" />
+    <ClInclude Include="Type\with_initial.h" />
     <ClInclude Include="Utility\Adaptor.h" />
+    <ClInclude Include="Utility\JSON\jsonutl.h" />
     <ClInclude Include="Utility\Equals.h" />
     <ClInclude Include="Utility\RandomGenerator\RandomGenerator.h" />
     <ClInclude Include="Utility\Threadpool\Threadpool.h" />

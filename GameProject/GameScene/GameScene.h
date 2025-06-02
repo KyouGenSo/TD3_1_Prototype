@@ -28,7 +28,6 @@
 #include <GameSystem/FreeCamera/FreeLookCamera.h>
 #include <GameSystem/SoundManager/SoundManager.h>
 #include <vector>
-#include <vector>
 
 class GameScene : public BaseScene
 {
@@ -62,6 +61,18 @@ class GameScene : public BaseScene
     std::vector<uint32_t> handle_onresizes_ = {};
 
     std::unique_ptr<Sprite> reticle_ = nullptr;
+
+    std::unique_ptr<Sprite> f11Sprite_ = nullptr;
+    Vector2 f11SpritePos_{ .x= 0.0f, .y= 0.0f };
+
+    std::unique_ptr<Sprite> pauseKeySp_ = nullptr;
+    Vector2 pauseKeySpPos_{ .x = 0.0f, .y = 0.0f };
+
+    std::unique_ptr<Sprite> statusKeySp_ = nullptr;
+    Vector2 statusKeySpPos_{ .x = 0.0f, .y = 0.0f };
+
+    std::unique_ptr<Sprite> weaponChainKeySp_ = nullptr;
+    Vector2 weaponChainKeySpPos_{ .x = 0.0f, .y = 0.0f };
 
 public:
     struct DirectionalLightParam

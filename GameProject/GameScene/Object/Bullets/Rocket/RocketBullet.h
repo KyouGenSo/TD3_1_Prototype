@@ -36,6 +36,9 @@ class RocketBullet : public BulletBase
         void SetEmitter(EmitterManager* _emitter);
     };
 
+
+    Timer timer;
+
     std::unique_ptr<Explosion> exImpl_ = nullptr;
 
     std::unique_ptr<CB> cb_ = nullptr;

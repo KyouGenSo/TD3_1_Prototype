@@ -11,6 +11,14 @@ void ReinforcementManager::Initialize(const std::string& _filename)
     this->LoadImages(kReinforcementDir_ + _filename);
 }
 
+void ReinforcementManager::Update()
+{
+    for (auto& card : reinforcementList_)
+    {
+        card->Update();
+    }
+}
+
 void ReinforcementManager::Notify(const std::string& _event)
 {
     if (_event == "onHit")
