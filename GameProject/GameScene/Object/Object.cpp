@@ -74,6 +74,7 @@ void Object::UpdateCollider() const {
 
 void Object::DrawCollider(const Collision::Collider* _collider)
 {
+#ifdef _DEBUG
     if (_collider == nullptr) return;
 
     Collision::Vec3 pos = _collider->GetTranslate();
@@ -93,6 +94,7 @@ void Object::DrawCollider(const Collision::Collider* _collider)
 
         Draw2D::GetInstance()->DrawSphere(Adaptor(pos), size, { 0.0f, 1.0f, 0.0f, 1.0f });
     }
+#endif
 }
 
 void Object::StatusUpdateOnCollision(const Collision::Collider* _other)
