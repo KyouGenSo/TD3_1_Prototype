@@ -448,6 +448,7 @@ void Player::ChangeAimMode(bool isMouseAim)
         --countCursorVisible_;
         if (countCursorVisible_ == 0)
         {
+            SetCursorPos(ORIGIN.x, ORIGIN.y);
             ShowCursor(false);
             mouseAim_ = true;
         }
@@ -457,6 +458,7 @@ void Player::ChangeAimMode(bool isMouseAim)
         ++countCursorVisible_;
         if (countCursorVisible_ == 1)
         {
+            SetCursorPos(ORIGIN.x, ORIGIN.y);
             ShowCursor(true);
             mouseAim_ = false;
         }
@@ -468,12 +470,14 @@ void Player::ChangeAimModeForce(bool _isMouseAim)
     if (_isMouseAim)
     {
         countCursorVisible_ = 0;
+        SetCursorPos(ORIGIN.x, ORIGIN.y);
         ShowCursor(false);
         mouseAim_ = true;
     }
     else
     {
         countCursorVisible_ = 1;
+        SetCursorPos(ORIGIN.x, ORIGIN.y);
         ShowCursor(true);
         mouseAim_ = false;
     }

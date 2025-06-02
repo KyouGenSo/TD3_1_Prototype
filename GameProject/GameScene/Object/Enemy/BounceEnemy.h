@@ -17,15 +17,9 @@ public:
 
     void Finalize() override;
 
-    void OnCollision(const Collision::Collider* pCollider);
-
-    void OnCollisionTrigger(const Collision::Collider* _other);
-
     void Move();
 
     void AppearanceProduction();
-
-    void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
 
 
 private:

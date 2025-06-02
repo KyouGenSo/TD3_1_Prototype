@@ -115,7 +115,6 @@ void GameScene::Initialize()
     boss_ = std::make_unique<Boss>();
     boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
-    minimap_->Register(boss_.get());
 
     eventTimer_->EndEvent("Enemy");
 
@@ -212,7 +211,7 @@ void GameScene::Initialize()
     pauseKeySp_->SetPos(pauseKeySpPos_);
     pauseKeySp_->SetSize({ pauseKeySp_->GetSize().x * 0.5f, pauseKeySp_->GetSize().y * 0.5f });
 
-    statusKeySpPos_ = { .x = 44.89f, .y = 259.21 };
+    statusKeySpPos_ = { .x = 44.89f, .y = 259.21f };
     statusKeySp_ = std::make_unique<Sprite>();
     statusKeySp_->Initialize("statusKey.png");
     statusKeySp_->SetPos(statusKeySpPos_);
@@ -270,7 +269,12 @@ void GameScene::Update()
         guiChain_->Update();
     });
 
+    if (enemyManager_->GetLastTurn() <= enemyManager_->GetCurrentTurn()){
+        boss_->SetIsValid(true);
+        minimap_->Register(boss_.get());
+    }
     boss_->Update();
+
     eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
     eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
 
@@ -377,6 +381,7 @@ void GameScene::DrawWithoutEffect()
     minimap_->Draw();
     statusHUD_->Draw2D();
     enemyManager_->Draw2d();
+    boss_->Draw2d();
     reticle_->Draw();
     f11Sprite_->Draw();
     pauseKeySp_->Draw();

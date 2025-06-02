@@ -17,6 +17,7 @@ void ThunderBullet::Bullet::Draw() {
 void ThunderBullet::Bullet::Initialize() {
     BulletBase::Initialize();
     type_ = WeaponType::Thunder;
+    name_ = "Thunder";
     speed_ = 8.f;
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
@@ -47,12 +48,19 @@ void ThunderBullet::Bullet::Update() {
     }
 }
 
+void ThunderBullet::Bullet::OnCollision(const Collision::Collider* _other) {
+    if (isDead_ || pCollider_->IsDisabled()) return;
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY)){
+        NotifyReinforcementManager(_other);
+        Next();
+    }
+}
+
 void ThunderBullet::Bullet::OnCollisionTrigger(const Collision::Collider* _collider) {
     if (isDead_ || pCollider_->IsDisabled()) return;
     if (_collider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY)){
         isDead_ = true;
         pCollider_->Disable();
-        StatusUpdateOnCollision(_collider);
         NotifyReinforcementManager(_collider);
         Next();
     }
@@ -66,14 +74,34 @@ void ThunderBullet::Bullet::InitializeNormal() {
     transform_.translate.y = 8.f;
 
     statusInit_.setAttack(6)
-        .setHp(1)
-        .setSpeed(1)
-        .setDefence(0)
-        .setMaxHp(1);
+        .setHp(1.f)
+        .setSpeed(1.f)
+        .setDefence(0.f)
+        .setMaxHp(1.f);
     statusCurrent_ = statusInit_;
 }
 
 void ThunderBullet::Bullet::InitializeChain() {
+    statusInit_.setAttack(2.f)
+        .setHp(1.f)
+        .setSpeed(1.f)
+        .setDefence(0.f)
+        .setMaxHp(1.f);
+    statusCurrent_ = statusInit_;
+    pCollider_ = std::make_unique<Collision::Collider>();
+    pCollider_
+        ->SetEvent(Collision::EventType::Stay, [&](const Collision::Collider* pCol){ OnCollision(pCol); })
+        ->SetType(Collision::Type::Sphere)
+        ->SetTranslate(Adaptor(transform_.translate))
+        ->SetSize(7.f)
+        ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
+        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+        ->SetOwner(this)
+        ->Enable();
+
+    lifeTime_ = 5.f;
 }
 
 void ThunderBullet::Bullet::UpdateNormal() {
@@ -91,7 +119,7 @@ void ThunderBullet::Bullet::UpdateNormal() {
             ->SetEvent(Collision::EventType::Trigger, [&](const Collision::Collider* pCol){ OnCollisionTrigger(pCol); })
             ->SetType(Collision::Type::Sphere)
             ->SetTranslate(Adaptor(transform_.translate))
-            ->SetSize(3.f)
+            ->SetSize(5.f)
             ->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
             ->AddIgnore(static_cast<uint32_t>(Collider::Type::P_BULLET))
             ->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
@@ -113,6 +141,18 @@ void ThunderBullet::Bullet::UpdateNormal() {
 }
 
 void ThunderBullet::Bullet::UpdateChain() {
+    if (isDead_) return;
+    if (lifeTime_ <= 0.f){
+        isDead_ = true;
+        if (pCollider_) pCollider_->Disable();
+        return;
+    }
+
+    lifeTime_ -= deltaTime_;
+
+    if (pCollider_ && pCollider_->IsEnabled()){
+        pCollider_->SetTranslate(Adaptor(transform_.translate));
+    }
 }
 
 void ThunderBullet::Initialize() {

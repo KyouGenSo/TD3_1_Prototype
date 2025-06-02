@@ -6,11 +6,11 @@ class ThunderBullet final : public BulletBase{
     class Bullet : public BulletBase{
         bool isExploded_ = false;
 
-        Object* target_ = nullptr;
     public:
         void Draw() override;
         void Initialize() override;
         void Update() override;
+        void OnCollision(const Collision::Collider* _other) override;
         void OnCollisionTrigger(const Collision::Collider* _collider) override;
         void SetSpeed(float _speed);
 
