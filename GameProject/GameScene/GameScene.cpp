@@ -24,15 +24,17 @@ void GameScene::Initialize()
 
     //ModelManager::GetInstance()->GetModel("rocketBullet.gltf");
 
-    PostEffect::GetInstance()->SetEffectType("NoEffect");
+    PostEffect::GetInstance()->SetEffectType("RGBSplit");
+    PostEffect::GetInstance()->SetRGBSplitIntensity(0.2f);
 
     // ステージデータの取得
     const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
 
     
     directLightParam_ = {
-        .direction = { 0.0f, -1.0f, 0.0f },
-        .color = {1.000f, 0.254f, 0.254f, 1.000f},
+        .direction = { .x= 0.0f, .y= -1.0f, .z= 0.0f },
+        //.color = {1.000f, 0.254f, 0.254f, 1.000f},
+        .color = {.x= 1.000f, .y= 1.0f, .z= 1.0f, .w= 1.000f},
         .lightType = 1,
         .intensity = 2.0f
     };
@@ -85,6 +87,9 @@ void GameScene::Initialize()
     guiChain_ = std::make_unique<GUI_Chain>();
     guiChain_->Initialize();
     guiChain_->SetViewModel(chainViewModel_.get());
+
+    wnd_setting_ = std::make_unique<Wnd_Setting>();
+    wnd_setting_->Initialize();
 
     // Observer登録
     player_->AddObserver(guiLvUP_.get());
@@ -241,27 +246,34 @@ void GameScene::Finalize()
     enemyManager_->Finalize();
     camera_->Finalize();
     player_->Finalize();
+    wnd_setting_->Finalize();
 
     soundGroup_->Finalize();
 }
 
 void GameScene::Update()
 {
-    Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
+    if (boss_->GetIsValid())
+    {
+        directLightParam_.color = { .x= 1.0f, .y= 0.254f, .z= 0.254f, .w= 1.0f };
+    }
+    else
+    {
+        directLightParam_.color = { .x= 1.0f, .y= 1.0f, .z= 1.0f, .w= 1.0f };
+    }
 
+    Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
     ReinforcementManager::GetInstance()->Update();
+    this->UpdateInputCommands();
 
     soundGroup_->Update();
-
     timeKeeper_->Update();
     chainViewModel_->Update();
-
     eventTimer_->Measure("Update Terrain", [&]() { terrain_->Update(); });
     eventTimer_->Measure("Update Castle", [&]() { castle_->Update(); });
     eventTimer_->Measure("Update Player", [&]() { player_->Update(); });
     eventTimer_->Measure("Update Camera", [&]() { camera_->Update(); });
     freeLookCamera_->Update();
-
     eventTimer_->Measure("Update GUI", [&]()
     {
         guiLvUP_->Update();
@@ -277,46 +289,35 @@ void GameScene::Update()
 
     eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
     eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
-
     /// タイマーの更新
     if (timeKeeper_->GetRemainTime("JunbiPhase") < 3.0f && !countDown_->IsStart())
     {
         countDown_->Start();
         timeKeeper_->Reset("JunbiPhase");
     }
-
     countDown_->Update();
-
     statusHUD_->Update();
+    wnd_setting_->Update();
     eventTimer_->Measure("detect", [&]{pCollisionManager_->Detect(); });
     eventTimer_->Measure("event", [&]{pCollisionManager_->ProcessEvent(); });
-
     emitterManager_->Update();
-
     // プレイヤーのHPのUIを更新
     statusHUD_->GetHpBar()->SetMaxValue(player_->getStatusCurrent().getMaxHp());
     *(statusHUD_->GetHpBar()) = player_->getStatusCurrent().getHp();
-
     // プレイヤーのXPのUIを更新
     statusHUD_->GetXPBar()->SetMaxValue(player_->getXPMax());
     *(statusHUD_->GetXPBar()) = player_->getXP();
-
     // 城のHPのUIを更新
     statusHUD_->GetCastleHpBar()->SetMaxValue(castle_->getStatusCurrent().getMaxHp());
     *(statusHUD_->GetCastleHpBar()) = castle_->getStatusCurrent().getHp();
-
     reticle_->Update();
-
     f11SpritePos_.x = static_cast<float>(WinApp::clientWidth) - f11Sprite_->GetSize().x - 10.f;
     f11Sprite_->SetPos(f11SpritePos_);
     f11Sprite_->Update();
-
     pauseKeySp_->SetPos(pauseKeySpPos_);
     pauseKeySp_->Update();
-
     statusKeySp_->SetPos(statusKeySpPos_);
     statusKeySp_->Update();
-
     weaponChainKeySp_->SetPos(weaponChainKeySpPos_);
     weaponChainKeySp_->Update();
 
@@ -387,6 +388,7 @@ void GameScene::DrawWithoutEffect()
     pauseKeySp_->Draw();
     statusKeySp_->Draw();
     weaponChainKeySp_->Draw();
+    wnd_setting_->Draw2d();
 }
 
 void GameScene::DrawImGui()
@@ -419,5 +421,33 @@ void GameScene::MonitorStatus()
     if (castle_->getStatusCurrent().getHp() <= 0)
     {
         SceneManager::GetInstance()->ChangeScene("result");
+    }
+}
+
+void GameScene::UpdateInputCommands()
+{
+    auto input = Input::GetInstance();
+
+    std::vector<IObserver*> observers;
+    observers.push_back(guiLvUP_.get());
+    observers.push_back(guiPauseMenu_.get());
+    observers.push_back(guiChain_.get());
+    observers.push_back(wnd_setting_.get());
+
+    if (input->TriggerKey(DIK_ESCAPE))
+    {
+        for (auto observer : observers)
+        {
+            observer->OnNotify("everyone", "close");
+        }
+        guiPauseMenu_->OnNotify("pause_menu", "toggle");
+    }
+    if (input->TriggerKey(DIK_TAB))
+    {
+        guiLvUP_->OnNotify("lvup", "toggle");
+    }
+    if (input->TriggerKey(DIK_C))
+    {
+        guiChain_->OnNotify("chain", "toggle");
     }
 }

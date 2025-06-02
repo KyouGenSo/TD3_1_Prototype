@@ -143,6 +143,12 @@
     <Filter Include="Utility\JSON">
       <UniqueIdentifier>{916d4784-73fb-466d-b33e-78cafc49c36a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameUI\Settings">
+      <UniqueIdentifier>{b0fab12b-692d-4544-9921-b19bd78de0bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameUI\Controller">
+      <UniqueIdentifier>{fd6939db-37df-4364-9173-6c283179708e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -155,7 +161,7 @@
     <ClCompile Include="GameScene\Object\Camera\FollowCamera.cpp">
       <Filter>GameSystem\FollowCamera</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI\LvUP\GUI_LvUP.cpp">
+    <ClCompile Include="GameUI\LvUP\wnd_lvup.cpp">
       <Filter>GameUI\LvUP</Filter>
     </ClCompile>
     <ClCompile Include="Timer\Timer.cpp">
@@ -215,10 +221,10 @@
     <ClCompile Include="GameScene\Object\Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI\Chain\GUI_Chain.cpp">
+    <ClCompile Include="GameUI\Chain\wnd_chain.cpp">
       <Filter>GameUI\Chain</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI\PauseMenu\GUI_PauseMenu.cpp">
+    <ClCompile Include="GameUI\PauseMenu\wnd_pausemenu.cpp">
       <Filter>GameUI\PauseMenu</Filter>
     </ClCompile>
     <ClCompile Include="NiGui\Derived\Drawer.cpp">
@@ -329,6 +335,12 @@
     <ClCompile Include="ClearScene\ClearScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI\Settings\wnd_setting.cpp">
+      <Filter>GameUI\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\Controller\Controller.cpp">
+      <Filter>GameUI\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene\Object\Player\Player.h">
@@ -340,7 +352,7 @@
     <ClInclude Include="GameScene\Object\Camera\FollowCamera.h">
       <Filter>GameSystem\FollowCamera</Filter>
     </ClInclude>
-    <ClInclude Include="GameUI\LvUP\GUI_LvUP.h">
+    <ClInclude Include="GameUI\LvUP\wnd_lvup.h">
       <Filter>GameUI\LvUP</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IObserver.h">
@@ -397,7 +409,7 @@
     <ClInclude Include="Type\WeaponType.h">
       <Filter>Object\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="GameUI\PauseMenu\GUI_PauseMenu.h">
+    <ClInclude Include="GameUI\PauseMenu\wnd_pausemenu.h">
       <Filter>GameUI\PauseMenu</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Object\Bullets\BulletBase.h">
@@ -409,7 +421,7 @@
     <ClInclude Include="GameSystem\DeltaTimeManager\DeltaTimeManager.h">
       <Filter>GameSystem\DeltaTimeManager</Filter>
     </ClInclude>
-    <ClInclude Include="GameUI\Chain\GUI_Chain.h">
+    <ClInclude Include="GameUI\Chain\wnd_chain.h">
       <Filter>GameUI\Chain</Filter>
     </ClInclude>
     <ClInclude Include="NiGui\Derived\Drawer.h">
@@ -534,6 +546,12 @@
     <ClInclude Include="Utility\Equals.h" />
     <ClInclude Include="ClearScene\ClearScene.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\Settings\wnd_setting.h">
+      <Filter>GameUI\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\Controller\Controller.h">
+      <Filter>GameUI\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

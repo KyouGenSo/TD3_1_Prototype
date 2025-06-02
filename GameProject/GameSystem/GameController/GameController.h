@@ -30,7 +30,7 @@ public:
 
     void OnLevelUp()
     {
-        guiChainView_->OnNotify("open_chain");
+        guiChainView_->OnNotify("chain", "open");
     }
 
 private:

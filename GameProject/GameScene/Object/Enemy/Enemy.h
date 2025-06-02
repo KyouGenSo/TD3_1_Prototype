@@ -36,7 +36,7 @@ private:
 
     Vector3 direction_{ 0.0f,0.0f,0.0f };
 
-    float speed_ = 1.0f;
+    float speed_ = 12.0f;
 
     float appearDuration_ = 60.0f;
 

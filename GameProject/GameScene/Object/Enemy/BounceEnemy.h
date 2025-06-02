@@ -24,7 +24,7 @@ private:
 
     float targetRotate = 2.0f;
 
-    float speed = 2.4f;
+    float speed = 14.f;
 
     float appearDuration = 60.0f;
 

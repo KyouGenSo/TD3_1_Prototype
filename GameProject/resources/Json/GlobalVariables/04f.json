@@ -1,8 +1,8 @@
 {
     "04f": {
-        "amount": 3,
+        "amount": 2,
         "hpMultiplier": 1.0,
-        "interval": 7.0,
+        "interval": 5.0,
         "time": 30.0,
         "turn": 4,
         "type": 1

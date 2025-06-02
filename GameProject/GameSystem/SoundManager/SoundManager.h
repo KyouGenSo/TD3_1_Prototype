@@ -43,6 +43,9 @@ public:
     uint32_t Play(const uint32_t _handle) const;
     uint32_t PlayNoLoop(const uint32_t _handle) const;
 
+    // 注意！倍率です
+    void SetVolumeMultiply(float _multiply);
+
 
 private:
     using json = nlohmann::json;
@@ -61,8 +64,8 @@ private:
     void LoadFromFile(const std::string& _filename);
     void DecodeToSoundData();
 
-private:
     Audio* pAudio_ = nullptr;
+    float volume_multiply_ = 1.0f;
 };
 
 class SoundGroup

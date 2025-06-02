@@ -10,7 +10,7 @@ class NiGuiDrawer : public INiGuiDrawer
 {
 public:
     NiGuiDrawer() = default;
-    ~NiGuiDrawer() = default;
+    ~NiGuiDrawer();
 
     void Draw() override;
     void PlayAudio(uint32_t _handle) override;
@@ -22,4 +22,5 @@ private:
 
     StringMap<SpriteList> sprites_;
     StringMap<uint32_t> textureCount_;
+    uint32_t playhandle_ = 0;
 };

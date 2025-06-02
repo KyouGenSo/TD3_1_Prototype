@@ -1,6 +1,7 @@
 #include "FlyEnemy.h"
 
 #include "cmath"
+#include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
 #include "Type/ColliderType.h"
 #include "Utility/Adaptor.h"
 

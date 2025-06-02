@@ -251,7 +251,7 @@ void Player::InitializeCallbacks()
     id_callback_playerlevelup_ = GameEventNotifier::GetInstance()->RegisterCallback("PlayerLevelUp", [this]([[maybe_unused]]std::any _unused) {
         for (auto& obs : observers_)
         {
-            obs->OnNotify("toggle_lvup");
+            obs->OnNotify("lvup", "toggle");
         }
     });
 
@@ -266,28 +266,6 @@ void Player::UpdateInputCommands()
     if (pInput_->PushMouse(0) || pInput_->PushButton(JOY_BUTTON1)){
         if (weapon_){
             weapon_->Fire();
-        }
-    }
-
-    if (pInput_->TriggerKey(DIK_ESCAPE))
-    {
-        for (auto observer : observers_)
-        {
-            observer->OnNotify("toggle_pause_menu");
-        }
-    }
-    if (pInput_->TriggerKey(DIK_TAB))
-    {
-        for (auto observer : observers_)
-        {
-            observer->OnNotify("toggle_lvup");
-        }
-    }
-    if (pInput_->TriggerKey(DIK_C))
-    {
-        for (auto observer : observers_)
-        {
-            observer->OnNotify("toggle_chain");
         }
     }
 

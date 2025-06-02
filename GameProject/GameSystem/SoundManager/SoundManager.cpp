@@ -149,6 +149,11 @@ uint32_t SoundManager::PlayNoLoop(const uint32_t _handle) const
     return 0;
 }
 
+void SoundManager::SetVolumeMultiply(float _multiply)
+{
+    Audio::GetInstance()->SetAllVolume(_multiply);
+}
+
 void SoundManager::LoadFromFile(const std::string& _filename)
 {
     std::stringstream ss;
