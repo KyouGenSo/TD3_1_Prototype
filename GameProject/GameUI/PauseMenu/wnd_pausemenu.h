@@ -19,7 +19,6 @@ public:
 
 
 private:
-    bool    isDisplay_      = false;
     Vector2 displaySize_    = { 1600.0f, 900.0f };
 
 
