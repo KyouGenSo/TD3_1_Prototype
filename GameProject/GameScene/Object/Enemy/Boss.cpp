@@ -101,6 +101,7 @@ void Boss::OnCollisionTrigger(const Collision::Collider* _other) {
     Object* object = static_cast<Object*>(_other->GetOwner());
 
     if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::P_BULLET)){
+        HitEffect();
         Object::StatusUpdateOnCollision(_other);
         pHPBar_->Display(2.0f);
         
