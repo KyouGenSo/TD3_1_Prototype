@@ -71,8 +71,8 @@ class GameScene : public BaseScene
     std::unique_ptr<Sprite> pauseKeySp_ = nullptr;
     Vector2 pauseKeySpPos_{ .x = 0.0f, .y = 0.0f };
 
-    std::unique_ptr<Sprite> statusKeySp_ = nullptr;
-    Vector2 statusKeySpPos_{ .x = 0.0f, .y = 0.0f };
+    //std::unique_ptr<Sprite> statusKeySp_ = nullptr;
+    //Vector2 statusKeySpPos_{ .x = 0.0f, .y = 0.0f };
 
     std::unique_ptr<Sprite> weaponChainKeySp_ = nullptr;
     Vector2 weaponChainKeySpPos_{ .x = 0.0f, .y = 0.0f };
