@@ -2,9 +2,10 @@
 #include <memory>
 
 #include "BaseScene.h"
-#include <GameUI/LvUP/GUI_LvUP.h>
-#include <GameUI/PauseMenu/GUI_PauseMenu.h>
-#include <GameUI/Chain/GUI_Chain.h>
+#include <GameUI/LvUP/wnd_lvup.h>
+#include <GameUI/PauseMenu/wnd_pausemenu.h>
+#include <GameUI/Chain/wnd_chain.h>
+#include <GameUI/Settings/wnd_setting.h>
 
 #include "HUD/Minimap.h"
 #include "Object/Camera/FollowCamera.h"
@@ -34,9 +35,11 @@ class GameScene : public BaseScene
     std::unique_ptr<Player> player_;
     std::unique_ptr<FollowCamera> camera_;
     std::unique_ptr<FreeLookCamera> freeLookCamera_;
+
     std::unique_ptr<GUI_LvUP> guiLvUP_;
     std::unique_ptr<GUI_PauseMenu> guiPauseMenu_;
     std::unique_ptr<GUI_Chain> guiChain_;
+    std::unique_ptr<Wnd_Setting> wnd_setting_;
     std::unique_ptr<GameController> gameController_;
 
     std::unique_ptr<ChainViewModel> chainViewModel_;
@@ -95,5 +98,6 @@ public:
 
 private:
     void MonitorStatus();
+    void UpdateInputCommands();
 };
 

@@ -13,16 +13,15 @@ public:
     GUI_Chain() = default;
     ~GUI_Chain() override = default;
 
-    void Initialize();
+    void Initialize() override;
+    void Finalize() override {}
+    void Update() override;
+    void ImGui();
 
     // 通知する
-    void OnNotify(const std::string& _event) override;
+    void OnNotify(const std::string& _name, const std::string& _event) override;
     void SetViewModel(ChainViewModel* _viewModel) { chainViewModel_ = _viewModel; }
     void SetGameController(GameController* _gameController) { gameController_ = _gameController; }
-
-public:
-    void Update();
-    void ImGui();
 
 private:
     const std::string TEX_WHITE_ = "white.png";

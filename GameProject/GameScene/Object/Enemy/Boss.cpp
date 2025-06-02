@@ -2,12 +2,15 @@
 
 #include "Enemy.h"
 #include "imgui.h"
-#include "Object3dBasic.h"
 #include "Type/ColliderType.h"
 #include <Utility/Adaptor.h>
 
 void Boss::Initialize()
 {
+    EnemyBase::Initialize();
+    hpBarSize_ = {160.0f, 16.0f};
+    hpBarOffset_ = {0.0f, 3.5f, 0.0f};
+
     model_ = std::make_unique<Object3d>();
     model_->Initialize();
     model_->SetModel("boss.gltf", 1, 0);
@@ -23,31 +26,36 @@ void Boss::Initialize()
     model_->SetTranslate(transform_.translate);
 
     pCollider_ = std::make_unique<Collision::Collider>();
-    pCollider_->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol) {this->OnCollision(pCol); })
+    pCollider_
+        ->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pCol) { OnCollision(pCol); })
+        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pCol) {OnCollisionTrigger(pCol); })
         ->SetType(Collision::Type::Sphere)
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
         ->AddIgnore(static_cast<uint32_t>(Collider::Type::ENEMY))
-        ->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
         ->SetTranslate(Adaptor(transform_.translate))
         ->SetSize(3.f)
-        ->SetOwner(this)
-        ->Enable();
+        ->SetOwner(this);
 
     isValid_ = false;
 
     name_ = "boss";
+
+    statusInit_.setAttack(50)
+        .setDefence(0)
+        .setHp(500)
+        .setMaxHp(500)
+        .setSpeed(1)
+        .setXpAmount(1000);
+    statusCurrent_ = statusInit_;
 }
 
 void Boss::Update()
 {
-    if (isValid_)
-    {
-        prePos_ = transform_.translate;
-        transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
-    } else
-    {
+    if (!isValid_)return;
 
-    }
+    EnemyBase::Update();
+    prePos_ = transform_.translate;
+    transform_.translate += Vector3{ 0.0f,0.0f,-0.1f };
 
     pCollider_->SetTranslate(Adaptor(transform_.translate));
 
@@ -57,6 +65,7 @@ void Boss::Update()
 
 void Boss::Draw()
 {
+    if (!isValid_) return;
     model_->Draw();
 }
 
@@ -71,7 +80,20 @@ void Boss::ImGui()
     ImGui::End();
 }
 
-void Boss::OnCollision(const Collision::Collider* pCollider)
-{
-    transform_.translate = prePos_;
+void Boss::SetIsValid(bool isValid) {
+    isValid_ = isValid;
+
+    pCollider_->Enable();
+}
+
+void Boss::OnCollision(const Collision::Collider* _other) {
+    if (isValid_){
+        EnemyBase::OnCollision(_other);
+    }
+}
+
+void Boss::OnCollisionTrigger(const Collision::Collider* _other) {
+    if (isValid_){
+        EnemyBase::OnCollisionTrigger(_other);
+    }
 }

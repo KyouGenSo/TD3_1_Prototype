@@ -17,10 +17,6 @@ public:
 
     void Finalize() override;
 
-	void OnCollision(const Collision::Collider* pCollider) override;
-
-    void OnCollisionTrigger(const Collision::Collider* pCollider) override;
-
     void Move();
 
     void AppearanceProduction();

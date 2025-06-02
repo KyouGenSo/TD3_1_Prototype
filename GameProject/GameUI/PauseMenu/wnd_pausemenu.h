@@ -9,12 +9,16 @@ public:
     GUI_PauseMenu() = default;
     ~GUI_PauseMenu() override = default;
 
-    void Initialize();
-    void Update();
-    void OnNotify(const std::string& _event) override;
+
+    void    Initialize() override;
+    void    Finalize() override {}
+    void    Update() override;
+    void    OnNotify(const std::string& _name, const std::string& _event) override;
+
 
 private:
-    bool isDisplay_ = false;
+    bool    isDisplay_ = false;
+
 
 private:
     void ShowPauseMenu();

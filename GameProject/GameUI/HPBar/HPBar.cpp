@@ -89,7 +89,7 @@ void HPBar::CurrentValueSpriteUpdate()
 
 void HPBar::UpdateDisplayFlagByTimer()
 {
-    if (isDisplay_)
+    if (isDisplay_ && enableTimer_)
     {
         if (timerDisplay_.GetNow<float>() >= displayTime_)
         {

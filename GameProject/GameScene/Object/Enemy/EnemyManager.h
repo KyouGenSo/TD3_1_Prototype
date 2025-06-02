@@ -17,33 +17,37 @@ class EnemyManager
 {  
 private:  
 
-   struct Wave  
-   {  
-       EnemyBase::Type type;
-       float interval;  
-       int amount;  
-       float hpMultiplier;  
-       int turn;  
-       float time;  
-   };  
+    struct Wave  
+    {  
+        EnemyBase::Type type;
+        float interval;  
+        int amount;  
+        float hpMultiplier;  
+        int turn;  
+        float time;  
+    };  
 
 public:  
-   EnemyManager();  
-   ~EnemyManager();  
+    EnemyManager();  
+    ~EnemyManager();  
+    
+    void Initialize(Object* player, Object* castle);  
+    void Update();  
+    void Draw();  
+    void Draw2d();  
+    void Finalize();  
+    void AddEnemy(const Vector3& position, EnemyBase::Type type); 
+    void SelectTarget(EnemyBase* enemy);  
+    void ImGui();  
+    void ChangeWave(std::string key, bool resetSpawnCount = true);  
+    void SetMinimap(Minimap* pMinimap);
 
-   void Initialize(Object* player, Object* castle);  
-   void Update();  
-   void Draw();  
-   void Draw2d();  
-   void Finalize();  
-   void AddEnemy(const Vector3& position, EnemyBase::Type type); 
-   void SelectTarget(EnemyBase* enemy);  
-   void ImGui();  
-   void ChangeWave(std::string key, bool resetSpawnCount = true);  
-   void SetMinimap(Minimap* pMinimap);  
+    void SetTarget(Object* pTarget) { pTarget_ = pTarget; }  
+    void SetEmitter(EmitterManager* pEmitter);
 
-   void SetTarget(Object* pTarget) { pTarget_ = pTarget; }  
-   void SetEmitter(EmitterManager* pEmitter);  
+    int GetCurrentTurn() const;
+    int GetLastTurn() const;
+
 private:  
    void SpawnEnemy();  
    Vector3 RandomSpawnPosition(EnemyBase::Type type); 

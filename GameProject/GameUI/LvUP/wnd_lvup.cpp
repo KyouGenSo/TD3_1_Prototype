@@ -1,4 +1,4 @@
-#include "GUI_LvUP.h"
+#include "wnd_lvup.h"
 
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 
@@ -58,22 +58,24 @@ void GUI_LvUP::Initialize()
     arg_button_right_.pivot = NiGui_StandardPoint::Center;
 }
 
-void GUI_LvUP::OnNotify(const std::string& _event)
+void GUI_LvUP::OnNotify(const std::string& _name, const std::string& _event)
 {
+    if (_name != "lvup" && _name != "everyone") return;
+
     auto dtm = DeltaTimeManager::GetInstance();
-    if (_event == "open_lvup")
+    if (_event == "open")
     {
         dtm->SetDeltaTime(1, 0.0f);
         notifier_->Notify("OnWindowOpen", true);
         isDisplay_ = true;
     }
-    else if (_event == "close_lvup")
+    else if (_event == "close")
     {
         dtm->SetDeltaTime(1, 1.0f / 60.0f);
-        notifier_->Notify("OnWindowOpen", false);
+        if (isDisplay_) notifier_->Notify("OnWindowOpen", false);
         isDisplay_ = false;
     }
-    else if (_event == "toggle_lvup")
+    else if (_event == "toggle")
     {
         if (isDisplay_) 
             dtm->SetDeltaTime(1, 1.0f / 60.0f);

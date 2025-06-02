@@ -1,4 +1,4 @@
-#include "GUI_Chain.h"
+#include "wnd_chain.h"
 
 #include <NiGui.h>
 #include <imgui.h>
@@ -13,24 +13,29 @@ void GUI_Chain::Initialize()
     NiGui::SetItemToArea("Assault", "DragItemArea1");
 }
 
-void GUI_Chain::OnNotify(const std::string& _event)
+void GUI_Chain::OnNotify(const std::string& _name, const std::string& _event)
 {
+    if (_name != "chain" && _name != "everyone") return;
+
     auto dtm = DeltaTimeManager::GetInstance();
-    if (_event == "open_chain")
+    if (_event == "open")
     {
         dtm->SetDeltaTime(1, 0.0f);
+        notifier_->Notify("OnWindowOpen", true);
         isDisplay_ = true;
     }
-    else if (_event == "close_chain")
+    else if (_event == "close")
     {
         dtm->SetDeltaTime(1, 1.0f / 60.0f);
+        if (isDisplay_) notifier_->Notify("OnWindowOpen", false);
         isDisplay_ = false;
     }
-    else if (_event == "toggle_chain")
+    else if (_event == "toggle")
     {
         if (isDisplay_) dtm->SetDeltaTime(1, 1.0f / 60.0f);
         else dtm->SetDeltaTime(1, 0.0f);
         isDisplay_ = !isDisplay_;
+        notifier_->Notify("OnWindowOpen", isDisplay_);
     }
 }
 
@@ -50,6 +55,9 @@ void GUI_Chain::Update()
         gameController_->HandleConfirmChain();
 
         GameEventNotifier::GetInstance()->Notify("ChainConfirm", nullptr);
+
+        // デルタタイム
+        DeltaTimeManager::GetInstance()->SetDeltaTime(1, 1.0f / 60.0f);
 
         isConfirm_ = false;
         isDisplay_ = false;

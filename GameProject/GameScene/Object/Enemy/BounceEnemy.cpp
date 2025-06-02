@@ -34,8 +34,8 @@ void BounceEnemy::Initialize()
 
     pCollider_ = std::make_unique<Collision::Collider>();
     pCollider_
-        ->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) { this->OnCollision(pObj); })
-        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { this->OnCollisionTrigger(pObj); })
+        ->SetEvent(Collision::EventType::Stay, [this](const Collision::Collider* pObj) { EnemyBase::OnCollision(pObj); })
+        ->SetEvent(Collision::EventType::Trigger, [this](const Collision::Collider* pObj) { EnemyBase::OnCollisionTrigger(pObj); })
         ->SetType(Collision::Type::Sphere)
         ->SetTranslate(Adaptor(transform_.translate))
         ->AddAttribute(static_cast<uint32_t>(Collider::Type::ENEMY))
@@ -57,9 +57,7 @@ void BounceEnemy::Update()
 
     model_->Update();
 
-    statusInit_.Update();
     statusCurrent_.Update();
-
 }
 
 void BounceEnemy::Draw()
@@ -69,33 +67,6 @@ void BounceEnemy::Draw()
 
 void BounceEnemy::Finalize()
 {
-}
-
-void BounceEnemy::OnCollision(const Collision::Collider* _other)
-{
-     if (isDead_) return;
-
-    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::ALLY))
-    {
-        isDead_ = true;
-
-        if (!(_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::STAGE)))
-        {
-            if (emitter_)
-            {
-                emitter_->SetEmitterPosition("hit", transform_.translate);
-                emitter_->CreateTemporaryEmitterFrom("hit", "hit_tmp", 1.f);
-            }
-        }
-
-        transform_.translate = prePos_;
-        model_->SetTranslate(transform_.translate);
-    }
-}
-
-void BounceEnemy::OnCollisionTrigger(const Collision::Collider* _other)
-{
-    EnemyBase::OnCollisionTrigger(_other);
 }
 
 void BounceEnemy::Move()

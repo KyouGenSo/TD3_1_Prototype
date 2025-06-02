@@ -17,14 +17,13 @@ public:
     ~GUI_LvUP() override = default;
 
     // 通知する
-    void Initialize();
-    void OnNotify(const std::string& _event) override;
+    void Initialize() override;
+    void Finalize() override {};
+    void Update() override;
+    void OnNotify(const std::string& _name, const std::string& _event) override;
     void SetGameController(GameController* _gameController) { gameController_ = _gameController; }
 
     void OnResize(Vector2 _size);
-
-public:
-    void Update();
     void ImGui();
 
 private:

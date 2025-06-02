@@ -1,4 +1,4 @@
-#include "GUI_PauseMenu.h"
+#include "wnd_pausemenu.h"
 
 #include <GameUI/ColorResolver/ColorResolver.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
@@ -23,22 +23,25 @@ void GUI_PauseMenu::Update()
     }
 }
 
-void GUI_PauseMenu::OnNotify(const std::string& _event)
+void GUI_PauseMenu::OnNotify(const std::string& _name, const std::string& _event)
 {
+    if (_name != "pause_menu") return;
+
     auto dtm = DeltaTimeManager::GetInstance();
-    if (_event == "open_pause_menu")
+    if (_event == "open")
     {
         dtm->SetDeltaTime(1, 0.0f);
         notifier_->Notify("OnWindowOpen", true);
         isDisplay_ = true;
     }
-    else if (_event == "close_pause_menu")
+    else if (_event == "close")
     {
         dtm->SetDeltaTime(1, 1.0f / 60.0f);
-        notifier_->Notify("OnWindowOpen", false);
+        notifier_->Notify("RequestOpenSetting", true);
+        if (isDisplay_) notifier_->Notify("OnWindowOpen", true);
         isDisplay_ = false;
     }
-    else if (_event == "toggle_pause_menu")
+    else if (_event == "toggle")
     {
         if (isDisplay_) dtm->SetDeltaTime(1, 1.0f / 60.0f);
         else dtm->SetDeltaTime(1, 0.0f);
@@ -60,13 +63,19 @@ void GUI_PauseMenu::ShowPauseMenu()
 
     if (NiGui::BeginDiv("PauseMenu", "white.png", NiGui::BLACK, {}, { 250, 250 }, center, center))
     {
-        if (NiGui::Button("Resume", "resume.png", NiGui::WHITE, { 0.0f, -50.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
+        if (NiGui::Button("Resume", "resume.png", NiGui::WHITE, { 0.0f, -70.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
         {
             dtm->SetDeltaTime(1, 1.0f / 60.0f);
             notifier_->Notify("OnWindowOpen", false);
             isDisplay_ = false;
         }
-        if (NiGui::Button("Exit", "exit.png", NiGui::WHITE, { 0.0f, 50.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
+        if (NiGui::Button("Option", "resume.png", NiGui::WHITE, { 0.0f, 0.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
+        {
+            dtm->SetDeltaTime(1, 1.0f / 60.0f);
+            notifier_->Notify("RequestOpenSetting", true);
+            isDisplay_ = false;
+        }
+        if (NiGui::Button("Exit", "exit.png", NiGui::WHITE, { 0.0f, 70.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
         {
             dtm->SetDeltaTime(1, 1.0f / 60.0f);
             GameEventNotifier::GetInstance()->Notify("Exit", nullptr);
