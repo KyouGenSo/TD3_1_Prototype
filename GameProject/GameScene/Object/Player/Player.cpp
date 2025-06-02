@@ -279,8 +279,8 @@ void Player::UpdateInputCommands()
         GetCursorPos(&point);
         SetCursorPos(ORIGIN.x, ORIGIN.y);
 
-        transform_.rotate.y += static_cast<float>(point.x - ORIGIN.x) * 0.001f;
-        transform_.rotate.x += static_cast<float>(point.y - ORIGIN.y) * 0.001f;
+        transform_.rotate.y += static_cast<float>(point.x - ORIGIN.x) * 0.001f * sensitivity_;
+        transform_.rotate.x += static_cast<float>(point.y - ORIGIN.y) * 0.001f * sensitivity_;
     } else{
         transform_.rotate.y += static_cast<float>(Input::GetInstance()->PushKey(DIK_RIGHTARROW) - Input::GetInstance()->PushKey(DIK_LEFTARROW)) * 0.03f;
         transform_.rotate.x += static_cast<float>(Input::GetInstance()->PushKey(DIK_UPARROW) - Input::GetInstance()->PushKey(DIK_DOWNARROW)) * 0.03f;
