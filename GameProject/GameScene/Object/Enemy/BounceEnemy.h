@@ -2,9 +2,6 @@
 #include <memory>
 
 #include "EnemyBase.h"
-#include "GameScene/Object/Object.h"
-#include "Collision/Collider.h"
-#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 class BounceEnemy : public EnemyBase
 {
@@ -27,7 +24,7 @@ private:
 
     float targetRotate = 2.0f;
 
-    float speed = 0.2f;
+    float speed = 2.4f;
 
     float appearDuration = 60.0f;
 

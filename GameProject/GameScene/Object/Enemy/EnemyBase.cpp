@@ -3,6 +3,7 @@
 
 #include <Camera.h>
 
+#include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
 #include "Utility/Equals.h"
 
 void EnemyBase::OnCollision(const Collision::Collider* _other) {
@@ -15,6 +16,7 @@ void EnemyBase::OnCollision(const Collision::Collider* _other) {
         if (statusCurrent_.getHp() <= 0){
             pGameEventNotifier_->Notify("EnemyDeadForXP", statusCurrent_.getExperiencePoints());
             pCollider_->Disable();
+            isDead_ = true;
         }
         pHPBar_->Display(2.0f);
     }
@@ -29,11 +31,7 @@ void EnemyBase::OnCollisionTrigger(const Collision::Collider* _other)
     if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::P_BULLET))
     {
         Object::StatusUpdateOnCollision(_other);
-        if (statusCurrent_.getHp() <= 0)
-        {
-            pGameEventNotifier_->Notify("EnemyDeadForXP", statusCurrent_.getExperiencePoints());
-            pCollider_->Disable();
-        }
+        
         pHPBar_->Display(2.0f);
     }
 
@@ -41,6 +39,14 @@ void EnemyBase::OnCollisionTrigger(const Collision::Collider* _other)
         pGameEventNotifier_->Notify("PlayerHit", statusCurrent_.getAttack());
         statusCurrent_.setHp(0);
         pCollider_->Disable();
+    }
+
+
+    if (statusCurrent_.getHp() <= 0)
+    {
+        pGameEventNotifier_->Notify("EnemyDeadForXP", statusCurrent_.getExperiencePoints());
+        pCollider_->Disable();
+        isDead_ = true;
     }
 }
 
@@ -58,6 +64,8 @@ void EnemyBase::Update()
     pHPBar_->SetCurrentValue(statusCurrent_.getHp());
     pHPBar_->SetMaxValue(statusCurrent_.getMaxHp());
     pHPBar_->Update();
+
+    deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
 }
 
 void EnemyBase::Finalize()
