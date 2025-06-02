@@ -69,7 +69,7 @@ void EnemyManager::Update()
             if (!spawnLimitReached) {
                 waves_[*key].time -= deltaTime_;
             }
-            key++;
+            ++key;
         }
         else
         {

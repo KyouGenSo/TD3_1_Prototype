@@ -12,6 +12,7 @@ void EnemyBase::OnCollision(const Collision::Collider* _other) {
     Object* object = static_cast<Object*>(_other->GetOwner());
 
     if (Utility::EqualsIgnoreCase(object->GetName(), "Thunder")){
+        HitEffect();
         StatusUpdateOnCollision(_other);
         if (statusCurrent_.getHp() <= 0){
             pGameEventNotifier_->Notify("EnemyDeadForXP", statusCurrent_.getExperiencePoints());
@@ -30,17 +31,17 @@ void EnemyBase::OnCollisionTrigger(const Collision::Collider* _other)
 
     if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::P_BULLET))
     {
+        HitEffect();
         Object::StatusUpdateOnCollision(_other);
-        
         pHPBar_->Display(2.0f);
     }
 
     if (Utility::EqualsIgnoreCase(object->GetName(), "Player")){
+        HitEffect();
         pGameEventNotifier_->Notify("PlayerHit", statusCurrent_.getAttack());
         statusCurrent_.setHp(0);
         pCollider_->Disable();
     }
-
 
     if (statusCurrent_.getHp() <= 0)
     {
