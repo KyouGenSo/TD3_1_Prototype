@@ -448,16 +448,22 @@ void Player::ChangeAimModeForce(bool _isMouseAim)
 {
     if (_isMouseAim)
     {
-        countCursorVisible_ = 0;
         SetCursorPos(ORIGIN.x, ORIGIN.y);
-        ShowCursor(false);
+        while (countCursorVisible_ > 0)
+        {
+            --countCursorVisible_;
+            ShowCursor(false);
+        }
         mouseAim_ = true;
     }
     else
     {
-        countCursorVisible_ = 1;
         SetCursorPos(ORIGIN.x, ORIGIN.y);
-        ShowCursor(true);
+        while (countCursorVisible_ < 1)
+        {
+            ++countCursorVisible_;
+            ShowCursor(true);
+        }
         mouseAim_ = false;
     }
 }

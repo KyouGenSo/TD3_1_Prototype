@@ -217,11 +217,11 @@ void GameScene::Initialize()
     pauseKeySp_->SetPos(pauseKeySpPos_);
     pauseKeySp_->SetSize({ pauseKeySp_->GetSize().x * 0.5f, pauseKeySp_->GetSize().y * 0.5f });
 
-    statusKeySpPos_ = { .x = 44.89f, .y = 259.21f };
-    statusKeySp_ = std::make_unique<Sprite>();
-    statusKeySp_->Initialize("statusKey.png");
-    statusKeySp_->SetPos(statusKeySpPos_);
-    statusKeySp_->SetSize({ statusKeySp_->GetSize().x * 0.5f, statusKeySp_->GetSize().y * 0.5f });
+    //statusKeySpPos_ = { .x = 44.89f, .y = 259.21f };
+    // = std::make_unique<Sprite>();
+    //statusKeySp_->Initialize("statusKey.png");
+    //statusKeySp_->SetPos(statusKeySpPos_);
+    //statusKeySp_->SetSize({ statusKeySp_->GetSize().x * 0.5f, statusKeySp_->GetSize().y * 0.5f });
 
     weaponChainKeySpPos_ = { .x = 42.8f, .y = 304.6f };
     weaponChainKeySp_ = std::make_unique<Sprite>();
@@ -317,8 +317,8 @@ void GameScene::Update()
     f11Sprite_->Update();
     pauseKeySp_->SetPos(pauseKeySpPos_);
     pauseKeySp_->Update();
-    statusKeySp_->SetPos(statusKeySpPos_);
-    statusKeySp_->Update();
+    //statusKeySp_->SetPos(statusKeySpPos_);
+    //statusKeySp_->Update();
     weaponChainKeySp_->SetPos(weaponChainKeySpPos_);
     weaponChainKeySp_->Update();
 
@@ -387,7 +387,7 @@ void GameScene::DrawWithoutEffect()
     reticle_->Draw();
     f11Sprite_->Draw();
     pauseKeySp_->Draw();
-    statusKeySp_->Draw();
+    //statusKeySp_->Draw();
     weaponChainKeySp_->Draw();
     wnd_setting_->Draw2d();
 }

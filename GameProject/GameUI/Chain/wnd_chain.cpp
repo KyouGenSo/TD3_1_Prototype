@@ -35,7 +35,6 @@ void GUI_Chain::OnNotify(const std::string& _name, const std::string& _event)
         if (isDisplay_) dtm->SetDeltaTime(1, 1.0f / 60.0f);
         else dtm->SetDeltaTime(1, 0.0f);
         isDisplay_ = !isDisplay_;
-        notifier_->Notify("OnWindowOpen", isDisplay_);
     }
 
     if (isDisplay_ && !preIsDisplay)
