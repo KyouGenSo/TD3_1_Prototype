@@ -75,10 +75,10 @@ void GUI_Chain::ShowChain()
     {
         if (NiGui::BeginDiv("DragItemHolder", TEX_WHITE_, {}, { 218,190 }, { 758,128 }, lefttop, lefttop))
         {
-            area1_ = NiGui::DragItemArea("DragItemArea1", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 0, 0 }, { 128, 128 }, lefttop, lefttop);
-            area2_ = NiGui::DragItemArea("DragItemArea2", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 210, 0 }, { 128, 128 }, lefttop, lefttop);
-            area3_ = NiGui::DragItemArea("DragItemArea3", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 420, 0 }, { 128, 128 }, lefttop, lefttop);
-            area3_ = NiGui::DragItemArea("DragItemArea4", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 630, 0 }, { 128, 128 }, lefttop, lefttop);
+            area1_ = NiGui::DragItemArea("DragItemArea1", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 210, 0 }, { 128, 128 }, lefttop, lefttop);
+            area2_ = NiGui::DragItemArea("DragItemArea2", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 420, 0 }, { 128, 128 }, lefttop, lefttop);
+            //area3_ = NiGui::DragItemArea("DragItemArea3", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 420, 0 }, { 128, 128 }, lefttop, lefttop);
+            //area3_ = NiGui::DragItemArea("DragItemArea4", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 630, 0 }, { 128, 128 }, lefttop, lefttop);
 
             NiGui::EndDiv();
         }
