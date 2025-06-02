@@ -43,7 +43,7 @@ void Wnd_Setting::Initialize()
     sprite_background_ = std::make_unique<Sprite>();
     sprite_background_->Initialize(arg_window_.textureName);
     sprite_background_->SetPos(NiUtil::Adaptor(bgpos));
-    sprite_background_->SetColor(pColorResolver_->Resolve(ColorName::Gray).toVector4());
+    sprite_background_->SetColor(pColorResolver_->Resolve(ColorName::Background).toVector4());
     sprite_background_->SetSize(NiUtil::Adaptor(bgSize));
 }
 

@@ -425,16 +425,21 @@ void GameScene::UpdateInputCommands()
 
     if (input->TriggerKey(DIK_ESCAPE))
     {
-        for (auto observer : observers)
+        if (!guiLvUP_->IsDisplay())
         {
-            observer->OnNotify("everyone", "close");
+            for (auto observer : observers)
+            {
+                observer->OnNotify("everyone", "close");
+            }
+            guiPauseMenu_->OnNotify("pause_menu", "toggle");
         }
-        guiPauseMenu_->OnNotify("pause_menu", "toggle");
     }
+    #ifdef _DEBUG
     if (input->TriggerKey(DIK_TAB))
     {
         guiLvUP_->OnNotify("lvup", "toggle");
     }
+    #endif //_DEBUG
     if (input->TriggerKey(DIK_C))
     {
         guiChain_->OnNotify("chain", "toggle");

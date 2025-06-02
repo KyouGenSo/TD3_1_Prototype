@@ -17,17 +17,17 @@ void GUI_Chain::OnNotify(const std::string& _name, const std::string& _event)
 {
     if (_name != "chain" && _name != "everyone") return;
 
+    bool preIsDisplay = isDisplay_;
+
     auto dtm = DeltaTimeManager::GetInstance();
     if (_event == "open")
     {
         dtm->SetDeltaTime(1, 0.0f);
-        notifier_->Notify("OnWindowOpen", true);
         isDisplay_ = true;
     }
     else if (_event == "close")
     {
         dtm->SetDeltaTime(1, 1.0f / 60.0f);
-        if (isDisplay_) notifier_->Notify("OnWindowOpen", false);
         isDisplay_ = false;
     }
     else if (_event == "toggle")
@@ -36,6 +36,17 @@ void GUI_Chain::OnNotify(const std::string& _name, const std::string& _event)
         else dtm->SetDeltaTime(1, 0.0f);
         isDisplay_ = !isDisplay_;
         notifier_->Notify("OnWindowOpen", isDisplay_);
+    }
+
+    if (isDisplay_ && !preIsDisplay)
+    {
+        notifier_->Notify("OnWindowOpen", true);
+        area1_pre_ = area1_;
+        area2_pre_ = area2_;
+    }
+    if (!isDisplay_ && preIsDisplay)
+    {
+        notifier_->Notify("OnWindowOpen", false);
     }
 }
 
@@ -49,7 +60,7 @@ void GUI_Chain::Update()
     if (isConfirm_)
     {
         // チェインを確定する
-        chainViewModel_->UpdateChainData({ area1_, area2_, area3_, "" });
+        chainViewModel_->UpdateChainData({ area1_, area2_, "", ""});
 
         // プレイヤーにも通知する
         gameController_->HandleConfirmChain();
@@ -74,7 +85,6 @@ void GUI_Chain::ImGui()
     ImGui::Checkbox("Display", &isDisplay_);
     ImGui::Text("Area1 : %s", area1_.c_str());
     ImGui::Text("Area2 : %s", area2_.c_str());
-    ImGui::Text("Area3 : %s", area3_.c_str());
     ImGui::End();
 }
 
@@ -85,12 +95,10 @@ void GUI_Chain::ShowChain()
     auto confirm = NiGui_ButtonState::Confirm;
     if (NiGui::BeginDiv("Chain", (CHAINDIR_ / TEX_WND_).string(), NiGui::WHITE, { 0, 0 }, { 1200,700 }, center, center))
     {
-        if (NiGui::BeginDiv("DragItemHolder", TEX_WHITE_, {}, { 218,190 }, { 758,128 }, lefttop, lefttop))
+        if (NiGui::BeginDiv("DragItemHolder", TEX_WHITE_, {}, { 431,190 }, { 338,128 }, lefttop, lefttop))
         {
             area1_ = NiGui::DragItemArea("DragItemArea1", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 0, 0 }, { 128, 128 }, lefttop, lefttop);
             area2_ = NiGui::DragItemArea("DragItemArea2", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 210, 0 }, { 128, 128 }, lefttop, lefttop);
-            area3_ = NiGui::DragItemArea("DragItemArea3", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 420, 0 }, { 128, 128 }, lefttop, lefttop);
-            area3_ = NiGui::DragItemArea("DragItemArea4", (CHAINDIR_ / TEX_FRAME_).string(), NiGui::WHITE, { 630, 0 }, { 128, 128 }, lefttop, lefttop);
 
             NiGui::EndDiv();
         }
@@ -104,6 +112,14 @@ void GUI_Chain::ShowChain()
         NiGui::DragItem("Assault", (ICONDIR_ / TEX_ASSAULT_).string(), NiGui::WHITE, { 0, 70 }, { 100, 100 }, center, center);
         NiGui::DragItem("MachineGun", (ICONDIR_ / TEX_SUBMACHINEGUN_).string(), NiGui::WHITE, { 240, 70 }, { 100, 100 }, center, center);
 
+        if (NiGui::Button("CancelChain", (CHAINDIR_ / TEX_BUTTON_CANCEL_).string(), NiGui::WHITE, { 266, 533 }, { 292,84 }, {}, lefttop, lefttop) == confirm)
+        {
+            area1_ = area1_pre_;
+            area2_ = area2_pre_;
+            isDisplay_ = false;
+            notifier_->Notify("OnWindowOpen", false);
+            DeltaTimeManager::GetInstance()->SetDeltaTime(1, 1.0f / 60.0f);
+        }
 
         if (NiGui::Button("ConfirmChain", (CHAINDIR_ / TEX_BUTTON_CONFIRM_).string(), NiGui::WHITE, { 642, 533 }, { 292,84 }, {}, lefttop, lefttop) == confirm)
         {
@@ -111,7 +127,6 @@ void GUI_Chain::ShowChain()
             {
                 isConfirm_ = true;
             }
-
         }
         NiGui::EndDiv();
     }
@@ -119,7 +134,7 @@ void GUI_Chain::ShowChain()
 
 bool GUI_Chain::CheckValidChain()
 {
-    std::array<std::string, 3> chain = { area1_, area2_, area3_ };
+    std::array<std::string, 2> chain = { area1_, area2_ };
     bool isChainValid = true;
     bool isChainEmpty = false;
 

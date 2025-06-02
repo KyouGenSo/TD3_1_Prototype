@@ -38,7 +38,9 @@ private:
     bool isConfirm_ = false;
     std::string area1_ = "";
     std::string area2_ = "";
-    std::string area3_ = "";
+
+    std::string area1_pre_ = "";
+    std::string area2_pre_ = "";
 
 private:
     // チェイン画面を表示する
