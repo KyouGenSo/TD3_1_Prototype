@@ -268,6 +268,8 @@ void MyGame::Draw()
     // テクスチャ用のsrvヒープの設定
     SrvManager::GetInstance()->BeginDraw();
 
+    GPUParticle::GetInstance()->Draw();
+
     // シーンの描画
     SceneManager::GetInstance()->Draw();
 
@@ -295,8 +297,6 @@ void MyGame::Draw()
     NiGui::DrawUI();
 
     Draw2D::GetInstance()->Draw();
-
-    GPUParticle::GetInstance()->Draw();
 
     Transition::GetInstance()->Draw();
 
