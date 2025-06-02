@@ -31,8 +31,6 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
     keys_.clear();
 
-    isPause_ = false;
-    eventId_ = GameEventNotifier::GetInstance()->RegisterCallback("OnWindowOpen", [&](const std::any& a){isPause_ = std::any_cast<bool>(&a); });
 
 
     InitializeWaveFile("00n");
@@ -84,15 +82,15 @@ void EnemyManager::Update()
     {
         TurnControl();
         turnProgress++;
-    } 
+    }
 
-    if (!spawnLimitReached && !isPause_) {
+    if (!spawnLimitReached) {
         SpawnEnemy();
     }
 
     for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {
         if ((*enemy)->IsDead()) {
-            pMinimap_->Unregister(enemy->get());
+            //pMinimap_->Unregister(enemy.get());
             enemy = enemies_.erase(enemy);
             continue;
         }
@@ -123,7 +121,6 @@ void EnemyManager::Finalize()
         enemy->Finalize();
     }
     enemies_.clear();
-    GameEventNotifier::GetInstance()->UnregisterCallback("OnWindowOpen", eventId_);
 }
 
 void EnemyManager::AddEnemy(const Vector3& position, EnemyBase::Type type)

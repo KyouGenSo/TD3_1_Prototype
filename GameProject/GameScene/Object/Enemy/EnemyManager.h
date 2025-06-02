@@ -76,9 +76,6 @@ private:
 
    std::unordered_map<EnemyBase::Type, uint32_t> pendingSpawnCount_ = {};
 
-    bool isPause_ = false;
-    uint32_t eventId_;
-
    Minimap* pMinimap_ = nullptr;  
 
    Object* pTarget_ = nullptr;  
