@@ -1,7 +1,7 @@
 {
     "10n": {
         "amount": 5,
-        "hpMultiplier": 5.0,
+        "hpMultiplier": 2.0,
         "interval": 5.0,
         "time": 30.0,
         "turn": 10,
