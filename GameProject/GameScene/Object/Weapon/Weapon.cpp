@@ -59,11 +59,11 @@ void WeaponBase::Fire(const Vector3& _position)
 void WeaponBase::AddNewBullet(std::unique_ptr<BulletBase> _bullet, const Vector3& _position)
 {
     _bullet->SetEmitter(emitter_);
+    _bullet->SetIsChainBullet(false);
     _bullet->Initialize();
     _bullet->SetPosition(_position);
     _bullet->SetRotation(transform_.rotate);
     _bullet->SetForward(forward_);
-    _bullet->SetIsChainBullet(false);
     _bullet->SetChainManager(pChain_);
     _bullet->SetEmitter(emitter_);
     _bullet->Fire();

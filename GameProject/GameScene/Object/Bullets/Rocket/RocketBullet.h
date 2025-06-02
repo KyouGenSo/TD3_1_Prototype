@@ -1,8 +1,5 @@
 #pragma once
 #include <GameScene/Object/Bullets/BulletBase.h>
-
-#include <Timer/Timer.h>
-
 #include "EmitterManager.h"
 
 class RocketBullet : public BulletBase
@@ -39,7 +36,6 @@ class RocketBullet : public BulletBase
         void SetEmitter(EmitterManager* _emitter);
     };
 
-    Vector4 color_ = { 1,1,1,1 };
 
     Timer timer;
 

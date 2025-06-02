@@ -33,9 +33,9 @@ void ChainViewModel::UpdateChainData(const std::array<std::string, 4>& _chainDat
         {
             weaponType[i] = WeaponType::MachineGun;
         }
-        else if (_chainData[i] == "Lightning")
+        else if (_chainData[i] == "Thunder")
         {
-            weaponType[i] = WeaponType::Lightning;
+            weaponType[i] = WeaponType::Thunder;
         }
     }
 

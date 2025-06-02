@@ -26,6 +26,7 @@
 #include <any>
 
 #include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
+#include "GameScene/Object/Weapon/ThunderRod/ThunderRod.hpp"
 
 void Player::Initialize()
 {
@@ -65,7 +66,7 @@ void Player::Initialize()
     statusCurrent_ = statusInit_;
 
     /// !!Debug!!
-    weapon_ = std::make_unique<AssaultRifle>();
+    weapon_ = std::make_unique<ThunderRod>();
     weapon_->Initialize();
     weapon_->SetChain(chain_);
     weapon_->SetEmitter(emitter_);
