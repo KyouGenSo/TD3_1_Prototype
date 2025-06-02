@@ -143,6 +143,14 @@ void RocketBullet::Update()
     	isDead_ = CheckLifeTime();
 	}
 
+    if (exImpl_){
+        exImpl_->Update();
+        exImpl_->Disable();
+        if (!exImpl_->IsEnabled()){
+            exImpl_.reset();
+        }
+    }
+
 	model_->SetRotate(transform_.rotate);
 	model_->SetTranslate(transform_.translate);
 	model_->Update();
@@ -172,6 +180,11 @@ void RocketBullet::OnCollisionTrigger(const Collision::Collider* _other)
 	isDead_ = true;
 	pCollider_->Disable();
 
+    exImpl_ = std::make_unique<Explosion>();
+    exImpl_->SetPosition(transform_.translate);
+    exImpl_->SetEmitter(emitter_);
+    exImpl_->Init();
+
 	// 強化カードの効果を適用するための通知
 	NotifyReinforcementManager(_other);
 
@@ -199,6 +212,8 @@ void RocketBullet::InitializeChain()
 
 void RocketBullet::UpdateNormal()
 {
+    if (isDead_) return;
+
 	transform_.translate += forward_ * speed_ * deltaTime_;
 
 	pCollider_->SetTranslate(Adaptor(transform_.translate));
