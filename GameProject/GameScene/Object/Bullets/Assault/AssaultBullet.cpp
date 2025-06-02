@@ -73,13 +73,13 @@ bool AssaultBullet::IsDeadAll() {
 void AssaultBullet::InitializeNormal()
 {
     bullet_ = std::make_unique<Bullet>();
-    bullet_->Initialize();
     bullet_->SetPosition(transform_.translate);
     bullet_->SetRotation(transform_.rotate);
     bullet_->SetForward(forward_);
     bullet_->SetSpeed(speed_);
     bullet_->SetChainManager(pChainManager_);
     bullet_->SetEmitter(emitter_);
+    bullet_->Initialize();
 }
 
 void AssaultBullet::InitializeChain()
@@ -99,11 +99,11 @@ void AssaultBullet::InitializeChain()
         Vector3 forward_ = Quat::RotateVec3({ 0.0f, 0.0f, 1.0f }, rotate);
 
         bullets_[i] = std::make_unique<Bullet>();
-        bullets_[i]->Initialize();
         bullets_[i]->SetPosition(position);
         bullets_[i]->SetForward(forward_);
         bullets_[i]->SetSpeed(speed_);
         bullets_[i]->SetChainManager(pChainManager_);
+        bullets_[i]->Initialize();
     }
 }
 

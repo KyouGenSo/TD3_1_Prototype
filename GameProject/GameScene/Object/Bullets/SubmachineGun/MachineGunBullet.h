@@ -4,7 +4,6 @@
 class MachineGunBullet : public BulletBase
 {
     class Bullet : public BulletBase{
-        Vector3 origin = {};
     public:
         void Initialize() override;
         void Update() override;
@@ -21,7 +20,6 @@ class MachineGunBullet : public BulletBase
         void UpdateChain() override;
     };
 
-    Vector3 origin{};
     std::vector<std::unique_ptr<Bullet>> bullets_ = {};
 public:
     void Initialize() override;

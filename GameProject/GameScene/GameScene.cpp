@@ -222,7 +222,7 @@ void GameScene::Initialize()
     statusKeySp_->SetPos(statusKeySpPos_);
     statusKeySp_->SetSize({ statusKeySp_->GetSize().x * 0.5f, statusKeySp_->GetSize().y * 0.5f });
 
-    weaponChainKeySpPos_ = { .x = 42.8f, .y = 304.6 };
+    weaponChainKeySpPos_ = { .x = 42.8f, .y = 304.6f };
     weaponChainKeySp_ = std::make_unique<Sprite>();
     weaponChainKeySp_->Initialize("weaponChainKey.png");
     weaponChainKeySp_->SetPos(weaponChainKeySpPos_);

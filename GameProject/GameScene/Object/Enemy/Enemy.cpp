@@ -50,8 +50,6 @@ void Enemy::Update()
 {
     EnemyBase::Update();
 
-    Object::Update();
-
     if (isDead_) return;
 
     Move();
@@ -86,7 +84,7 @@ void Enemy::Move()
         direction.z = pTarget_->GetTransform().translate.z - transform_.translate.z;
 
         float length = std::sqrt(direction.x * direction.x + direction.z * direction.z);
-        if (length != 0)
+        if (1e-4f < length)
         {
             direction.x /= length;
             direction.z /= length;
@@ -94,9 +92,8 @@ void Enemy::Move()
             transform_.rotate.y = std::atan2(direction.x, direction.z);
         }
 
-        float deltaTime = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
-        transform_.translate.x += direction.x * speed_ * deltaTime;
-        transform_.translate.z += direction.z * speed_ * deltaTime;
+        transform_.translate.x += direction.x * speed_ * deltaTime_;
+        transform_.translate.z += direction.z * speed_ * deltaTime_;
 
     }
     model_->SetTranslate(transform_.translate);

@@ -1,6 +1,5 @@
 #include "FlyEnemy.h"
 
-#include "Object3dBasic.h"
 #include "cmath"
 #include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
 #include "Type/ColliderType.h"
@@ -51,9 +50,7 @@ void FlyEnemy::Initialize()
 void FlyEnemy::Update()
 {
     EnemyBase::Update();
-
-    Object::Update();
-
+    
     if (isDead_) return;
 
     Move();
@@ -83,8 +80,7 @@ void FlyEnemy::Move()
     }
     else
     {
-        Vector3 direction;
-        direction = pTarget_->GetTransform().translate - transform_.translate;
+        Vector3 direction = pTarget_->GetTransform().translate - transform_.translate;
 
         float length = std::sqrt((direction.x * direction.x) + (direction.y * direction.y) + (direction.z * direction.z));
         if (length != 0)
@@ -94,9 +90,7 @@ void FlyEnemy::Move()
             transform_.rotate.y = std::atan2(direction.x, direction.z);
         }
 
-        float deltaTime = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
-        transform_.translate += direction * speed_ * deltaTime;
-
+        transform_.translate += direction * speed_ * deltaTime_;
         if (transform_.translate.y < 1.0f)
         {
             transform_.translate.y = 1.0f;

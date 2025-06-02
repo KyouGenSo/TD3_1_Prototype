@@ -2,9 +2,6 @@
 #include <memory>
 
 #include "EnemyBase.h"
-#include "GameScene/Object/Object.h"
-#include "Collision/Collider.h"
-#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 class BounceEnemy : public EnemyBase
 {
