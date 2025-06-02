@@ -22,7 +22,7 @@ void Minimap::Update() {size_t i = 0;
             objects_.erase(std::ranges::remove(objects_,o).begin(), objects_.end());
             assert(pObjects_.size() == objects_.size());
         } else{
-            Vector2 pos = { pObjects_[i]->GetTransform().translate.x,  pObjects_[i]->GetTransform().translate.z};
+            Vector2 pos = { pObjects_[i]->GetTransform().translate.x,  pObjects_[i]->GetTransform().translate.z * -1.f};
 
             pos.x = std::clamp(pos.x, stageRange_.min.x + OBJECT_SIZE / 2.f, stageRange_.max.x - OBJECT_SIZE / 2.f);
             pos.y = std::clamp(pos.y, stageRange_.min.z + OBJECT_SIZE / 2.f, stageRange_.max.z - OBJECT_SIZE / 2.f);
@@ -62,8 +62,10 @@ void Minimap::Register(Object* object) {
     else if (Utility::EqualsIgnoreCase(object->GetName(), std::string("boss"))){
         sprite->SetSize({OBJECT_SIZE * 2 ,OBJECT_SIZE * 2});
         sprite->SetColor({1, 0, 0, 1});
-    } else if (Utility::EqualsIgnoreCase(object->GetName(), std::string("castle")))sprite->SetColor({0, 1, 0, 1});
-    else{
+    } else if (Utility::EqualsIgnoreCase(object->GetName(), std::string("castle"))){
+        sprite->SetSize({OBJECT_SIZE * 2 ,OBJECT_SIZE * 2});
+        sprite->SetColor({0, 1, 0, 1});
+    } else{
         __debugbreak();
         return;
     }
