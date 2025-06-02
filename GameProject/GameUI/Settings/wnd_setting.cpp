@@ -13,7 +13,7 @@ void Wnd_Setting::Initialize()
     controller_sens_.Initialize("Sens", { 0, 50.0f });
 
     controller_volume_.SetMax(1.0f);
-    controller_volume_.SetValue(0.8f);
+    controller_volume_.SetValue(1.0f);
     controller_sens_.SetMax(1.0f);
     id_callback_change_display_ = notifier_->RegisterCallback("RequestOpenSetting", [this](std::any _flag)
     {
@@ -51,7 +51,10 @@ void Wnd_Setting::Update()
 {
     this->Show();
     sprite_background_->Update();
-    SoundManager::GetInstance()->SetVolumeMultiply(controller_volume_.GetValue());
+    
+
+    if (controller_volume_.IsChanged()) SoundManager::GetInstance()->SetVolumeMultiply(controller_volume_.GetValue());
+    if (controller_sens_.IsChanged()) notifier_->Notify("ChangedSens", controller_sens_.GetValue());
 }
 
 void Wnd_Setting::Draw2d()

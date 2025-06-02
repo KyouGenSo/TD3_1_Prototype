@@ -21,6 +21,7 @@ namespace UI_Widget
 
         // Getter
         float   GetValue() const { return value_; };
+        bool    IsChanged() const { return isChanged_; }
 
     private:
         void    InitializeButtonArg(NiGui_Arg_Button& _arg, const std::string& _id, const std::string& _tex, const NiVec2& _pos) const;
@@ -36,5 +37,6 @@ namespace UI_Widget
         float               value_          = {};
         float               max_            = {};
         NiVec2              position_       = {};
+        bool                isChanged_      = false;
     };
 }

@@ -23,6 +23,7 @@ void Controller::Initialize(const std::string& _name, const Vector2& _position)
 
 void Controller::Update()
 {
+    isChanged_ = false;
     this->UpdateWindow();
     statebar_.SetCurrentValue(value_);
     statebar_.Update();
@@ -65,10 +66,12 @@ void UI_Widget::Controller::UpdateWindow()
     if (NiGui::Button(arg_up_) == confirm)
     {
         value_ += max_ * 0.1f;
+        isChanged_ = true;
     }
     if (NiGui::Button(arg_down_) == confirm)
     {
         value_ -= max_ * 0.1f;
+        isChanged_ = true;
     }
 
     if (value_ > max_) value_ = max_;
