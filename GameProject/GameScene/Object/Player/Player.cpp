@@ -10,7 +10,6 @@
 #include <ModelManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 #include <GameScene/Object/Weapon/WeaponFactory.h>
-#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 // DEBUG
 #include <QuatFunc.h>
@@ -18,7 +17,6 @@
 #include "Type/ColliderType.h"
 #include <GameSystem/Reinforcement/StatusReinforcement.h>
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
-#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 #include <algorithm>
 #include <Utility/Adaptor.h>
@@ -27,6 +25,7 @@
 
 #include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
 #include "GameScene/Object/Weapon/ThunderRod/ThunderRod.hpp"
+#include <functional>
 
 void Player::Initialize()
 {
@@ -74,10 +73,6 @@ void Player::Initialize()
 
     this->InitializeCallbacks();
 
-    GameEventNotifier::GetInstance()->RegisterCallback("OnWindowOpen", [this](std::any _isOpen)
-    {
-        ChangeAimMode(!std::any_cast<bool>(_isOpen));
-    });
     ChangeAimMode(true); // 初期状態はマウスエイム
 }
 
@@ -120,7 +115,8 @@ void Player::Finalize()
     GameEventNotifier::GetInstance()->UnregisterCallback("EnemyDeadForXP", id_callback_enemydead_);
     GameEventNotifier::GetInstance()->UnregisterCallback("PlayerLevelUp", id_callback_playerlevelup_);
     GameEventNotifier::GetInstance()->UnregisterCallback("ChainConfirm", id_callback_chainconfirm_);
-    GameEventNotifier::GetInstance()->UnregisterCallback("ChainConfirm", id_callback_windowOpen_);
+    GameEventNotifier::GetInstance()->UnregisterCallback("OnWindowOpen", id_callback_windowOpen_);
+    GameEventNotifier::GetInstance()->UnregisterCallback("ChangedSens", id_callback_change_sens_);
 
     auto* rfmManager = ReinforcementManager::GetInstance();
     for (auto& reinforcement : reinforcementList_)
@@ -257,6 +253,17 @@ void Player::InitializeCallbacks()
 
     id_callback_chainconfirm_ = GameEventNotifier::GetInstance()->RegisterCallback("ChainConfirm", [this]([[maybe_unused]]std::any _unused) {
         this->OnChainConfirm();
+    });
+
+    id_callback_windowOpen_ = pNotifier_->RegisterCallback("OnWindowOpen", [this](std::any _isOpen)
+    {
+        ChangeAimMode(!std::any_cast<bool>(_isOpen));
+    });
+
+    id_callback_change_sens_ = pNotifier_->RegisterCallback("ChangedSens", [this](std::any _value)
+    {
+        float value = std::any_cast<float>(_value);
+        SetSens(value);
     });
 }
 

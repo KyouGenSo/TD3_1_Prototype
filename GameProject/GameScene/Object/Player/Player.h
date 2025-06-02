@@ -9,6 +9,7 @@
 #include <GameSystem/Reinforcement/IReinforcement.h>
 #include <Type/with_initial.h>
 #include <cstdint>
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 class Player : public Object
 {
@@ -55,6 +56,7 @@ private:
     uint32_t    id_callback_playerlevelup_  = 0;
     uint32_t    id_callback_chainconfirm_   = 0;
     uint32_t    id_callback_windowOpen_     = 0;
+    uint32_t    id_callback_change_sens_ = 0;
 
     // プレイヤー独自のステータス
     PlayerBehavior behaviorData_    = {}; // 行動制限
@@ -68,6 +70,8 @@ private:
     // 特殊なステータス
     with_initial<uint32_t>    numAbleJump_        = 1;        // ジャンプ可能回数
 
+    // Pointers
+    GameEventNotifier* pNotifier_ = GameEventNotifier::GetInstance();
 
 public:
     // 一般
