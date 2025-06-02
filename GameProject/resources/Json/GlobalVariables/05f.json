@@ -1,8 +1,8 @@
 {
     "05f": {
-        "amount": 5,
+        "amount": 3,
         "hpMultiplier": 1.0,
-        "interval": 5.0,
+        "interval": 10.0,
         "time": 30.0,
         "turn": 5,
         "type": 1

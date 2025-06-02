@@ -74,7 +74,7 @@ void GUI_PauseMenu::ShowPauseMenu()
             notifier_->Notify("OnWindowOpen", false);
             isDisplay_ = false;
         }
-        if (NiGui::Button("Option", "resume.png", NiGui::WHITE, { 0.0f, 0.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
+        if (NiGui::Button("Option", "option.png", NiGui::WHITE, { 0.0f, 0.0f }, { 150.0f, 50.0f }, {}, center, center) == confirm)
         {
             dtm->SetDeltaTime(1, 1.0f / 60.0f);
             notifier_->Notify("RequestOpenSetting", true);

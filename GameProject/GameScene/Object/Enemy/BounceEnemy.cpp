@@ -2,6 +2,7 @@
 
 #include "Object3dBasic.h"
 #include "cmath"
+#include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
 #include "Type/ColliderType.h"
 #include "Utility/Adaptor.h"
 
@@ -76,18 +77,17 @@ void BounceEnemy::Move()
         AppearanceProduction();
     }
     else {
-        Vector3 direction;
-        direction = pTarget_->GetTransform().translate - transform_.translate;
+        Vector3 direction = pTarget_->GetTransform().translate - transform_.translate;
 
         float length = std::sqrt((direction.x * direction.x) + (direction.y * direction.y) + (direction.z * direction.z));
-        if (length != 0) {
+        if (1e-4f < length) {
             direction /= length;
 
             transform_.rotate.y = std::atan2(direction.x, direction.z);
         }
 
-        transform_.translate.x += direction.x * speed;
-        transform_.translate.z += direction.z * speed;
+        transform_.translate.x += direction.x * speed * deltaTime_;
+        transform_.translate.z += direction.z * speed * deltaTime_;
 
         bounceTime_ += 0.05f;
         transform_.translate.y = std::sin(bounceTime_) * bounceHight_ + standardHeight_;

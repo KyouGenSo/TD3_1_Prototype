@@ -62,7 +62,7 @@
     {
         "name": "AutoHeal",
         "description": "一定時間ごとにHPが回復します。",
-        "image": "white.png",
+        "image": "hud/card/card_AutoHeal_shadow.png",
         "status-type": "heal",
         "operatorType": "add",
         "value": 5.0,

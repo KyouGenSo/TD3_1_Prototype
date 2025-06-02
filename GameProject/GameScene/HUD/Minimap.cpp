@@ -17,10 +17,7 @@ void Minimap::Initialize() {
 void Minimap::Update() {size_t i = 0;
     for (auto& object : pObjects_){
         if (!object){
-            auto& o = *(objects_.begin() + i);
-            pObjects_.erase(std::ranges::remove(pObjects_, object).begin(), pObjects_.end());
-            objects_.erase(std::ranges::remove(objects_,o).begin(), objects_.end());
-            assert(pObjects_.size() == objects_.size());
+            Unregister(object);
         } else{
             Vector2 pos = { pObjects_[i]->GetTransform().translate.x,  pObjects_[i]->GetTransform().translate.z * -1.f};
 

@@ -85,7 +85,7 @@ void Player::Update()
 {
     deltaTime_ = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
 
-    isCollidCastle_ = false;
+    isCollideCastle_ = false;
 
     UpdateInputCommands();
     UpdateMovement();
@@ -162,7 +162,7 @@ void Player::ImGui()
 
 void Player::OnCollision(const Collision::Collider* pCollider) {
     if (static_cast<Object*>(pCollider->GetOwner())->GetName() == "Castle") {
-        isCollidCastle_ = true;
+        isCollideCastle_ = true;
 
         // AABBの情報取得
         Vector3 colliderPos = {
@@ -263,9 +263,10 @@ void Player::InitializeCallbacks()
 void Player::UpdateInputCommands()
 {
     // Attack
-    if (pInput_->PushMouse(0) || pInput_->PushButton(JOY_BUTTON1))
-    {
-        weapon_->Fire();
+    if (pInput_->PushMouse(0) || pInput_->PushButton(JOY_BUTTON1)){
+        if (weapon_){
+            weapon_->Fire();
+        }
     }
 
     if (pInput_->TriggerKey(DIK_M)){
@@ -296,7 +297,7 @@ void Player::UpdateMovement()
     {
         // Joycon Movement
     }
-    else if (!isCollidCastle_)
+    else if (!isCollideCastle_)
     {
         Quaternion yaw = Quat::MakeRotateAxisAngle({ 0.0f, 1.0f, 0.0f }, transform_.rotate.y);
         Quaternion pitch = Quat::MakeRotateAxisAngle({ 1.0f, 0.0f, 0.0f }, 0.0f);

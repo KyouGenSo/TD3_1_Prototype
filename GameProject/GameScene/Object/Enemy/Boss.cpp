@@ -5,6 +5,8 @@
 #include "Type/ColliderType.h"
 #include <Utility/Adaptor.h>
 
+#include "SceneManager.h"
+
 void Boss::Initialize()
 {
     EnemyBase::Initialize();
@@ -93,7 +95,19 @@ void Boss::OnCollision(const Collision::Collider* _other) {
 }
 
 void Boss::OnCollisionTrigger(const Collision::Collider* _other) {
-    if (isValid_){
-        EnemyBase::OnCollisionTrigger(_other);
+    if (!isValid_) return;
+    if (isDead_ || pCollider_->IsDisabled()) return;
+
+    Object* object = static_cast<Object*>(_other->GetOwner());
+
+    if (_other->GetAttribute() & static_cast<uint32_t>(Collider::Type::P_BULLET)){
+        Object::StatusUpdateOnCollision(_other);
+        pHPBar_->Display(2.0f);
+        
+        if (statusCurrent_.getHp() <= 0){
+            SceneManager::GetInstance()->ChangeScene("clear");    
+        }
+        
     }
+
 }
