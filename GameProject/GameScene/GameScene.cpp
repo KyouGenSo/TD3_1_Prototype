@@ -24,15 +24,17 @@ void GameScene::Initialize()
 
     //ModelManager::GetInstance()->GetModel("rocketBullet.gltf");
 
-    PostEffect::GetInstance()->SetEffectType("NoEffect");
+    PostEffect::GetInstance()->SetEffectType("RGBSplit");
+    PostEffect::GetInstance()->SetRGBSplitIntensity(0.2f);
 
     // ステージデータの取得
     const auto& currentStageData = StageManager::GetInstance()->GetCurrentStageData();
 
     
     directLightParam_ = {
-        .direction = { 0.0f, -1.0f, 0.0f },
-        .color = {1.000f, 0.254f, 0.254f, 1.000f},
+        .direction = { .x= 0.0f, .y= -1.0f, .z= 0.0f },
+        //.color = {1.000f, 0.254f, 0.254f, 1.000f},
+        .color = {.x= 1.000f, .y= 1.0f, .z= 1.0f, .w= 1.000f},
         .lightType = 1,
         .intensity = 2.0f
     };
@@ -251,6 +253,15 @@ void GameScene::Finalize()
 
 void GameScene::Update()
 {
+    if (boss_->GetIsValid())
+    {
+        directLightParam_.color = { .x= 1.0f, .y= 0.254f, .z= 0.254f, .w= 1.0f };
+    }
+    else
+    {
+        directLightParam_.color = { .x= 1.0f, .y= 1.0f, .z= 1.0f, .w= 1.0f };
+    }
+
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);
     ReinforcementManager::GetInstance()->Update();
     this->UpdateInputCommands();
