@@ -31,7 +31,9 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
     keys_.clear();
 
+    eventId_ = GameEventNotifier::GetInstance()->RegisterCallback("OnWindowOpen", [&](const std::any& a) {isPause_ = std::any_cast<bool>(&a); });
 
+    isPause_ = false;
 
     InitializeWaveFile("00n");
     InitializeWaveFile("01n");
@@ -70,8 +72,7 @@ void EnemyManager::Update()
                 waves_[*key].time -= deltaTime_;
             }
             ++key;
-        }
-        else
+        } else
         {
             keysToRemove.push_back(*key);
             key = keys_.erase(key);
@@ -90,7 +91,7 @@ void EnemyManager::Update()
 
     for (auto enemy = enemies_.begin(); enemy != enemies_.end(); ) {
         if ((*enemy)->IsDead()) {
-            //pMinimap_->Unregister(enemy.get());
+            pMinimap_->Unregister(enemy->get());
             enemy = enemies_.erase(enemy);
             continue;
         }
@@ -121,6 +122,7 @@ void EnemyManager::Finalize()
         enemy->Finalize();
     }
     enemies_.clear();
+    GameEventNotifier::GetInstance()->UnregisterCallback("OnWindowOpen", eventId_);
 }
 
 void EnemyManager::AddEnemy(const Vector3& position, EnemyBase::Type type)
@@ -144,8 +146,7 @@ void EnemyManager::SelectTarget(EnemyBase* enemy)
     if (distanceToPlayer < leave)
     {
         enemy->SetTarget(pPlayer_);
-    }
-    else
+    } else
     {
         enemy->SetTarget(pCastle_);
     }
@@ -153,7 +154,7 @@ void EnemyManager::SelectTarget(EnemyBase* enemy)
 
 void EnemyManager::ImGui()
 {
-    #ifdef _DEBUG
+#ifdef _DEBUG
     ImGui::Begin("EnemyManager");
     if (ImGui::Button("Normal"))
     {
@@ -174,7 +175,7 @@ void EnemyManager::ImGui()
     }
     ImGui::DragInt("turnProgress", &turnProgress, 1);
     ImGui::End();
-    #endif
+#endif
 }
 
 
@@ -225,7 +226,7 @@ int EnemyManager::GetCurrentTurn() const {
 }
 
 int EnemyManager::GetLastTurn() const {
-    return 10;
+    return static_cast<int>(waves_.size());
 }
 
 void EnemyManager::SpawnEnemy()
@@ -265,18 +266,16 @@ Vector3 EnemyManager::RandomSpawnPosition(EnemyBase::Type type)
     {
         while ((randomPos.x < maxSpawnRange_.x && randomPos.x > minSpawnRange_.x) && (randomPos.z < maxSpawnRange_.z && randomPos.z > minSpawnRange_.z))
         {
-            randomPos = Vector3{ RandomGenerator::Generate(minSpawnPoint_.x, maxSpawnPoint_.x), RandomGenerator::Generate(minSpawnPoint_.y, maxSpawnPoint_.y), RandomGenerator::Generate(minSpawnPoint_.z, maxSpawnPoint_.z)};
+            randomPos = Vector3{ RandomGenerator::Generate(minSpawnPoint_.x, maxSpawnPoint_.x), RandomGenerator::Generate(minSpawnPoint_.y, maxSpawnPoint_.y), RandomGenerator::Generate(minSpawnPoint_.z, maxSpawnPoint_.z) };
         }
-    }
-    else if (type == EnemyBase::Type::Fly)
+    } else if (type == EnemyBase::Type::Fly)
     {
         while ((randomPos.x < flyMaxSpawnRange_.x && randomPos.x > flyMinSpawnRange_.x) && (randomPos.z < flyMaxSpawnRange_.z && randomPos.z > flyMinSpawnRange_.z))
         {
             randomPos = Vector3{ RandomGenerator::Generate(flyMinSpawnPoint_.x, flyMaxSpawnPoint_.x), RandomGenerator::Generate(flyMinSpawnPoint_.y, flyMaxSpawnPoint_.y), RandomGenerator::Generate(flyMinSpawnPoint_.z, flyMaxSpawnPoint_.z), };
         }
-    }
-    else if (type == EnemyBase::Type::Bounce) {
-        while ((randomPos.x < bounceMaxSpawnRange_.x && randomPos.x > bounceMinSpawnRange_.x) && (randomPos.z < bounceMaxSpawnRange_.z && randomPos.z > bounceMinSpawnRange_.z)) 
+    } else if (type == EnemyBase::Type::Bounce) {
+        while ((randomPos.x < bounceMaxSpawnRange_.x && randomPos.x > bounceMinSpawnRange_.x) && (randomPos.z < bounceMaxSpawnRange_.z && randomPos.z > bounceMinSpawnRange_.z))
         {
             randomPos = Vector3{ RandomGenerator::Generate(bounceMinSpawnPoint_.x, bounceMaxSpawnPoint_.x), RandomGenerator::Generate(bounceMinSpawnPoint_.y, bounceMaxSpawnPoint_.y), RandomGenerator::Generate(bounceMinSpawnPoint_.z, bounceMaxSpawnPoint_.z), };
         }

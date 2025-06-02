@@ -11,100 +11,103 @@
 #include <cstdint>
 #include "Utility/RandomGenerator/RandomGenerator.h"
 
-class Player;  
-class Castle;  
-class EnemyManager  
-{  
-private:  
+class Player;
+class Castle;
+class EnemyManager
+{
+private:
 
-    struct Wave  
-    {  
+    struct Wave
+    {
         EnemyBase::Type type;
-        float interval;  
-        int amount;  
-        float hpMultiplier;  
-        int turn;  
-        float time;  
-    };  
+        float interval;
+        int amount;
+        float hpMultiplier;
+        int turn;
+        float time;
+    };
 
-public:  
-    EnemyManager();  
-    ~EnemyManager();  
-    
-    void Initialize(Object* player, Object* castle);  
-    void Update();  
-    void Draw();  
-    void Draw2d();  
-    void Finalize();  
-    void AddEnemy(const Vector3& position, EnemyBase::Type type); 
-    void SelectTarget(EnemyBase* enemy);  
-    void ImGui();  
-    void ChangeWave(std::string key, bool resetSpawnCount = true);  
+public:
+    EnemyManager();
+    ~EnemyManager();
+
+    void Initialize(Object* player, Object* castle);
+    void Update();
+    void Draw();
+    void Draw2d();
+    void Finalize();
+    void AddEnemy(const Vector3& position, EnemyBase::Type type);
+    void SelectTarget(EnemyBase* enemy);
+    void ImGui();
+    void ChangeWave(std::string key, bool resetSpawnCount = true);
     void SetMinimap(Minimap* pMinimap);
 
-    void SetTarget(Object* pTarget) { pTarget_ = pTarget; }  
+    void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
     void SetEmitter(EmitterManager* pEmitter);
 
     int GetCurrentTurn() const;
     int GetLastTurn() const;
 
-private:  
-   void SpawnEnemy();  
-   Vector3 RandomSpawnPosition(EnemyBase::Type type); 
-   void CreateWaveFile(std::string key);  
-   void InitializeWaveFile(std::string key);  
-   void TurnControl();  
+private:
+    void SpawnEnemy();
+    Vector3 RandomSpawnPosition(EnemyBase::Type type);
+    void CreateWaveFile(std::string key);
+    void InitializeWaveFile(std::string key);
+    void TurnControl();
 
-private:  
-   float deltaTime_ = 1.0f / 60.0f;  
+private:
+    float deltaTime_ = 1.0f / 60.0f;
 
-   Wave wave_;  
-   std::unordered_map<std::string, Wave>waves_;  
+    Wave wave_;
+    std::unordered_map<std::string, Wave>waves_;
 
-   std::unordered_map<std::string, int> spawnCount_;  
-   std::unordered_map<std::string, float> spawnTimer_;
-   int maxSpawnCount_ = 30;
+    std::unordered_map<std::string, int> spawnCount_;
+    std::unordered_map<std::string, float> spawnTimer_;
+    int maxSpawnCount_ = 30;
 
-   std::vector<std::string> keys_;  
-   int keyIndex_ = 0;  
+    std::vector<std::string> keys_;
+    int keyIndex_ = 0;
 
-   std::vector<std::unique_ptr<EnemyBase>>enemies_;  
+    std::vector<std::unique_ptr<EnemyBase>>enemies_;
 
-   const float leave = 10.0f;  
+    const float leave = 10.0f;
 
-   int turnProgress = 0;
+    int turnProgress = 0;
 
-   std::unordered_map<EnemyBase::Type, uint32_t> pendingSpawnCount_ = {};
+    std::unordered_map<EnemyBase::Type, uint32_t> pendingSpawnCount_ = {};
 
-   Minimap* pMinimap_ = nullptr;  
+    bool isPause_ = false;
+    uint32_t eventId_;
 
-   Object* pTarget_ = nullptr;  
-   Object* pPlayer_ = nullptr;  
-   Object* pCastle_ = nullptr;  
+    Minimap* pMinimap_ = nullptr;
 
-   EmitterManager* pEmitter_ = nullptr;  
+    Object* pTarget_ = nullptr;
+    Object* pPlayer_ = nullptr;
+    Object* pCastle_ = nullptr;
 
-   Vector3 appearancePos_ = { 3.0f,1.0f,0.0f };  
+    EmitterManager* pEmitter_ = nullptr;
 
-   Vector3 minSpawnRange_ = { -50.0f,0.0f,-50.0f };  
-   Vector3 maxSpawnRange_ = { 50.0f,0.0f,50.0f };  
+    Vector3 appearancePos_ = { 3.0f,1.0f,0.0f };
 
-   Vector3 minSpawnPoint_ = { -55.0f,1.0f,-55.0f };  
-   Vector3 maxSpawnPoint_ = { 55.0f,1.0f,55.0f };  
+    Vector3 minSpawnRange_ = { -50.0f,0.0f,-50.0f };
+    Vector3 maxSpawnRange_ = { 50.0f,0.0f,50.0f };
 
-   Vector3 flyAppearancePos_ = { 3.0f,5.0f,0.0f };  
+    Vector3 minSpawnPoint_ = { -55.0f,1.0f,-55.0f };
+    Vector3 maxSpawnPoint_ = { 55.0f,1.0f,55.0f };
 
-   Vector3 flyMinSpawnRange_ = { -50.0f,5.0f,-50.0f };  
-   Vector3 flyMaxSpawnRange_ = { 50.0f,5.0f,50.0f };  
+    Vector3 flyAppearancePos_ = { 3.0f,5.0f,0.0f };
 
-   Vector3 flyMinSpawnPoint_ = { -55.0f,5.0f,-55.0f };  
-   Vector3 flyMaxSpawnPoint_ = { 55.0f,5.0f,55.0f };  
+    Vector3 flyMinSpawnRange_ = { -50.0f,5.0f,-50.0f };
+    Vector3 flyMaxSpawnRange_ = { 50.0f,5.0f,50.0f };
 
-   Vector3 bounceAppearancePos_ = { 3.0f,1.0f,0.0f };  
+    Vector3 flyMinSpawnPoint_ = { -55.0f,5.0f,-55.0f };
+    Vector3 flyMaxSpawnPoint_ = { 55.0f,5.0f,55.0f };
 
-   Vector3 bounceMinSpawnRange_ = { -50.0f,0.0f,-50.0f };  
-   Vector3 bounceMaxSpawnRange_ = { 50.0f,0.0f,50.0f };  
+    Vector3 bounceAppearancePos_ = { 3.0f,1.0f,0.0f };
 
-   Vector3 bounceMinSpawnPoint_ = { -55.0f,1.0f,-55.0f };  
-   Vector3 bounceMaxSpawnPoint_ = { 55.0f,1.0f,55.0f };  
+    Vector3 bounceMinSpawnRange_ = { -50.0f,0.0f,-50.0f };
+    Vector3 bounceMaxSpawnRange_ = { 50.0f,0.0f,50.0f };
+
+    Vector3 bounceMinSpawnPoint_ = { -55.0f,1.0f,-55.0f };
+    Vector3 bounceMaxSpawnPoint_ = { 55.0f,1.0f,55.0f };
 };
