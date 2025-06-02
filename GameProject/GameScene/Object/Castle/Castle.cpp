@@ -13,8 +13,6 @@ void Castle::Initialize() {
     model_->Initialize();
     model_->SetModel("castle.gltf");
 
-    name_ = "castle";
-
     // 初期化用 - 外部から設定するためこの値は適用されない
     transform_ = {
         {0, 0, 0},
