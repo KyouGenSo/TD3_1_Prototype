@@ -15,14 +15,15 @@ void Controller::Initialize(const std::string& _name, const Vector2& _position)
     InitializeButtonArg(arg_up_, _name + "up", "arrow.png", { 100.0f, 0.0f });
     statebar_.Initialize();
     statebar_.SetSize(NiUtil::Adaptor(size_statebar_));
-    NiVec2 wndsize = { static_cast<float>(WinApp::clientWidth / 2), static_cast<float>(WinApp::clientHeight / 2) };
-    statebar_.SetPosition(NiUtil::Adaptor(wndsize - size_statebar_ / 2.0f + position_));
     statebar_.SetEnableTimer(false);
     statebar_.Display(true);
 }
 
 void Controller::Update()
 {
+    wndsize_ = { static_cast<float>(WinApp::clientWidth), static_cast<float>(WinApp::clientHeight) };
+    statebar_.SetPosition(NiUtil::Adaptor((wndsize_ * 0.5f) - size_statebar_ * 0.5f + position_));
+
     isChanged_ = false;
     this->UpdateWindow();
     statebar_.SetCurrentValue(value_);

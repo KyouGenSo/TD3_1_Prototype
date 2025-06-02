@@ -27,6 +27,7 @@ namespace UI_Widget
         void    InitializeButtonArg(NiGui_Arg_Button& _arg, const std::string& _id, const std::string& _tex, const NiVec2& _pos) const;
         void    UpdateWindow();
 
+        NiVec2              wndsize_        = {};
         std::string         name_           = {};
         float               scale_          = 1.0f;
         NiVec2              size_button_    = {};

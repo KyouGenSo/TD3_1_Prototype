@@ -233,7 +233,13 @@ void MyGame::Update()
         ToggleFullScreen();
         NiGui::SetWindowInfo({ WinApp::clientWidth, WinApp::clientHeight }, {});
         NiGui::SetClientSize({ WinApp::clientWidth, WinApp::clientHeight });
-        GameEventNotifier::GetInstance()->Notify("OnWindowResized", Vector2(WinApp::clientWidth, WinApp::clientHeight));
+        GameEventNotifier::GetInstance()->Notify(
+            "OnWindowResized",
+            Vector2(
+                static_cast<float>(WinApp::clientWidth), 
+                static_cast<float>(WinApp::clientHeight)
+            )
+        );
     }
 
 #ifdef _DEBUG

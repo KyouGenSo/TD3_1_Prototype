@@ -59,7 +59,7 @@ void Player::Initialize()
     statusInit_
         .setAttack(0)
         .setHp(100)
-        .setSpeed(1)
+        .setSpeed(35.0f)
         .setDefence(0)
         .setMaxHp(100);
     statusCurrent_ = statusInit_;
@@ -140,7 +140,6 @@ void Player::ImGui()
         {
             ImGui::DragFloat("Start lerp distance", &distance_start_lerp_, 0.01f);
             ImGui::DragFloat("JumpPower", &jumpPower_, 0.01f);
-            ImGui::DragFloat("MoveSpeed", &moveSpeed_, 0.01f);
             ImGui::DragFloat("FrictionCoefficient", &frictionCoefficient_, 0.01f);
             ImGui::TreePop();
         }
@@ -316,8 +315,8 @@ void Player::UpdateMovement()
 
         int directionForward = Input::GetInstance()->PushKey(DIK_W) - Input::GetInstance()->PushKey(DIK_S);
         int directionRight = Input::GetInstance()->PushKey(DIK_D) - Input::GetInstance()->PushKey(DIK_A);
-        acceleration_ += forward_ * moveSpeed_ * static_cast<float>(directionForward) * deltaTime_;
-        acceleration_ += right * moveSpeed_ * static_cast<float>(directionRight) * deltaTime_;
+        acceleration_ += forward_ * statusCurrent_.getSpeed()  * static_cast<float>(directionForward) * deltaTime_;
+        acceleration_ += right * statusCurrent_.getSpeed() * static_cast<float>(directionRight) * deltaTime_;
     }
 
 

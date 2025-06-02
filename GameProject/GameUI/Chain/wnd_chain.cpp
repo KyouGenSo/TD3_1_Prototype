@@ -10,6 +10,7 @@
 void GUI_Chain::Initialize()
 {
     NiGui::ResetItemToArea();
+    NiGui::ResetDragItemOffsets();
     NiGui::SetItemToArea("Assault", "DragItemArea1");
 }
 
@@ -40,8 +41,6 @@ void GUI_Chain::OnNotify(const std::string& _name, const std::string& _event)
     if (isDisplay_ && !preIsDisplay)
     {
         notifier_->Notify("OnWindowOpen", true);
-        area1_pre_ = area1_;
-        area2_pre_ = area2_;
     }
     if (!isDisplay_ && preIsDisplay)
     {
@@ -72,6 +71,8 @@ void GUI_Chain::Update()
         // ウィンドウが閉じたことを通知
         notifier_->Notify("OnWindowOpen", false);
 
+        area1_pre_ = area1_;
+        area2_pre_ = area2_;
 
         isConfirm_ = false;
         isDisplay_ = false;
@@ -115,6 +116,10 @@ void GUI_Chain::ShowChain()
         {
             area1_ = area1_pre_;
             area2_ = area2_pre_;
+            NiGui::ResetItemToArea();
+            NiGui::ResetDragItemOffsets();
+            NiGui::SetItemToArea(area1_pre_, "DragItemArea1");
+            NiGui::SetItemToArea(area2_pre_, "DragItemArea2");
             isDisplay_ = false;
             notifier_->Notify("OnWindowOpen", false);
             DeltaTimeManager::GetInstance()->SetDeltaTime(1, 1.0f / 60.0f);

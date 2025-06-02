@@ -260,7 +260,9 @@ void GameScene::Update()
     }
     else
     {
-        directLightParam_.color = { .x= 1.0f, .y= 1.0f, .z= 1.0f, .w= 1.0f };
+        directLightParam_.color = { 1.000f, 0.893f, 0.766f, 1.000f };
+        directLightParam_.direction = { -1.52f, 2.43f, 0.38f };
+        directLightParam_.intensity = 2.7f;
     }
 
     Object3dBasic::GetInstance()->SetDirectionalLight(directLightParam_.direction, directLightParam_.color, directLightParam_.lightType, directLightParam_.intensity);

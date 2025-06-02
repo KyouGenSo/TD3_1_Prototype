@@ -16,6 +16,7 @@
 #include"ImGui.h"
 #include "DebugCamera.h"
 #endif
+#include <GameSystem/GameEventNotifier/GameEventNotifier.h>
 
 void TitleScene::Finalize()
 {
@@ -218,6 +219,10 @@ void TitleScene::Update()
     if (Input::GetInstance()->TriggerKey(DIK_SPACE))
     {
         SceneManager::GetInstance()->ChangeScene("play");
+    }
+    if (Input::GetInstance()->TriggerKey(DIK_ESCAPE))
+    {
+        GameEventNotifier::GetInstance()->Notify("Exit", nullptr);
     }
 }
 

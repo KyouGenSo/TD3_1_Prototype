@@ -40,7 +40,6 @@ private:
     // 挙動データ
     float       floor_                  = 0.5f;
     float       jumpPower_              = 20.0f;    // ジャンプ力
-    float       moveSpeed_              = 35.0f;    // 移動速度
     float       frictionCoefficient_    = 5.0f;     // 摩擦係数 (friction coefficient)
     MinMax      posXMinMax              = { .min= -94.0f, .max= 95.0f}; // X座標の最小値と最大値
     MinMax      posZMinMax              = { .min= -395.0f, .max= 395.0f }; // Z座標の最小値と最大値
