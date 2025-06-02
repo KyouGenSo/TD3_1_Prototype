@@ -112,7 +112,7 @@ void StatusBar::ImGui()
 
 void StatusBar::UpdateTransform()
 {
-    NiVec2 leftTop = position_ - anchor_ * size_;
+    NiVec2 leftTop = position_ - anchor_ * barSize_;
     NiVec2 cPos = leftTop;
 
     if (name_) 
