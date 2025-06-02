@@ -66,7 +66,7 @@ private:
     int         countCursorVisible_ = 1;
 
     // 特殊なステータス
-    with_initial<uint32_t>    numAbleJump_        = 2;        // ジャンプ可能回数
+    with_initial<uint32_t>    numAbleJump_        = 1;        // ジャンプ可能回数
 
 
 public:
