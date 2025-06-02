@@ -43,6 +43,8 @@ void AssaultBullet::Bullet::Initialize()
 
     speed_ = 80.0f;
 
+    origin = transform_.translate;
+
     Update();
 }
 
@@ -50,9 +52,14 @@ void AssaultBullet::Bullet::Update()
 {
     BulletBase::Update();
 
-    isDead_ = BulletBase::CheckLifeTime();
+    isDead_ = CheckLifeTime();
 
     transform_.translate += forward_ * speed_ * deltaTime_;
+
+    if (50.f <= (transform_.translate - origin).Length()){
+        isDead_ = true;
+        pCollider_->Disable();
+    }
 
     pCollider_->SetTranslate(Adaptor(transform_.translate));
 
@@ -61,7 +68,7 @@ void AssaultBullet::Bullet::Update()
     model_->Update();
 
     if (pNext_){
-        pNext_->Update();
+         pNext_->Update();
     }
 }
 

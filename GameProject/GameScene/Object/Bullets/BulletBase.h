@@ -39,6 +39,7 @@ protected:
     WeaponType type_ = WeaponType::None;
     float speed_ = 60.0f;
     float lifeTime_ = 300.0f / speed_;
+    Vector3 origin = {};
 
 
 protected:

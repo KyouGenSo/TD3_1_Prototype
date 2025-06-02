@@ -22,6 +22,9 @@ void RocketBullet::Explosion::Init() {
 		->SetOwner(this)
 		->Enable();
 
+    statusInit_.setAttack(20.f);
+    statusCurrent_ = statusInit_;
+
 	if (emitter_){
 		emitter_->SetEmitterPosition("explosion", transform_.translate);
 		emitter_->CreateTemporaryEmitterFrom("explosion", GetUniqueId(), 2.f);
