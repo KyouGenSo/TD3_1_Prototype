@@ -17,8 +17,9 @@ void RocketBullet::Explosion::Init() {
 		->SetType(Collision::Type::Sphere)
 		->SetTranslate(Adaptor(transform_.translate))
 		->SetSize(10.0f)
-		->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
+		->AddAttribute(static_cast<uint32_t>(Collider::Type::P_BULLET))
 		->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
+		->AddIgnore(static_cast<uint32_t>(Collider::Type::ALLY))
 		->SetOwner(this)
 		->Enable();
 
