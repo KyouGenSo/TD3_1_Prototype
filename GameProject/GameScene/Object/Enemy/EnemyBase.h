@@ -16,6 +16,7 @@ public:
     };
 
     void SetTarget(Object* pTarget) { pTarget_ = pTarget; }
+    virtual void OnCollision(const Collision::Collider* _other) override;
     virtual void OnCollisionTrigger(const Collision::Collider* _other);
     virtual void Initialize() override;
     virtual void Update() override;
@@ -33,7 +34,8 @@ protected:
     Object* pTarget_ = nullptr;
     std::unique_ptr<HPBar> pHPBar_ = nullptr;
     GameEventNotifier* pGameEventNotifier_ = nullptr;
-    static const Vector2 hpBarSize_;
+    Vector2 hpBarSize_ = {80.0f, 5.0f};;
     bool isAppearing_ = false;
     float appearCounter_ = 0.0f;
+    Vector3 hpBarOffset_ {0,0, 0};
 };

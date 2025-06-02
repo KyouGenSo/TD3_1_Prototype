@@ -3,7 +3,22 @@
 
 #include <Camera.h>
 
-const Vector2 EnemyBase::hpBarSize_ = { 80.0f, 5.0f };
+#include "Utility/Equals.h"
+
+void EnemyBase::OnCollision(const Collision::Collider* _other) {
+    if (isDead_ || pCollider_->IsDisabled()) return;
+
+    Object* object = static_cast<Object*>(_other->GetOwner());
+
+    if (Utility::EqualsIgnoreCase(object->GetName(), "Thunder")){
+        StatusUpdateOnCollision(_other);
+        if (statusCurrent_.getHp() <= 0){
+            pGameEventNotifier_->Notify("EnemyDeadForXP", statusCurrent_.getExperiencePoints());
+            pCollider_->Disable();
+        }
+        pHPBar_->Display(2.0f);
+    }
+}
 
 void EnemyBase::OnCollisionTrigger(const Collision::Collider* _other)
 {
@@ -48,7 +63,7 @@ void EnemyBase::UpdateHPBarPosition()
     auto camera = Object3dBasic::GetInstance()->GetCamera();
 
     Vector2 position = HPBar::GetHeadUpPositionOnScreen(
-        transform_.translate,
+        transform_.translate + hpBarOffset_,
         hpBarSize_,
         *(*camera),
         1.5f

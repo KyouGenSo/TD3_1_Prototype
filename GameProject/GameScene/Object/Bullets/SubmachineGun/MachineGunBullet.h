@@ -4,6 +4,7 @@
 class MachineGunBullet : public BulletBase
 {
     class Bullet : public BulletBase{
+        Vector3 origin = {};
     public:
         void Initialize() override;
         void Update() override;

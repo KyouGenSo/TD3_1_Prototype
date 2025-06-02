@@ -220,6 +220,14 @@ void EnemyManager::SetEmitter(EmitterManager* pEmitter) {
     pEmitter_ = pEmitter;
 }
 
+int EnemyManager::GetCurrentTurn() const {
+    return turnProgress;
+}
+
+int EnemyManager::GetLastTurn() const {
+    return static_cast<int>(waves_.size());
+}
+
 void EnemyManager::SpawnEnemy()
 {
     /// スポーンしたい敵の数をカウントアップする
