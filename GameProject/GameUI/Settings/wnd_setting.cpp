@@ -18,6 +18,11 @@ void Wnd_Setting::Initialize()
     id_callback_change_display_ = notifier_->RegisterCallback("RequestOpenSetting", [this](std::any _flag)
     {
         bool open = std::any_cast<bool>(_flag);
+
+        // デルタタイム
+        if (isDisplay_) notifier_->Notify("OnWindowOpen", !isDisplay_);
+        if (open) DeltaTimeManager::GetInstance()->SetDeltaTime(1, 0.0f);
+        else DeltaTimeManager::GetInstance()->SetDeltaTime(1, 1.0f / 60.0f);
         isDisplay_ = open;
     });
 
@@ -38,7 +43,7 @@ void Wnd_Setting::Initialize()
     sprite_background_ = std::make_unique<Sprite>();
     sprite_background_->Initialize(arg_window_.textureName);
     sprite_background_->SetPos(NiUtil::Adaptor(bgpos));
-    sprite_background_->SetColor(pColorResolver_->Resolve(ColorName::Gray).toVector4());
+    sprite_background_->SetColor(pColorResolver_->Resolve(ColorName::Background).toVector4());
     sprite_background_->SetSize(NiUtil::Adaptor(bgSize));
 }
 

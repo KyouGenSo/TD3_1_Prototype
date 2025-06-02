@@ -46,9 +46,6 @@ private:
 
     std::vector<ReinforcementData> rfCards_ = {};
 
-    // レベルアップ画面を表示するかどうか
-    bool isDisplay_ = false;
-
     bool isSelected_ = false;
     std::string selectedCard_ = "none";
 

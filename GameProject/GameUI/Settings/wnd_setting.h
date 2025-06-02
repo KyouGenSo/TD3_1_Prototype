@@ -20,8 +20,6 @@ public:
 private:
     void    Show();
 
-    bool    isDisplay_  = false;
-
     // Callback IDs
     uint32_t        id_callback_change_display_ = 0u;
 

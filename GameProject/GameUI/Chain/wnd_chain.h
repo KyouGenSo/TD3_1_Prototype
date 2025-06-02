@@ -35,11 +35,12 @@ private:
     const std::filesystem::path TEX_BUTTON_CONFIRM_ = "button_confirm.png";
     const std::filesystem::path TEX_BUTTON_CANCEL_ = "button_cancel.png";
     const std::filesystem::path TEX_HOLDER_ = "holder.png";
-    bool isDisplay_ = false;
     bool isConfirm_ = false;
     std::string area1_ = "";
     std::string area2_ = "";
-    std::string area3_ = "";
+
+    std::string area1_pre_ = "";
+    std::string area2_pre_ = "";
 
 private:
     // チェイン画面を表示する

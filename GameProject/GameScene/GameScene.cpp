@@ -178,6 +178,7 @@ void GameScene::Initialize()
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&StatusHUD::OnResized, statusHUD_.get(), std::placeholders::_1)),
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&CountDown::OnResize, countDown_.get(), std::placeholders::_1)),
         WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&GUI_LvUP::OnResize, guiLvUP_.get(), std::placeholders::_1)),
+        WinApp::GetInstance()->RegisterOnResizeFunc(std::bind(&GUI_PauseMenu::OnResize, guiPauseMenu_.get(), std::placeholders::_1)),
         WinApp::GetInstance()->RegisterOnResizeFunc([this](Vector2 size) { reticle_->SetPos({size.x / 2.0f, size.y / 2.0f}); }),
     };
 
@@ -429,23 +430,27 @@ void GameScene::UpdateInputCommands()
     auto input = Input::GetInstance();
 
     std::vector<IObserver*> observers;
-    observers.push_back(guiLvUP_.get());
     observers.push_back(guiPauseMenu_.get());
     observers.push_back(guiChain_.get());
     observers.push_back(wnd_setting_.get());
 
     if (input->TriggerKey(DIK_ESCAPE))
     {
-        for (auto observer : observers)
+        if (!guiLvUP_->IsDisplay())
         {
-            observer->OnNotify("everyone", "close");
+            for (auto observer : observers)
+            {
+                observer->OnNotify("everyone", "close");
+            }
+            guiPauseMenu_->OnNotify("pause_menu", "toggle");
         }
-        guiPauseMenu_->OnNotify("pause_menu", "toggle");
     }
+    #ifdef _DEBUG
     if (input->TriggerKey(DIK_TAB))
     {
         guiLvUP_->OnNotify("lvup", "toggle");
     }
+    #endif //_DEBUG
     if (input->TriggerKey(DIK_C))
     {
         guiChain_->OnNotify("chain", "toggle");

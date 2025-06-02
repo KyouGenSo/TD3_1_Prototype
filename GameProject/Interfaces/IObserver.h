@@ -13,7 +13,13 @@ public:
     virtual void Update() = 0;
     virtual void OnNotify(const std::string& _name, const std::string& _event) = 0;
 
+    // Getters
+    bool IsDisplay() const { return isDisplay_; }
+
 protected:
+    // 画面を表示するかどうか
+    bool isDisplay_ = false;
+
     GameEventNotifier* notifier_ = GameEventNotifier::GetInstance();
     ColorResolver* pColorResolver_ = ColorResolver::GetInstance();
 };
