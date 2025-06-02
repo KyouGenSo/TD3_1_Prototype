@@ -3,6 +3,11 @@
 #include <TextureManager.h>
 #include <Audio.h>
 
+NiGuiDrawer::~NiGuiDrawer()
+{
+    Audio::GetInstance()->StopWave(playhandle_);
+}
+
 void NiGuiDrawer::Draw()
 {
     textureCount_.clear();
@@ -45,6 +50,6 @@ void NiGuiDrawer::Draw()
 
 void NiGuiDrawer::PlayAudio(uint32_t _handle)
 {
-    Audio::GetInstance()->Play(_handle);
+    playhandle_ = Audio::GetInstance()->Play(_handle);
     return;
 }

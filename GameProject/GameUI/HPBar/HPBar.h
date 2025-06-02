@@ -17,6 +17,7 @@ public:
     void Update();
     void Draw2d();
     void Display(float _sec);
+    void Display(bool flag) { isDisplay_ = flag; }
 
 
 public:
@@ -24,6 +25,7 @@ public:
     void SetCurrentValue(float _value) { valueCurrent_ = _value; }
     void SetPosition(const Vector2& _position);
     void SetSize(const Vector2& _size);
+    void SetEnableTimer(bool flag) { enableTimer_ = flag; }
 
 
 public:
@@ -43,6 +45,7 @@ private:
 
     Timer                   timerDisplay_;
     bool                    isDisplay_ = false;
+    bool                    enableTimer_ = true;
     float                   displayTime_ = 0.0f;
 
 
