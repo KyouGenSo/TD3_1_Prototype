@@ -40,6 +40,12 @@ void MachineGunBullet::Bullet::Update() {
     } else{
         UpdateNormal();
     }
+
+    if (50.f <= (transform_.translate - origin).Length()){
+        isDead_ = true;
+        pCollider_->Disable();
+    }
+
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
     model_->Update();
@@ -92,11 +98,6 @@ void MachineGunBullet::Bullet::InitializeChain() {
 void MachineGunBullet::Bullet::UpdateNormal() {
     transform_.translate += forward_ * speed_;
 
-    if ((transform_.translate - origin).Length() <= 40.f){
-        isDead_ = false;
-        pCollider_->Disable();
-    }
-
     pCollider_->SetTranslate(Adaptor(transform_.translate));
     model_->SetRotate(transform_.rotate);
     model_->SetTranslate(transform_.translate);
@@ -105,11 +106,6 @@ void MachineGunBullet::Bullet::UpdateNormal() {
 
 void MachineGunBullet::Bullet::UpdateChain() {
     transform_.translate += forward_ * speed_;
-
-    if ((transform_.translate - origin).Length() <= 40.f){
-        isDead_ = false;
-        pCollider_->Disable();
-    }
 
     pCollider_->SetTranslate(Adaptor(transform_.translate));
     model_->SetRotate(transform_.rotate);

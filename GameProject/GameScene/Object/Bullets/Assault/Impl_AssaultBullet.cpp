@@ -56,7 +56,7 @@ void AssaultBullet::Bullet::Update()
 
     transform_.translate += forward_ * speed_ * deltaTime_;
 
-    if (50.f <= (transform_.translate - origin).Length()){
+    if (120.f <= (transform_.translate - origin).Length()){
         isDead_ = true;
         pCollider_->Disable();
     }

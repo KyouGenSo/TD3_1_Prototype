@@ -36,6 +36,12 @@ void EnemyBase::OnCollisionTrigger(const Collision::Collider* _other)
         }
         pHPBar_->Display(2.0f);
     }
+
+    if (Utility::EqualsIgnoreCase(object->GetName(), "Player")){
+        pGameEventNotifier_->Notify("PlayerHit", statusCurrent_.getAttack());
+        statusCurrent_.setHp(0);
+        pCollider_->Disable();
+    }
 }
 
 void EnemyBase::Initialize()
