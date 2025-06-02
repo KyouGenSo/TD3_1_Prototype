@@ -9,7 +9,7 @@
 
 void GUI_Chain::Initialize()
 {
-    //NiGui::ResetItemToArea();
+    NiGui::ResetItemToArea();
     NiGui::SetItemToArea("Assault", "DragItemArea1");
 }
 

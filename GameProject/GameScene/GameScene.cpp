@@ -418,7 +418,6 @@ void GameScene::UpdateInputCommands()
     auto input = Input::GetInstance();
 
     std::vector<IObserver*> observers;
-    observers.push_back(guiLvUP_.get());
     observers.push_back(guiPauseMenu_.get());
     observers.push_back(guiChain_.get());
     observers.push_back(wnd_setting_.get());

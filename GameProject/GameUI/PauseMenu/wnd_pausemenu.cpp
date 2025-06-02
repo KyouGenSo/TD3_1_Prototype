@@ -31,7 +31,7 @@ void GUI_PauseMenu::OnNotify(const std::string& _name, const std::string& _event
     if (_event == "open")
     {
         dtm->SetDeltaTime(1, 0.0f);
-        notifier_->Notify("OnWindowOpen", true);
+        if (!isDisplay_) notifier_->Notify("OnWindowOpen", true);
         isDisplay_ = true;
     }
     else if (_event == "close")
