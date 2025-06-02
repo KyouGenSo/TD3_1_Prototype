@@ -1,28 +1,26 @@
-#pragma once
+﻿#ifndef ThunderBullet_HPP_
+#define ThunderBullet_HPP_
 #include "GameScene/Object/Bullets/BulletBase.h"
 
-class MachineGunBullet : public BulletBase
-{
+class ThunderBullet final : public BulletBase{
     class Bullet : public BulletBase{
-        Vector3 origin = {};
+        bool isExploded_ = false;
+
     public:
+        void Draw() override;
         void Initialize() override;
         void Update() override;
-        void Draw() override;
+        void OnCollision(const Collision::Collider* _other) override;
         void OnCollisionTrigger(const Collision::Collider* _collider) override;
+        void SetSpeed(float _speed);
 
-        void SetSpeed(float speed) {
-            speed_ = speed;
-        }
     protected:
         void InitializeNormal() override;
         void InitializeChain() override;
         void UpdateNormal() override;
         void UpdateChain() override;
     };
-
-    Vector3 origin{};
-    std::vector<std::unique_ptr<Bullet>> bullets_ = {};
+    std::unique_ptr<Bullet> bullet_;
 public:
     void Initialize() override;
     void Update() override;
@@ -34,5 +32,7 @@ protected:
     void InitializeChain() override;
     void UpdateNormal() override;
     void UpdateChain() override;
-};
+}; // class ThunderBullet
 
+
+#endif // ThunderBullet_HPP_

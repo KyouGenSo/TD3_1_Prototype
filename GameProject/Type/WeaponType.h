@@ -5,5 +5,5 @@ enum class WeaponType : int{
     RocketLauncher,
     Assault,
     MachineGun,
-    Lightning,
+    Thunder,
 };

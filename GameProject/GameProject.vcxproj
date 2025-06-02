@@ -189,6 +189,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\HUD\StatusHUD.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\ImplSubmachineGunBullet.cpp" />
     <ClCompile Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.cpp" />
+    <ClCompile Include="GameScene\Object\Bullets\Thunder\ThunderBullet.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\BounceEnemy.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\EnemyBase.cpp" />
     <ClCompile Include="GameScene\Object\Enemy\FlyEnemy.cpp" />
@@ -211,6 +212,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene\Object\Terrain\Terrain.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\SMG\SMG.cpp" />
+    <ClCompile Include="GameScene\Object\Weapon\ThunderRod\ThunderRod.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\Weapon.cpp" />
     <ClCompile Include="GameScene\Object\Weapon\WeaponFactory.cpp" />
     <ClCompile Include="GameScene\Status\Status.cpp" />
@@ -254,6 +256,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene\HUD\StatusBar.h" />
     <ClInclude Include="GameScene\HUD\StatusHUD.h" />
     <ClInclude Include="GameScene\Object\Bullets\SubmachineGun\MachineGunBullet.h" />
+    <ClInclude Include="GameScene\Object\Bullets\Thunder\ThunderBullet.hpp" />
     <ClInclude Include="GameScene\Object\Enemy\BounceEnemy.h" />
     <ClInclude Include="GameScene\Object\Enemy\EnemyBase.h" />
     <ClInclude Include="GameScene\Object\Enemy\FlyEnemy.h" />
@@ -274,6 +277,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="GameScene\Object\Terrain\Terrain.h" />
     <ClInclude Include="GameScene\Object\Weapon\RocketLauncher\RocketLauncher.h" />
     <ClInclude Include="GameScene\Object\Weapon\SMG\SMG.h" />
+    <ClInclude Include="GameScene\Object\Weapon\ThunderRod\ThunderRod.hpp" />
     <ClInclude Include="GameScene\Object\Weapon\Weapon.h" />
     <ClInclude Include="GameScene\Object\Weapon\WeaponFactory.h" />
     <ClInclude Include="GameScene\Status\Status.h" />

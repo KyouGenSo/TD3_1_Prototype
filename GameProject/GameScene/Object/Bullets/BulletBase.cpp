@@ -7,6 +7,8 @@
 #include <GameSystem/Reinforcement/Manager/ReinforcementManager.h>
 #include <GameSystem/DeltaTimeManager/DeltaTimeManager.h>
 
+#include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
+
 void BulletBase::Initialize()
 {
 	pLifeTimer_ = std::make_unique<Timer>();

@@ -162,8 +162,9 @@ void Terrain::Draw()
     aabb.min = size * -0.5f + transform_.translate;
     aabb.max = size * 0.5f + transform_.translate;
 
-    Draw2D::GetInstance()->DrawAABB(aabb, { 0.0f, 1.0f, 0.0f, 1.0f });
-
+#ifdef _DEBUG
+    Draw2D::GetInstance()->DrawAABB(aabb, { 1.0f, 0.0f, 0.0f, 1.0f });
+#endif
 
     model_->Draw();
     longWallModel1_->Draw();

@@ -51,7 +51,7 @@ public:
     virtual void ImGui(std::function<void()> _guiWidgetsFunc);
     virtual void ImGui();
 
-    virtual void OnCollisionTrigger(const Collision::Collider* _other) {};
+    virtual void OnCollisionTrigger(const Collision::Collider* _other) {}
     virtual void OnCollision(const Collision::Collider* _other){}
     virtual void OnCollisionExit(const Collision::Collider* _other){}
 

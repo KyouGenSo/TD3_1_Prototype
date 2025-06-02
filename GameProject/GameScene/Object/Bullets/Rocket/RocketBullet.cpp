@@ -16,7 +16,7 @@ void RocketBullet::Explosion::Init() {
 	pCollider_
 		->SetType(Collision::Type::Sphere)
 		->SetTranslate(Adaptor(transform_.translate))
-		->SetSize(5.0f)
+		->SetSize(10.0f)
 		->AddAttribute(static_cast<uint32_t>(Collider::Type::ALLY))
 		->AddIgnore(static_cast<uint32_t>(Collider::Type::STAGE))
 		->SetOwner(this)
@@ -193,8 +193,6 @@ void RocketBullet::InitializeChain()
 	cb_->SetPosition(transform_.translate);
 	cb_->SetEmitter(emitter_);
 	cb_->Init();
-
-    timer.Stop();
 
 	isDead_ = false;
 }

@@ -55,6 +55,7 @@ void GameScene::Initialize()
     eventTimer_->BeginEvent("Player");
     // プレイヤーの初期化
     player_ = std::make_unique<Player>();
+    player_->SetEmitter(emitterManager_.get());
     player_->Initialize();
     player_->SetFloor(terrain_->GetFloorHeight());
     player_->SetTransform(currentStageData.playerTransform);
@@ -103,6 +104,7 @@ void GameScene::Initialize()
     castle_ = std::make_unique<Castle>();
     castle_->Initialize();
     castle_->SetTransform(currentStageData.castleTransform);
+    minimap_->Register(castle_.get());
 
     eventTimer_->BeginEvent("Enemy");
     // 敵の初期化
@@ -116,7 +118,6 @@ void GameScene::Initialize()
     boss_ = std::make_unique<Boss>();
     boss_->Initialize();
     boss_->SetTransform(currentStageData.bossTransform);
-    minimap_->Register(boss_.get());
 
     eventTimer_->EndEvent("Enemy");
 
@@ -154,6 +155,14 @@ void GameScene::Initialize()
     emitterManager_->SetEmitterStartColor("explosion", {1, 0, 0, 1});
     emitterManager_->SetEmitterEndColor("explosion", {1.f, 1.f, 0.f, 1});
     emitterManager_->SetEmitterScaleRange("explosion", {0.4f, 0.4f}, {0.4f, 0.4f});
+
+    emitterManager_->CreateSphereEmitter("thunder", {0,0, 0},  3, 250, 0);
+    emitterManager_->SetEmitterActive("thunder", false);
+    //emitterManager_->SetEmitterVelocityRange("explosion", {-0.1f, 0.1f}, {-0.1f,  0.1f}, {-0.1f, 0.1f});
+    emitterManager_->SetEmitterColor("thunder", {1.f, 0.f, 0.f, 1});
+    emitterManager_->SetEmitterStartColor("thunder", {1, 0.6f, 0.2f, 1});
+    emitterManager_->SetEmitterEndColor("thunder", {1.f, 1.f, 0.f, 1});
+    emitterManager_->SetEmitterScaleRange("thunder", {0.4f, 0.4f}, {0.4f, 0.4f});
 
     emitterManager_->CreateSphereEmitter("hit", {0,0,0}, 5, 100, 0);
     emitterManager_->SetEmitterActive("hit", false);
@@ -205,7 +214,7 @@ void GameScene::Initialize()
     pauseKeySp_->SetPos(pauseKeySpPos_);
     pauseKeySp_->SetSize({ pauseKeySp_->GetSize().x * 0.5f, pauseKeySp_->GetSize().y * 0.5f });
 
-    statusKeySpPos_ = { .x = 44.89f, .y = 259.21 };
+    statusKeySpPos_ = { .x = 44.89f, .y = 259.21f };
     statusKeySp_ = std::make_unique<Sprite>();
     statusKeySp_->Initialize("statusKey.png");
     statusKeySp_->SetPos(statusKeySpPos_);
@@ -260,7 +269,13 @@ void GameScene::Update()
         guiPauseMenu_->Update();
         guiChain_->Update();
     });
+
+    if (enemyManager_->GetLastTurn() <= enemyManager_->GetCurrentTurn()){
+        boss_->SetIsValid(true);
+        minimap_->Register(boss_.get());
+    }
     boss_->Update();
+
     eventTimer_->Measure("Update EnemyManager", [&]() { enemyManager_->Update(); });
     eventTimer_->Measure("Update Minimap", [&]() { minimap_->Update(); });
     /// タイマーの更新
@@ -356,6 +371,7 @@ void GameScene::DrawWithoutEffect()
     minimap_->Draw();
     statusHUD_->Draw2D();
     enemyManager_->Draw2d();
+    boss_->Draw2d();
     reticle_->Draw();
     f11Sprite_->Draw();
     pauseKeySp_->Draw();

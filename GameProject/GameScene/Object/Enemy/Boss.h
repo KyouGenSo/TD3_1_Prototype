@@ -1,12 +1,9 @@
 #pragma once
 #include <memory>
 
-#include "Object3d.h"
-#include "Camera.h"
-#include "GameScene/Object/Object.h"
-#include "Collision/Collider.h"
+#include "EnemyBase.h"
 
-class Boss : public Object
+class Boss : public EnemyBase
 {
 public:
     void Initialize() override;
@@ -15,22 +12,19 @@ public:
 
     void Draw() override;
 
-    void Finalize();
+    void Finalize() override;
 
-    void ImGui();
-
-	void OnCollision(const Collision::Collider* pObject) override;
+    void ImGui() override;
 
     bool GetIsValid() const { return isValid_; }
 
-    void SetIsValid(bool isValid) { isValid_ = isValid; }
+    void SetIsValid(bool isValid);
+
+    void OnCollision(const Collision::Collider* _other) override;
+    void OnCollisionTrigger(const Collision::Collider* _other) override;
 
 private:
-
-    std::unique_ptr<Collision::Collider> collider_;
-
-    Vector3 prePos_;
-
+    Vector3 prePos_ = {}; // 前回の位置
     bool isValid_ = false; // ボスの有効無効
 };
 

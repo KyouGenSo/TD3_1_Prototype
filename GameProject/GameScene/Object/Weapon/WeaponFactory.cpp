@@ -2,6 +2,7 @@
 #include "RocketLauncher/RocketLauncher.h"
 #include "AssaultRifle/AssaultRifle.h"
 #include "SMG/SMG.h"
+#include "ThunderRod/ThunderRod.hpp"
 
 std::unique_ptr<WeaponBase> WeaponFactory::CreateWeapon(WeaponType _type)
 {
@@ -18,7 +19,8 @@ std::unique_ptr<WeaponBase> WeaponFactory::CreateWeapon(WeaponType _type)
     case WeaponType::MachineGun:
         weapon = std::make_unique<SMG>();
         break;
-    case WeaponType::Lightning:
+    case WeaponType::Thunder:
+        weapon = std::make_unique<ThunderRod>();
         break;
     }
     return weapon;

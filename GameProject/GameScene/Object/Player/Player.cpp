@@ -26,6 +26,7 @@
 #include <any>
 
 #include "GameScene/Object/Weapon/AssaultRifle/AssaultRifle.h"
+#include "GameScene/Object/Weapon/ThunderRod/ThunderRod.hpp"
 
 void Player::Initialize()
 {
@@ -65,7 +66,7 @@ void Player::Initialize()
     statusCurrent_ = statusInit_;
 
     /// !!Debug!!
-    weapon_ = std::make_unique<AssaultRifle>();
+    weapon_ = std::make_unique<ThunderRod>();
     weapon_->Initialize();
     weapon_->SetChain(chain_);
     weapon_->SetEmitter(emitter_);
@@ -425,6 +426,7 @@ void Player::ChangeAimMode(bool isMouseAim)
         --countCursorVisible_;
         if (countCursorVisible_ == 0)
         {
+            SetCursorPos(ORIGIN.x, ORIGIN.y);
             ShowCursor(false);
             mouseAim_ = true;
         }
@@ -434,6 +436,7 @@ void Player::ChangeAimMode(bool isMouseAim)
         ++countCursorVisible_;
         if (countCursorVisible_ == 1)
         {
+            SetCursorPos(ORIGIN.x, ORIGIN.y);
             ShowCursor(true);
             mouseAim_ = false;
         }
@@ -445,12 +448,14 @@ void Player::ChangeAimModeForce(bool _isMouseAim)
     if (_isMouseAim)
     {
         countCursorVisible_ = 0;
+        SetCursorPos(ORIGIN.x, ORIGIN.y);
         ShowCursor(false);
         mouseAim_ = true;
     }
     else
     {
         countCursorVisible_ = 1;
+        SetCursorPos(ORIGIN.x, ORIGIN.y);
         ShowCursor(true);
         mouseAim_ = false;
     }
