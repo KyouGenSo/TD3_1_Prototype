@@ -2,6 +2,7 @@
 
 #include "Object3dBasic.h"
 #include "cmath"
+#include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
 #include "Type/ColliderType.h"
 #include "Utility/Adaptor.h"
 
@@ -86,8 +87,9 @@ void BounceEnemy::Move()
             transform_.rotate.y = std::atan2(direction.x, direction.z);
         }
 
-        transform_.translate.x += direction.x * speed;
-        transform_.translate.z += direction.z * speed;
+        float deltaTime = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
+        transform_.translate.x += direction.x * speed * deltaTime;
+        transform_.translate.z += direction.z * speed * deltaTime;
 
         bounceTime_ += 0.05f;
         transform_.translate.y = std::sin(bounceTime_) * bounceHight_ + standardHeight_;
