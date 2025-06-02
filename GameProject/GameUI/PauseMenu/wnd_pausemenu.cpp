@@ -50,13 +50,18 @@ void GUI_PauseMenu::OnNotify(const std::string& _name, const std::string& _event
     }
 }
 
+void GUI_PauseMenu::OnResize(Vector2 _size)
+{
+    displaySize_ = _size;
+}
+
 void GUI_PauseMenu::ShowPauseMenu()
 {
     auto center = NiGui_StandardPoint::Center;
     auto confirm = NiGui_ButtonState::Confirm;
 
     NiVec4 bgcolor = NiUtil::Adaptor(ColorResolver::GetInstance()->Resolve(ColorName::Background).toVector4());
-    NiGui::BeginDiv("PauseMenu_Background", "white.png", bgcolor, {}, { 1600,900 }, center, center);
+    NiGui::BeginDiv("PauseMenu_Background", "white.png", bgcolor, {}, NiUtil::Adaptor(displaySize_), center, center);
     NiGui::EndDiv();
 
     auto dtm = DeltaTimeManager::GetInstance();
