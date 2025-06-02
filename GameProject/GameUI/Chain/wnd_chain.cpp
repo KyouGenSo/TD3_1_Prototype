@@ -60,7 +60,7 @@ void GUI_Chain::Update()
         DeltaTimeManager::GetInstance()->SetDeltaTime(1, 1.0f / 60.0f);
 
         // ウィンドウが閉じたことを通知
-        notifier_->Notify("OnWindowOpen", isDisplay_);
+        notifier_->Notify("OnWindowOpen", false);
 
 
         isConfirm_ = false;
