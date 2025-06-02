@@ -26,10 +26,10 @@ void Castle::Initialize() {
 
     statusInit_
         .setAttack(5000)
-        .setHp(5000)
+        .setHp(500)
         .setSpeed(1)
         .setDefence(0)
-        .setMaxHp(5000);
+        .setMaxHp(500);
     statusCurrent_ = statusInit_;
 
 
