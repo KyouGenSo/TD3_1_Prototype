@@ -1,8 +1,8 @@
 {
     "10b": {
-        "amount": 5,
-        "hpMultiplier": 2.0,
-        "interval": 10.0,
+        "amount": 2,
+        "hpMultiplier": 8.0,
+        "interval": 16.0,
         "time": 30.0,
         "turn": 10,
         "type": 2
