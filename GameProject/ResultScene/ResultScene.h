@@ -51,14 +51,14 @@ private: // メンバ変数
     float pressAlphaSpeed = 0.05f;
     bool pressAlphaIncreasing = true;
 
-    std::unique_ptr<Sprite> press_;
-    std::unique_ptr<Sprite> overText_;
-    std::unique_ptr<Sprite> bgSp_;
+    std::unique_ptr<Sprite> press_ = nullptr;
+    std::unique_ptr<Sprite> overText_ = nullptr;
+    std::unique_ptr<Sprite> bgSp_ = nullptr;
 
-    std::unique_ptr<Sprite> whiteBarVer_;
-    std::unique_ptr<Sprite> whiteBarVer2_;
-    std::unique_ptr<Sprite> whiteBarHor_;
-    std::unique_ptr<Sprite> whiteBarHor2_;
+    std::unique_ptr<Sprite> whiteBarVer_ = nullptr;
+    std::unique_ptr<Sprite> whiteBarVer2_ = nullptr;
+    std::unique_ptr<Sprite> whiteBarHor_ = nullptr;
+    std::unique_ptr<Sprite> whiteBarHor2_ = nullptr;
     Vector2 whiteBarVerPos{ .x = 80.f, .y = 0.f };
     Vector2 whiteBarVerPos2{ .x = 1520.f, .y = 0.f };
     Vector2 whiteBarHorPos{ .x = 0.f, .y = 80.f };
