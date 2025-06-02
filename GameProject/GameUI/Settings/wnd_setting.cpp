@@ -132,10 +132,4 @@ void Wnd_Setting::Show()
     controller_volume_.Update();
     controller_sens_.Update();
     NiGui::EndDiv();
-
-    if (ImGui::Begin("WndSetting"))
-    {
-        ImGui::DragFloat3("pos", &pos_sprite_sens_.x, 1.0f);
-        ImGui::End();
-    }
 }

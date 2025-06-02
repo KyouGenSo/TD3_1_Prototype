@@ -225,8 +225,10 @@ int EnemyManager::GetCurrentTurn() const {
     return turnProgress;
 }
 
+constexpr auto １０ = 10;
+
 int EnemyManager::GetLastTurn() const {
-    return static_cast<int>(waves_.size());
+    return static_cast<int>(１０);
 }
 
 void EnemyManager::SpawnEnemy()
