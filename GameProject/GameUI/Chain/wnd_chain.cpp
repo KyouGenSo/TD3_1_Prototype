@@ -110,6 +110,7 @@ void GUI_Chain::ShowChain()
         NiGui::DragItem("RocketLauncher", (ICONDIR_ / TEX_ROCKETLAUNCHER_).string(), NiGui::WHITE, { -240, 70 }, { 100, 100 }, center, center);
         NiGui::DragItem("Assault", (ICONDIR_ / TEX_ASSAULT_).string(), NiGui::WHITE, { 0, 70 }, { 100, 100 }, center, center);
         NiGui::DragItem("MachineGun", (ICONDIR_ / TEX_SUBMACHINEGUN_).string(), NiGui::WHITE, { 240, 70 }, { 100, 100 }, center, center);
+        NiGui::DragItem("Thunder", (ICONDIR_ / TEX_THUNDER_).string(), NiGui::WHITE, { 120, 70 }, { 100, 100 }, center, center);
 
         if (NiGui::Button("CancelChain", (CHAINDIR_ / TEX_BUTTON_CANCEL_).string(), NiGui::WHITE, { 266, 533 }, { 292,84 }, {}, lefttop, lefttop) == confirm)
         {

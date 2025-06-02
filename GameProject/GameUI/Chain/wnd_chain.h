@@ -30,6 +30,7 @@ private:
     const std::filesystem::path TEX_ROCKETLAUNCHER_ = "RocketLauncher.png";
     const std::filesystem::path TEX_ASSAULT_ = "assault.png";
     const std::filesystem::path TEX_SUBMACHINEGUN_ = "submachinegun.png";
+    const std::filesystem::path TEX_THUNDER_ = "thunder.png";
     const std::filesystem::path TEX_FRAME_ = "itemarea.png";
     const std::filesystem::path TEX_WND_ = "window.png";
     const std::filesystem::path TEX_BUTTON_CONFIRM_ = "button_confirm.png";
