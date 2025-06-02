@@ -2,6 +2,7 @@
 
 #include "Object3dBasic.h"
 #include "cmath"
+#include "GameSystem/DeltaTimeManager/DeltaTimeManager.h"
 #include "Type/ColliderType.h"
 #include "Utility/Adaptor.h"
 
@@ -93,7 +94,9 @@ void FlyEnemy::Move()
             transform_.rotate.y = std::atan2(direction.x, direction.z);
         }
 
-        transform_.translate += direction * speed_;
+        float deltaTime = DeltaTimeManager::GetInstance()->GetDeltaTime(1);
+        transform_.translate += direction * speed_ * deltaTime;
+
         if (transform_.translate.y < 1.0f)
         {
             transform_.translate.y = 1.0f;

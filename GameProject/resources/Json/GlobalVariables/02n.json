@@ -1,8 +1,8 @@
 {
     "02n": {
-        "amount": 5,
+        "amount": 3,
         "hpMultiplier": 1.0,
-        "interval": 3.0,
+        "interval": 5.0,
         "time": 20.0,
         "turn": 2,
         "type": 0
