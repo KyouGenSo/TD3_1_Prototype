@@ -6,15 +6,35 @@
 #include <GameSystem/SoundManager/SoundManager.h>
 #include <Utility/Adaptor.h>
 #include <WinApp.h>
+#include <imgui.h>
 
 void Wnd_Setting::Initialize()
 {
+    NiVec2 wndsize = { WinApp::clientWidth, WinApp::clientHeight };
+
     controller_volume_.Initialize("Volume", { 0, -50.0f });
     controller_sens_.Initialize("Sens", { 0, 50.0f });
-
     controller_volume_.SetMax(1.0f);
     controller_volume_.SetValue(1.0f);
     controller_sens_.SetMax(1.0f);
+    controller_sens_.SetValue(1.0f);
+
+    pos_sprite_volume_ = {};
+    pos_sprite_volume_.x = 560.0f;
+    pos_sprite_volume_.y = 350.0f;
+
+    pos_sprite_sens_ = {};
+    pos_sprite_sens_.x = 415.0f;
+    pos_sprite_sens_.y = 452.0f;
+
+    sprite_text_volume_ = std::make_unique<Sprite>();
+    sprite_text_volume_->Initialize("volumeText.png");
+    sprite_text_volume_->SetSize(NiUtil::Adaptor(NiVec2(97.0f, 63.0f) * 0.5f));
+    sprite_text_sens_ = std::make_unique<Sprite>();
+    sprite_text_sens_->Initialize("mouseSensitiveText.png");
+    sprite_text_sens_->SetSize(NiUtil::Adaptor(NiVec2(240.0f, 64.0f) * 0.5f));
+
+
     id_callback_change_display_ = notifier_->RegisterCallback("RequestOpenSetting", [this](std::any _flag)
     {
         bool open = std::any_cast<bool>(_flag);
@@ -29,7 +49,6 @@ void Wnd_Setting::Initialize()
     auto center = NiGui_StandardPoint::Center;
 
     NiVec2 bgSize = { 600.0f, 300.0f };
-    NiVec2 wndsize = { WinApp::clientWidth, WinApp::clientHeight };
     arg_window_.id = "setting_background";
     arg_window_.textureName = "white.png";
     arg_window_.size = bgSize;
@@ -56,7 +75,14 @@ void Wnd_Setting::Update()
 {
     this->Show();
     sprite_background_->Update();
-    
+
+    auto size = sprite_text_volume_->GetSize();
+    sprite_text_volume_->SetPos(NiUtil::Adaptor((wndsize * 0.5f) + pos_sprite_volume_ + NiUtil::Adaptor(size)));
+    sprite_text_volume_->Update();
+
+    size = sprite_text_sens_->GetSize();
+    sprite_text_sens_->SetPos(NiUtil::Adaptor((wndsize * 0.5f) + pos_sprite_sens_ + NiUtil::Adaptor(size)));
+    sprite_text_sens_->Update();
 
     if (controller_volume_.IsChanged()) SoundManager::GetInstance()->SetVolumeMultiply(controller_volume_.GetValue());
     if (controller_sens_.IsChanged()) notifier_->Notify("ChangedSens", controller_sens_.GetValue());
@@ -68,6 +94,8 @@ void Wnd_Setting::Draw2d()
     sprite_background_->Draw();
     controller_volume_.Draw2d();
     controller_sens_.Draw2d();
+    sprite_text_volume_->Draw();
+    sprite_text_sens_->Draw();
 }
 
 void Wnd_Setting::OnNotify(const std::string& _name, const std::string& _event)
@@ -104,4 +132,10 @@ void Wnd_Setting::Show()
     controller_volume_.Update();
     controller_sens_.Update();
     NiGui::EndDiv();
+
+    if (ImGui::Begin("WndSetting"))
+    {
+        ImGui::DragFloat3("pos", &pos_sprite_sens_.x, 1.0f);
+        ImGui::End();
+    }
 }

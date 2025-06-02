@@ -122,6 +122,8 @@ void MyGame::Initialize()
     TextureManager::GetInstance()->LoadTexture("pauseKey.png");
     TextureManager::GetInstance()->LoadTexture("statusKey.png");
     TextureManager::GetInstance()->LoadTexture("weaponChainKey.png");
+    TextureManager::GetInstance()->LoadTexture("volumeText.png");
+    TextureManager::GetInstance()->LoadTexture("mouseSensitiveText.png");
 
     GPUParticle::GetInstance()->Initialize(dx12_, defaultCamera_);
 

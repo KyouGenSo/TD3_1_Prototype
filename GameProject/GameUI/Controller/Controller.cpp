@@ -10,9 +10,9 @@ void Controller::Initialize(const std::string& _name, const Vector2& _position)
 {
     position_ = NiUtil::Adaptor(_position);
     size_statebar_ = { 150.0f, 5.0f };
-    size_button_ = { 30.0f, 30.0f };
-    InitializeButtonArg(arg_down_, _name + "down", "white.png", { -100.0f, 0.0f });
-    InitializeButtonArg(arg_up_, _name + "up", "white.png", { 100.0f, 0.0f });
+    size_button_ = { 32.0f, 32.0f };
+    InitializeButtonArg(arg_down_, _name + "down", "arrow_inv.png", { -100.0f, 0.0f });
+    InitializeButtonArg(arg_up_, _name + "up", "arrow.png", { 100.0f, 0.0f });
     statebar_.Initialize();
     statebar_.SetSize(NiUtil::Adaptor(size_statebar_));
     NiVec2 wndsize = { static_cast<float>(WinApp::clientWidth / 2), static_cast<float>(WinApp::clientHeight / 2) };
