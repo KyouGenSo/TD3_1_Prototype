@@ -2,7 +2,7 @@
     "09n": {
         "amount": 10,
         "hpMultiplier": 2.0,
-        "interval": 5.0,
+        "interval": 10.0,
         "time": 30.0,
         "turn": 9,
         "type": 0
