@@ -31,9 +31,9 @@ void EnemyManager::Initialize(Object* player, Object* castle)
 
     keys_.clear();
 
+    isPause_ = false;
     eventId_ = GameEventNotifier::GetInstance()->RegisterCallback("OnWindowOpen", [&](const std::any& a){isPause_ = std::any_cast<bool>(&a); });
 
-    isPause_ = false;
 
     InitializeWaveFile("00n");
     InitializeWaveFile("01n");

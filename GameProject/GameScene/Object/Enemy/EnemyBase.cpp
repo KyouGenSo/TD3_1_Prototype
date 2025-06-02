@@ -43,6 +43,12 @@ void EnemyBase::OnCollisionTrigger(const Collision::Collider* _other)
         pCollider_->Disable();
     }
 
+    if (Utility::EqualsIgnoreCase(object->GetName(), "Castle")){
+        HitEffect();
+        statusCurrent_.setHp(0);
+        pCollider_->Disable();
+    }
+
     if (statusCurrent_.getHp() <= 0)
     {
         pGameEventNotifier_->Notify("EnemyDeadForXP", statusCurrent_.getExperiencePoints());

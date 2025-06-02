@@ -4,6 +4,7 @@
 #include "Type/ColliderType.h"
 #include <Utility/Adaptor.h>
 
+
 void Castle::Initialize() {
     Object::Initialize();
 
@@ -62,7 +63,10 @@ void Castle::Draw() {
 
 void Castle::OnCollisionTrigger(const Collision::Collider* _pCollider)
 {
-    Object::StatusUpdateOnCollision(_pCollider);
+    Object* object = static_cast<Object*>(_pCollider->GetOwner());
+    if (_pCollider->GetAttribute() & static_cast<uint32_t>(Collider::Type::ENEMY)){
+        Object::StatusUpdateOnCollision(_pCollider);
+    }
 }
 
 void Castle::ImGui()
