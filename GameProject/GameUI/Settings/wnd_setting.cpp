@@ -10,7 +10,7 @@
 
 void Wnd_Setting::Initialize()
 {
-    NiVec2 wndsize = { WinApp::clientWidth, WinApp::clientHeight };
+    wndsize_ = { WinApp::clientWidth, WinApp::clientHeight };
 
     controller_volume_.Initialize("Volume", { 0, -50.0f });
     controller_sens_.Initialize("Sens", { 0, 50.0f });
@@ -20,12 +20,12 @@ void Wnd_Setting::Initialize()
     controller_sens_.SetValue(1.0f);
 
     pos_sprite_volume_ = {};
-    pos_sprite_volume_.x = 560.0f;
-    pos_sprite_volume_.y = 350.0f;
+    pos_sprite_volume_.x = -150.0f;
+    pos_sprite_volume_.y = -50.0f;
 
     pos_sprite_sens_ = {};
-    pos_sprite_sens_.x = 415.0f;
-    pos_sprite_sens_.y = 452.0f;
+    pos_sprite_sens_.x = -150.0f;
+    pos_sprite_sens_.y = 50.0f;
 
     sprite_text_volume_ = std::make_unique<Sprite>();
     sprite_text_volume_->Initialize("volumeText.png");
@@ -48,22 +48,20 @@ void Wnd_Setting::Initialize()
 
     auto center = NiGui_StandardPoint::Center;
 
-    NiVec2 bgSize = { 600.0f, 300.0f };
+    size_background_= { 600.0f, 300.0f };
+
     arg_window_.id = "setting_background";
     arg_window_.textureName = "white.png";
-    arg_window_.size = bgSize;
+    arg_window_.size = size_background_;
     arg_window_.position = {};
     arg_window_.color = {};
     arg_window_.anchor = center;
     arg_window_.pivot = center;
 
-    NiVec2 bgpos = wndsize / 2.0f - bgSize / 2.0f;
-
     sprite_background_ = std::make_unique<Sprite>();
     sprite_background_->Initialize(arg_window_.textureName);
-    sprite_background_->SetPos(NiUtil::Adaptor(bgpos));
     sprite_background_->SetColor(pColorResolver_->Resolve(ColorName::Background).toVector4());
-    sprite_background_->SetSize(NiUtil::Adaptor(bgSize));
+    sprite_background_->SetSize(NiUtil::Adaptor(size_background_));
 }
 
 void Wnd_Setting::Finalize()
@@ -73,16 +71,25 @@ void Wnd_Setting::Finalize()
 
 void Wnd_Setting::Update()
 {
-    this->Show();
+    wndsize_ = { WinApp::clientWidth, WinApp::clientHeight };
+
+    pos_background_ = wndsize_ / 2.0f - size_background_ / 2.0f;
+    sprite_background_->SetPos(NiUtil::Adaptor(pos_background_));
     sprite_background_->Update();
 
+    this->Show();
+
+    // スプライトテキストの座標更新
     auto size = sprite_text_volume_->GetSize();
-    sprite_text_volume_->SetPos(NiUtil::Adaptor((wndsize * 0.5f) + pos_sprite_volume_ + NiUtil::Adaptor(size)));
+    size.y *= 0.5f;
+    sprite_text_volume_->SetPos(NiUtil::Adaptor((wndsize_ * 0.5f) + pos_sprite_volume_ - NiUtil::Adaptor(size)));
     sprite_text_volume_->Update();
 
     size = sprite_text_sens_->GetSize();
-    sprite_text_sens_->SetPos(NiUtil::Adaptor((wndsize * 0.5f) + pos_sprite_sens_ + NiUtil::Adaptor(size)));
+    size.y *= 0.5f;
+    sprite_text_sens_->SetPos(NiUtil::Adaptor((wndsize_ * 0.5f) + pos_sprite_sens_ - NiUtil::Adaptor(size)));
     sprite_text_sens_->Update();
+
 
     if (controller_volume_.IsChanged()) SoundManager::GetInstance()->SetVolumeMultiply(controller_volume_.GetValue());
     if (controller_sens_.IsChanged()) notifier_->Notify("ChangedSens", controller_sens_.GetValue());
@@ -132,10 +139,4 @@ void Wnd_Setting::Show()
     controller_volume_.Update();
     controller_sens_.Update();
     NiGui::EndDiv();
-
-    if (ImGui::Begin("WndSetting"))
-    {
-        ImGui::DragFloat3("pos", &pos_sprite_sens_.x, 1.0f);
-        ImGui::End();
-    }
 }
